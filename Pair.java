@@ -14,13 +14,11 @@ public class Pair<K extends Comparable<K>, V extends Comparable<V>> implements E
 
 	@Override
 	public K getKey() {
-		// TODO Auto-generated method stub
 		return key;
 	}
 
 	@Override
 	public V getValue() {
-		// TODO Auto-generated method stub
 		return value;
 	}
 	
@@ -30,7 +28,6 @@ public class Pair<K extends Comparable<K>, V extends Comparable<V>> implements E
 
 	@Override
 	public V setValue(V value) {
-		// TODO Auto-generated method stub
 		V oldv = this.value;
 		this.value = value;
 		return oldv;
@@ -38,7 +35,6 @@ public class Pair<K extends Comparable<K>, V extends Comparable<V>> implements E
 	
 	@Override
 	public int compareTo(Pair<K, V> p) {
-		// TODO Auto-generated method stub
 		if (key.equals(p.getKey()))
 			return value.compareTo(p.getValue());
 		return key.compareTo(p.getKey());
