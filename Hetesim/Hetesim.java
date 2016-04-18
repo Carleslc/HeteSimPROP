@@ -87,6 +87,13 @@ public class Hetesim {
 		return null; //Esta linea hay que borrarla
 	}
 	
+	/*Función para testear matriusPath()
+	public String TestMatriusPath(String path) {
+		ArrayList<Matriu<Double>> m = matriusPath(path);
+		String res = m.toString();
+		return res;
+	}*/
+	
 	/**
 	 * Devuelve una lista con todas las matrices necesarias para calcular
 	 * HeteSim del path dado
@@ -96,71 +103,51 @@ public class Hetesim {
 	 */
 	private ArrayList<Matriu<Double>> matriusPath(String path) {
 		int longitud = path.length() - 1;
-		ArrayList<Matriu<Double>> mPath = null;
-		if (longitud%2 == 0) { //longitud par -> no hace falta añadir Empty
-			for (int i = 0; i < longitud; ++i) {
-				mPath = new ArrayList<>(longitud);
-				char charAti = path.charAt(i);
-				if (charAti == 'A') {
-					Matriu<Double> m = creaMatriuDouble(graf.consultarMatriuPaperAutor().transposada());
-					if (i+1 <= (longitud)/2) {
-						m.normalitzaPerFiles();
-						mPath.set(i, m);
-					}
-					else {
-						m.normalitzaPerColumnes();
-						mPath.set(i, m);
-					}
+		ArrayList<Matriu<Double>> mPath;
+		mPath = new ArrayList<>(longitud);
+		for (int i = 0; i < longitud; ++i) {
+			char charAti = path.charAt(i);
+			if (charAti == 'A') {
+				Matriu<Double> m = creaMatriuDouble(graf.consultarMatriuPaperAutor().transposada());
+				mPath.add(i,m);
+			}
+			else if (charAti == 'C') {
+				Matriu<Double> m = creaMatriuDouble(graf.consultarMatriuPaperConferencia().transposada());
+				mPath.add(i,m);
+			}
+			else if (charAti == 'T') {
+				Matriu<Double> m = creaMatriuDouble(graf.consultarMatriuPaperTerme().transposada());
+				mPath.add(i,m);
+			}
+			else if (charAti == 'P') {
+				char charAti1 = path.charAt(i+1);
+				Matriu<Double> m = null;
+				if (charAti1 == 'A') {
+					m = creaMatriuDouble(graf.consultarMatriuPaperAutor());
 				}
-				else if (charAti == 'C') {
-					Matriu<Double> m = creaMatriuDouble(graf.consultarMatriuPaperConferencia().transposada());
-					if (i+1 <= (longitud)/2) {
-						m.normalitzaPerFiles();
-						mPath.set(i, m);
-					}
-					else {
-						m.normalitzaPerColumnes();
-						mPath.set(i, m);
-					}
+				if (charAti1 == 'C') {
+					m = creaMatriuDouble(graf.consultarMatriuPaperConferencia());
 				}
-				else if (charAti == 'T') {
-					Matriu<Double> m = creaMatriuDouble(graf.consultarMatriuPaperTerme().transposada());
-					if (i+1 <= (longitud)/2) {
-						m.normalitzaPerFiles();
-						mPath.set(i, m);
-					}
-					else {
-						m.normalitzaPerColumnes();
-						mPath.set(i, m);
-					}
+				if (charAti1 == 'T') {
+					m = creaMatriuDouble(graf.consultarMatriuPaperTerme());
 				}
-				else if (charAti == 'P') {
-					char charAti1 = path.charAt(i+1);
-					Matriu<Double> m = null;
-					if (charAti1 == 'A') {
-						m = creaMatriuDouble(graf.consultarMatriuPaperAutor());
-					}
-					if (charAti1 == 'C') {
-						m = creaMatriuDouble(graf.consultarMatriuPaperConferencia());
-					}
-					if (charAti1 == 'T') {
-						m = creaMatriuDouble(graf.consultarMatriuPaperTerme());
-					}
-					if (i+1 <= (longitud)/2) {
-						m.normalitzaPerFiles();
-						mPath.set(i, m);
-					}
-					else {
-						m.normalitzaPerColumnes();
-						mPath.set(i, m);
-					}
-				}
+				mPath.add(i,m);
 			}
 		}
-		else {
-			mPath = new ArrayList<>(longitud+1);
-			//añadir elemento Empty y poner matrices en ArrayList
+		if (longitud%2 != 0) {
+			ArrayList<Matriu<Double>> E = mPath.get(longitud/2).intermedia(mPath.get(longitud/2).transposada());
+			mPath.set(longitud/2, E.get(0));
+			mPath.add(longitud/2 + 1, E.get(1));
+			++longitud;
 		}
+		int i;
+		for (i = 0; i < (longitud/2); ++i) {
+			mPath.get(i).normalitzaPerFiles();
+		}
+		for (int j = i; j < longitud; ++j) {
+			mPath.get(i).normalitzaPerColumnes();
+		}
+		
 		return mPath;
 	}
 	
