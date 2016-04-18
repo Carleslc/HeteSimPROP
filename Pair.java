@@ -1,6 +1,8 @@
-package Pair;
+package domini;
 
-import java.util.Map.Entry;
+/**
+ * @author Carla Claverol
+ */
 
 public class Pair<K extends Comparable<K>, V> implements Entry<K, V>, Comparable< Pair<K,V> > {
 	
