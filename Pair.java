@@ -2,7 +2,7 @@ package Pair;
 
 import java.util.Map.Entry;
 
-public class Pair<K extends Comparable<K>, V extends Comparable<V>> implements Entry<K, V>, Comparable< Pair<K,V> > {
+public class Pair<K extends Comparable<K>, V> implements Entry<K, V>, Comparable< Pair<K,V> > {
 	
 	private K key;
 	private V value;
@@ -35,8 +35,6 @@ public class Pair<K extends Comparable<K>, V extends Comparable<V>> implements E
 	
 	@Override
 	public int compareTo(Pair<K, V> p) {
-		if (key.equals(p.getKey()))
-			return value.compareTo(p.getValue());
 		return key.compareTo(p.getKey());
 	}
 	
