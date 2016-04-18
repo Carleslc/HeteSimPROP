@@ -18,11 +18,21 @@ public class Hetesim {
 	protected Graf graf;
 	private HashMap<String, Matriu<Double>> clausures;
 	
+	/**
+	 * Crea una instancia de Hetesim con graf
+	 * @param graf Graf con el que se harán los cálculos
+	 * @author Guillem Castro
+	 */
 	public Hetesim(Graf graf) {
 		this.graf = graf;
 		clausures = new HashMap<>();
 	}
 	
+	/**
+	 * Devuelve el grafo pasado como parámetro al constructor
+	 * @return Devuelve el Graf pasado como parámetro al constructor
+	 * @author Guillem Castro
+	 */
 	public Graf getGraf() {
 		return this.graf;
 	}
@@ -32,16 +42,36 @@ public class Hetesim {
 	 * @param path El path de la clausura que buscamos
 	 * @return Devuelve la clausura del path indicado
 	 * @throws IllegalArgumentException
+	 * @author Guillem Castro
 	 */
-	Matriu<Double> clausura(String path) throws IllegalArgumentException {
-		if (path == null) {
-			throw new IllegalArgumentException("'path' no pot ser null");
+	public Matriu<Double> clausura(String path) throws IllegalArgumentException {
+		if (path == null || path.length() == 0) {
+			throw new IllegalArgumentException("'path' no pot ser buit");
 		}
 		if (clausures.containsKey(path)) {
 			return (Matriu<Double>) clausures.get(path);
 		}
+				
+		ArrayList<Matriu<Double>> mPath = matriusPath(path);
+		int longitud = mPath.size();
+		Matriu<Double> left = mPath.get(0);
+		Matriu<Double> right = mPath.get(longitud/2);
+		for (int i = 1; i < longitud/2; ++i) {
+			left.multiplicar(mPath.get(i));
+		}
+		for (int i = longitud/2 + 1; i < longitud; ++i) {
+			right.multiplicar(mPath.get(i));
+		}
+		left = clausura(left, right);
 		
-		//calcular clausura...
+		clausures.put(path, left);
+		
+		return left;
+	}
+	
+	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right) {
+		
+		
 		return null;
 	}
 	
@@ -53,7 +83,7 @@ public class Hetesim {
 	 * @return Devuelve la relevancia de 'a' con 'b'
 	 * @throws IllegalArgumentException
 	 */
-	double heteSim(Node a, Node b, String path) throws IllegalArgumentException {
+	public double heteSim(Node a, Node b, String path) throws IllegalArgumentException {
 		if (path == null || a == null || b == null) {
 			throw new IllegalArgumentException("Els parametres no poden ser null");
 		}
@@ -73,7 +103,7 @@ public class Hetesim {
 		return 0; //Esta linea hay que borrarla
 	}
 	
-	ArrayList<Entry<Double, String>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
+	public ArrayList<Entry<Double, String>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
 		if (path == null || n == null) {
 			throw new IllegalArgumentException("Els parametres no poden ser null");
 		}
@@ -87,12 +117,12 @@ public class Hetesim {
 		return null; //Esta linea hay que borrarla
 	}
 	
-	/*Función para testear matriusPath()
+	/*Función para testear matriusPath()*/
 	public String TestMatriusPath(String path) {
 		ArrayList<Matriu<Double>> m = matriusPath(path);
 		String res = m.toString();
 		return res;
-	}*/
+	}
 	
 	/**
 	 * Devuelve una lista con todas las matrices necesarias para calcular
@@ -100,6 +130,7 @@ public class Hetesim {
 	 * @param path Path del que se quiere obtener sus matrices
 	 * @return Devuelve un ArrayList<Matriu<Double>> con las matrices correspondientes
 	 * a 'path'
+	 * @author Guillem Castro
 	 */
 	private ArrayList<Matriu<Double>> matriusPath(String path) {
 		int longitud = path.length() - 1;
@@ -147,13 +178,14 @@ public class Hetesim {
 		for (int j = i; j < longitud; ++j) {
 			mPath.get(i).normalitzaPerColumnes();
 		}
-		
 		return mPath;
 	}
 	
-	/*
-	 * Esta funcion es necesaria hasta que tengamos una creadora
-	 * por copia o que la funcion normalizar devuelva una Matriu<Double>
+	/**
+	 * Convierte una Matriu<Byte> en Matriu<Double>
+	 * @param m Matriu<Byte>  a transformar
+	 * @return Se devuelve una Matriu<Double> con los mismos valores de m
+	 * @author Guillem Castro
 	 */
 	private Matriu<Double> creaMatriuDouble(Matriu<Byte> m) {
 		int files = m.getFiles();
