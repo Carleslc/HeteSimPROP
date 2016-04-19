@@ -41,7 +41,7 @@ public class Hetesim {
 	 * Devuelve la clausura de un path indicado
 	 * @param path El path de la clausura que buscamos
 	 * @return Devuelve la clausura del path indicado
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Cuando 'path' es null o es un Path vacio
 	 * @author Guillem Castro
 	 */
 	public Matriu<Double> clausura(String path) throws IllegalArgumentException {
@@ -57,22 +57,36 @@ public class Hetesim {
 		Matriu<Double> left = mPath.get(0);
 		Matriu<Double> right = mPath.get(longitud/2);
 		for (int i = 1; i < longitud/2; ++i) {
-			left.multiplicar(mPath.get(i));
+			left = left.multiplicar(mPath.get(i));
 		}
 		for (int i = longitud/2 + 1; i < longitud; ++i) {
-			right.multiplicar(mPath.get(i));
+			right = right.multiplicar(mPath.get(i));
 		}
-		left = clausura(left, right);
+		left = clausura(left, right, (path.length()) == 2);
 		
 		clausures.put(path, left);
 		
 		return left;
 	}
 	
-	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right) {
-		
-		
-		return null;
+	/**
+	 * Devuelve la clausura a partir de las matrices normalizadas izquierda y derecha del algoritmo Hetesim
+	 * @param left Matriu de la parte izquierda del camino
+	 * @param right Matriu de la parte derecha del camino
+	 * @param DOSelementos Indica si el path tiene dos elementos
+	 * @return Se devuelve la clausura asociada al path representado por left*right
+	 * @author Guillem Castro
+	 */
+	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right, boolean DOSelementos) {
+		left = left.multiplicar(right);
+		if (!DOSelementos) { //Creo que esto va así
+			for (int i = 0; i < left.getFiles(); ++i) {
+				for (int j = 0; j < left.getColumnes(); ++j) {
+					left.set(i, j, (left.get(i, j)/  (left.getNormaFila(i)*left.getNormaColumna(j)) ));
+				}
+			}
+		}
+		return left;
 	}
 	
 	/**
