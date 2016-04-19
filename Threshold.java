@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 public class Threshold {
 	
-	private Double rellevancia;
+	private double rellevancia;
 	private Node a;
 	private Node b;
 	private Path path;
 	private HeteSim hs;
 	
-	public Threshold(Double rellevancia, Node a, Node b, Path path, HeteSim hs) {
+	public Threshold(double rellevancia, Node a, Node b, Path path, HeteSim hs) {
 		this.rellevancia = rellevancia;
 		this.a = a;
 		this.b = b;
@@ -41,20 +41,20 @@ public class Threshold {
 		return path;
 	}
 	
-	public Double getRellevancia() {
+	public double getRellevancia() {
 		return rellevancia;
 	}
 	
-	public void setRellevancia(Double rellevancia) {
+	public void setRellevancia(double rellevancia) {
 		this.rellevancia = rellevancia;
 	}
 	
 	public String toString() {
-		String aux = a.toString() + "\n" + b.toString() + "\n" + path.toString() + "\n" + rellevancia.toString();
+		String aux = a.toString() + "\n" + b.toString() + "\n" + path.toString() + "\n" + String.valueOf(rellevancia);
 		return aux;
 	}
 	
-	private Double calculateRellevancia() {
+	private double calculateRellevancia() {
 		return hs.heteSim(a, b, path.getPath());
 	}
 }
