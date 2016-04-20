@@ -1,4 +1,4 @@
-package Hetesim;
+package domini;
 
 /**
  * @authors Guillem Castro, Carlos Lazaro
