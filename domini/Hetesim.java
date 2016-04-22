@@ -4,16 +4,16 @@ package domini;
  * @authors Guillem Castro, Carlos Lazaro
  */
 
-import Graf.Graf;
-import Matriu.Matriu;
+import domini.Graf;
+import domini.Matriu;
+import domini.Node;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import Node.*;
-
-public class Hetesim {
+public class Hetesim implements Serializable{
 	
 	protected Graf graf;
 	private HashMap<String, Matriu<Double>> clausures;
