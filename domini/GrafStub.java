@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Stub de Graf
  * @author Carleslc
  */
-public class Graf {
+public class GrafStub {
 
 	int papersId, autorsId;
 	
@@ -14,7 +14,7 @@ public class Graf {
 	HashMap<Integer, Paper> papers;
 	HashMap<Integer, Autor> autors;
 	
-	public Graf() {
+	public GrafStub() {
 		adjPaperAutors = new Matriu<Byte>();
 		papers = new HashMap<Integer, Paper>();
 		autors = new HashMap<Integer, Autor>();

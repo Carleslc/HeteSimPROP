@@ -43,7 +43,7 @@ public class Pair<K extends Comparable<K>, V> implements Entry<K, V>, Comparable
 	}
 	
 	public String toString() {
-		String aux = getKey().toString() + " " + getValue().toString();
+		String aux = "[" + getKey().toString() + ", " + getValue().toString() + "]";
 		return aux;
 	}
 

@@ -13,24 +13,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-public class Hetesim implements Serializable{
+public class HeteSim implements Serializable {
+
+	private static final long serialVersionUID = -4776834543552403509L;
 	
 	protected Graf graf;
 	private HashMap<String, Matriu<Double>> clausures;
 	
 	/**
 	 * Crea una instancia de Hetesim con graf
-	 * @param graf Graf con el que se harán los cálculos
+	 * @param graf Graf con el que se haran los calculos
 	 * @author Guillem Castro
 	 */
-	public Hetesim(Graf graf) {
+	public HeteSim(Graf graf) {
 		this.graf = graf;
 		clausures = new HashMap<>();
 	}
 	
 	/**
-	 * Devuelve el grafo pasado como parámetro al constructor
-	 * @return Devuelve el Graf pasado como parámetro al constructor
+	 * Devuelve el grafo pasado como parametro al constructor
+	 * @return Devuelve el Graf pasado como parametro al constructor
 	 * @author Guillem Castro
 	 */
 	public Graf getGraf() {
@@ -51,7 +53,7 @@ public class Hetesim implements Serializable{
 		if (clausures.containsKey(path)) {
 			return (Matriu<Double>) clausures.get(path);
 		}
-				
+		
 		ArrayList<Matriu<Double>> mPath = matriusPath(path);
 		int longitud = mPath.size();
 		Matriu<Double> left = mPath.get(0);
@@ -62,7 +64,7 @@ public class Hetesim implements Serializable{
 		for (int i = longitud/2 + 1; i < longitud; ++i) {
 			right = right.multiplicar(mPath.get(i));
 		}
-		left = clausura(left, right, (path.length()) == 2);
+		left = clausura(left, right, path);
 		
 		clausures.put(path, left);
 		
@@ -77,13 +79,12 @@ public class Hetesim implements Serializable{
 	 * @return Se devuelve la clausura asociada al path representado por left*right
 	 * @author Guillem Castro
 	 */
-	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right, boolean DOSelementos) {
-		left = left.multiplicar(right);
-		if (!DOSelementos) { //Creo que esto va así
-			for (int i = 0; i < left.getFiles(); ++i) {
-				for (int j = 0; j < left.getColumnes(); ++j) {
-					left.set(i, j, (left.get(i, j)/  (left.getNormaFila(i)*left.getNormaColumna(j)) ));
-				}
+	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right, String path) {
+		Matriu<Double> aux = left.multiplicar(right);
+		if (path.length() != 2) {
+			for (int i = 0; i < aux.getFiles(); ++i) {
+				for (int j = 0; j < aux.getColumnes(); ++j)
+					aux.set(i, j, (aux.get(i, j)/(left.getNormaFila(i)*right.getNormaColumna(j)) ));
 			}
 		}
 		return left;
@@ -92,7 +93,7 @@ public class Hetesim implements Serializable{
 	/**
 	 * Efectua el calculo de HeteSim entre dos nodos 'a' y 'b'
 	 * @param a Primer nodo del path
-	 * @param b Último nodo del path
+	 * @param b ultimo nodo del path
 	 * @param path Path que deseamos usar para el calculo de HeteSim
 	 * @return Devuelve la relevancia de 'a' con 'b'
 	 * @throws IllegalArgumentException
@@ -112,12 +113,73 @@ public class Hetesim implements Serializable{
 			return clausura.get(a.getId(), b.getId());
 		}
 		
-		//calcular HeteSim...
+		ArrayList<Matriu<Double>> matrius = matriusPath(path);
+		ArrayList<Double> fila = matrius.get(0).getFila(a.getId());
+		for (int i = 1; i < matrius.size()/2; ++i) {
+			Matriu<Double> next = matrius.get(i);
+			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
+			for (int j = 0; j < next.getColumnes(); ++j)
+				res.add(0D);
+			for (int j = 0; j < res.size(); ++j) {
+				for (int k = 0; k < fila.size(); ++k)
+					res.set(j, res.get(j) + fila.get(k)*next.get(k, j));
+			}
+			fila = res;
+		}
 		
-		return 0; //Esta linea hay que borrarla
+		ArrayList<Double> columna = matrius.get(matrius.size() - 1).getColumna(b.getId());
+		for (int i = matrius.size() - 2; i > matrius.size()/2; --i) {
+			Matriu<Double> next = matrius.get(i);
+			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
+			for (int j = 0; j < next.getColumnes(); ++j)
+				res.add(0D);
+			for (int j = 0; j < res.size(); ++j) {
+				for (int k = 0; k < columna.size(); ++k)
+					res.set(j, res.get(j) + columna.get(k)*next.get(j, k));
+			}
+			columna = res;
+		}
+		
+		double res = 0d;
+		
+		for (int i = 0; i < fila.size(); ++i)
+			res += fila.get(i)*columna.get(i);
+		
+		double sumaFila = 0d;
+		for (double d : fila)
+			sumaFila += d*d;
+		
+		double sumaColumna = 0d;
+		for (double d : columna)
+			sumaColumna += d*d;
+		
+		double norma = Math.sqrt(sumaFila)*Math.sqrt(sumaColumna);
+		
+		return res/norma;
 	}
 	
-	public ArrayList<Entry<Double, String>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
+	public static void main(String[] args) {
+		Graf g = new Graf();
+		for (int i = 0; i < 3; ++i)
+			g.afegeix(new Paper(i, String.valueOf(i)));
+		for (int i = 0; i < 4; ++i)
+			g.afegeix(new Autor(i, String.valueOf(i)));
+		
+		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(0));
+		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(1));
+		
+		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(1));
+		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(2));
+		
+		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(2));
+		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(3));
+		
+		HeteSim hs = new HeteSim(g);
+		
+		System.out.println(hs.heteSim(g.consultarPaper(1), g.consultarAutor(3), "PA"));
+	}
+	
+	public ArrayList<Entry<Double, Integer>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
 		if (path == null || n == null) {
 			throw new IllegalArgumentException("Els parametres no poden ser null");
 		}
@@ -126,16 +188,59 @@ public class Hetesim implements Serializable{
 			throw new IllegalArgumentException("El tipus del node no coincideix amb el primer del 'path'");
 		}
 		
-		//calcular HeteSim...
+		if (clausures.containsKey(path)) {
+			Matriu<Double> clausura = clausures.get(path);
+			ArrayList<Pair<Double, Integer>> aux = new ArrayList<Pair<Double, Integer>>();
+			ArrayList<Double> res = clausura.getFila(n.getId());
+			for (int i = 0; i < res.size(); ++i)
+				aux.add(new Pair<Double, Integer>(res.get(i), i));
+			return new ArrayList<Entry<Double, Integer>>(aux);
+		}
 		
-		return null; //Esta linea hay que borrarla
-	}
-	
-	/*Función para testear matriusPath()*/
-	public String TestMatriusPath(String path) {
-		ArrayList<Matriu<Double>> m = matriusPath(path);
-		String res = m.toString();
-		return res;
+		ArrayList<Matriu<Double>> matrius = matriusPath(path);
+		ArrayList<Double> fila = matrius.get(0).getFila(n.getId());
+		for (int i = 1; i < matrius.size()/2; ++i) {
+			Matriu<Double> next = matrius.get(i);
+			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
+			for (int j = 0; j < next.getColumnes(); ++j)
+				res.add(0D);
+			for (int j = 0; j < res.size(); ++j) {
+				for (int k = 0; k < fila.size(); ++k)
+					res.set(j, res.get(j) + fila.get(k)*next.get(k, j));
+			}
+			fila = res;
+		}
+		
+		int longitud = matrius.size();
+		Matriu<Double> right = matrius.get(longitud/2);
+		
+		for (int i = longitud/2 + 1; i < longitud; ++i) {
+			right = right.multiplicar(matrius.get(i));
+		}
+		
+		ArrayList<Double> res = new ArrayList<>(right.getColumnes());
+		for (int j = 0; j < right.getColumnes(); ++j)
+			res.add(0D);
+		for (int j = 0; j < res.size(); ++j) {
+			for (int k = 0; k < fila.size(); ++k)
+				res.set(j, res.get(j) + fila.get(k)*right.get(k, j));
+		}
+		
+		double sumaFila = 0d;
+		for (double d : fila)
+			sumaFila += d*d;
+		
+		double normaFila = Math.sqrt(sumaFila);
+		
+		for (int i = 0; i < res.size(); ++i)
+			res.set(i, res.get(i)/(normaFila*right.getNormaColumna(i)));
+		
+		ArrayList<Pair<Double, Integer>> aux = new ArrayList<Pair<Double, Integer>>();
+		
+		for (int i = 0; i < fila.size(); ++i)
+			aux.add(new Pair<Double, Integer>(res.get(i), i));
+		
+		return new ArrayList<Entry<Double, Integer>>(aux);
 	}
 	
 	/**
@@ -196,9 +301,9 @@ public class Hetesim implements Serializable{
 	}
 	
 	/**
-	 * Convierte una Matriu<Byte> en Matriu<Double>
-	 * @param m Matriu<Byte>  a transformar
-	 * @return Se devuelve una Matriu<Double> con los mismos valores de m
+	 * Convierte una Matriu[Byte] en Matriu[Double]
+	 * @param m Matriu[Byte] a transformar
+	 * @return Se devuelve una Matriu[Double] con los mismos valores de m
 	 * @author Guillem Castro
 	 */
 	private Matriu<Double> creaMatriuDouble(Matriu<Byte> m) {
@@ -212,4 +317,14 @@ public class Hetesim implements Serializable{
 		}
 		return res;
 	}
+
+	public void guardarClausures(String defaultFilepathClausures) {
+		
+	}
+
+	public void carregarClausures(String defaultFilepathClausures) {
+		
+	}
+	
+	
 }

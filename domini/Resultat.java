@@ -7,10 +7,12 @@ package domini;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class Resultat implements Serializable {
+
+	private static final long serialVersionUID = -6077434227265383645L;
+	
 	private Node dada;
 	private Path path;
 	private String nomGraf;
@@ -21,8 +23,8 @@ public class Resultat implements Serializable {
 	 * @param Dada sobre la que s'ha fet la consulta
 	 * @param Path usat en la consulta
 	 * @param nom del Graf sobre el que es fa la consulta
-	 * @param llista de parelles de rellevància i nodes ordenada decreixentment per rellevància, els 
-	 * nodes són còpies dels nodes originals
+	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
+	 * nodes son copies dels nodes originals
 	 */
 	public Resultat(Node dada, Path path, String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
 		this.dada = dada;
@@ -37,8 +39,8 @@ public class Resultat implements Serializable {
 	 * @param Dada sobre la que s'ha fet la consulta
 	 * @param Path usat en la consulta
 	 * @param nom del Graf sobre el que es fa la consulta
-	 * @param llista de parelles de rellevància i nodes ordenada decreixentment per rellevància, els 
-	 * nodes són còpies dels nodes originals
+	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
+	 * nodes son copies dels nodes originals
 	 * @param threshold usat en la consulta
 	 */
 	public Resultat(Node dada, Path path, String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold) {
@@ -137,9 +139,9 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Canvia el resultat d’una posició. Retorna si index < size(). 
-	 * S’ha de tenir en compte que després d’aquesta crida si el resultat
-	 *  és true llavors és probable que aquesta posició hagi canviat degut 
+	 * Canvia el resultat d’una posicio. Retorna si index < size(). 
+	 * S’ha de tenir en compte que despres d’aquesta crida si el resultat
+	 *  es true llavors es probable que aquesta posicio hagi canviat degut 
 	 *  a l’ordre dels resultats.
 	*/
 	public boolean set(int index, Pair<Double, Node> resultat) {
@@ -204,7 +206,7 @@ public class Resultat implements Serializable {
 		}
 	}
 	
-	public void filtrarPerRellevància(double min, double max) {
+	public void filtrarPerRellevancia(double min, double max) {
 		for (int i = 0; resultats.get(i).getKey().doubleValue() > max; ++i) {
 			esborrar(i);
 		}

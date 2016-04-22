@@ -1,12 +1,16 @@
 package domini;
 
+import java.io.Serializable;
+
 /**
  * @author Carla Claverol
  */
 
 import java.util.ArrayList;
 
-public class Threshold {
+public class Threshold implements Serializable {
+	
+	private static final long serialVersionUID = -7710703940760522487L;
 	
 	private double rellevancia;
 	private Node a;

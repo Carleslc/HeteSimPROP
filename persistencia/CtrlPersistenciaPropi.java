@@ -18,7 +18,7 @@ import domini.Resultat;
  *
  */
 
-public class CtrlPersistenciaPropi {
+public class CtrlPersistenciaPropi extends ControladorPersistencia {
 	
 	
 	/**
