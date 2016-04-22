@@ -2,6 +2,10 @@ package domini;
 
 import java.util.HashMap;
 
+/**
+ * Stub de Graf
+ * @author Carleslc
+ */
 public class Graf {
 
 	int papersId, autorsId;
