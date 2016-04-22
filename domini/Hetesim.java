@@ -319,11 +319,11 @@ public class HeteSim implements Serializable {
 	}
 
 	public void guardarClausures(String defaultFilepathClausures) {
-		
+		// TODO
 	}
 
 	public void carregarClausures(String defaultFilepathClausures) {
-		
+		// TODO
 	}
 	
 	
