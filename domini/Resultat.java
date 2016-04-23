@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Resultat implements Serializable {
+class Resultat implements Serializable {
 
 	private static final long serialVersionUID = -6077434227265383645L;
 	
@@ -26,7 +26,7 @@ public class Resultat implements Serializable {
 	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
 	 * nodes son copies dels nodes originals
 	 */
-	public Resultat(Node dada, Path path, String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
+	Resultat(Node dada, Path path, String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
 		this.dada = dada;
 		this.path = path;
 		this.nomGraf = nomGraf;
@@ -43,7 +43,7 @@ public class Resultat implements Serializable {
 	 * nodes son copies dels nodes originals
 	 * @param threshold usat en la consulta
 	 */
-	public Resultat(Node dada, Path path, String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold) {
+	Resultat(Node dada, Path path, String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold) {
 		this.dada = dada;
 		this.path = path;
 		this.nomGraf = nomGraf;
@@ -56,7 +56,7 @@ public class Resultat implements Serializable {
 	 * Setter de node
 	 * @param node pel que es vol canviar 
 	 */
-	public void setNode(Node node) {
+	void setNode(Node node) {
 		this.dada = node;
 	}
 	
@@ -64,7 +64,7 @@ public class Resultat implements Serializable {
 	 * Getter de node
 	 * @returns node sobre el que s'ha fet la consulta
 	 */
-	public Node getNode() {
+	Node getNode() {
 		return dada;
 	}
 	
@@ -72,7 +72,7 @@ public class Resultat implements Serializable {
 	 * Setter de path
 	 * @param path pel que es vol canviar 
 	 */
-	public void setPath(Path path) {
+	void setPath(Path path) {
 		this.path = path;
 	}
 	
@@ -80,7 +80,7 @@ public class Resultat implements Serializable {
 	 * Getter de path
 	 * @returns node sobre el que s'ha fet la consulta
 	 */
-	public Path getPath() {
+	Path getPath() {
 		return path;
 	}
 	
@@ -89,7 +89,7 @@ public class Resultat implements Serializable {
 	 * Setter de nomGraf
 	 * @param nomGraf pel que es vol canviar 
 	 */
-	public void setNomGraf(String nomGraf) {
+	void setNomGraf(String nomGraf) {
 		this.nomGraf = nomGraf;
 	}
 	
@@ -97,7 +97,7 @@ public class Resultat implements Serializable {
 	 * Getter de nomGraf
 	 * @returns nomGraf sobre el que s'ha fet la consulta
 	 */
-	public String getNomGraf() {
+	String getNomGraf() {
 		return nomGraf;
 	}
 	
@@ -105,7 +105,7 @@ public class Resultat implements Serializable {
 	 * Setter de resultats
 	 * @param Resultat substituts 
 	 */
-	public void setResultats(ArrayList<Pair<Double, Node>> resultats) {
+	void setResultats(ArrayList<Pair<Double, Node>> resultats) {
 		this.resultats = resultats;
 	}
 	
@@ -113,28 +113,28 @@ public class Resultat implements Serializable {
 	 * Getter de resultats
 	 * @returns nomGraf sobre el que s'ha fet la consulta
 	 */
-	public List<Pair<Double, Node>> getResultats() {
+	List<Pair<Double, Node>> getResultats() {
 		return resultats;
 	}
 	
-	public void setThreshold(Threshold threshold) {
+	void setThreshold(Threshold threshold) {
 		this.threshold = threshold;
 	}
 	
-	public Threshold getThreshold() {
+	Threshold getThreshold() {
 		return threshold;
 	}
 	
-	public int size() {
+	int size() {
 		return resultats.size();
 	}
 	
-	public boolean isEmpty() {
+	boolean isEmpty() {
 		return resultats.isEmpty();
 	}
 	
 	//retrona null ?!
-	public Pair<Double, Node> get(int index) throws IndexOutOfBoundsException {
+	Pair<Double, Node> get(int index) throws IndexOutOfBoundsException {
 		return resultats.get(index);
 	}
 	
@@ -144,7 +144,7 @@ public class Resultat implements Serializable {
 	 *  es true llavors es probable que aquesta posicio hagi canviat degut 
 	 *  a l’ordre dels resultats.
 	*/
-	public boolean set(int index, Pair<Double, Node> resultat) {
+	boolean set(int index, Pair<Double, Node> resultat) {
 		if (index < resultats.size()) {
 			esborrar(index);
 			afegir(resultat);
@@ -157,12 +157,12 @@ public class Resultat implements Serializable {
 		resultats.clear();
 	}
 	
-	public void afegir(Pair<Double, Node> p) {
+	void afegir(Pair<Double, Node> p) {
 		int pos = Collections.binarySearch(resultats,p);
 		resultats.add(pos,p);
 	}
 		
-	public boolean esborrar(int index) {
+	boolean esborrar(int index) {
 		if (index < resultats.size()) {
 			resultats.remove(index);	
 			return true;
@@ -171,7 +171,7 @@ public class Resultat implements Serializable {
 	}
 	
 	//aqui la llista deixa de ser ordenada
-	public boolean setRellevancia(int index, Double rellevancia) {
+	boolean setRellevancia(int index, Double rellevancia) {
 		if (index < resultats.size()) {
 			Pair<Double,Node> p = resultats.get(index);
 			p.setKey(rellevancia);
@@ -182,23 +182,25 @@ public class Resultat implements Serializable {
 		return false;
 	}
 	
-	public void setDada(int index, Node Dada) {
+	void setDada(int index, Node Dada) {
 		if (index < resultats.size()) {
 			resultats.get(index).setValue(Dada);	
 		}
 	}
 	
-	public void filtrarElsPrimers(int n) {
+	void filtrarElsPrimers(int n) {
 		for (int i = n; i < resultats.size(); ++i) {
 			esborrar(i);
 		}
 	}
-	public void filtrarElsÚltims(int n) {
+	
+	void filtrarElsUltims(int n) {
 		for (int i = 0; i < (resultats.size() - n); ++i) {
 			esborrar(i);
 		}
 	}
-	public void filtrarPetEtiqueta(String label) {
+	
+	void filtrarPetEtiqueta(String label) {
 		for (int i = 0; i < resultats.size(); ++i) {
 			if (!resultats.get(i).getValue().getLabel().equals(label)) {
 				esborrar(i);
@@ -206,7 +208,7 @@ public class Resultat implements Serializable {
 		}
 	}
 	
-	public void filtrarPerRellevancia(double min, double max) {
+	void filtrarPerRellevancia(double min, double max) {
 		for (int i = 0; resultats.get(i).getKey().doubleValue() > max; ++i) {
 			esborrar(i);
 		}
@@ -232,6 +234,5 @@ public class Resultat implements Serializable {
 		}
 		return s;
 	}
-	
 	
 }

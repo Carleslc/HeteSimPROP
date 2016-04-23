@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
-public class Threshold implements Serializable {
+class Threshold implements Serializable {
 	
 	private static final long serialVersionUID = -7710703940760522487L;
 	
@@ -18,7 +18,7 @@ public class Threshold implements Serializable {
 	private String path;
 	private HeteSim hs;
 	
-	public Threshold(double rellevancia, Node a, Node b, String path, HeteSim hs) {
+	Threshold(double rellevancia, Node a, Node b, String path, HeteSim hs) {
 		this.rellevancia = rellevancia;
 		this.a = a;
 		this.b = b;
@@ -26,7 +26,7 @@ public class Threshold implements Serializable {
 		this.hs = hs;
 	}
 	
-	public Threshold(Node a, Node b, String path, HeteSim hs) {
+	Threshold(Node a, Node b, String path, HeteSim hs) {
 		this.a = a;
 		this.b = b;
 		this.path = path;
@@ -34,22 +34,22 @@ public class Threshold implements Serializable {
 		this.rellevancia = calculateRellevancia();
 	}
 	
-	public ArrayList<Node> getNodes(){
+	ArrayList<Node> getNodes(){
 		ArrayList<Node> l = new ArrayList<>();
 		l.add(a);
 		l.add(b);
 		return l;
 	}
 	
-	public String getPath() {
+	String getPath() {
 		return path;
 	}
 	
-	public double getRellevancia() {
+	double getRellevancia() {
 		return rellevancia;
 	}
 	
-	public void setRellevancia(double rellevancia) {
+	void setRellevancia(double rellevancia) {
 		this.rellevancia = rellevancia;
 	}
 	
@@ -58,7 +58,7 @@ public class Threshold implements Serializable {
 		return aux;
 	}
 	
-	private double calculateRellevancia() {
+	double calculateRellevancia() {
 		return hs.heteSim(a, b, path);
 	}
 }

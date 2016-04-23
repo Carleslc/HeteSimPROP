@@ -7,12 +7,13 @@ import domini.Pair;
 public final class DriverPair extends Driver {
 
 	public static void main(String[] args) {
-		Pair<String, String> p = null;
+		Pair<String, String> p = crearPair();
+		println();
 		
 		int opcio;
 		do {
 			print("Escolleix una opcio:\n"
-					+ "1. Crear pair.\n"
+					+ "1. Crear pair\n"
 					+ "2. getKey\n"
 					+ "3. getValue\n"
 					+ "4. setKey\n"
@@ -29,11 +30,7 @@ public final class DriverPair extends Driver {
 			try {
 				switch (opcio) {
 					case 1: {
-						print("Key: ");
-						String key = nextLine();
-						print("Value: ");
-						String value = nextLine();
-						p = new Pair<>(key, value);
+						p = crearPair();
 						break;
 					}
 					case 2:
@@ -76,17 +73,25 @@ public final class DriverPair extends Driver {
 					case 8:
 						break;
 					default:
-						System.err.println("Introdueix una opcio del 1 al 8.");
+						println("Introdueix una opcio del 1 al 8.");
 				}
 			} catch (Exception e) {
 				println("Hi ha hagut un error: " + e + "\n" +
 						Arrays.toString(e.getStackTrace()));
 			}
 			
-			System.out.println();
+			println();
 		} while (opcio != 8);
 		
 		close();
+	}
+
+	private static Pair<String, String> crearPair() {
+		print("Key: ");
+		String key = nextLine();
+		print("Value: ");
+		String value = nextLine();
+		return new Pair<>(key, value);
 	}
 	
 	

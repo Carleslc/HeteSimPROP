@@ -56,5 +56,21 @@ public class GrafStub {
 	public Matriu<Byte> consultarMatriuPaperTerme() {
 		return null;
 	}
+
+	public int consultaMidaPaper() {
+		return papers.size();
+	}
+
+	public int consultaMidaAutor() {
+		return autors.size();
+	}
+
+	public Node consultarConferencia(int id) {
+		return null;
+	}
+
+	public Node consultarTerme(int id) {
+		return null;
+	}
 	
 }
