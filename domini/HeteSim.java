@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 /**
  * Controlador de l'algorisme HeteSim.
  * 
- * <p><b>TODO</b> AFEGIR DESCRIPCIÓ DE L'ALGORISME.
+ * <p><b>TODO</b> AFEGIR DESCRIPCIï¿½ DE L'ALGORISME.
  * 
  * @author Guillem Castro Olivares,<br>
  * 		   Carlos Lazaro Costa
@@ -31,7 +31,7 @@ public class HeteSim implements Serializable {
 	 * @param graf Graf sobre el que es faran els calculs
 	 * @author Guillem Castro
 	 */
-	public HeteSim(Graf graf) {
+	public Hetesim(Graf graf) {
 		this.graf = graf;
 		clausures = new HashMap<>();
 	}
@@ -93,7 +93,7 @@ public class HeteSim implements Serializable {
 					aux.set(i, j, (aux.get(i, j)/(left.getNormaFila(i)*right.getNormaColumna(j)) ));
 			}
 		}
-		return left;
+		return aux;
 	}
 	
 	/**
