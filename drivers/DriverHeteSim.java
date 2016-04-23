@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import domini.Autor;
-import domini.Graf;
+import domini.GrafStub;
 import domini.HeteSim;
 import domini.Matriu;
 import domini.Paper;
@@ -115,7 +115,7 @@ public class DriverHeteSim extends Driver {
 
 	private static void defaultTest() {
 		String path = "PA";
-		Graf g = new Graf();
+		GrafStub g = new GrafStub();
 		for (int i = 0; i < 3; ++i)
 			g.afegeix(new Paper(i, String.valueOf(i)));
 		for (int i = 0; i < 4; ++i)
@@ -123,24 +123,32 @@ public class DriverHeteSim extends Driver {
 		
 		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(0));
 		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(1));
-		
 		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(1));
 		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(2));
-		
-		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(2));
+		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(3));
 		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(3));
 		
 		HeteSim hs = new HeteSim(g);
-		
-		println("Mitjançant llistes");
+				
+		println("Mitjanï¿½ant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaAutor(); ++j)
 				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + ", ");
 			println();
 		}
+				
+		System.out.println("hetesim amb id");
+		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
+			System.out.println(hs.heteSimAmbIdentificadors(g.consultarPaper(i), path));
+		}
 		
-		println("\nMitjançant clausura");
-		print(hs.clausura(path));
+		System.out.println("hetesim amb nom");
+		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
+			System.out.println(hs.heteSimAmbNoms(g.consultarPaper(i), path));
+		}
+		
+		println("\nMitjanï¿½ant clausura");
+		System.out.println((hs.clausura(path)));
 	}
 
 	private static void print(Matriu<Double> m) {

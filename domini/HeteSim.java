@@ -27,8 +27,8 @@ public class HeteSim implements Serializable {
 	private HashMap<String, Matriu<Double>> clausures;
 	
 	/**
-	 * Crea una instancia de Hetesim per un graf
-	 * @param graf Graf sobre el que es faran els calculs
+	 * Crea una instancia de Hetesim per un Graf
+	 * @param Graf Graf sobre el que es faran els calculs
 	 * @author Guillem Castro
 	 */
 	public HeteSim(Graf graf) {
@@ -37,8 +37,8 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * Consulta el graf sobre el que es fan els calculs
-	 * @return el graf que s'havia passat com a parametre al constructor
+	 * Consulta el Graf sobre el que es fan els calculs
+	 * @return el Graf que s'havia passat com a parametre al constructor
 	 * @author Guillem Castro
 	 */
 	public Graf getGraf() {
@@ -135,20 +135,20 @@ public class HeteSim implements Serializable {
 		}
 		
 		ArrayList<Double> columna = matrius.get(matrius.size() - 1).getColumna(b.getId());
-		for (int i = matrius.size() - 2; i > matrius.size()/2; --i) {
+		for (int i = matrius.size() - 2; i >= matrius.size()/2; --i) {
 			Matriu<Double> next = matrius.get(i);
-			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
-			for (int j = 0; j < next.getColumnes(); ++j)
+			ArrayList<Double> res = new ArrayList<>(next.getFiles());
+			for (int j = 0; j < next.getFiles(); ++j)
 				res.add(0d);
-			for (int j = 0; j < res.size(); ++j) {
-				for (int k = 0; k < columna.size(); ++k)
+			for (int j = 0; j < next.getFiles(); ++j) {
+				for (int k = 0; k < next.getColumnes(); ++k) {
 					res.set(j, res.get(j) + columna.get(k)*next.get(j, k));
+				}
 			}
 			columna = res;
 		}
 		
 		double res = 0d;
-		
 		for (int i = 0; i < fila.size(); ++i)
 			res += fila.get(i)*columna.get(i);
 		
