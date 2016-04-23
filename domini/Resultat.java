@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-class Resultat implements Serializable {
+public class Resultat implements Serializable {
 
 	private static final long serialVersionUID = -6077434227265383645L;
 	

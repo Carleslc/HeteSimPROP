@@ -233,7 +233,7 @@ public class HeteSim implements Serializable {
 		
 		ArrayList<Pair<Double, Integer>> aux = new ArrayList<>();
 		
-		for (int i = 0; i < fila.size(); ++i)
+		for (int i = 0; i < res.size(); ++i)
 			aux.add(new Pair<>(res.get(i), i));
 		
 		return new ArrayList<>(aux);
