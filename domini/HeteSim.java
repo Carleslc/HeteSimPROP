@@ -14,13 +14,13 @@ import java.util.Map.Entry;
 /**
  * Controlador de l'algorisme HeteSim.
  * 
- * <p><b>TODO</b> AFEGIR DESCRIPCI� DE L'ALGORISME.
+ * <p><b>TODO</b> AFEGIR DESCRIPCIO DE L'ALGORISME.
  * 
  * @author Guillem Castro Olivares,<br>
  * 		   Carlos Lazaro Costa
  */
 public class HeteSim implements Serializable {
-
+	
 	private static final long serialVersionUID = -4776834543552403509L;
 	
 	protected Graf graf;
@@ -31,7 +31,7 @@ public class HeteSim implements Serializable {
 	 * @param graf Graf sobre el que es faran els calculs
 	 * @author Guillem Castro
 	 */
-	public Hetesim(Graf graf) {
+	public HeteSim(Graf graf) {
 		this.graf = graf;
 		clausures = new HashMap<>();
 	}
@@ -307,7 +307,7 @@ public class HeteSim implements Serializable {
 		
 		ArrayList<Pair<Double, String>> aux = new ArrayList<>();
 		
-		for (int i = 0; i < fila.size(); ++i)
+		for (int i = 0; i < res.size(); ++i)
 			aux.add(new Pair<>(res.get(i), consultarNomById(i, path)));
 		
 		return new ArrayList<>(aux);
@@ -322,7 +322,7 @@ public class HeteSim implements Serializable {
 	 */
 	private String consultarNomById(int id, String path) {
 		if (!path.isEmpty()) {
-			switch (path.charAt(0)) {
+			switch (path.charAt(path.length()-1)) {
 				case 'P':
 					return graf.consultarPaper(id).getNom();
 				case 'A':
