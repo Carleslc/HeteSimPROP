@@ -1,12 +1,15 @@
 package drivers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map.Entry;
 
 import domini.Autor;
-import domini.GrafStub;
+import domini.Graf;
 import domini.HeteSim;
 import domini.Matriu;
+import domini.Node;
 import domini.Paper;
 
 /**
@@ -23,7 +26,8 @@ public class DriverHeteSim extends Driver {
 		do {
 			print("Escolleix una opcio:\n"
 				+ "1. Crear HeteSim\n"
-				+ "2. Test per defecte\n");
+				+ "2. Test per defecte\n"
+				+ "3. Sortir del driver\n");
 			
 			opcio = nextInt();
 			
@@ -31,7 +35,8 @@ public class DriverHeteSim extends Driver {
 				hs = crearHeteSim();
 			else if (opcio == 2)
 				defaultTest();
-			
+			else if (opcio == 3)
+				return;
 			println();
 		} while (opcio != 1);
 		
@@ -115,11 +120,11 @@ public class DriverHeteSim extends Driver {
 
 	private static void defaultTest() {
 		String path = "PA";
-		GrafStub g = new GrafStub();
+		Graf g = new Graf();
 		for (int i = 0; i < 3; ++i)
-			g.afegeix(new Paper(i, String.valueOf(i)));
+			g.afegeix(new Paper(i, "Paper" + i));
 		for (int i = 0; i < 4; ++i)
-			g.afegeix(new Autor(i, String.valueOf(i)));
+			g.afegeix(new Autor(i, "Autor" + i));
 		
 		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(0));
 		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(1));
@@ -130,25 +135,37 @@ public class DriverHeteSim extends Driver {
 		
 		HeteSim hs = new HeteSim(g);
 				
-		println("Mitjanï¿½ant llistes");
+		println("Mitjançant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaAutor(); ++j)
 				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + ", ");
 			println();
 		}
-				
-		System.out.println("hetesim amb id");
+		
+		println("\nHeteSim amb ID");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
-			System.out.println(hs.heteSimAmbIdentificadors(g.consultarPaper(i), path));
+			ArrayList<Entry<Double, Integer>> m = hs.heteSimAmbIdentificadors(g.consultarPaper(i), path);
+			print(getTipusNode(path, true) + " " + i + " amb " + getTipusNode(path, false) + " [");
+			for (int j = 0; j < m.size(); ++j) {
+				Entry<Double, Integer> e = m.get(j);
+				print(e.getValue() + ": " + String.format(Locale.UK, "%.2f", e.getKey()) + (j < m.size() - 1 ? ", " : ""));
+			}
+			println("]");
 		}
 		
-		System.out.println("hetesim amb nom");
-		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
-			System.out.println(hs.heteSimAmbNoms(g.consultarPaper(i), path));
-		}
+		println("\nMitjançant clausura");
+		print(hs.clausura(path));
 		
-		println("\nMitjanï¿½ant clausura");
-		System.out.println((hs.clausura(path)));
+		println("\nHeteSim amb Noms");
+		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
+			ArrayList<Entry<Double, String>> m = hs.heteSimAmbNoms(g.consultarPaper(i), path);
+			print(getTipusNode(path, true) + " " + i + " amb " + getTipusNode(path, false) + " [");
+			for (int j = 0; j < m.size(); ++j) {
+				Entry<Double, String> e = m.get(j);
+				print(e.getValue() + ": " + String.format(Locale.UK, "%.2f", e.getKey()) + (j < m.size() - 1 ? ", " : ""));
+			}
+			println("]");
+		}
 	}
 
 	private static void print(Matriu<Double> m) {
@@ -157,6 +174,18 @@ public class DriverHeteSim extends Driver {
 				print(String.format(Locale.UK, "%.2f", m.get(i,  j)) + (j < m.getColumnes() - 1 ? ", " : ""));
 			println();
 		}
+	}
+	
+	private static String getTipusNode(String path, boolean first) {
+		if (!path.isEmpty()) {
+			switch (path.charAt(first ? 0 : path.length() - 1)) {
+				case 'A': return "Autor";
+				case 'P': return "Paper";
+				case 'T': return "Terme";
+				case 'C': return "Conferencia";
+			}
+		}
+		return "Node";
 	}
 	
 }

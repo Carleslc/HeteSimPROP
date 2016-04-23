@@ -1,6 +1,5 @@
 package domini;
 
-import domini.Graf;
 import domini.Matriu;
 import domini.Node;
 import persistencia.ControladorPersistencia;
