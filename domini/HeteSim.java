@@ -12,7 +12,11 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 /**
- * @author Guillem Castro Olivares,<p>
+ * Controlador de l'algorisme HeteSim.
+ * 
+ * <p><b>TODO</b> AFEGIR DESCRIPCIÓ DE L'ALGORISME.
+ * 
+ * @author Guillem Castro Olivares,<br>
  * 		   Carlos Lazaro Costa
  */
 public class HeteSim implements Serializable {
@@ -23,8 +27,8 @@ public class HeteSim implements Serializable {
 	private HashMap<String, Matriu<Double>> clausures;
 	
 	/**
-	 * Crea una instancia de Hetesim con graf
-	 * @param graf Graf con el que se haran los calculos
+	 * Crea una instancia de Hetesim per un graf
+	 * @param graf Graf sobre el que es faran els calculs
 	 * @author Guillem Castro
 	 */
 	public HeteSim(Graf graf) {
@@ -33,8 +37,8 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * Devuelve el grafo pasado como parametro al constructor
-	 * @return Devuelve el Graf pasado como parametro al constructor
+	 * Consulta el graf sobre el que es fan els calculs
+	 * @return el graf que s'havia passat com a parametre al constructor
 	 * @author Guillem Castro
 	 */
 	public Graf getGraf() {
@@ -42,14 +46,14 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * Devuelve la clausura de un path indicado
-	 * @param path El path de la clausura que buscamos
-	 * @return Devuelve la clausura del path indicado
-	 * @throws IllegalArgumentException Cuando 'path' es null o es un Path vacio
+	 * Calcula la clausura per un path
+	 * @param path el path de la clausura que volem calcular
+	 * @return la clausura del path indicat
+	 * @throws IllegalArgumentException si <b>path</b> es <code>null</code> o es buit
 	 * @author Guillem Castro
 	 */
 	public Matriu<Double> clausura(String path) throws IllegalArgumentException {
-		if (path == null || path.length() == 0) {
+		if (path == null || path.isEmpty()) {
 			throw new IllegalArgumentException("'path' no pot ser buit");
 		}
 		if (clausures.containsKey(path)) {
@@ -74,11 +78,11 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * Devuelve la clausura a partir de las matrices normalizadas izquierda y derecha del algoritmo Hetesim
-	 * @param left Matriu de la parte izquierda del camino
-	 * @param right Matriu de la parte derecha del camino
-	 * @param path el path a usar en el calculo
-	 * @return Se devuelve la clausura asociada al path representado por left*right
+	 * Calcula la clausura a partir de les matrius normalitzades esquerra y dreta del algorisme
+	 * @param left Matriu de la part esquerra del cami
+	 * @param right Matriu de la part dreta del cami
+	 * @param path el path a utilitzar en el calcul
+	 * @return la clausura associada al path representada per left*right
 	 * @author Guillem Castro
 	 */
 	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right, String path) {
@@ -93,12 +97,12 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * Efectua el calculo de HeteSim entre dos nodos 'a' y 'b'
-	 * @param a Primer nodo del path
-	 * @param b ultimo nodo del path
-	 * @param path Path que deseamos usar para el calculo de HeteSim
-	 * @return Devuelve la relevancia de 'a' con 'b'
-	 * @throws IllegalArgumentException
+	 * Efectua el calcul del HeteSim entre dos nodes
+	 * @param a primer node del path
+	 * @param b ultim node del path
+	 * @param path path que desitjem utilitzar pel calcul del HeteSim
+	 * @return la rellevancia de <b>a</b> amb <b>b</b>
+	 * @throws IllegalArgumentException si algun parametre es null o algun node no es correspon al path
 	 * @author Guillem Castro, Carlos Lazaro
 	 */
 	public double heteSim(Node a, Node b, String path) throws IllegalArgumentException {
@@ -162,11 +166,13 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * 
-	 * @param n
-	 * @param path
-	 * @return
-	 * @throws IllegalArgumentException
+	 * Efectua el calcul del HeteSim entre un node i els altres
+	 * @param n primer node del path
+	 * @param path path que desitjem utilitzar pel calcul del HeteSim
+	 * @return llista ordenada per rellevancies on cada element es la rellevancia
+	 * <br>que te n amb un altre node del tipus de l'ultim del path,
+	 * <br>representat pel seu identificador.
+	 * @throws IllegalArgumentException si algun parametre es null o el node no es correspon al path
 	 * @author Guillem Castro, Carlos Lazaro
 	 */
 	public ArrayList<Entry<Double, Integer>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
@@ -234,11 +240,13 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * 
-	 * @param n
-	 * @param path
-	 * @return
-	 * @throws IllegalArgumentException
+	 * Efectua el calcul del HeteSim entre un node i els altres
+	 * @param n primer node del path
+	 * @param path path que desitjem utilitzar pel calcul del HeteSim
+	 * @return llista ordenada per rellevancies on cada element es la rellevancia
+	 * <br>que te n amb un altre node del tipus de l'ultim del path,
+	 * <br>representat pel seu nom.
+	 * @throws IllegalArgumentException si algun parametre es null o el node no es correspon al path
 	 * @author Carlos Lazaro
 	 */
 	public ArrayList<Entry<Double, String>> heteSimAmbNoms(Node n, String path) throws IllegalArgumentException {
@@ -306,10 +314,10 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * 
-	 * @param n
-	 * @param path
-	 * @return
+	 * Consulta el nom d'un node a partir del seu id i path.
+	 * @param id el identificador del node a consultar
+	 * @param path el path de la consulta
+	 * @return el nom del node o null si el path es buit
 	 * @author Carlos Lazaro
 	 */
 	private String consultarNomById(int id, String path) {
@@ -329,11 +337,9 @@ public class HeteSim implements Serializable {
 	}
 
 	/**
-	 * Devuelve una lista con todas las matrices necesarias para calcular
-	 * HeteSim del path dado
-	 * @param path Path del que se quiere obtener sus matrices
-	 * @return Devuelve un ArrayList<Matriu<Double>> con las matrices correspondientes
-	 * a 'path'
+	 * Separa el path i retorna una llista amb totes les matrius necessaries per calcular
+	 * @param path path que desitjem utilitzar pel calcul del HeteSim
+	 * @return una llista amb les matrius corresponents a <b>path</b>
 	 * @author Guillem Castro
 	 */
 	private ArrayList<Matriu<Double>> matriusPath(String path) {
@@ -386,9 +392,9 @@ public class HeteSim implements Serializable {
 	}
 	
 	/**
-	 * Convierte una Matriu[Byte] en Matriu[Double]
+	 * Transforma una Matriu[Byte] en Matriu[Double]
 	 * @param m Matriu[Byte] a transformar
-	 * @return Se devuelve una Matriu[Double] con los mismos valores de m
+	 * @return una Matriu[Double] amb els mateixos valors de <b>m</b>
 	 * @author Guillem Castro
 	 */
 	private Matriu<Double> creaMatriuDouble(Matriu<Byte> m) {
@@ -404,9 +410,10 @@ public class HeteSim implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @param filesystem_path
-	 * @throws IOException 
+	 * Guarda les clausures en un fitxer del sistema
+	 * @param filesystem_path path del fitxer on guardar les clausures
+	 * @throws IOException si el fitxer es un directori, el fitxer no es pot escriure
+	 * <br>o hi ha altres problemes d'entrada/sortida
 	 * @author Carlos Lazaro
 	 */
 	public void guardarClausures(String filesystem_path) throws IOException {
@@ -414,9 +421,10 @@ public class HeteSim implements Serializable {
 	}
 
 	/**
-	 * 
-	 * @param filesystem_path
-	 * @throws IOException 
+	 * Carrega les clausures des d'un fitxer del sistema
+	 * @param filesystem_path path del fitxer on guardar les clausures
+	 * @throws IOException si el fitxer no existeix, el fitxer es un directori,
+	 * el fitxer no es pot llegir o hi ha altres problemes d'entrada/sortida
 	 * @author Carlos Lazaro
 	 */
 	public void carregarClausures(String filesystem_path) throws IOException {
