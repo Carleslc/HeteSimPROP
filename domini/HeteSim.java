@@ -428,6 +428,6 @@ public class HeteSim implements Serializable {
 	 * @author Carlos Lazaro
 	 */
 	public void carregarClausures(String filesystem_path) throws IOException {
-		ControladorPersistencia.carregarClausures(filesystem_path);
+		clausures = (HashMap<String, Matriu<Double>>) ControladorPersistencia.carregarClausures(filesystem_path);
 	}
 }
