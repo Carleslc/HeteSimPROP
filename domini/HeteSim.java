@@ -1,18 +1,20 @@
 package domini;
 
-/**
- * @authors Guillem Castro, Carlos Lazaro
- */
-
 import domini.Graf;
 import domini.Matriu;
 import domini.Node;
+import persistencia.ControladorPersistencia;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+/**
+ * @author Guillem Castro Olivares,<p>
+ * 		   Carlos Lazaro Costa
+ */
 public class HeteSim implements Serializable {
 
 	private static final long serialVersionUID = -4776834543552403509L;
@@ -75,7 +77,7 @@ public class HeteSim implements Serializable {
 	 * Devuelve la clausura a partir de las matrices normalizadas izquierda y derecha del algoritmo Hetesim
 	 * @param left Matriu de la parte izquierda del camino
 	 * @param right Matriu de la parte derecha del camino
-	 * @param DOSelementos Indica si el path tiene dos elementos
+	 * @param path el path a usar en el calculo
 	 * @return Se devuelve la clausura asociada al path representado por left*right
 	 * @author Guillem Castro
 	 */
@@ -97,6 +99,7 @@ public class HeteSim implements Serializable {
 	 * @param path Path que deseamos usar para el calculo de HeteSim
 	 * @return Devuelve la relevancia de 'a' con 'b'
 	 * @throws IllegalArgumentException
+	 * @author Guillem Castro, Carlos Lazaro
 	 */
 	public double heteSim(Node a, Node b, String path) throws IllegalArgumentException {
 		if (path == null || a == null || b == null) {
@@ -119,7 +122,7 @@ public class HeteSim implements Serializable {
 			Matriu<Double> next = matrius.get(i);
 			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
 			for (int j = 0; j < next.getColumnes(); ++j)
-				res.add(0D);
+				res.add(0d);
 			for (int j = 0; j < res.size(); ++j) {
 				for (int k = 0; k < fila.size(); ++k)
 					res.set(j, res.get(j) + fila.get(k)*next.get(k, j));
@@ -132,7 +135,7 @@ public class HeteSim implements Serializable {
 			Matriu<Double> next = matrius.get(i);
 			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
 			for (int j = 0; j < next.getColumnes(); ++j)
-				res.add(0D);
+				res.add(0d);
 			for (int j = 0; j < res.size(); ++j) {
 				for (int k = 0; k < columna.size(); ++k)
 					res.set(j, res.get(j) + columna.get(k)*next.get(j, k));
@@ -158,27 +161,14 @@ public class HeteSim implements Serializable {
 		return res/norma;
 	}
 	
-	public static void main(String[] args) {
-		Graf g = new Graf();
-		for (int i = 0; i < 3; ++i)
-			g.afegeix(new Paper(i, String.valueOf(i)));
-		for (int i = 0; i < 4; ++i)
-			g.afegeix(new Autor(i, String.valueOf(i)));
-		
-		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(0));
-		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(1));
-		
-		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(1));
-		g.afegirAdjacencia(g.consultarPaper(1), g.consultarAutor(2));
-		
-		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(2));
-		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(3));
-		
-		HeteSim hs = new HeteSim(g);
-		
-		System.out.println(hs.heteSim(g.consultarPaper(1), g.consultarAutor(3), "PA"));
-	}
-	
+	/**
+	 * 
+	 * @param n
+	 * @param path
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @author Guillem Castro, Carlos Lazaro
+	 */
 	public ArrayList<Entry<Double, Integer>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
 		if (path == null || n == null) {
 			throw new IllegalArgumentException("Els parametres no poden ser null");
@@ -190,11 +180,11 @@ public class HeteSim implements Serializable {
 		
 		if (clausures.containsKey(path)) {
 			Matriu<Double> clausura = clausures.get(path);
-			ArrayList<Pair<Double, Integer>> aux = new ArrayList<Pair<Double, Integer>>();
+			ArrayList<Pair<Double, Integer>> aux = new ArrayList<>();
 			ArrayList<Double> res = clausura.getFila(n.getId());
 			for (int i = 0; i < res.size(); ++i)
-				aux.add(new Pair<Double, Integer>(res.get(i), i));
-			return new ArrayList<Entry<Double, Integer>>(aux);
+				aux.add(new Pair<>(res.get(i), i));
+			return new ArrayList<>(aux);
 		}
 		
 		ArrayList<Matriu<Double>> matrius = matriusPath(path);
@@ -235,14 +225,109 @@ public class HeteSim implements Serializable {
 		for (int i = 0; i < res.size(); ++i)
 			res.set(i, res.get(i)/(normaFila*right.getNormaColumna(i)));
 		
-		ArrayList<Pair<Double, Integer>> aux = new ArrayList<Pair<Double, Integer>>();
+		ArrayList<Pair<Double, Integer>> aux = new ArrayList<>();
 		
 		for (int i = 0; i < fila.size(); ++i)
-			aux.add(new Pair<Double, Integer>(res.get(i), i));
+			aux.add(new Pair<>(res.get(i), i));
 		
-		return new ArrayList<Entry<Double, Integer>>(aux);
+		return new ArrayList<>(aux);
 	}
 	
+	/**
+	 * 
+	 * @param n
+	 * @param path
+	 * @return
+	 * @throws IllegalArgumentException
+	 * @author Carlos Lazaro
+	 */
+	public ArrayList<Entry<Double, String>> heteSimAmbNoms(Node n, String path) throws IllegalArgumentException {
+		if (path == null || n == null) {
+			throw new IllegalArgumentException("Els parametres no poden ser null");
+		}
+		char classNode = n.getClass().getSimpleName().charAt(0);
+		if (path.charAt(0) != classNode) {
+			throw new IllegalArgumentException("El tipus del node no coincideix amb el primer del 'path'");
+		}
+		
+		if (clausures.containsKey(path)) {
+			Matriu<Double> clausura = clausures.get(path);
+			ArrayList<Pair<Double, String>> aux = new ArrayList<>();
+			ArrayList<Double> res = clausura.getFila(n.getId());
+			for (int i = 0; i < res.size(); ++i)
+				aux.add(new Pair<>(res.get(i), consultarNomById(i, path)));
+			return new ArrayList<Entry<Double, String>>(aux);
+		}
+		
+		ArrayList<Matriu<Double>> matrius = matriusPath(path);
+		ArrayList<Double> fila = matrius.get(0).getFila(n.getId());
+		for (int i = 1; i < matrius.size()/2; ++i) {
+			Matriu<Double> next = matrius.get(i);
+			ArrayList<Double> res = new ArrayList<>(next.getColumnes());
+			for (int j = 0; j < next.getColumnes(); ++j)
+				res.add(0D);
+			for (int j = 0; j < res.size(); ++j) {
+				for (int k = 0; k < fila.size(); ++k)
+					res.set(j, res.get(j) + fila.get(k)*next.get(k, j));
+			}
+			fila = res;
+		}
+		
+		int longitud = matrius.size();
+		Matriu<Double> right = matrius.get(longitud/2);
+		
+		for (int i = longitud/2 + 1; i < longitud; ++i) {
+			right = right.multiplicar(matrius.get(i));
+		}
+		
+		ArrayList<Double> res = new ArrayList<>(right.getColumnes());
+		for (int j = 0; j < right.getColumnes(); ++j)
+			res.add(0D);
+		for (int j = 0; j < res.size(); ++j) {
+			for (int k = 0; k < fila.size(); ++k)
+				res.set(j, res.get(j) + fila.get(k)*right.get(k, j));
+		}
+		
+		double sumaFila = 0d;
+		for (double d : fila)
+			sumaFila += d*d;
+		
+		double normaFila = Math.sqrt(sumaFila);
+		
+		for (int i = 0; i < res.size(); ++i)
+			res.set(i, res.get(i)/(normaFila*right.getNormaColumna(i)));
+		
+		ArrayList<Pair<Double, String>> aux = new ArrayList<>();
+		
+		for (int i = 0; i < fila.size(); ++i)
+			aux.add(new Pair<>(res.get(i), consultarNomById(i, path)));
+		
+		return new ArrayList<>(aux);
+	}
+	
+	/**
+	 * 
+	 * @param n
+	 * @param path
+	 * @return
+	 * @author Carlos Lazaro
+	 */
+	private String consultarNomById(int id, String path) {
+		if (!path.isEmpty()) {
+			switch (path.charAt(0)) {
+				case 'P':
+					return graf.consultarPaper(id).getNom();
+				case 'A':
+					return graf.consultarAutor(id).getNom();
+				case 'C':
+					return graf.consultarConferencia(id).getNom();
+				case 'T':
+					return graf.consultarTerme(id).getNom();
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Devuelve una lista con todas las matrices necesarias para calcular
 	 * HeteSim del path dado
@@ -316,5 +401,25 @@ public class HeteSim implements Serializable {
 			}
 		}
 		return res;
+	}
+
+	/**
+	 * 
+	 * @param filesystem_path
+	 * @throws IOException 
+	 * @author Carlos Lazaro
+	 */
+	public void guardarClausures(String filesystem_path) throws IOException {
+		ControladorPersistencia.guardarClausures(filesystem_path, clausures);
+	}
+
+	/**
+	 * 
+	 * @param filesystem_path
+	 * @throws IOException 
+	 * @author Carlos Lazaro
+	 */
+	public void carregarClausures(String filesystem_path) throws IOException {
+		ControladorPersistencia.carregarClausures(filesystem_path);
 	}
 }
