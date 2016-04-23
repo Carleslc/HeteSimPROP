@@ -5,16 +5,15 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map.Entry;
 
+import domini.HeteSim;
 import domini.Autor;
 import domini.Graf;
-import domini.HeteSim;
-import domini.Matriu;
-import domini.Node;
 import domini.Paper;
+import domini.Matriu;
 
 /**
  * Driver per provar el HeteSim.
- * @author Carlos Lazaro
+ * @author Carlos Lazaro, Guillem Castro
  */
 public class DriverHeteSim extends Driver {
 
@@ -26,8 +25,8 @@ public class DriverHeteSim extends Driver {
 		do {
 			print("Escolleix una opcio:\n"
 				+ "1. Crear HeteSim\n"
-				+ "2. Test per defecte\n"
-				+ "3. Sortir del driver\n");
+				+ "2. Test per defecte (de l'article)\n"
+				+ "3. Sortir del Driver");
 			
 			opcio = nextInt();
 			
@@ -43,7 +42,7 @@ public class DriverHeteSim extends Driver {
 		do {
 			print("Escolleix una opcio:\n"
 					+ "1. Crear HeteSim\n"
-					+ "2. Test per defecte\n"
+					+ "2. Test per defecte (de l'article)\n"
 					+ "3. getGraf\n"
 					+ "4. clausura(path)\n"
 					+ "5. clausura(left, right, path)\n"
@@ -52,7 +51,10 @@ public class DriverHeteSim extends Driver {
 					+ "8. heteSimAmbNoms(node, path)\n"
 					+ "9. guardarClausures(system_path)\n"
 					+ "10. carregarClausures(system_path)\n"
-					+ "11. Sortir del driver\n"
+					+ "11. Afegir Autors\n"
+					+ "12. Afegir Papers\n"
+					+ "13. Afegir Adjacencia Papers-Autors\n"
+					+ "14. Sortir del driver\n"
 					+ "Opcio = ");
 			
 			opcio = nextInt();
@@ -72,8 +74,8 @@ public class DriverHeteSim extends Driver {
 						println(hs.getGraf());
 						break;
 					case 4: {
-						print("Path: ");
-						print(hs.clausura(nextWord().toUpperCase()));
+						print("Path: (només amb Autors i Papers): ");
+						System.out.println((hs.clausura(nextWord().toUpperCase())));
 						break;
 					}
 					case 5: {
@@ -81,14 +83,31 @@ public class DriverHeteSim extends Driver {
 						break;
 					}
 					case 6: {
-						// TODO
+						println("Entre quin Paper y Autor vols fer el càlcul? ");
+						print("Primer Node (Paper o Autor): ");
+						int paper = nextInt();
+						print("Últim Node (Paper o Autor): ");
+						int autor = nextInt();
+						print("Introdueix el path: ");
+						String path = nextWord();
+						System.out.println(hetesimNodes(paper, autor, path.toUpperCase(), hs));
 						break;
 					}
 					case 7:
-						// TODO
+						println("De quin Node (Paper o Autor) vols obtenir les rellevàncies? ");
+						print("Introdueix el primer Node (Paper o Autor");
+						int node = nextInt();
+						print("Introdueix el path: ");
+						String path = nextWord();
+						System.out.println(hetesimid(node, path.toUpperCase(), hs));
 						break;
 					case 8:
-						// TODO
+						println("De quin Node (Paper o Autor) vols obtenir les rellevàncies? ");
+						print("Introdueix el primer Node (Paper o Autor)");
+						int node2 = nextInt();
+						print("Introdueix el path: ");
+						String path2 = nextWord();
+						System.out.println(hetesimnom(node2, path2.toUpperCase(), hs));
 						break;
 					case 9:
 						print("Escriu el path i fitxer on guardarles: ");
@@ -98,9 +117,28 @@ public class DriverHeteSim extends Driver {
 						print("Escriu el path i fitxer on estan guardades: ");
 						hs.carregarClausures(nextLine());
 						break;
-					case 11: break;
+					case 11:
+						print("Quants autors vols afegir?: ");
+						int autors = nextInt();
+						afegirAutors(autors, hs);
+						break;
+					case 12:
+						print("Quants Papers vols afegir?: ");
+						int papers = nextInt();
+						afegirPapers(papers, hs);
+						break;
+					case 13:
+						println("Entre quins Papers i Autors vols afegir una adjacencia? ");
+						print("Paper: ");
+						int paper = nextInt();
+						print("Autor: ");
+						int autor = nextInt();
+						afegirAdjacencia(paper, autor, hs);
+						break;
+					case 14: 
+						break;
 					default:
-						println("Introdueix una opcio de la 1 a la 11.");
+						println("Introdueix una opcio de la 1 a la 14.");
 				}
 			} catch (Exception e) {
 				println("Hi ha hagut un error: " + e + "\n" +
@@ -108,14 +146,64 @@ public class DriverHeteSim extends Driver {
 			}
 			
 			println();
-		} while (opcio != 11);
+		} while (opcio != 14);
 		
 		close();
 	}
 	
 	private static HeteSim crearHeteSim() {
-		// TODO
-		return null;
+		Graf g = new Graf();
+		HeteSim h = new HeteSim(g);
+		return h;
+	}
+	
+	private static void afegirAutors(int autors, HeteSim hs) {
+		Graf g = hs.getGraf();
+		for (int i = 0; i < autors; ++i) {
+			g.afegeix(new Autor(i, "A"+String.valueOf(i)));
+		}
+	}
+	
+	private static void afegirPapers(int papers, HeteSim hs) {
+		Graf g = hs.getGraf();
+		for (int i = 0; i < papers; ++i) {
+			g.afegeix(new Paper(i, "P"+String.valueOf(i)));
+		}
+	}
+	
+	private static void afegirAdjacencia(int paper, int autor, HeteSim hs) {
+		Graf g = hs.getGraf();
+		g.afegirAdjacencia(g.consultarPaper(paper), g.consultarAutor(autor));
+	}
+	
+	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) {
+		if (path.startsWith("P") && path.endsWith("A"))
+			return hs.heteSim(hs.getGraf().consultarPaper(paper), hs.getGraf().consultarAutor(autor), path);
+		else if (path.startsWith("P") && path.endsWith("P"))
+			return hs.heteSim(hs.getGraf().consultarPaper(paper), hs.getGraf().consultarPaper(autor), path);
+		else if (path.startsWith("A") && path.endsWith("P"))
+			return hs.heteSim(hs.getGraf().consultarAutor(paper), hs.getGraf().consultarPaper(autor), path);
+		else if (path.startsWith("A") && path.endsWith("A"))
+			return hs.heteSim(hs.getGraf().consultarAutor(paper), hs.getGraf().consultarAutor(autor), path);
+		return 0.0;
+	}
+	
+	private static ArrayList<Entry<Double, Integer>> hetesimid (int node, String path, HeteSim hs) {
+		if (path.startsWith("A")) {
+			return hs.heteSimAmbIdentificadors(hs.getGraf().consultarAutor(node), path);
+		}
+		else {
+			return hs.heteSimAmbIdentificadors(hs.getGraf().consultarPaper(node), path);
+		}
+	}
+	
+	private static ArrayList<Entry<Double, String>> hetesimnom (int node, String path, HeteSim hs) {
+		if (path.startsWith("A")) {
+			return hs.heteSimAmbNoms(hs.getGraf().consultarAutor(node), path);
+		}
+		else {
+			return hs.heteSimAmbNoms(hs.getGraf().consultarPaper(node), path);
+		}
 	}
 
 	private static void defaultTest() {
@@ -135,7 +223,7 @@ public class DriverHeteSim extends Driver {
 		
 		HeteSim hs = new HeteSim(g);
 				
-		println("Mitjan�ant llistes");
+		println("Mitjançant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaAutor(); ++j)
 				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + ", ");
@@ -153,7 +241,7 @@ public class DriverHeteSim extends Driver {
 			println("]");
 		}
 		
-		println("\nMitjan�ant clausura");
+		println("\nMitjançant clausura");
 		print(hs.clausura(path));
 		
 		println("\nHeteSim amb Noms");
