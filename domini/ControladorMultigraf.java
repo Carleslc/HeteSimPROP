@@ -1,4 +1,4 @@
-package domini;
+package controladormultigraf;
 
 /**
  * @author Arnau Badia Sampera
@@ -43,7 +43,20 @@ public class ControladorMultigraf extends ControladorGraf {
 	public HeteSim getHeteSim() {
 		return controladors.get(idActual);
 	}
-
+	
+	/**
+	 * Crea una nova entrada a grafs amb el nou graf de nom nomGraf i una altra a controladors (els dos seran buits).
+	 * El graf actual i l'id actual passen a ser els d'aquest graf.
+	 * @param nomGraf es el nom del nou graf.
+	 */
+	public void afegirGraf(String nomGraf) {
+		Graf g = new Graf();
+		grafs.put(nomGraf, g);
+		controladors.put(nomGraf, new HeteSim(g));
+		idActual = nomGraf;
+		graf = g;
+	}
+	
 	/**
 	 * Importa i crea un graf que tindrà el nom donat mitjançant els fitxers
 	 * del directori que es passen com a paràmetre (autors, papers, conferències, 
@@ -59,6 +72,7 @@ public class ControladorMultigraf extends ControladorGraf {
 		super.importar(directori);
 		grafs.put(nomGraf, graf);
 		idActual = nomGraf;
+		controladors.put(nomGraf, new HeteSim(graf));
 	}
 	
 	/**
