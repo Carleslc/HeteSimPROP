@@ -62,13 +62,14 @@ public class DriverPersistenciaPropi extends Driver {
 					resultats = ControladorPersistenciaPropi.carregarResultats(filesystem_path2);
 					println("Resultats carregats correctament");
 				case 4:
-					System.out.println(resultats);
+					print(resultats);
 					break;
 				default:
 					print("Introdueix una opcio de la 1 a la 4");
 				}
 			} catch(Exception e) {
-				e.printStackTrace();
+				println("\nHi ha hagut un error:");
+				print(e);
 			}
 		} while (opcio != 5);
 	}

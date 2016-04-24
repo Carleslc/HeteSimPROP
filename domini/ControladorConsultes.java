@@ -164,18 +164,15 @@ public class ControladorConsultes {
 	}
 	
 	void exportarResultat(String filesystem_path) throws IOException {
-		ControladorExportacions c = new ControladorExportacions(controladorPaths);
-		c.exportar(filesystem_path, ultimaConsulta, resultats.get(ultimaConsulta));
+		ControladorExportacio.exportar(filesystem_path, ultimaConsulta, resultats.get(ultimaConsulta));
 	}
 	
 	void guardarResultats() throws IOException {
-		ControladorPersistenciaPropi c = new ControladorPersistenciaPropi();
-		c.guardarResultats(DEFAULT_PATH_RESULTATS, resultats);
+		ControladorPersistenciaPropi.guardarResultats(DEFAULT_PATH_RESULTATS, resultats);
 	}
 	
 	void carregarResultats() throws IOException {
-		ControladorPersistenciaPropi c = new ControladorPersistenciaPropi();
-		resultats = c.carregarResultats(DEFAULT_PATH_RESULTATS);
+		resultats = ControladorPersistenciaPropi.carregarResultats(DEFAULT_PATH_RESULTATS);
 	}
 	
 	private Node copia(Node n, String tipus) {

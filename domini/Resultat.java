@@ -1,5 +1,4 @@
-package resultat;
-
+package domini;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,13 +9,16 @@ import java.util.List;
  * 
  * @author Arnau Badia Sampera
  *
- *La classe Resultat només és una classe que conté informació sobre un resultat però que no realitza
- *totes les comprovacions sobre la coherència d'aquests. És a dir, un objecte de la classe por contenir
- *informació incoherent. L'única propietat que sempre es manté és que la llista serà decreixent segons la 
- *rellevància de cada tupla. Si per exemple es canvia el threshold, no es reajustaran els resultats al nou
- *threshold, o si es canvia la rellevància d'una tupla, no es comprovarà que aquesta s'ajusti al threshold.
+ * La classe Resultat nomes es una classe que conte informacio sobre un resultat pero que no realitza
+ * totes les comprovacions sobre la coherencia d'aquests. E�s a dir, un objecte de la classe por contenir
+ * informacio incoherent. L'unica propietat que sempre es mante es que la llista sera decreixent segons la 
+ * rellevancia de cada tupla. Si per exemple es canvia el threshold, no es reajustaran els resultats al nou
+ * threshold, o si es canvia la rellevancia d'una tupla, no es comprovara que aquesta s'ajusti al threshold.
  */
 public class Resultat implements Serializable {
+	
+	private static final long serialVersionUID = 6293912609608481009L;
+	
 	private Node dada;
 	private ControladorPaths controladorPaths;
 	private String nomPath;
@@ -42,8 +44,8 @@ public class Resultat implements Serializable {
 	 * @param Dada sobre la que s'ha fet la consulta
 	 * @param Path usat en la consulta
 	 * @param nom del Graf sobre el que es fa la consulta
-	 * @param llista de parelles de rellevància i nodes ordenada decreixentment per rellevància, els 
-	 * nodes són còpies dels nodes originals
+	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
+	 * nodes son copies dels nodes originals
 	 */
 	public Resultat(Node dada, String nomPath, ControladorPaths controladorPaths, String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
 		this.dada = dada;
@@ -60,8 +62,8 @@ public class Resultat implements Serializable {
 	 * @param Dada sobre la que s'ha fet la consulta
 	 * @param Path usat en la consulta
 	 * @param nom del Graf sobre el que es fa la consulta
-	 * @param llista de parelles de rellevància i nodes ordenada decreixentment per rellevància, els 
-	 * nodes són còpies dels nodes originals
+	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
+	 * nodes son copies dels nodes originals
 	 * @param threshold usat en la consulta
 	 */
 	
@@ -156,26 +158,26 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Retorna el total de tuples de dada i rellevància que conté el resultat.
-	 * @return el total de tuples de dada i rellevància que conté el resultat.
+	 * Retorna el total de tuples de dada i rellevancia que conte el resultat.
+	 * @return el total de tuples de dada i rellevancia que conte el resultat.
 	 */
 	public int size() {
 		return resultats.size();
 	}
 	
 	/**
-	 * Retorna si el resultat no conté cap tupla de dada i rellevància.
-	 * @return si el resultat no conté cap tupla de dada i rellevància.
+	 * Retorna si el resultat no conte cap tupla de dada i rellevancia.
+	 * @return si el resultat no conte cap tupla de dada i rellevancia.
 	 */
 	public boolean isEmpty() {
 		return resultats.isEmpty();
 	}
 	
 	/**
-	 * Retorna el resultat en una posició. La primera posició és la 0.
-	 * @param index que indica la posició de la tupla a la llista.
+	 * Retorna el resultat en una posicio. La primera posicio es la 0.
+	 * @param index que indica la posicio de la tupla a la llista.
 	 * @return la tupla que hi ha a l'index indicat.
-	 * @throws IndexOutOfBoundsException si l'index està fora de rang.
+	 * @throws IndexOutOfBoundsException si l'index esta fora de rang.
 	 */
 	public Pair<Double, Node> get(int index) throws IndexOutOfBoundsException {
 		return resultats.get(index);
@@ -183,12 +185,12 @@ public class Resultat implements Serializable {
 
 	
 	/**
-	 * Canvia el resultat d’una posició. Retorna si index < size(). 
-	 * S’ha de tenir en compte que després d’aquesta crida si el resultat
-	 * és true llavors és probable que aquesta posició hagi canviat degut 
-	 * a l’ordre dels resultats.
-	 * @param index del paràmtetre que es vol substituir
-	 * @param resultat pel que es vol substituir el resultat contigut a l'index del paràmetre
+	 * Canvia el resultat d'��una posicio. Retorna si index < size(). 
+	 * S'��ha de tenir en compte que despres d'��aquesta crida si el resultat
+	 * es true llavors es probable que aquesta posicio hagi canviat degut 
+	 * a l'��ordre dels resultats.
+	 * @param index del paramtetre que es vol substituir
+	 * @param resultat pel que es vol substituir el resultat contigut a l'index del parametre
 	 * @return si index < size()
 	 */
 	public boolean set(int index, Pair<Double, Node> resultat) {
@@ -201,14 +203,14 @@ public class Resultat implements Serializable {
 	}
 
 	/**
-	 * Esborra totes les tuples de dada i rellevància de resultats.
+	 * Esborra totes les tuples de dada i rellevancia de resultats.
 	 */
-	void clear() {
+	public void clear() {
 		resultats.clear();
 	}
 	
 	/**
-	 * Afegeix un resultat, i el col·loca de forma ordenada a la llista
+	 * Afegeix un resultat, i el col'�loca de forma ordenada a la llista
 	 * @param p es la tupla que es vol afegir.
 	 */
 	
@@ -219,9 +221,9 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Esborra un resultat. Retorna si l'índex es troba dins del rang correcte.
+	 * Esborra un resultat. Retorna si l'index es troba dins del rang correcte.
 	 * @param index de la tupla que es vol esborrar.
-	 * @return si l'índex es troba dins del rang correcte.
+	 * @return si l'index es troba dins del rang correcte.
 	 */
 	public boolean esborrar(int index) {
 		if (index < resultats.size()) {
@@ -231,9 +233,9 @@ public class Resultat implements Serializable {
 		return false;
 	}
 	/**
-	 * Canvia el resultat d’una posició. Retorna si index < size(). 
-	 * S’ha de tenir en compte que després d’aquesta crida si el resultat és true 
-	 * llavors és probable que aquesta posició hagi canviat degut a l’ordre dels resultats.
+	 * Canvia el resultat d'��una posicio. Retorna si index < size(). 
+	 * S'��ha de tenir en compte que despres d'��aquesta crida si el resultat es true 
+	 * llavors es probable que aquesta posicio hagi canviat degut a l'��ordre dels resultats.
 	 * @param index de la tupla que es vol modificar.
 	 * @param rellevancia per la qual es vol substituir l'antiga.
 	 * @return si index < size(). 
@@ -262,7 +264,7 @@ public class Resultat implements Serializable {
 	
 	/**
 	 * Elimina tots els resultats excepte els n primers.
-	 * @param n n es el nombre de resultats amb més rellevància que s'han de conservar
+	 * @param n n es el nombre de resultats amb mes rellevancia que s'han de conservar
 	 */
 	public void filtrarElsPrimers(int n) {
 		while (n < resultats.size()) {
@@ -271,8 +273,8 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Elimina tots els resultats excepte els n últims.
-	 * @param n es el nombre de resultats amb menys rellevància que s'han de conservar
+	 * Elimina tots els resultats excepte els n ultims.
+	 * @param n es el nombre de resultats amb menys rellevancia que s'han de conservar
 	 */
 	public void filtrarElsUltims(int n) {
 		while (n < resultats.size()) {
@@ -281,7 +283,7 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Elimina tots els resultats menys els resultats que tenen el node amb l’etiqueta label.
+	 * Elimina tots els resultats menys els resultats que tenen el node amb l'��etiqueta label.
 	 * @param label de les tuples del resultat que no s'han d'eliminar
 	 */
 	
@@ -294,9 +296,9 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Elimina tots els resultats menys els que tenen una rellevància entre min i max, ambdós incluïts.
-	 * @param min es el mínim de rellevància
-	 * @param max es el màxim de rellevància
+	 * Elimina tots els resultats menys els que tenen una rellevancia entre min i max, ambdos incluits.
+	 * @param min es el minim de rellevancia
+	 * @param max es el maxim de rellevancia
 	 */
 	
 	public void filtrarPerRellevancia(double min, double max) {
@@ -316,7 +318,9 @@ public class Resultat implements Serializable {
 		String s = "RESULTATS:\n\n";
 		s = s + "Dada : " + dada.getNom() + "\n";
 		s = s + "Path : " + nomPath + "\n";
-		s = s + "Descripció del path: " + controladorPaths.consultarDefinicio(nomPath) + "\n";
+		String def = controladorPaths.consultarDefinicio(nomPath);
+		if (def != null)
+			s = s + "Descripcio del path: " + def + "\n";
 		s = s + "Nom del graf : " + nomGraf + "\n";
 		if (threshold != null) {
 			threshold.toString();
@@ -329,8 +333,5 @@ public class Resultat implements Serializable {
 		}
 		return s;
 	}
-	
-	
-
 
 }

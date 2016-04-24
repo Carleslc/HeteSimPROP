@@ -1,4 +1,4 @@
-package controladormultigraf;
+package domini;
 
 /**
  * @author Arnau Badia Sampera
@@ -27,6 +27,14 @@ public class ControladorMultigraf extends ControladorGraf {
 		grafs = new HashMap<>();
 		controladors = new HashMap<>();
 		idActual = "";
+	}
+
+	/**
+	 * Consulta l'ID del graf actual.
+	 * @return l'ID del graf actual.
+	 */
+	public String getIdActual() {
+		return idActual;
 	}
 	
 	/**
@@ -95,7 +103,8 @@ public class ControladorMultigraf extends ControladorGraf {
 	 * @throws IOException si no es pot llegir algun fitxer
 	 * @throws FileNotFoundException si no es troba algun fitxer
 	 */
-	@Override public void carregar(String directori) throws IOException {
+	@Override
+	public void carregar(String directori) throws IOException {
 		File f = new File(directori);
 		if (f.isDirectory() && f.exists()) {
 			File[] fitxers = f.listFiles();
@@ -118,7 +127,8 @@ public class ControladorMultigraf extends ControladorGraf {
 	 * Si algun fitxer existia es sobreescriu.
 	 * @throws IOException en cas de no poder-se escriure algun fitxer.
 	 */
-	@Override public void guardar(String directori) throws IOException {
+	@Override
+	public void guardar(String directori) throws IOException {
 		for (String key: grafs.keySet()) {
 			ControladorPersistencia.guardarGraf(directori + "/" + "graf_"+ key + ".dat",grafs.get(key));
 			controladors.get(key).guardarClausures(directori + "/" + "clausures_" + key + ".dat");
