@@ -16,7 +16,7 @@ import domini.Resultat;
  *
  */
 
-public class ControladorPersistenciaPropi extends ControladorPersistencia {
+public abstract class ControladorPersistenciaPropi extends ControladorPersistencia {
 	
 	
 	/**

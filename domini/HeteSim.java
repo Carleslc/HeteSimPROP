@@ -401,9 +401,8 @@ public class HeteSim implements Serializable {
 		int cols = m.getColumnes();
 		Matriu<Double> res = new Matriu<Double>(files, cols, 0d);
 		for (int i = 0; i < files; ++i) {
-			for (int j = 0; j < cols; ++j) {
-				res.set(i, j, (double) m.get(i, j));
-			}
+			for (int j = 0; j < cols; ++j)
+				res.set(i, j, Double.valueOf(m.get(i, j).doubleValue()));
 		}
 		return res;
 	}
