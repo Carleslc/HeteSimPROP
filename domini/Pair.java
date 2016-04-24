@@ -1,7 +1,7 @@
 package domini;
 
-import java.io.Serializable;
 import java.util.Map.Entry;
+import java.io.Serializable;
 
 /**
  * Classe genèrica amb dos paràmetres que implementa l'interfície Entry<K, V>.
@@ -10,8 +10,7 @@ import java.util.Map.Entry;
  * @author Carla Claverol
  */
 
-public class Pair<K extends Comparable<K> & Serializable, V extends Serializable>
-			implements Entry<K, V>, Comparable< Pair<K,V> >, Serializable {
+public class Pair<K extends Comparable<K> & Serializable, V extends Serializable> implements Entry<K, V>, Comparable<Pair<K,V>>, Serializable {
 	
 	private static final long serialVersionUID = -1708108678640588754L;
 	
@@ -70,12 +69,12 @@ public class Pair<K extends Comparable<K> & Serializable, V extends Serializable
 	/**
 	 * Comparador de la classe. Compara només segons les claus.
 	 * @param p. Pair amb el que comparem el nostre pair.
-	 * @return Retorna 0 si els dos pairs són iguals, un valor positiu si el pair original
-	 * 			és més gran que p o un valor negatiu si el pair original és més petit que p
+	 * @return Retorna 0 si els dos pairs són iguals, un valor negatiu si el pair original
+	 * 			és més gran que p o un valor positiu si el pair original és més petit que p
 	 */
 	@Override
 	public int compareTo(Pair<K, V> p) {
-		return key.compareTo(p.getKey());
+		return -key.compareTo(p.getKey());
 	}
 	
 	/**
