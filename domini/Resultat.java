@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class Resultat implements Serializable {
 	private Node dada;
+	private ControladorPaths controladorPaths;
 	private String nomPath;
 	private String nomGraf;
 	private ArrayList<Pair<Double, Node>> resultats;
@@ -44,9 +45,10 @@ public class Resultat implements Serializable {
 	 * @param llista de parelles de rellevància i nodes ordenada decreixentment per rellevància, els 
 	 * nodes són còpies dels nodes originals
 	 */
-	public Resultat(Node dada, String nomPath, String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
+	public Resultat(Node dada, String nomPath, ControladorPaths controladorPaths, String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
 		this.dada = dada;
 		this.nomPath = nomPath;
+		this.controladorPaths = controladorPaths;
 		this.nomGraf = nomGraf;
 		this.threshold = null;
 		resultats.sort(c);
@@ -63,9 +65,10 @@ public class Resultat implements Serializable {
 	 * @param threshold usat en la consulta
 	 */
 	
-	public Resultat(Node dada, String nomPath, String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold) {
+	public Resultat(Node dada, String nomPath, ControladorPaths controladorPaths, String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold) {
 		this.dada = dada;
 		this.nomPath = nomPath;
+		this.controladorPaths = controladorPaths;
 		this.nomGraf = nomGraf;
 		resultats.sort(c);
 		this.resultats = resultats;
@@ -313,6 +316,7 @@ public class Resultat implements Serializable {
 		String s = "RESULTATS:\n\n";
 		s = s + "Dada : " + dada.getNom() + "\n";
 		s = s + "Path : " + nomPath + "\n";
+		s = s + "Descripció del path: " + controladorPaths.consultarDefinicio(nomPath) + "\n";
 		s = s + "Nom del graf : " + nomGraf + "\n";
 		if (threshold != null) {
 			threshold.toString();
