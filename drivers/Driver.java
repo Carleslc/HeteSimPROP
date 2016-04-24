@@ -21,9 +21,10 @@ public abstract class Driver {
 		int i = 0;
 		try {
 			i = in.nextInt();
-			in.nextLine();
 		} catch (InputMismatchException e) {
-			System.out.println("Error: S'ha demanat un enter.");
+			System.out.println("\nError: S'ha demanat un enter.");
+		} finally {
+			in.nextLine();
 		}
 		return i;
 	}
@@ -36,9 +37,10 @@ public abstract class Driver {
 		double d = 0d;
 		try {
 			d = in.nextInt();
-			in.nextLine();
 		} catch (InputMismatchException e) {
-			System.out.println("Error: S'ha demanat un double.");
+			System.out.println("\nError: S'ha demanat un double.");
+		} finally {
+			in.nextLine();
 		}
 		return d;
 	}
@@ -51,9 +53,10 @@ public abstract class Driver {
 		boolean b = false;
 		try {
 			b = in.nextBoolean();
-			in.nextLine();
 		} catch (InputMismatchException e) {
-			System.out.println("Error: S'ha demanat un boolean.");
+			System.out.println("\nError: S'ha demanat un boolean.");
+		} finally {
+			in.nextLine();
 		}
 		return b;
 	}
@@ -155,6 +158,17 @@ public abstract class Driver {
 	public static void println(Map<?, ?> map) {
 		print(map);
 		println();
+	}
+	
+	/**
+	 * Mostra un error.
+	 * @param t el error/excepcio a mostrar.
+	 */
+	public static void print(Throwable t) {
+		println(t);
+		println("StackTrace:");
+		for (StackTraceElement ste : t.getStackTrace())
+			print(ste);
 	}
 	
 	/**

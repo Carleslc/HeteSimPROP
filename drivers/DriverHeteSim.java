@@ -1,7 +1,7 @@
 package drivers;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map.Entry;
 
@@ -18,42 +18,24 @@ import domini.Matriu;
 public class DriverHeteSim extends Driver {
 
 	public static void main(String[] args) {
-		HeteSim hs = null;
+		HeteSim hs = crearHeteSim();
 		
 		int opcio;
-		
 		do {
 			print("Escolleix una opcio:\n"
-				+ "1. Crear HeteSim\n"
-				+ "2. Test per defecte (de l'article)\n"
-				+ "3. Sortir del Driver");
-			
-			opcio = nextInt();
-			
-			if (opcio == 1)
-				hs = crearHeteSim();
-			else if (opcio == 2)
-				defaultTest();
-			else if (opcio == 3)
-				return;
-			println();
-		} while (opcio != 1);
-		
-		do {
-			print("Escolleix una opcio:\n"
-					+ "1. Crear HeteSim\n"
-					+ "2. Test per defecte (de l'article)\n"
+					+ "1. Crear nou HeteSim\n"
+					+ "2. Joc de proves per defecte (de l'article)\n"
 					+ "3. getGraf\n"
 					+ "4. clausura(path)\n"
-					+ "5. clausura(left, right, path)\n"
-					+ "6. heteSim(node, node, path)\n"
-					+ "7. heteSimAmbIdentificadors(node, path)\n"
-					+ "8. heteSimAmbNoms(node, path)\n"
-					+ "9. guardarClausures(system_path)\n"
-					+ "10. carregarClausures(system_path)\n"
-					+ "11. Afegir Autors\n"
-					+ "12. Afegir Papers\n"
-					+ "13. Afegir Adjacencia Papers-Autors\n"
+					+ "5. heteSim(node, node, path)\n"
+					+ "6. heteSimAmbIdentificadors(node, path)\n"
+					+ "7. heteSimAmbNoms(node, path)\n"
+					+ "8. guardarClausures(system_path)\n"
+					+ "9. carregarClausures(system_path)\n"
+					+ "10. Afegir Autors\n"
+					+ "11. Afegir Papers\n"
+					+ "12. Afegir Adjacencia Paper-Autor\n"
+					+ "13. Eliminar Adjacencia Paper-Autor\n"
 					+ "14. Sortir del driver\n"
 					+ "Opcio = ");
 			
@@ -63,86 +45,128 @@ public class DriverHeteSim extends Driver {
 			
 			try {
 				switch (opcio) {
-					case 1: {
+					case 1:
 						hs = crearHeteSim();
 						break;
-					}
 					case 2:
-						defaultTest();
+						jocDeProves();
 						break;
 					case 3:
-						println(hs.getGraf());
+						Graf g = hs.getGraf();
+						println("Matriu adjacencia Paper-Autor");
+						print(g.consultarMatriuPaperAutor());
 						break;
 					case 4: {
-						print("Path: (només amb Autors i Papers): ");
-						System.out.println((hs.clausura(nextWord().toUpperCase())));
+						print("Path: (nomes amb Autors i Papers): ");
+						try {
+							println(hs.clausura(nextWord().toUpperCase()));
+						} catch (Exception e) {
+							println("\nPath incorrecte.");
+						}
 						break;
 					}
 					case 5: {
-						// TODO
-						break;
-					}
-					case 6: {
-						println("Entre quin Paper y Autor vols fer el càlcul? ");
+						println("Entre quin Paper y Autor vols fer el calcul?");
 						print("Primer Node (Paper o Autor): ");
 						int paper = nextInt();
-						print("Últim Node (Paper o Autor): ");
+						print("Ultim Node (Paper o Autor): ");
 						int autor = nextInt();
 						print("Introdueix el path: ");
 						String path = nextWord();
-						System.out.println(hetesimNodes(paper, autor, path.toUpperCase(), hs));
+						try {
+							println("Rellevancia: " + String.format(Locale.UK, "%.2f", hetesimNodes(paper, autor, path.toUpperCase(), hs)));
+						} catch (IllegalArgumentException e) {
+							println("\nAquests nodes no existeixen.");
+						}
 						break;
 					}
-					case 7:
-						println("De quin Node (Paper o Autor) vols obtenir les rellevàncies? ");
+					case 6: {
+						println("De quin Node (Paper o Autor) vols obtenir les rellevancies? ");
 						print("Introdueix el primer Node (Paper o Autor");
 						int node = nextInt();
 						print("Introdueix el path: ");
 						String path = nextWord();
-						System.out.println(hetesimid(node, path.toUpperCase(), hs));
+						try {
+							printAmbID(heteSimId(node, path.toUpperCase(), hs), node, path);
+						} catch (IllegalArgumentException e) {
+							println("\nAquests nodes no existeixen.");
+						}
 						break;
-					case 8:
-						println("De quin Node (Paper o Autor) vols obtenir les rellevàncies? ");
+					}
+					case 7: {
+						println("De quin Node (Paper o Autor) vols obtenir les rellevancies? ");
 						print("Introdueix el primer Node (Paper o Autor)");
-						int node2 = nextInt();
+						int node = nextInt();
 						print("Introdueix el path: ");
-						String path2 = nextWord();
-						System.out.println(hetesimnom(node2, path2.toUpperCase(), hs));
+						String path = nextWord();
+						try {
+							printAmbNom(heteSimNom(node, path.toUpperCase(), hs), node, path);
+						} catch (IllegalArgumentException e) {
+							println("\nAquests nodes no existeixen.");
+						}
 						break;
-					case 9:
+					}
+					case 8: {
 						print("Escriu el path i fitxer on guardarles: ");
-						hs.guardarClausures(nextLine());
+						String system_path = nextLine();
+						hs.guardarClausures(system_path);
+						File f = new File(system_path);
+						f.deleteOnExit();
+						println("El fitxer " + f.getAbsolutePath() + " sera eliminat al sortir del driver.");
 						break;
-					case 10:
+					}
+					case 9: {
 						print("Escriu el path i fitxer on estan guardades: ");
 						hs.carregarClausures(nextLine());
+						println("Clausures carregades correctament.");
 						break;
-					case 11:
+					}
+					case 10: {
 						print("Quants autors vols afegir?: ");
 						int autors = nextInt();
 						afegirAutors(autors, hs);
 						break;
-					case 12:
+					}
+					case 11: {
 						print("Quants Papers vols afegir?: ");
 						int papers = nextInt();
 						afegirPapers(papers, hs);
 						break;
-					case 13:
+					}
+					case 12: {
 						println("Entre quins Papers i Autors vols afegir una adjacencia? ");
 						print("Paper: ");
 						int paper = nextInt();
 						print("Autor: ");
 						int autor = nextInt();
-						afegirAdjacencia(paper, autor, hs);
+						try {
+							afegirAdjacencia(paper, autor, hs);
+						} catch (Exception e) {
+							println("\nAquests nodes no existeixen.");
+						}
 						break;
-					case 14: 
+					}
+					case 13: {
+						println("Entre quins Papers i Autors vols eliminar una adjacencia? ");
+						print("Paper: ");
+						int paper = nextInt();
+						print("Autor: ");
+						int autor = nextInt();
+						try {
+							eliminarAdjacencia(paper, autor, hs);
+						} catch (Exception e) {
+							println("\nAquests nodes no existeixen.");
+						}
+						break;
+					}
+					case 14:
 						break;
 					default:
 						println("Introdueix una opcio de la 1 a la 14.");
 				}
 			} catch (Exception e) {
-				println("Hi ha hagut un error: " + e + "\n" +
-						Arrays.toString(e.getStackTrace()));
+				println("\nHi ha hagut un error:");
+				print(e);
 			}
 			
 			println();
@@ -159,16 +183,24 @@ public class DriverHeteSim extends Driver {
 	
 	private static void afegirAutors(int autors, HeteSim hs) {
 		Graf g = hs.getGraf();
-		for (int i = 0; i < autors; ++i) {
-			g.afegeix(new Autor(i, "A"+String.valueOf(i)));
-		}
+		for (int i = 0; i < autors; ++i)
+			g.afegeix(new Autor(i, "A" + String.valueOf(i)));
+		int size = g.consultaMidaAutor();
+		if (size > 0)
+			println("Autors actuals: ID 0 - " + (size - 1));
+		else
+			println("No hi ha cap autor afegit.");
 	}
 	
 	private static void afegirPapers(int papers, HeteSim hs) {
 		Graf g = hs.getGraf();
-		for (int i = 0; i < papers; ++i) {
-			g.afegeix(new Paper(i, "P"+String.valueOf(i)));
-		}
+		for (int i = 0; i < papers; ++i)
+			g.afegeix(new Paper(i, "P" + String.valueOf(i)));
+		int size = g.consultaMidaPaper();
+		if (size > 0)
+			println("Papers actuals: ID 0 - " + (size - 1));
+		else
+			println("No hi ha cap paper afegit.");
 	}
 	
 	private static void afegirAdjacencia(int paper, int autor, HeteSim hs) {
@@ -176,7 +208,12 @@ public class DriverHeteSim extends Driver {
 		g.afegirAdjacencia(g.consultarPaper(paper), g.consultarAutor(autor));
 	}
 	
-	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) {
+	private static void eliminarAdjacencia(int paper, int autor, HeteSim hs) {
+		Graf g = hs.getGraf();
+		g.eliminarAdjacencia(g.consultarPaper(paper), g.consultarAutor(autor));
+	}
+	
+	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) throws IllegalArgumentException {
 		if (path.startsWith("P") && path.endsWith("A"))
 			return hs.heteSim(hs.getGraf().consultarPaper(paper), hs.getGraf().consultarAutor(autor), path);
 		else if (path.startsWith("P") && path.endsWith("P"))
@@ -188,31 +225,27 @@ public class DriverHeteSim extends Driver {
 		return 0.0;
 	}
 	
-	private static ArrayList<Entry<Double, Integer>> hetesimid (int node, String path, HeteSim hs) {
-		if (path.startsWith("A")) {
+	private static ArrayList<Entry<Double, Integer>> heteSimId(int node, String path, HeteSim hs) throws IllegalArgumentException {
+		if (path.startsWith("A"))
 			return hs.heteSimAmbIdentificadors(hs.getGraf().consultarAutor(node), path);
-		}
-		else {
+		else
 			return hs.heteSimAmbIdentificadors(hs.getGraf().consultarPaper(node), path);
-		}
 	}
 	
-	private static ArrayList<Entry<Double, String>> hetesimnom (int node, String path, HeteSim hs) {
-		if (path.startsWith("A")) {
+	private static ArrayList<Entry<Double, String>> heteSimNom(int node, String path, HeteSim hs) throws IllegalArgumentException {
+		if (path.startsWith("A"))
 			return hs.heteSimAmbNoms(hs.getGraf().consultarAutor(node), path);
-		}
-		else {
+		else
 			return hs.heteSimAmbNoms(hs.getGraf().consultarPaper(node), path);
-		}
 	}
 
-	private static void defaultTest() {
+	private static void jocDeProves() {
 		String path = "PA";
 		Graf g = new Graf();
 		for (int i = 0; i < 3; ++i)
-			g.afegeix(new Paper(i, "Paper" + i));
+			g.afegeix(new Paper(i, "P" + i));
 		for (int i = 0; i < 4; ++i)
-			g.afegeix(new Autor(i, "Autor" + i));
+			g.afegeix(new Autor(i, "A" + i));
 		
 		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(0));
 		g.afegirAdjacencia(g.consultarPaper(0), g.consultarAutor(1));
@@ -223,7 +256,7 @@ public class DriverHeteSim extends Driver {
 		
 		HeteSim hs = new HeteSim(g);
 				
-		println("Mitjançant llistes");
+		println("Mitjan�ant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaAutor(); ++j)
 				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + ", ");
@@ -231,35 +264,39 @@ public class DriverHeteSim extends Driver {
 		}
 		
 		println("\nHeteSim amb ID");
-		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
-			ArrayList<Entry<Double, Integer>> m = hs.heteSimAmbIdentificadors(g.consultarPaper(i), path);
-			print(getTipusNode(path, true) + " " + i + " amb " + getTipusNode(path, false) + " [");
-			for (int j = 0; j < m.size(); ++j) {
-				Entry<Double, Integer> e = m.get(j);
-				print(e.getValue() + ": " + String.format(Locale.UK, "%.2f", e.getKey()) + (j < m.size() - 1 ? ", " : ""));
-			}
-			println("]");
-		}
+		for (int i = 0; i < g.consultaMidaPaper(); ++i)
+			printAmbID(hs.heteSimAmbIdentificadors(g.consultarPaper(i), path), i, path);
 		
-		println("\nMitjançant clausura");
+		println("\nMitjan�ant clausura");
 		print(hs.clausura(path));
 		
 		println("\nHeteSim amb Noms");
-		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
-			ArrayList<Entry<Double, String>> m = hs.heteSimAmbNoms(g.consultarPaper(i), path);
-			print(getTipusNode(path, true) + " " + i + " amb " + getTipusNode(path, false) + " [");
-			for (int j = 0; j < m.size(); ++j) {
-				Entry<Double, String> e = m.get(j);
-				print(e.getValue() + ": " + String.format(Locale.UK, "%.2f", e.getKey()) + (j < m.size() - 1 ? ", " : ""));
-			}
-			println("]");
-		}
+		for (int i = 0; i < g.consultaMidaPaper(); ++i)
+			printAmbNom(hs.heteSimAmbNoms(g.consultarPaper(i), path), i, path);
 	}
 
-	private static void print(Matriu<Double> m) {
+	private static void printAmbID(ArrayList<Entry<Double, Integer>> a, int id, String path) {
+		print(getTipusNode(path, true) + " " + id + " amb " + getTipusNode(path, false) + " [");
+		for (int j = 0; j < a.size(); ++j) {
+			Entry<Double, Integer> e = a.get(j);
+			print(e.getValue() + ": " + String.format(Locale.UK, "%.2f", e.getKey()) + (j < a.size() - 1 ? ", " : ""));
+		}
+		println("]");
+	}
+	
+	private static void printAmbNom(ArrayList<Entry<Double, String>> a, int id, String path) {
+		print(getTipusNode(path, true) + " " + id + " amb " + getTipusNode(path, false) + " [");
+		for (int j = 0; j < a.size(); ++j) {
+			Entry<Double, String> e = a.get(j);
+			print(e.getValue() + ": " + String.format(Locale.UK, "%.2f", e.getKey()) + (j < a.size() - 1 ? ", " : ""));
+		}
+		println("]");
+	}
+	
+	private static void print(Matriu<? extends Number> m) {
 		for (int i = 0; i < m.getFiles(); ++i) {
 			for (int j = 0; j < m.getColumnes(); ++j)
-				print(String.format(Locale.UK, "%.2f", m.get(i,  j)) + (j < m.getColumnes() - 1 ? ", " : ""));
+				print(String.format(Locale.UK, "%.2f", m.get(i,  j).doubleValue()) + (j < m.getColumnes() - 1 ? ", " : ""));
 			println();
 		}
 	}

@@ -38,6 +38,10 @@ public class Graf {
 	public void afegirAdjacencia(Paper p, Autor a) {
 		adjPaperAutors.set(p.getId(), a.getId(), (byte)1);
 	}
+	
+	public void eliminarAdjacencia(Paper p, Autor a) {
+		adjPaperAutors.set(p.getId(), a.getId(), (byte)0);
+	}
 
 	public void afegeix(Paper paper) {
 		adjPaperAutors.afegirFila((byte)0);
