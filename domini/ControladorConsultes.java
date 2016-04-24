@@ -38,9 +38,13 @@ public class ControladorConsultes {
 		return resultats.get(data).toString();
 	}
 	
+	public String consultarTot() {
+		return resultats.toString();
+	}
+	
 	public String consulta(String path, int idNode) throws IllegalArgumentException {
 		Node n = getNode(path, 0, idNode);
-		if (n == null) throw new IllegalArgumentException ("El node no existeix.");
+		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 		
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, (double)0);
 		
@@ -53,7 +57,7 @@ public class ControladorConsultes {
 	
 	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2, String thresholdPath) throws IllegalArgumentException {
 		Node n = getNode(path, 0, idNode);
-		if (n == null) throw new IllegalArgumentException ("El node no existeix.");
+		if (n .getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 		
 		Threshold t = createThreshold(idNodeThreshold1, idNodeThreshold2, thresholdPath);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, t.getRellevancia());
@@ -121,7 +125,7 @@ public class ControladorConsultes {
 		
 		String path = resultats.get(ultimaConsulta).getPath();
 		Node n = getNode(path, path.length()-1, idNode);
-		if (n == null) return false;
+		if (n.getId() == -1) return false;
 		
 		r.setDada(index, n);
 		return true;
@@ -207,7 +211,7 @@ public class ControladorConsultes {
 		ArrayList<Pair<Double, Node>> res = new ArrayList<>();
 		
 		for(Entry<Double, Integer> reshs : resultatshs) {
-			if (reshs.getKey() < filtre) break;
+			if (reshs.getKey() < filtre || reshs.getKey() == 0.) break;
 			
 			Node nodeResultat = getNode(path, path.length()-1, reshs.getValue());
 			if (path.charAt(path.length()-1) == 'A') nodeResultat = copia(nodeResultat, "Autor");
