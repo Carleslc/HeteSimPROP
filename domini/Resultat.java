@@ -12,7 +12,7 @@ import java.util.List;
  * @author Arnau Badia Sampera
  *
  * La classe Resultat nomes es una classe que conte informacio sobre un resultat pero que no realitza
- * totes les comprovacions sobre la coherencia d'aquests. E‰s a dir, un objecte de la classe por contenir
+ * totes les comprovacions sobre la coherencia d'aquests. Es a dir, un objecte de la classe por contenir
  * informacio incoherent. L'unica propietat que sempre es mante es que la llista sera decreixent segons la 
  * rellevancia de cada tupla. Si per exemple es canvia el threshold, no es reajustaran els resultats al nou
  * threshold, o si es canvia la rellevancia d'una tupla, no es comprovara que aquesta s'ajusti al threshold.
@@ -28,17 +28,6 @@ public class Resultat implements Serializable {
 	private ArrayList<Pair<Double, Node>> resultats;
 	private Threshold threshold;
 	
-	/**
-	 * Comparador de pairs de forma decreixent
-	 */
-	Comparator<Pair<Double, Node>> c = new Comparator<Pair<Double,Node>>() {
-	    @Override
-	    public int compare(final Pair<Double, Node> o1, Pair<Double, Node> o2) {
-			if (o1.getKey().doubleValue() > o2.getKey().doubleValue()) return -1;
-			if (o1.getKey().doubleValue() == o2.getKey().doubleValue()) return 0;
-			return 1;	    	
-	    }
-	};
 	
 	/** Constructor sense threshold, que ordena la llista resultats
 	 * @param Dada sobre la que s'ha fet la consulta
@@ -53,7 +42,7 @@ public class Resultat implements Serializable {
 		this.controladorPaths = controladorPaths;
 		this.nomGraf = nomGraf;
 		this.threshold = null;
-		resultats.sort(c);
+		Collections.sort(resultats);
 		this.resultats = resultats;
 	}
 	
@@ -72,7 +61,7 @@ public class Resultat implements Serializable {
 		this.nomPath = nomPath;
 		this.controladorPaths = controladorPaths;
 		this.nomGraf = nomGraf;
-		resultats.sort(c);
+		Collections.sort(resultats);
 		this.resultats = resultats;
 		this.threshold = threshold;
 	}
@@ -185,10 +174,10 @@ public class Resultat implements Serializable {
 
 	
 	/**
-	 * Canvia el resultat d'€™una posicio. Retorna si index < size(). 
-	 * S'€™ha de tenir en compte que despres d'€™aquesta crida si el resultat
+	 * Canvia el resultat d'una posicio. Retorna si index < size(). 
+	 * S'ha de tenir en compte que despres d'aquesta crida si el resultat
 	 * es true llavors es probable que aquesta posicio hagi canviat degut 
-	 * a l'€™ordre dels resultats.
+	 * a l'ordre dels resultats.
 	 * @param index del paramtetre que es vol substituir
 	 * @param resultat pel que es vol substituir el resultat contigut a l'index del parametre
 	 * @return si 0 <= index < size()
@@ -210,12 +199,12 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Afegeix un resultat, i el col'·loca de forma ordenada a la llista
+	 * Afegeix un resultat, i el col'loca de forma ordenada a la llista
 	 * @param p es la tupla que es vol afegir.
 	 */
 	
 	public void afegir(Pair<Double, Node> p) {
-		int pos = Collections.binarySearch(resultats,p,c);
+		int pos = Collections.binarySearch(resultats,p);
 		if (pos < 0) pos = -(pos) -1;
 		resultats.add(pos,p);
 	}
@@ -233,9 +222,9 @@ public class Resultat implements Serializable {
 		return false;
 	}
 	/**
-	 * Canvia el resultat d'€™una posicio. Retorna si index < size(). 
-	 * S'€™ha de tenir en compte que despres d'€™aquesta crida si el resultat es true 
-	 * llavors es probable que aquesta posicio hagi canviat degut a l'€™ordre dels resultats.
+	 * Canvia el resultat d'una posicio. Retorna si index < size(). 
+	 * S'ha de tenir en compte que despres d'aquesta crida si el resultat es true 
+	 * llavors es probable que aquesta posicio hagi canviat degut a l'ordre dels resultats.
 	 * @param index de la tupla que es vol modificar.
 	 * @param rellevancia per la qual es vol substituir l'antiga.
 	 * @return si 0 <= index < size() i la rellevancia es valida
@@ -286,7 +275,7 @@ public class Resultat implements Serializable {
 	}
 	
 	/**
-	 * Elimina tots els resultats menys els resultats que tenen el node amb l'€™etiqueta label.
+	 * Elimina tots els resultats menys els resultats que tenen el node amb l'etiqueta label.
 	 * @param label de les tuples del resultat que no s'han d'eliminar
 	 */
 	
@@ -336,5 +325,4 @@ public class Resultat implements Serializable {
 		}
 		return s;
 	}
-
 }
