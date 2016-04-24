@@ -48,7 +48,7 @@ public class ControladorConsultes {
 		
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, (double)0);
 		
-		Resultat r = new Resultat(n, path, controladorMultigraf.getNom(), res);
+		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res);
 		Date d = new Date();
 		resultats.put(d, r);
 		ultimaConsulta = d;
@@ -62,7 +62,7 @@ public class ControladorConsultes {
 		Threshold t = createThreshold(idNodeThreshold1, idNodeThreshold2, thresholdPath);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, t.getRellevancia());
 		
-		Resultat r = new Resultat(n, path, controladorMultigraf.getNom(), res, t);
+		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res, t);
 		Date d = new Date();
 		resultats.put(d, r);
 		ultimaConsulta = d;
@@ -211,16 +211,19 @@ public class ControladorConsultes {
 		ArrayList<Pair<Double, Node>> res = new ArrayList<>();
 		
 		for(Entry<Double, Integer> reshs : resultatshs) {
-			if (reshs.getKey() < filtre || reshs.getKey() == 0.) break;
+			if (reshs.getKey() < filtre || reshs.getKey() == 0) break;
 			
-			Node nodeResultat = getNode(path, path.length()-1, reshs.getValue());
-			if (path.charAt(path.length()-1) == 'A') nodeResultat = copia(nodeResultat, "Autor");
-			else if (path.charAt(path.length()-1) == 'C') nodeResultat = copia(nodeResultat, "Conferencia");
-			else if (path.charAt(path.length()-1) == 'T') nodeResultat = copia(nodeResultat, "Terme");
-			else if(path.charAt(path.length()-1) == 'P') nodeResultat = copia(nodeResultat, "Paper");
+			if (!Double.isNaN(reshs.getKey())) {
 			
-			Pair<Double, Node> p = new Pair<>(reshs.getKey(), nodeResultat);
-			res.add(p);
+				Node nodeResultat = getNode(path, path.length()-1, reshs.getValue());
+				if (path.charAt(path.length()-1) == 'A') nodeResultat = copia(nodeResultat, "Autor");
+				else if (path.charAt(path.length()-1) == 'C') nodeResultat = copia(nodeResultat, "Conferencia");
+				else if (path.charAt(path.length()-1) == 'T') nodeResultat = copia(nodeResultat, "Terme");
+				else if(path.charAt(path.length()-1) == 'P') nodeResultat = copia(nodeResultat, "Paper");
+				
+				Pair<Double, Node> p = new Pair<>(reshs.getKey(), nodeResultat);
+				res.add(p);
+			}
 		}
 		
 		return res;
