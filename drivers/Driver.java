@@ -169,6 +169,7 @@ public abstract class Driver {
 		println("StackTrace:");
 		for (StackTraceElement ste : t.getStackTrace())
 			print(ste);
+		println();
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package domini;
 
+import java.io.Serializable;
 import java.util.Map.Entry;
 
 /**
@@ -9,7 +10,10 @@ import java.util.Map.Entry;
  * @author Carla Claverol
  */
 
-public class Pair<K extends Comparable<K>, V> implements Entry<K, V>, Comparable< Pair<K,V> > {
+public class Pair<K extends Comparable<K> & Serializable, V extends Serializable>
+			implements Entry<K, V>, Comparable< Pair<K,V> >, Serializable {
+	
+	private static final long serialVersionUID = -1708108678640588754L;
 	
 	private K key;
 	private V value;
