@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import domini.Autor;
+import domini.ControladorGraf;
+import domini.ControladorPaths;
 import domini.Node;
 import domini.Pair;
 import domini.Resultat;
@@ -30,7 +32,7 @@ public class DriverExportacio extends Driver {
 					+ "1. Crear nou resultat sense tuples\n"
 					+ "2. Afegit tupla al resultat\n"
 					+ "3. Exportar resultat\n"
-					+ "4. Llegir fitxer\n"
+					+ "4. Llegir fitxer exportat\n"
 					+ "5. Sortir del driver\n"
 					+ "Opcio = ");
 
@@ -68,6 +70,7 @@ public class DriverExportacio extends Driver {
 				println("\nHi ha hagut un error:");
 				print(e);
 			}
+			println();
 		} while (opt != 5);
 		
 		close();
@@ -83,7 +86,7 @@ public class DriverExportacio extends Driver {
 		String nomp = nextLine().toUpperCase();
 		print("Nom del graf: ");
 		String nom = nextLine();
-		return new Resultat(n, nomp, nom, new ArrayList<Pair<Double, Node>>());
+		return new Resultat(n, nomp, new ControladorPaths(new ControladorGraf()), nom, new ArrayList<Pair<Double, Node>>());
 	}
 
 	private static Pair<Double, Node> crearTupla() {

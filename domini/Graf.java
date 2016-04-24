@@ -1,12 +1,15 @@
 package domini;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Stub de Graf
  * @author Carleslc
  */
-public class Graf {
+public class Graf implements Serializable {
+
+	private static final long serialVersionUID = -5976485947632957778L;
 
 	int papersId, autorsId;
 	

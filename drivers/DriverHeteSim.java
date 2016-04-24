@@ -52,9 +52,7 @@ public class DriverHeteSim extends Driver {
 						jocDeProves();
 						break;
 					case 3:
-						Graf g = hs.getGraf();
-						println("Matriu adjacencia Paper-Autor");
-						print(g.consultarMatriuPaperAutor());
+						print(hs.getGraf());
 						break;
 					case 4: {
 						print("Path: (nomes amb Autors i Papers): ");
@@ -299,6 +297,17 @@ public class DriverHeteSim extends Driver {
 				print(String.format(Locale.UK, "%.2f", m.get(i,  j).doubleValue()) + (j < m.getColumnes() - 1 ? ", " : ""));
 			println();
 		}
+	}
+	
+	private static void print(Graf g) {
+		println("Papers:");
+		for (int i = 0; i < g.consultaMidaPaper(); ++i)
+			println("- " + g.consultarPaper(i).getNom());
+		println("Autors:");
+		for (int i = 0; i < g.consultaMidaAutor(); ++i)
+			println("- " + g.consultarAutor(i).getNom());
+		println("Matriu adjacencia Paper-Autor");
+		print(g.consultarMatriuPaperAutor());
 	}
 	
 	private static String getTipusNode(String path, boolean first) {

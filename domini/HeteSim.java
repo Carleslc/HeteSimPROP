@@ -52,23 +52,22 @@ public class HeteSim implements Serializable {
 	 * @author Guillem Castro
 	 */
 	public Matriu<Double> clausura(String path) throws IllegalArgumentException {
-		if (path == null || path.isEmpty()) {
+		if (path == null || path.isEmpty())
 			throw new IllegalArgumentException("'path' no pot ser buit");
-		}
-		if (clausures.containsKey(path)) {
+		
+		if (clausures.containsKey(path))
 			return (Matriu<Double>) clausures.get(path);
-		}
 		
 		ArrayList<Matriu<Double>> mPath = matriusPath(path);
 		int longitud = mPath.size();
 		Matriu<Double> left = mPath.get(0);
 		Matriu<Double> right = mPath.get(longitud/2);
-		for (int i = 1; i < longitud/2; ++i) {
+		for (int i = 1; i < longitud/2; ++i)
 			left = left.multiplicar(mPath.get(i));
-		}
-		for (int i = longitud/2 + 1; i < longitud; ++i) {
+		
+		for (int i = longitud/2 + 1; i < longitud; ++i)
 			right = right.multiplicar(mPath.get(i));
-		}
+		
 		left = clausura(left, right, path);
 		
 		clausures.put(path, left);
@@ -82,14 +81,16 @@ public class HeteSim implements Serializable {
 	 * @param right Matriu de la part dreta del cami
 	 * @param path el path a utilitzar en el calcul
 	 * @return la clausura associada al path representada per left*right
-	 * @author Guillem Castro
+	 * @author Guillem Castro, Carlos Lazaro
 	 */
 	public Matriu<Double> clausura(Matriu<Double> left, Matriu<Double> right, String path) {
 		Matriu<Double> aux = left.multiplicar(right);
 		if (path.length() != 2) {
 			for (int i = 0; i < aux.getFiles(); ++i) {
-				for (int j = 0; j < aux.getColumnes(); ++j)
-					aux.set(i, j, (aux.get(i, j)/(left.getNormaFila(i)*right.getNormaColumna(j)) ));
+				for (int j = 0; j < aux.getColumnes(); ++j) {
+					Double d = (aux.get(i, j)/(left.getNormaFila(i)*right.getNormaColumna(j)));
+					aux.set(i, j, d.isNaN() ? 0d : d);
+				}
 			}
 		}
 		return aux;
@@ -140,9 +141,8 @@ public class HeteSim implements Serializable {
 			for (int j = 0; j < next.getFiles(); ++j)
 				res.add(0d);
 			for (int j = 0; j < next.getFiles(); ++j) {
-				for (int k = 0; k < next.getColumnes(); ++k) {
+				for (int k = 0; k < next.getColumnes(); ++k)
 					res.set(j, res.get(j) + columna.get(k)*next.get(j, k));
-				}
 			}
 			columna = res;
 		}
@@ -159,9 +159,9 @@ public class HeteSim implements Serializable {
 		for (double d : columna)
 			sumaColumna += d*d;
 		
-		double norma = Math.sqrt(sumaFila)*Math.sqrt(sumaColumna);
+		Double d = res/(Math.sqrt(sumaFila)*Math.sqrt(sumaColumna));
 		
-		return res/norma;
+		return d.isNaN() ? 0d : d;
 	}
 	
 	/**
@@ -175,13 +175,12 @@ public class HeteSim implements Serializable {
 	 * @author Guillem Castro, Carlos Lazaro
 	 */
 	public ArrayList<Entry<Double, Integer>> heteSimAmbIdentificadors(Node n, String path) throws IllegalArgumentException {
-		if (path == null || n == null) {
+		if (path == null || n == null)
 			throw new IllegalArgumentException("Els parametres no poden ser null");
-		}
+
 		char classNode = n.getClass().getSimpleName().charAt(0);
-		if (path.charAt(0) != classNode) {
+		if (path.charAt(0) != classNode)
 			throw new IllegalArgumentException("El tipus del node no coincideix amb el primer del 'path'");
-		}
 		
 		if (clausures.containsKey(path)) {
 			Matriu<Double> clausura = clausures.get(path);
@@ -209,13 +208,13 @@ public class HeteSim implements Serializable {
 		int longitud = matrius.size();
 		Matriu<Double> right = matrius.get(longitud/2);
 		
-		for (int i = longitud/2 + 1; i < longitud; ++i) {
+		for (int i = longitud/2 + 1; i < longitud; ++i)
 			right = right.multiplicar(matrius.get(i));
-		}
 		
 		ArrayList<Double> res = new ArrayList<>(right.getColumnes());
 		for (int j = 0; j < right.getColumnes(); ++j)
 			res.add(0D);
+		
 		for (int j = 0; j < res.size(); ++j) {
 			for (int k = 0; k < fila.size(); ++k)
 				res.set(j, res.get(j) + fila.get(k)*right.get(k, j));
@@ -227,8 +226,10 @@ public class HeteSim implements Serializable {
 		
 		double normaFila = Math.sqrt(sumaFila);
 		
-		for (int i = 0; i < res.size(); ++i)
-			res.set(i, res.get(i)/(normaFila*right.getNormaColumna(i)));
+		for (int i = 0; i < res.size(); ++i) {
+			Double d = res.get(i)/(normaFila*right.getNormaColumna(i));
+			res.set(i, d.isNaN() ? 0d : d);
+		}
 		
 		ArrayList<Pair<Double, Integer>> aux = new ArrayList<>();
 		
@@ -249,13 +250,12 @@ public class HeteSim implements Serializable {
 	 * @author Carlos Lazaro
 	 */
 	public ArrayList<Entry<Double, String>> heteSimAmbNoms(Node n, String path) throws IllegalArgumentException {
-		if (path == null || n == null) {
+		if (path == null || n == null)
 			throw new IllegalArgumentException("Els parametres no poden ser null");
-		}
+		
 		char classNode = n.getClass().getSimpleName().charAt(0);
-		if (path.charAt(0) != classNode) {
+		if (path.charAt(0) != classNode)
 			throw new IllegalArgumentException("El tipus del node no coincideix amb el primer del 'path'");
-		}
 		
 		if (clausures.containsKey(path)) {
 			Matriu<Double> clausura = clausures.get(path);
@@ -283,13 +283,13 @@ public class HeteSim implements Serializable {
 		int longitud = matrius.size();
 		Matriu<Double> right = matrius.get(longitud/2);
 		
-		for (int i = longitud/2 + 1; i < longitud; ++i) {
+		for (int i = longitud/2 + 1; i < longitud; ++i)
 			right = right.multiplicar(matrius.get(i));
-		}
 		
 		ArrayList<Double> res = new ArrayList<>(right.getColumnes());
 		for (int j = 0; j < right.getColumnes(); ++j)
 			res.add(0D);
+		
 		for (int j = 0; j < res.size(); ++j) {
 			for (int k = 0; k < fila.size(); ++k)
 				res.set(j, res.get(j) + fila.get(k)*right.get(k, j));
@@ -301,8 +301,10 @@ public class HeteSim implements Serializable {
 		
 		double normaFila = Math.sqrt(sumaFila);
 		
-		for (int i = 0; i < res.size(); ++i)
-			res.set(i, res.get(i)/(normaFila*right.getNormaColumna(i)));
+		for (int i = 0; i < res.size(); ++i) {
+			Double d = res.get(i)/(normaFila*right.getNormaColumna(i));
+			res.set(i, d.isNaN() ? 0d : d);
+		}
 		
 		ArrayList<Pair<Double, String>> aux = new ArrayList<>();
 		
