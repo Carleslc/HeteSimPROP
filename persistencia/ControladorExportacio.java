@@ -9,6 +9,10 @@ import java.util.Date;
 
 import domini.Resultat;
 
+/**
+ * Controlador per exportar resultats amb un format llegible.
+ * @author Carleslc
+ */
 public abstract class ControladorExportacio {
 	
 	/**

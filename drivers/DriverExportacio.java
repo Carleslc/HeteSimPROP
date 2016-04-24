@@ -12,6 +12,10 @@ import domini.Resultat;
 import persistencia.ControladorExportacio;
 import persistencia.ControladorPersistencia;
 
+/**
+ * Driver per provar el controlador d'exportacio.
+ * @author Carleslc
+ */
 public class DriverExportacio extends Driver {
 
 	public static void main(String[] args) {
@@ -65,6 +69,8 @@ public class DriverExportacio extends Driver {
 				print(e);
 			}
 		} while (opt != 5);
+		
+		close();
 	}
 
 	private static void mostrarFitxer(String filesystem_path) throws IOException {
