@@ -10,7 +10,8 @@ import java.util.Date;
 import java.util.Map.Entry;
 import java.io.IOException;
 
-import persistencia.*;
+import persistencia.ControladorPersistenciaPropi;
+import persistencia.ControladorExportacio;
 
 public class ControladorConsultes {
 	
@@ -27,7 +28,7 @@ public class ControladorConsultes {
 		this.controladorPaths = controladorPaths;
 	}
 	
-	public String consultarResultat() {
+	public String consultarResultat() throws IllegalArgumentException {
 		return resultats.get(ultimaConsulta).toString();
 	}
 	
@@ -38,8 +39,8 @@ public class ControladorConsultes {
 		return resultats.get(data).toString();
 	}
 	
-	public String consultarTot() {
-		return resultats.toString();
+	public String consultarDates() {
+		return resultats.keySet().toString();
 	}
 	
 	public String consulta(String path, int idNode) throws IllegalArgumentException {
@@ -76,38 +77,47 @@ public class ControladorConsultes {
 		return true;
 	}
 	
-	public void filtrarElsPrimers(int n) {
+	public void filtrarElsPrimers(int n) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		resultats.get(ultimaConsulta).filtrarElsPrimers(n);
 	}
 	
-	public void filtrarElsUltims(int n) {
+	public void filtrarElsUltims(int n) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		resultats.get(ultimaConsulta).filtrarElsUltims(n);
 	}
 	
-	public void filtrarPerEtiqueta(String label) {
+	public void filtrarPerEtiqueta(String label) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		resultats.get(ultimaConsulta).filtrarPerEtiqueta(label);
 	}
 	
-	public void filtrarPerRellevancia(double min, double max) {
+	public void filtrarPerRellevancia(double min, double max) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		resultats.get(ultimaConsulta).filtrarPerRellevancia(min, max);
 	}
 	
-	public void clear() {
+	public void clear() throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		resultats.get(ultimaConsulta).clear();
 	}
 	
-	public void afegir(double rellevancia, int idNode) {
+	public void afegir(double rellevancia, int idNode) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		String path = resultats.get(ultimaConsulta).getPath();
 		Node n = getNode(path, path.length()-1, idNode);
+		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 		Pair<Double, Node> p = new Pair<>(rellevancia, n);
 		resultats.get(ultimaConsulta).afegir(p);
 	}
 	
-	public void esborrar(int index) {
+	public void esborrar(int index) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		resultats.get(ultimaConsulta).esborrar(index);
 	}
 	
-	public String getTipusNode() {
+	public String getTipusNode() throws IllegalArgumentException{
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		String path = resultats.get(ultimaConsulta).getPath();
 		if (path.charAt(path.length()-1) == 'A') return "Autor";
 		if (path.charAt(path.length()-1) == 'C') return "Conferencia";
@@ -115,11 +125,13 @@ public class ControladorConsultes {
 		return "Paper";
 	}
 	
-	public boolean setRellevancia(int index, double rellevancia) {
+	public boolean setRellevancia(int index, double rellevancia) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		return resultats.get(ultimaConsulta).setRellevancia(index, rellevancia);
 	}
 	
-	public boolean setDada(int index, int idNode) {
+	public boolean setDada(int index, int idNode) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Resultat r = resultats.get(ultimaConsulta);
 		if (index < 0 || index >= r.size()) return false;
 		
@@ -131,14 +143,16 @@ public class ControladorConsultes {
 		return true;
 	}
 	
-	public boolean canviarNom(int index, String nom) {
+	public boolean canviarNom(int index, String nom) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Resultat r = resultats.get(ultimaConsulta);
 		if (index < 0 || index >= r.size()) return false;
 		r.get(index).getValue().setNom(nom);
 		return true;
 	}
 	
-	public void setThreshold(int idNode1, int idNode2, String path) {
+	public void setThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Threshold t = createThreshold(idNode1, idNode2, path);
 		Resultat r = resultats.get(ultimaConsulta);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(r.getNode(), r.getPath(), t.getRellevancia());
@@ -146,7 +160,8 @@ public class ControladorConsultes {
 		r.setResultats(res);
 	}
 	
-	public void setPath(String path, int id) {
+	public void setPath(String path, int id) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Resultat r = resultats.get(ultimaConsulta);
 		Node n = getNode(path, 0, id);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, r.getThreshold().getRellevancia());
@@ -155,7 +170,8 @@ public class ControladorConsultes {
 		r.setResultats(res);
 	}
 	
-	public void setDada(int id) {
+	public void setDada(int id) throws IllegalArgumentException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Resultat r = resultats.get(ultimaConsulta);
 		Node n = getNode(r.getPath(), 0, id);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), r.getThreshold().getRellevancia());
@@ -163,15 +179,16 @@ public class ControladorConsultes {
 		r.setResultats(res);
 	}
 	
-	void exportarResultat(String filesystem_path) throws IOException {
+	public void exportarResultat(String filesystem_path) throws IOException {
+		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		ControladorExportacio.exportar(filesystem_path, ultimaConsulta, resultats.get(ultimaConsulta));
 	}
 	
-	void guardarResultats() throws IOException {
+	public void guardarResultats() throws IOException {
 		ControladorPersistenciaPropi.guardarResultats(DEFAULT_PATH_RESULTATS, resultats);
 	}
 	
-	void carregarResultats() throws IOException {
+	public void carregarResultats() throws IOException {
 		resultats = ControladorPersistenciaPropi.carregarResultats(DEFAULT_PATH_RESULTATS);
 	}
 	
@@ -210,17 +227,14 @@ public class ControladorConsultes {
 		for(Entry<Double, Integer> reshs : resultatshs) {
 			if (reshs.getKey() < filtre || reshs.getKey() == 0) break;
 			
-			if (!Double.isNaN(reshs.getKey())) {
-			
-				Node nodeResultat = getNode(path, path.length()-1, reshs.getValue());
-				if (path.charAt(path.length()-1) == 'A') nodeResultat = copia(nodeResultat, "Autor");
-				else if (path.charAt(path.length()-1) == 'C') nodeResultat = copia(nodeResultat, "Conferencia");
-				else if (path.charAt(path.length()-1) == 'T') nodeResultat = copia(nodeResultat, "Terme");
-				else if(path.charAt(path.length()-1) == 'P') nodeResultat = copia(nodeResultat, "Paper");
+			Node nodeResultat = getNode(path, path.length()-1, reshs.getValue());
+			if (path.charAt(path.length()-1) == 'A') nodeResultat = copia(nodeResultat, "Autor");
+			else if (path.charAt(path.length()-1) == 'C') nodeResultat = copia(nodeResultat, "Conferencia");
+			else if (path.charAt(path.length()-1) == 'T') nodeResultat = copia(nodeResultat, "Terme");
+			else if(path.charAt(path.length()-1) == 'P') nodeResultat = copia(nodeResultat, "Paper");
 				
-				Pair<Double, Node> p = new Pair<>(reshs.getKey(), nodeResultat);
-				res.add(p);
-			}
+			Pair<Double, Node> p = new Pair<>(reshs.getKey(), nodeResultat);
+			res.add(p);
 		}
 		
 		return res;
