@@ -20,7 +20,7 @@ public class DriverThreshold extends Driver {
 			println("Introdueix el graf:");
 			print("Primer, introdueix el nom del graf: ");
 			String nomGraf = nextLine();
-			contrMultigraf.afegir(nomGraf);
+			contrMultigraf.afegirGraf(nomGraf);
 			
 			ControladorNodes contrNodes = new ControladorNodes(contrMultigraf);
 			println("Ara, introdueix els noms de tots els autors. Acaba amb -1:");
