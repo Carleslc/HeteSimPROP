@@ -42,7 +42,7 @@ public class ControladorConsultes {
 		Node n = getNode(path, 0, idNode);
 		if (n == null) throw new IllegalArgumentException ("El node no existeix.");
 		
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, 1.);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, (double)0);
 		
 		Resultat r = new Resultat(n, path, controladorMultigraf.getNom(), res);
 		Date d = new Date();
@@ -201,7 +201,7 @@ public class ControladorConsultes {
 		return new Threshold(n1, n2, path, controladorMultigraf.getHeteSim());
 	}
 	
-	private ArrayList<Pair<Double, Node>> llistaResultats(Node n, String path, Double filtre) {
+	private ArrayList<Pair<Double, Node>> llistaResultats(Node n, String path, Double filtre) throws IllegalArgumentException {
 		HeteSim hs = controladorMultigraf.getHeteSim();
 		ArrayList<Entry<Double, Integer>> resultatshs = hs.heteSimAmbIdentificadors(n, path);
 		ArrayList<Pair<Double, Node>> res = new ArrayList<>();
