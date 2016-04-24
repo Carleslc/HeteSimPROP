@@ -7,6 +7,7 @@ import persistencia.ControladorPersistencia;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -188,6 +189,7 @@ public class HeteSim implements Serializable {
 			ArrayList<Double> res = clausura.getFila(n.getId());
 			for (int i = 0; i < res.size(); ++i)
 				aux.add(new Pair<>(res.get(i), i));
+			Collections.sort(aux);
 			return new ArrayList<>(aux);
 		}
 		
@@ -236,6 +238,7 @@ public class HeteSim implements Serializable {
 		for (int i = 0; i < res.size(); ++i)
 			aux.add(new Pair<>(res.get(i), i));
 		
+		Collections.sort(aux);
 		return new ArrayList<>(aux);
 	}
 	
@@ -263,7 +266,8 @@ public class HeteSim implements Serializable {
 			ArrayList<Double> res = clausura.getFila(n.getId());
 			for (int i = 0; i < res.size(); ++i)
 				aux.add(new Pair<>(res.get(i), consultarNomById(i, path)));
-			return new ArrayList<Entry<Double, String>>(aux);
+			Collections.sort(aux);
+			return new ArrayList<>(aux);
 		}
 		
 		ArrayList<Matriu<Double>> matrius = matriusPath(path);
@@ -311,6 +315,7 @@ public class HeteSim implements Serializable {
 		for (int i = 0; i < res.size(); ++i)
 			aux.add(new Pair<>(res.get(i), consultarNomById(i, path)));
 		
+		Collections.sort(aux);
 		return new ArrayList<>(aux);
 	}
 	
