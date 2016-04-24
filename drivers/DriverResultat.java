@@ -19,8 +19,8 @@ import java.util.Comparator;
 			Pair<Double, Node> p4 = new Pair<Double, Node>(0.2,n4);
 			ArrayList<Pair<Double, Node>> l = new ArrayList<Pair<Double, Node>>();
 			l.add(p1);l.add(p2);l.add(p3);l.add(p4);
-			Threshold t = new Threshold();
-			Resultat r = new Resultat(n,"APA","Graf1",l,t);
+			Threshold t = new Threshold(0,n,n,"APAPA",new HeteSim());
+			Resultat r = new Resultat(n,"APA",new ControladorPaths(new ControladorGraf()),"Graf1",l,t);
 			print("El driver comença amb un objecte Resultat de mostra:\n");
 			print(r.toString());
 			println();
@@ -196,7 +196,7 @@ import java.util.Comparator;
 			String nom = nextLine();
 			print("\n");
 			ArrayList<Pair<Double, Node>> lis = new ArrayList<Pair<Double, Node>>();
-			return new Resultat(n,nomp,nom,lis);
+			return new Resultat(n,nomp,new ControladorPaths(new ControladorGraf()),nom,lis);
 		}
 		
 		private static Node crearNode() {
