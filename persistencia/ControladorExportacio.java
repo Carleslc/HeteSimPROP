@@ -21,7 +21,7 @@ public abstract class ControladorExportacio {
 	public static void exportar(String filesystem_path, Date date, Resultat resultat) throws IOException {
 		if (resultat != null) {
 			BufferedWriter bw = new BufferedWriter(new PrintWriter(new FileOutputStream(filesystem_path, false)));
-			bw.write(new SimpleDateFormat().format(date)); // dd/MM/yy HH:mm
+			bw.write("Data de creacio: " + new SimpleDateFormat().format(date) + "\n"); // dd/MM/yy HH:mm
 			bw.write(resultat.toString());
 			bw.close();
 		}

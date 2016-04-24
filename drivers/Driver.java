@@ -36,7 +36,7 @@ public abstract class Driver {
 	public static double nextDouble() {
 		double d = 0d;
 		try {
-			d = in.nextInt();
+			d = in.nextDouble();
 		} catch (InputMismatchException e) {
 			System.out.println("\nError: S'ha demanat un double.");
 		} finally {
