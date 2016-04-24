@@ -63,8 +63,8 @@ public class DriverPair extends Driver {
 						println("Pair1: key = " + p.getKey() + ", value = " + p.getValue());
 						println("Pair2: key = " + p2.getKey() + ", value = " + p2.getValue());
 						int comp = p.compareTo(p2);
-						if (comp < 0) println("El Pair2 és més gran que el Pair1.");
-						else if (comp > 0) println("El Pair2 és més petit que el Pair1.");
+						if (comp > 0) println("El Pair2 és més gran que el Pair1.");
+						else if (comp < 0) println("El Pair2 és més petit que el Pair1.");
 						else println("El Pair2 és igual que el Pair1.");
 						break;
 					}
