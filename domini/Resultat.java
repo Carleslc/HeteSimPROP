@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+
 /**
  * 
  * @author Arnau Badia Sampera
@@ -25,8 +27,6 @@ public class Resultat implements Serializable {
 	private String nomGraf;
 	private ArrayList<Pair<Double, Node>> resultats;
 	private Threshold threshold;
-	
-	
 	
 	/**
 	 * Comparador de pairs de forma decreixent
@@ -179,7 +179,7 @@ public class Resultat implements Serializable {
 	 * @return la tupla que hi ha a l'index indicat.
 	 * @throws IndexOutOfBoundsException si l'index esta fora de rang.
 	 */
-	public Pair<Double, Node> get(int index) throws IndexOutOfBoundsException {
+	public Pair<Double, Node> get(int index) {
 		return resultats.get(index);
 	}
 
@@ -191,10 +191,10 @@ public class Resultat implements Serializable {
 	 * a l'€™ordre dels resultats.
 	 * @param index del paramtetre que es vol substituir
 	 * @param resultat pel que es vol substituir el resultat contigut a l'index del parametre
-	 * @return si index < size()
+	 * @return si 0 <= index < size()
 	 */
 	public boolean set(int index, Pair<Double, Node> resultat) {
-		if (index < resultats.size()) {
+		if (index >= 0 && index < resultats.size()) {
 			esborrar(index);
 			afegir(resultat);
 			return true;
@@ -226,7 +226,7 @@ public class Resultat implements Serializable {
 	 * @return si l'index es troba dins del rang correcte.
 	 */
 	public boolean esborrar(int index) {
-		if (index < resultats.size()) {
+		if (index >= 0 && index < resultats.size()) {
 			resultats.remove(index);	
 			return true;
 		}
@@ -238,10 +238,10 @@ public class Resultat implements Serializable {
 	 * llavors es probable que aquesta posicio hagi canviat degut a l'€™ordre dels resultats.
 	 * @param index de la tupla que es vol modificar.
 	 * @param rellevancia per la qual es vol substituir l'antiga.
-	 * @return si index < size(). 
+	 * @return si 0 <= index < size() i la rellevancia es valida
 	 */
-	public boolean setRellevancia(int index, Double rellevancia) {
-		if (index < resultats.size()) {
+	public boolean setRellevancia(int index, double rellevancia) {
+		if (index >= 0 && index < resultats.size() && rellevancia >= 0 && rellevancia <= 1) {
 			Pair<Double,Node> p = resultats.get(index);
 			p.setKey(rellevancia);
 			esborrar(index);
@@ -255,11 +255,14 @@ public class Resultat implements Serializable {
 	 * Canvia la dada en una tupla dels resultats.
 	 * @param index de la tupla que es vol canviar.
 	 * @param Dada per la que es vol substituir.
+	 * @return si 0 <= index < size() i s'ha cambiat la dada
 	 */
-	public void setDada(int index, Node Dada) {
-		if (index < resultats.size()) {
-			resultats.get(index).setValue(Dada);	
+	public boolean setDada(int index, Node Dada) {
+		if (index >= 0 && index < resultats.size()) {
+			resultats.get(index).setValue(Dada);
+			return true;
 		}
+		return false;
 	}
 	
 	/**
