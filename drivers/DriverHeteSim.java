@@ -57,7 +57,7 @@ public class DriverHeteSim extends Driver {
 					case 4: {
 						print("Path: (nomes amb Autors i Papers): ");
 						try {
-							println(hs.clausura(nextWord().toUpperCase()));
+							print(hs.clausura(nextWord().toUpperCase()));
 						} catch (Exception e) {
 							println("\nPath incorrecte.");
 						}
@@ -253,11 +253,11 @@ public class DriverHeteSim extends Driver {
 		g.afegirAdjacencia(g.consultarPaper(2), g.consultarAutor(3));
 		
 		HeteSim hs = new HeteSim(g);
-				
+		
 		println("Mitjançant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaAutor(); ++j)
-				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + ", ");
+				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + (j < g.consultaMidaAutor() - 1 ? ", " : ""));
 			println();
 		}
 		
