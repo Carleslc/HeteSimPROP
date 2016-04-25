@@ -1,0 +1,19 @@
+Arnau Badía Sampera (arnau.badia.sampera@est.fib.upc.edu)
+- ControladorDominiPersistència
+- ControladorDominiPersistènciaPropi
+- ControladorMultigraf
+- Resultat
+
+Carla Claverol González (carla.claverol@est.fib.upc.edu)
+- ControladorConsultes
+- Pair<K, V>
+- Threshold
+
+Carlos Lázaro Costa (carlos.lazaro.costa@est.fib.upc.edu)
+- HeteSim
+- ControladorPersistència
+- ControladorExportació
+
+Guillem Castro Olivares (guillem.castro@est.fib.upc.edu)
+- HeteSim
+- ControladorPersistènciaPropi

@@ -14,8 +14,6 @@ import java.util.Map.Entry;
 /**
  * Controlador de l'algorisme HeteSim.
  * 
- * <p><b>TODO</b> AFEGIR DESCRIPCIO DE L'ALGORISME.
- * 
  * @author Guillem Castro Olivares,<br>
  * 		   Carlos Lazaro Costa
  */
