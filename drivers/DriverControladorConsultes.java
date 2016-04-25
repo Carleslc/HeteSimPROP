@@ -102,7 +102,17 @@ public class DriverControladorConsultes extends Driver {
 				id1 = nextInt();
 			}
 			
-			ControladorPaths contrPaths = new ControladorPaths(contrMultigraf);			
+			ControladorPaths contrPaths = new ControladorPaths(contrMultigraf);	
+			println("Introdueix els paths. Acaba amb un -1:");
+			String path = nextWord();
+			while(!path.equals("-1")) {
+				if (contrPaths.afegir(path))
+					println("S'ha afegit el path " + path);
+				else
+					println("Path incorrecte. Introdueix un path correcte.");
+				path = nextWord();
+			}
+			
 			ControladorConsultes contrConsultes = new ControladorConsultes(contrMultigraf, contrPaths);
 			
 			int num;
@@ -140,8 +150,7 @@ public class DriverControladorConsultes extends Driver {
 						
 					case 1: {
 						println("Introdueix el path amb el que vols fer la consulta:");
-						String path = nextWord();
-						contrPaths.afegir(path);
+						path = nextWord();
 						print("Introdueix l'id del node amb el que vols fer la consulta: ");
 						id = nextInt();
 						String resultat = contrConsultes.consulta(path, id);
@@ -151,13 +160,11 @@ public class DriverControladorConsultes extends Driver {
 					
 					case 2: {
 						println("Introdueix el path amb el que vols fer la consulta:");
-						String path = nextWord();
-						contrPaths.afegir(path);
+						path = nextWord();
 						print("Introdueix l'id del node amb el que vols fer la consulta: ");
 						id = nextInt();
 						println("Introdueix el node del threshold:");
 						String pathT = nextWord();
-						contrPaths.afegir(pathT);
 						print("Introdueix l'id del primer node del threshold: ");
 						int idT1 = nextInt();
 						print("Introdueix l'id del primer node del threshold: ");
@@ -295,8 +302,7 @@ public class DriverControladorConsultes extends Driver {
 					
 					case 18: {
 						println("Introdueix el nom del path del threshold:");
-						String path = nextWord();
-						contrPaths.afegir(path);
+						path = nextWord();
 						println("Introdueix l'id del primer node del threshold:");
 						id1 = nextInt();
 						println("Introdueix l'id del segon node del threshold:");
@@ -308,8 +314,7 @@ public class DriverControladorConsultes extends Driver {
 					
 					case 19: {
 						println("Introdueix el nom del nou path:");
-						String path = nextWord();
-						contrPaths.afegir(path);
+						path = nextWord();
 						print("Introdueix l'id de la nova dada: ");
 						id = nextInt();
 						contrConsultes.setPath(path, id);
