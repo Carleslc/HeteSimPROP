@@ -4,6 +4,7 @@ import domini.Matriu;
 import domini.Node;
 import persistencia.ControladorPersistencia;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -425,12 +426,27 @@ public class HeteSim implements Serializable {
 
 	/**
 	 * Carrega les clausures des d'un fitxer del sistema
-	 * @param filesystem_path path del fitxer on guardar les clausures
+	 * @param filesystem_path path del fitxer on estan guardades les clausures
 	 * @throws IOException si el fitxer no existeix, el fitxer es un directori,
 	 * el fitxer no es pot llegir o hi ha altres problemes d'entrada/sortida
 	 * @author Carlos Lazaro
 	 */
 	public void carregarClausures(String filesystem_path) throws IOException {
 		clausures = (HashMap<String, Matriu<Double>>) ControladorPersistencia.carregarClausures(filesystem_path);
+	}
+	
+	/**
+	 * Esborra totes les clausures d'aquest HeteSim i, si filesystem_path existeix, l'esborra.
+	 * @param filesystem_path path del fitxer on estan guardades les clausures
+	 * @throws IOException en cas de que no es pugui esborrar el fitxer de clausures
+	 * @author Carlos Lazaro
+	 */
+	public void eliminarClausures(String filesystem_path) {
+		clausures.clear();
+		if (filesystem_path != null) {
+			File f = new File(filesystem_path);
+			if (f.exists())
+				f.delete();
+		}
 	}
 }
