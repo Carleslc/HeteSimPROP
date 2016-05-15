@@ -306,13 +306,21 @@ public class ControladorConsultes {
 	 * @param path. El nom del path pel qual es vol modificar l'actual.
 	 * @param id. L'id del node pel qual es vol modificar l'actual.
 	 * 			El node és del primer tipus de node de path.
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una última consulta, 
+	 * 			o bé no existeixen el path o el node indicats.
 	 */
 	public void setPath(String path, int id) throws IllegalArgumentException {
+		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
+		
 		Resultat r = resultats.get(ultimaConsulta);
 		Node n = getNode(path, 0, id);
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, r.getThreshold().getRellevancia());
+		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
+		
+		Double filtre = 0.;
+		Threshold t = r.getThreshold();
+		if (t != null) filtre = t.getRellevancia();
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, filtre);
 		r.setPath(path);
 		r.setNode(n);
 		r.setResultats(res);
@@ -322,13 +330,19 @@ public class ControladorConsultes {
 	 * Modifica la dada de l'última consulta i refà la consulta.
 	 * @param id. L'id del node pel qual es vol modificar l'actual.
 	 * 			El node és del primer tipus de node del path de l'última consulta.
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una última consulta,
+	 * 			o bé no existeix el node indicat.
 	 */
 	public void setDada(int id) throws IllegalArgumentException {
 		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Resultat r = resultats.get(ultimaConsulta);
 		Node n = getNode(r.getPath(), 0, id);
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), r.getThreshold().getRellevancia());
+		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
+		
+		Double filtre = 0.;
+		Threshold t = r.getThreshold();
+		if (t != null) filtre = t.getRellevancia();
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), filtre);
 		r.setNode(n);
 		r.setResultats(res);
 	}
