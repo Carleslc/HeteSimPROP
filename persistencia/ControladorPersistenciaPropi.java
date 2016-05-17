@@ -40,6 +40,7 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 	 * @return Retorna un TreeMap<Date, Resultat> amb els resultats del fitxer.
 	 * @throws IOException Si el fitxer no existeix o no té el format correcte.
 	 */
+	@SuppressWarnings("unchecked")
 	public static TreeMap<Date, Resultat> carregarResultats (String filesystem_path) throws IOException {
 		FileInputStream file = new FileInputStream(filesystem_path);
 		ObjectInputStream in = new ObjectInputStream(file);

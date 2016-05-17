@@ -99,7 +99,7 @@ public class DriverPersistencia extends Driver {
 						break;
 					}
 					case 6: {
-						Map<String, Matriu<Double>> mapaClausures = crearClausures();
+						Map<String, Matriu> mapaClausures = crearClausures();
 						print("Escriu el path i fitxer on guardar les clausures: ");
 						pathClausures = nextLine();
 						ControladorPersistencia.guardarClausures(pathClausures, mapaClausures);
@@ -135,8 +135,8 @@ public class DriverPersistencia extends Driver {
 		close();
 	}
 
-	private static Map<String, Matriu<Double>> crearClausures() {
-		Map<String, Matriu<Double>> mapaClausures = new LinkedHashMap<>();
+	private static Map<String, Matriu> crearClausures() {
+		Map<String, Matriu> mapaClausures = new LinkedHashMap<>();
 		print("Cuantes clausures vols afegir?: ");
 		int nc = nextInt();
 		for (int i = 0; i < nc; ++i) {
@@ -145,7 +145,7 @@ public class DriverPersistencia extends Driver {
 			int f = nextInt();
 			print("Columnes de la matriu de " + nomClausura + ": ");
 			int c = nextInt();
-			Matriu<Double> clausura = new Matriu<Double>(f, c, 0d);
+			Matriu clausura = new Matriu(f, c, 0d);
 			println("Introdueix tots els valors de la matriu per files (decimals amb comes). Afegeix un enter després de cada valor:");
 			for (int ii = 0; ii < f; ++ii) {
 				for (int jj = 0; jj < c; ++jj)
@@ -167,10 +167,10 @@ public class DriverPersistencia extends Driver {
 		print(g.consultarMatriuPaperAutor());
 	}
 	
-	private static void print(Matriu<? extends Number> m) {
+	private static void print(Matriu m) {
 		for (int i = 0; i < m.getFiles(); ++i) {
 			for (int j = 0; j < m.getColumnes(); ++j)
-				print(String.format(Locale.UK, "%.2f", m.get(i,  j).doubleValue()) + (j < m.getColumnes() - 1 ? ", " : ""));
+				print(String.format(Locale.UK, "%.2f", m.get(i,  j)) + (j < m.getColumnes() - 1 ? ", " : ""));
 			println();
 		}
 	}
