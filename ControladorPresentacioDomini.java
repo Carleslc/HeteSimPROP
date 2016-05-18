@@ -26,7 +26,7 @@ public class ControladorPresentacioDomini {
 	
 
 	
-	ControladorPresentacioDomini() {
+	public ControladorPresentacioDomini() {
 		controladorMultigraf = new ControladorMultigraf();
 		controladorNodes = new ControladorNodes(controladorMultigraf);
 		controladorRelacions = new ControladorRelacions(controladorMultigraf);
