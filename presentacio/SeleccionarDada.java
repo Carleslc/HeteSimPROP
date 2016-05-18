@@ -59,10 +59,14 @@ public class SeleccionarDada extends JFrame {
 	 * 
 	 * @param cntrl ControladorPresentacioDomini del programa
 	 * @param nomDada nom de la dada a seleccionar
+	 * @param tipus tipus de la dada a seleccionar
+	 * @param id Llista dels ids valors que seran seleccionats, primer l'últim seleccionat (buida al principi, la vista s'encarrega d'omplirla)
 	 */
+	public SeleccionarDada(ControladorPresentacioDomini cntrl, String nomDada, String tipus, ArrayList<Integer> seleccions) {
 		this.cntrl = cntrl;
 		this.nomDada = nomDada;
 		this.tipus = tipus;
+		this.seleccions = seleccions;
 		consultarDada();
 		
 		setTitle("Seleccionar Dada");
@@ -117,14 +121,14 @@ public class SeleccionarDada extends JFrame {
 	}
 	
 	private void configurarTable() {
-		String[] colnames = {"ID", "Nom", "Informaciï¿½ Adicional"};
+		String[] colnames = {"ID", "Nom", "Informació Adicional"};
 		
 		if (resultats != null) {
 			String[][] data = new String[resultats.size()][3];
 			for (int i = 0; i < resultats.size(); ++i) {
 				data[i][0] = String.valueOf(resultats.get(i));
 				data[i][1] = nomDada;
-				data[i][2] = "Informaciï¿½ Adicional";
+				data[i][2] = "Informació Adicional";
 			}
 			tableModel = new DefaultTableModel(data, colnames);
 		}
