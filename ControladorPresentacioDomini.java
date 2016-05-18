@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
+
 
 import domini.ControladorConsultes;
 import domini.ControladorDominiPersistenciaPropi;
@@ -11,6 +13,7 @@ import domini.ControladorMultigraf;
 import domini.ControladorNodes;
 import domini.ControladorPaths;
 import domini.ControladorRelacions;
+
 
 
 public class ControladorPresentacioDomini {
@@ -554,6 +557,38 @@ public class ControladorPresentacioDomini {
     public List<Integer> consultarAutor(String nom){
 		return controladorMultigraf.consultarAutor(nom);
 	}
+    
+    /**
+     * Retorna un treemap amb els id i noms dels papers
+     * @return un treemap amb els id i noms dels papers
+     */
+    public TreeMap<Integer,String> consultarPapers(){
+		return controladorMultigraf.consultarPapers();
+    }
+
+    /**
+     * Retorna un treemap amb els id i noms dels autors
+     * @return un treemap amb els id i noms dels autors
+     */
+    public TreeMap<Integer,String> consultarAutors(){
+		return controladorMultigraf.consultarAutors();
+    }
+
+    /**
+     * Retorna un treemap amb els id i noms de les conferencies
+     * @return un treemap amb els id i noms de les conferencies
+     */
+    public TreeMap<Integer,String> consultarConferencies(){
+		return controladorMultigraf.consultarConferencies();
+    }
+
+    /**
+     * Retorna un treemap amb els id i noms dels termes
+     * @return un treemap amb els id i noms dels termes
+     */
+    public TreeMap<Integer,String> consultarTermes(){
+		return controladorMultigraf.consultarTermes();
+    }
     
     /** Consulta quants autors hi ha en el graf actual.
      * @return Retrona el nombre d'autors del graf
