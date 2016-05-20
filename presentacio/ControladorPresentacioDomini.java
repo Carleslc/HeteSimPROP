@@ -263,7 +263,7 @@ public class ControladorPresentacioDomini {
 	 * @param idAutor de l'autor
 	 * @return si ha sigut possible (si ambdos existeixen).
 	 */
-	boolean afegirAdjacenciaPaperAutor(int idPaper, int idAutor) {
+	public boolean afegirAdjacenciaPaperAutor(int idPaper, int idAutor) {
 		controladorMultigraf.clausuresInvalides();
 		return controladorRelacions.afegirAdjacenciaPaperAutor(idPaper, idAutor);
 	}
@@ -274,7 +274,7 @@ public class ControladorPresentacioDomini {
 	 * @param idTerme del terme
 	 * @return si ha sigut possible (si ambdos existeixen).
 	 */
-	boolean afegirAdjacenciaPaperTerme(int idPaper, int idTerme) {
+	public boolean afegirAdjacenciaPaperTerme(int idPaper, int idTerme) {
 		controladorMultigraf.clausuresInvalides();
 		return controladorRelacions.afegirAdjacenciaPaperTerme(idPaper, idTerme);
 	}
@@ -287,7 +287,7 @@ public class ControladorPresentacioDomini {
 	 * @param idConferencia de la conferencia
 	 * @return si ha sigut possible (si ambdos existeixen).
 	 */
-	boolean setAdjacenciaPaperConferencia(int idPaper, int idConferencia) {
+	public boolean setAdjacenciaPaperConferencia(int idPaper, int idConferencia) {
 		controladorMultigraf.clausuresInvalides();
 		return controladorRelacions.setAdjacenciaPaperConferencia(idPaper, idConferencia);
 	}
@@ -298,7 +298,7 @@ public class ControladorPresentacioDomini {
 	 * @param idAutor de l'autor
 	 * @return si ha sigut possible (si ambdos existeixen).
 	 */
-	boolean eliminarAdjacenciaPaperAutor(int idPaper, int idAutor) {
+	public boolean eliminarAdjacenciaPaperAutor(int idPaper, int idAutor) {
 		controladorMultigraf.clausuresInvalides();
 		return controladorRelacions.eliminarAdjacenciaPaperAutor(idPaper, idAutor);
 	}
@@ -309,7 +309,7 @@ public class ControladorPresentacioDomini {
 	 * @param idTerme del terme
 	 * @return si ha sigut possible (si ambdos existeixen).
 	 */
-	boolean eliminarAdjacenciaPaperTerme(int idPaper, int idTerme) {
+	public boolean eliminarAdjacenciaPaperTerme(int idPaper, int idTerme) {
 		controladorMultigraf.clausuresInvalides();
 		return controladorRelacions.eliminarAdjacenciaPaperTerme(idPaper, idTerme);
 	}
@@ -319,7 +319,7 @@ public class ControladorPresentacioDomini {
 	 * @param idConferencia de la conferencia
 	 * @return  una llista que conté els noms de tots els papers relacionats.
 	 */
-	List<String> consultarRelacionsConferencia(int idConferencia) {
+	public List<String> consultarRelacionsConferencia(int idConferencia) {
 		return controladorRelacions.consultarRelacionsConferencia(idConferencia);
 	}
 	
@@ -328,7 +328,7 @@ public class ControladorPresentacioDomini {
 	 * @param idAutor de l'autor
 	 * @return  una llista que conté els noms de tots els papers relacionats.
 	 */
-	List<String> consultarRelacionsAutor(int idAutor) {
+	public List<String> consultarRelacionsAutor(int idAutor) {
 		return controladorRelacions.consultarRelacionsAutor(idAutor);
 	}
 	
@@ -337,7 +337,7 @@ public class ControladorPresentacioDomini {
 	 * @param idTerme del terme
 	 * @return  una llista que conté els noms de tots els papers relacionats.
 	 */
-	List<String> consultarRelacionsTerme(int idTerme) {
+	public List<String> consultarRelacionsTerme(int idTerme) {
 		return controladorRelacions.consultarRelacionsTerme(idTerme);
 	}
 	
@@ -346,7 +346,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @return una llista que conté els noms dels autors relacionats amb el paper.
 	 */
-	List<String> consultarRelacionsPaperAmbAutor(int idPaper) {
+	public List<String> consultarRelacionsPaperAmbAutor(int idPaper) {
 		return controladorRelacions.consultarRelacionsPaperAmbAutor(idPaper);
 	}
 	
@@ -355,7 +355,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @return una llista que conté els noms dels termes relacionats amb el paper.
 	 */
-	List<String> consultarRelacionsPaperAmbTerme(int idPaper) {
+	public List<String> consultarRelacionsPaperAmbTerme(int idPaper) {
 		return controladorRelacions.consultarRelacionsPaperAmbTerme(idPaper);
 	}
 	
@@ -364,7 +364,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @return una llista que conté els noms de les conferencies relacionades amb el paper.
 	 */
-	List<String> consultarRelacionsPaperAmbConferencia(int idPaper) {
+	public List<String> consultarRelacionsPaperAmbConferencia(int idPaper) {
 		return controladorRelacions.consultarRelacionsPaperAmbConferencia(idPaper);
 	}
 	
@@ -376,7 +376,7 @@ public class ControladorPresentacioDomini {
 	 * @param definicio del path
 	 * @return si ha sigut possible (el path no existia).
 	 */
-	boolean afegir(String path, String definicio) {
+	public boolean afegir(String path, String definicio) {
 		return controladorPaths.afegir(path, definicio);
 	}
 	
@@ -385,7 +385,7 @@ public class ControladorPresentacioDomini {
 	 * @param path
 	 * @return si ha sigut possible (el path no existia).
 	 */
-	boolean afegir(String path) {
+	public boolean afegir(String path) {
 		return controladorPaths.afegir(path);
 	}
 
@@ -396,7 +396,7 @@ public class ControladorPresentacioDomini {
 	 * @return si ha sigut possible (el path existeix).
 	 * @return
 	 */
-	boolean modificarDefinicio(String path, String definicio) {
+	public boolean modificarDefinicio(String path, String definicio) {
 		return controladorPaths.modificarDefinicio(path, definicio);
 	}
 
@@ -405,7 +405,7 @@ public class ControladorPresentacioDomini {
 	 * @param path
 	 * @return si ha sigut possible (el path existia).
 	 */
-	boolean esborrar(String path) {
+	public boolean esborrar(String path) {
 		return controladorPaths.esborrar(path);
 	}
 
@@ -413,7 +413,7 @@ public class ControladorPresentacioDomini {
 	 * Retorna una llista amb tots els paths
 	 * @return una llista amb tots els paths
 	 */
-	List<String> consultarPaths() {
+	public List<String> consultarPaths() {
 		return controladorPaths.consultarPaths();
 	}
 	
@@ -422,7 +422,7 @@ public class ControladorPresentacioDomini {
 	 * @param path
 	 * @return la definicio del path
 	 */
-	String consultarDefinicio(String path) {
+	public String consultarDefinicio(String path) {
 		return controladorPaths.consultarDefinicio(path);
 	}
 
@@ -431,7 +431,7 @@ public class ControladorPresentacioDomini {
 	 * @param filesystem_path es el path del fitxer on es volen guardar els paths.
 	 * @throws IOException en cas de no poder-se escriure en el fitxer.
 	 */
-	void guardarPaths(String filesystem_path) throws IOException {
+	public void guardarPaths(String filesystem_path) throws IOException {
 		controladorPaths.guardarPaths(filesystem_path);
 	}
 
@@ -441,7 +441,7 @@ public class ControladorPresentacioDomini {
 	 * @throws FileNotFoundException en cas de que no es trobi el fitxer
 	 * @throws IOException si no es pot llegir el fitxer
 	 */
-	void carregarPaths(String filesystem_path) throws IOException {
+	public void carregarPaths(String filesystem_path) throws IOException {
 		controladorPaths.carregarPaths(filesystem_path);
 	}
 
