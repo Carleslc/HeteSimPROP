@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import persistencia.ControladorPersistencia;
@@ -15,8 +16,8 @@ import persistencia.ControladorPersistencia;
 public class ControladorMultigraf extends ControladorGraf {
 
 	private String idActual;
-	private HashMap<String, Graf> grafs;
-	private HashMap<String, HeteSim> controladors;
+	private HashSet<String> grafs;
+	private HeteSim heteSim; 	
 	
 	
 	/**
@@ -24,9 +25,8 @@ public class ControladorMultigraf extends ControladorGraf {
 	 */
 	public ControladorMultigraf() {
 		super();
-		grafs = new HashMap<>();
-		controladors = new HashMap<>();
-		idActual = "";
+		grafs = new HashSet<>();
+		heteSim = new HeteSim(graf);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	public HeteSim getHeteSim() {
 		return controladors.get(idActual);
 	}
-	
+	//asda
 	/**
 	 * Crea una nova entrada a grafs amb el nou graf de nom nomGraf i una altra a controladors (els dos seran buits).
 	 * El graf actual i l'id actual passen a ser els d'aquest graf.
