@@ -50,7 +50,7 @@ public class SeleccionarDada extends JFrame {
 	private String nomDada;
 	private String tipus;
 	private ArrayList<Integer> resultats;
-	private ArrayList<Integer> seleccions;
+	private Integer seleccio;
 	private JTable table;
 	private DefaultTableModel tableModel;
 	
@@ -60,17 +60,21 @@ public class SeleccionarDada extends JFrame {
 	 * @param cntrl ControladorPresentacioDomini del programa
 	 * @param nomDada nom de la dada a seleccionar
 	 * @param tipus tipus de la dada a seleccionar
-	 * @param id Llista dels ids valors que seran seleccionats, primer l'últim seleccionat (buida al principi, la vista s'encarrega d'omplirla)
 	 */
-	public SeleccionarDada(ControladorPresentacioDomini cntrl, String nomDada, String tipus, ArrayList<Integer> seleccions) {
+	public SeleccionarDada(ControladorPresentacioDomini cntrl, String nomDada, String tipus) {
 		this.cntrl = cntrl;
 		this.nomDada = nomDada;
 		this.tipus = tipus;
-		this.seleccions = seleccions;
+		this.seleccio = -1;
 		consultarDada();
 		
 		setTitle("Seleccionar Dada");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				setVisible(false);
+			}
+		});
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -119,6 +123,13 @@ public class SeleccionarDada extends JFrame {
 		});
 		
 	}
+	/**
+	 * Consulta el resultat de la selecció de dades
+	 * @return el ID de la dada seleccionada, -1 si cap dada ha sigut seleccionada
+	 */
+	public Integer getResultat() {
+		return seleccio;
+	}
 	
 	private void configurarTable() {
 		String[] colnames = {"ID", "Nom", "Informació Adicional"};
@@ -130,11 +141,19 @@ public class SeleccionarDada extends JFrame {
 				data[i][1] = nomDada;
 				data[i][2] = "Informació Adicional";
 			}
-			tableModel = new DefaultTableModel(data, colnames);
+			tableModel = new DefaultTableModel(data, colnames) {
+				public boolean isCellEditable(int row, int column) { /*fem la taula no editable*/
+					return false;
+				};
+			};
 		}
 		
 		else {
-			tableModel = new DefaultTableModel(colnames, 0);
+			tableModel = new DefaultTableModel(colnames, 0) {
+				public boolean isCellEditable(int row, int column) { /*fem la taula no editable*/
+					return false;
+				};
+			};
 		}
 		
 		table.setModel(tableModel);
@@ -157,16 +176,16 @@ public class SeleccionarDada extends JFrame {
 		        }
 				
 				System.out.println(row);
-				seleccions.add(0, Integer.valueOf((String) tableModel.getValueAt(row, 0)));
+				seleccio = Integer.valueOf((String) tableModel.getValueAt(row, 0));
 				
 			}
 			
 		});
-        
+		
         Action info = new AbstractAction() {
 		    public void actionPerformed(ActionEvent e)
 		    {
-		        
+		        /*TODO Crida a informació adicional*/
 		    }
 		};
 		 
@@ -181,10 +200,15 @@ public class SeleccionarDada extends JFrame {
 			break;
 		case "Conferencia":
 			resultats = (ArrayList<Integer>) cntrl.consultarConferencia(nomDada);
+			break;
 		case "Paper":
 			resultats = (ArrayList<Integer>) cntrl.consultarPaper(nomDada);
+			break;
 		case "Terme":
 			resultats = (ArrayList<Integer>) cntrl.consultarTerme(nomDada);
+			break;
+		default:
+			resultats = null;
 		}
 	}
 	
