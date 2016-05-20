@@ -4,14 +4,11 @@ package domini;
  * @author Arnau Badia Sampera
  */
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import persistencia.ControladorPersistencia;
 
 public class ControladorMultigraf extends ControladorGraf {
 
