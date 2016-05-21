@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -16,7 +14,7 @@ public class GestorDades extends JFrame {
 	private static final long serialVersionUID = 2697285126957563652L;
 	private JPanel contentPane;
 
-	public GestorDades() {
+	public GestorDades(ControladorPresentacioDomini ctrl) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -28,7 +26,7 @@ public class GestorDades extends JFrame {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GestorConjuntDades frame = new GestorConjuntDades();
+				GestorConjuntDades frame = new GestorConjuntDades(ctrl);
 				frame.setVisible(true);
 				setVisible(false);
 				frame.addWindowListener(new WindowAdapter() {
@@ -45,7 +43,7 @@ public class GestorDades extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GestorRelacions frame = new GestorRelacions();
+				GestorRelacions frame = new GestorRelacions(ctrl);
 				frame.setVisible(true);
 				setVisible(false);
 				frame.addWindowListener(new WindowAdapter() {
