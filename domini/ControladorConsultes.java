@@ -77,8 +77,10 @@ public class ControladorConsultes {
 	 * 			amb la llista de tots els nodes (de l'últim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode) throws IllegalArgumentException {
+	public String consulta(String path, int idNode) throws IllegalArgumentException, InterruptedException, IOException {
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 		
 		Node n = getNode(path, 0, idNode);
@@ -106,8 +108,9 @@ public class ControladorConsultes {
 	 * 			rellevants pel node amb id idNode segons el path indicat que passen el threshold.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats
 	 * 			o bé algun dels nodes o el path del threshold no existeixen.
+	 * @throws IOException 
 	 */
-	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2, String thresholdPath) throws IllegalArgumentException {
+	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2, String thresholdPath) throws IllegalArgumentException, InterruptedException, IOException {
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 		
 		Node n = getNode(path, 0, idNode);
@@ -291,8 +294,9 @@ public class ControladorConsultes {
 	 * 			El node és de l'últim tipus de node del path del threshold.
 	 * @param path. El nom del path del nou threshold.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IOException 
 	 */
-	public void setThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException {
+	public void setThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException, InterruptedException, IOException {
 		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Threshold t = createThreshold(idNode1, idNode2, path);
 		Resultat r = resultats.get(ultimaConsulta);
@@ -308,8 +312,10 @@ public class ControladorConsultes {
 	 * 			El node és del primer tipus de node de path.
 	 * @throws IllegalArgumentException si no existeix una última consulta, 
 	 * 			o bé no existeixen el path o el node indicats.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void setPath(String path, int id) throws IllegalArgumentException {
+	public void setPath(String path, int id) throws IllegalArgumentException, InterruptedException, IOException {
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		
@@ -332,8 +338,10 @@ public class ControladorConsultes {
 	 * 			El node és del primer tipus de node del path de l'última consulta.
 	 * @throws IllegalArgumentException si no existeix una última consulta,
 	 * 			o bé no existeix el node indicat.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void setDada(int id) throws IllegalArgumentException {
+	public void setDada(int id) throws IllegalArgumentException, InterruptedException, IOException {
 		if (ultimaConsulta == null) throw new IllegalArgumentException("No existeix una última consulta.");
 		Resultat r = resultats.get(ultimaConsulta);
 		Node n = getNode(r.getPath(), 0, id);
@@ -437,7 +445,7 @@ public class ControladorConsultes {
 	 * @returns Retorna el threshold que s'ha creat.
 	 * @throws IllegalArgumentException si el path o els nodes indicats no existeixen.
 	 */
-	private Threshold createThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException {
+	private Threshold createThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException, InterruptedException {
 		if (!exists(path)) throw new IllegalArgumentException("El path del threshold no existeix.");
 		
 		Node n1 = getNode(path, 0, idNode1);
@@ -457,7 +465,7 @@ public class ControladorConsultes {
 	 * 			de tots els nodes rellevants per n segons path que tenen una rellevància major que 0
 	 * 			i superior o igual a filtre.
 	 */
-	private ArrayList<Pair<Double, Node>> llistaResultats(Node n, String path, Double filtre) {
+	private ArrayList<Pair<Double, Node>> llistaResultats(Node n, String path, Double filtre) throws InterruptedException, IOException {
 		HeteSim hs = controladorMultigraf.getHeteSim();
 		ArrayList<Entry<Double, Integer>> resultatshs = hs.heteSimAmbIdentificadors(n, path);
 		ArrayList<Pair<Double, Node>> res = new ArrayList<>();

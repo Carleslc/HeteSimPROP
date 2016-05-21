@@ -50,7 +50,7 @@ public class Threshold implements Serializable {
 	 * 			no és del tipus indicat pel primer tipus de node de path o bé si
 	 * 			el Node b no és del tipus indicat per l'úlitm tipus de node de path.
 	 */
-	public Threshold(Node a, Node b, String path, HeteSim hs) throws IllegalArgumentException {
+	public Threshold(Node a, Node b, String path, HeteSim hs) throws IllegalArgumentException, InterruptedException {
 		this.a = a;
 		this.b = b;
 		this.path = path;
@@ -110,7 +110,7 @@ public class Threshold implements Serializable {
 	 * @throws IllegalArgumentException si el nom del path és null o bé si
 	 * 			algun dels Nodes no es correspon amb el path.
 	 */
-	private double calculateRellevancia() throws IllegalArgumentException {
+	private double calculateRellevancia() throws IllegalArgumentException, InterruptedException {
 		return hs.heteSim(a, b, path);
 	}
 }
