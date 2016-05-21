@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
-
 import domini.ControladorConsultes;
 import domini.ControladorDominiPersistenciaPropi;
 import domini.ControladorMultigraf;
@@ -254,6 +253,34 @@ public class ControladorPresentacioDomini {
 	public String consultarNomTerme(int idTerme) {
 		return controladorNodes.consultarNomTerme(idTerme);
 	}
+	
+	/**
+	 * Consulta la label d'un autor
+	 * @param idAutor de l'autor
+	 * @return label 
+	 */
+    public String consultarLabelAutor(int idAutor){
+	    return controladorNodes.consultarLabelAutor(idAutor);
+	}
+    
+    /**
+	 * Consulta la label d'un paper
+	 * @param idPaper del paper
+	 * @return label 
+	 */
+	public String consultarLabelPaper(int idPaper){
+	    return controladorNodes.consultarLabelPaper(idPaper);
+	}
+	
+	/**
+	 * Consulta la label d'una conferencia
+	 * @param idConferencia de la conferencia
+	 * @return label 
+	 */
+	public String consultarLabelConferencia(int idConferencia){
+		  return controladorNodes.consultarLabelConferencia(idConferencia);
+	}
+
 	
 	//**************funcions de controladorRelacions****************
 	
