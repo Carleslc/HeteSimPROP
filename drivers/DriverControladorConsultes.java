@@ -17,7 +17,12 @@ public class DriverControladorConsultes extends Driver {
 		println("Introdueix el graf:");
 		print("Primer, introdueix el nom del graf: ");
 		String nomGraf = nextLine();
-		contrMultigraf.afegirGraf(nomGraf);
+		try {
+			contrMultigraf.afegirGraf(nomGraf);
+		} catch (Exception e) {
+			println("Hi ha hagut un error:");
+			println(e);
+		}
 
 		ControladorNodes contrNodes = new ControladorNodes(contrMultigraf);
 		println("Ara, introdueix els noms de tots els autors. Acaba amb -1:");

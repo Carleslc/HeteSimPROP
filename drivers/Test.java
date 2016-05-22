@@ -1,14 +1,15 @@
+package drivers;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import domini.ControladorGraf;
 import domini.Graf;
 import domini.HeteSim;
 import domini.Matriu;
-import drivers.Driver;
 
 public class Test extends Driver {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IllegalArgumentException, IOException, InterruptedException {
 		long start = System.nanoTime();
 		ControladorGraf cg = new ControladorGraf();
 		try {
@@ -23,7 +24,7 @@ public class Test extends Driver {
 		println("Conferencies: " + g.consultaMidaConferencia());
 		println("Termes: " + g.consultaMidaTerme());
 		println("Autors: " + g.consultaMidaAutor());
-		println(passTest(g));
+		//println(passTest(g));
 		HeteSim hs = new HeteSim(g);
 		String path;
 		do {
@@ -38,11 +39,17 @@ public class Test extends Driver {
 		} while (!path.equals("0"));
 	}
 
-	private static String passTest(Graf g) {
+	/**
+	 * Comprova el temps de multiplicar matrius normalitzades (CP*PA)
+	 * i també comprova que les funcions de normalitzar retornen els mateixos resultats.
+	 * @throws InterruptedException 
+	 */
+	private static String passTest(Graf g) throws InterruptedException {
+		// Test que hace la media del tiempo de 5 multiplicaciones iguales
 		Matriu m1 = g.consultarMatriuPaperConferencia().transposada().normalitzadaPerFiles();
 		Matriu m2 = g.consultarMatriuPaperAutor().normalitzadaPerColumnes();
-		// CP * PA
-		int N = 3;
+		int N = 5;
+		// CP*PA normalitzades
 		ArrayList<Long> times = new ArrayList<>(N);
 		for (int i = 0; i < N; ++i) {
 			System.out.println("M " + i);
@@ -52,13 +59,17 @@ public class Test extends Driver {
 			times.add(time);
 			System.out.println(time + "ns");
 		}
-		/*String res = "";
+		// Test per comprovar si les funcions de normalització funcionen correctament
+		// Compara els resultats de normalitzadaPerFilas/Columnes amb els creats mitjançant
+		// la fila/columna normalitzada corresponent
+		long start = System.nanoTime();
+		String res = "";
 		Matriu m = g.consultarMatriuPaperAutor();
 		Matriu mf = m.normalitzadaPerFiles();
 		testfiles: for (int i = 0; i < m.getFiles(); ++i) {
 			ArrayList<Double> fn = m.getFilaNormalitzada(i);
 			for (int j = 0; j < m.getColumnes(); ++j) {
-				if (!fn.get(j).equals(Double.valueOf(mf.get(i, j)))) {
+				if (fn.get(j).floatValue() != (float)mf.get(i, j)) {
 					res += "FAIL FILES";
 					break testfiles;
 				}
@@ -70,15 +81,17 @@ public class Test extends Driver {
 		testcolumnes: for (int j = 0; j < m.getColumnes(); ++j) {
 			ArrayList<Double> cn = m.getColumnaNormalitzada(j);
 			for (int i = 0; i < m.getFiles(); ++i) {
-				if (!cn.get(i).equals(Double.valueOf(mc.get(i, j)))) {
+				if (cn.get(i).floatValue() != (float)mc.get(i, j)) {
 					res += ", FAIL COLUMNES";
 					break testcolumnes;
 				}
 			}
 		}
 		if (!res.endsWith("FAIL COLUMNES"))
-			res += ", PASS COLUMNES";*/
-		return "Mult: " + ((times.stream().mapToLong(Long::longValue).average().getAsDouble())/1000000L) + "ms";
+			res += ", PASS COLUMNES";
+		long end = System.nanoTime();
+		return "Mult: " + ((times.stream().mapToLong(Long::longValue).average().getAsDouble())/1000000L) + "ms\n" + res
+				+ " (" + (end - start)/1000000L + "ms)";
 	}
 	
 }

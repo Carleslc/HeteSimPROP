@@ -1,5 +1,7 @@
 package drivers;
 
+import java.io.IOException;
+
 import domini.ControladorMultigraf;
 import domini.ControladorNodes;
 import domini.ControladorPaths;
@@ -9,7 +11,7 @@ import domini.Threshold;
 
 public class DriverThreshold extends Driver {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, IllegalArgumentException, InterruptedException {
 		ControladorMultigraf contrMultigraf = new ControladorMultigraf();
 
 		println("Introdueix el graf:");

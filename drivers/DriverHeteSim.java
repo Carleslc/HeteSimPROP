@@ -1,6 +1,7 @@
 package drivers;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map.Entry;
@@ -211,7 +212,7 @@ public class DriverHeteSim extends Driver {
 		g.eliminarAdjacencia(g.consultarPaper(paper), g.consultarAutor(autor));
 	}
 	
-	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) throws IllegalArgumentException {
+	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) throws IllegalArgumentException, InterruptedException {
 		if (path.startsWith("P") && path.endsWith("A"))
 			return hs.heteSim(hs.getGraf().consultarPaper(paper), hs.getGraf().consultarAutor(autor), path);
 		else if (path.startsWith("P") && path.endsWith("P"))
@@ -223,21 +224,21 @@ public class DriverHeteSim extends Driver {
 		return 0.0;
 	}
 	
-	private static ArrayList<Entry<Double, Integer>> heteSimId(int node, String path, HeteSim hs) throws IllegalArgumentException {
+	private static ArrayList<Entry<Double, Integer>> heteSimId(int node, String path, HeteSim hs) throws IllegalArgumentException, IOException, InterruptedException {
 		if (path.startsWith("A"))
 			return hs.heteSimAmbIdentificadors(hs.getGraf().consultarAutor(node), path);
 		else
 			return hs.heteSimAmbIdentificadors(hs.getGraf().consultarPaper(node), path);
 	}
 	
-	private static ArrayList<Entry<Double, String>> heteSimNom(int node, String path, HeteSim hs) throws IllegalArgumentException {
+	private static ArrayList<Entry<Double, String>> heteSimNom(int node, String path, HeteSim hs) throws IllegalArgumentException, IOException, InterruptedException {
 		if (path.startsWith("A"))
 			return hs.heteSimAmbNoms(hs.getGraf().consultarAutor(node), path);
 		else
 			return hs.heteSimAmbNoms(hs.getGraf().consultarPaper(node), path);
 	}
 
-	private static void jocDeProves() {
+	private static void jocDeProves() throws IllegalArgumentException, IOException, InterruptedException {
 		String path = "PA";
 		Graf g = new Graf();
 		for (int i = 0; i < 3; ++i)
@@ -274,7 +275,7 @@ public class DriverHeteSim extends Driver {
 	}
 	
 	@SuppressWarnings("unused")
-	private static void jocDeProves2() {
+	private static void jocDeProves2() throws IllegalArgumentException, IOException, InterruptedException {
 		String path = "PAP";
 		Graf g = new Graf();
 		for (int i = 0; i < 3; ++i)
@@ -294,7 +295,12 @@ public class DriverHeteSim extends Driver {
 		println("Mitjançant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaPaper(); ++j)
-				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarPaper(j), path)) + (j < g.consultaMidaPaper() - 1 ? ", " : ""));
+				try {
+					print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarPaper(j), path)) + (j < g.consultaMidaPaper() - 1 ? ", " : ""));
+				} catch (Exception e) {
+					println("Error!");
+					println(e);
+				}
 			println();
 		}
 		
