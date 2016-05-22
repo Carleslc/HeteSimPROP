@@ -22,7 +22,7 @@ public class GestorDades extends JFrame {
 		btnGestorConjDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GestorConjuntDades frame = new GestorConjuntDades();
+				GestorConjuntDades frame = new GestorConjuntDades(ctrl);
 				configurarNovaFinestra(frame);
 			}
 		});
