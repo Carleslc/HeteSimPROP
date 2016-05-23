@@ -90,6 +90,8 @@ public class SeleccionarDada extends JFrame {
 		gbc_lblNewLabel.gridy = 0;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
+		configurarTable();
+		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
@@ -97,11 +99,7 @@ public class SeleccionarDada extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		
-		table = new JTable();
 		scrollPane.setViewportView(table);
-		
-		configurarTable();
 		
 		JButton btnAcceptar = new JButton("Acceptar");
 		GridBagConstraints gbc_btnAcceptar = new GridBagConstraints();
@@ -136,30 +134,33 @@ public class SeleccionarDada extends JFrame {
 				data[i][1] = nomDada;
 				data[i][2] = "Informació Adicional";
 			}
-			tableModel = new DefaultTableModel(data, colnames) {
-				public boolean isCellEditable(int row, int column) { /*fem la taula no editable*/
-					return false;
-				};
-			};
+			tableModel = new DefaultTableModel(data, colnames);
 		}
 		
 		else {
-			tableModel = new DefaultTableModel(colnames, 0) {
-				public boolean isCellEditable(int row, int column) { /*fem la taula no editable*/
-					return false;
-				};
-			};
+			tableModel = new DefaultTableModel(colnames, 0);
 		}
 		
-		table.setModel(tableModel);
-		TableColumn col = table.getColumnModel().getColumn(0);
+		table = new JTable(tableModel);
         
+		Action action = new AbstractAction() {
+		    public void actionPerformed(ActionEvent e)
+		    {
+		    	System.out.println("IA");
+		    	InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus);
+		    	ia.setVisible(true);
+		    }
+		};
+		 
+		ButtonColumn buttonColumn = new ButtonColumn(table, action, 2);
+		buttonColumn.setMnemonic(KeyEvent.VK_D);
+		
 		ListSelectionModel ls = table.getSelectionModel();
 		ls.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				
+				System.out.println("LS");
 				ListSelectionModel ls = (ListSelectionModel) e.getSource();
 				int row = -1;
 				int minIndex = ls.getMinSelectionIndex();
@@ -176,16 +177,6 @@ public class SeleccionarDada extends JFrame {
 			}
 			
 		});
-		
-        Action info = new AbstractAction() {
-		    public void actionPerformed(ActionEvent e)
-		    {
-		        /*TODO Crida a informació adicional*/
-		    }
-		};
-		 
-		ButtonColumn buttonColumn = new ButtonColumn(table, info, 2);
-		buttonColumn.setMnemonic(KeyEvent.VK_D);
 	}
 	
 	private void consultarDada() {
@@ -206,6 +197,4 @@ public class SeleccionarDada extends JFrame {
 			resultats = null;
 		}
 	}
-	
-
 }

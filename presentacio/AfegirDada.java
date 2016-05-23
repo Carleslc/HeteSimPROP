@@ -163,7 +163,6 @@ public class AfegirDada extends JFrame {
 				JButton src = (JButton) e.getSource();
 				if (src.isEnabled()) {
 					guardarDades();
-					System.out.println(adjacencies);
 				}
 			}
 		});
@@ -231,7 +230,7 @@ public class AfegirDada extends JFrame {
 		gbc_lblRelacions.gridy = 2;
 		contentPane.add(lblRelacions, gbc_lblRelacions);
 		
-		JButton btnAfegirRelaci = new JButton("Afegir Relació");
+		JButton btnAfegirRelaci = new JButton("Afegir Relaci\u00F3");
 		GridBagConstraints gbc_btnAfegirRelaci = new GridBagConstraints();
 		gbc_btnAfegirRelaci.insets = new Insets(0, 0, 5, 0);
 		gbc_btnAfegirRelaci.gridx = 3;
@@ -242,7 +241,6 @@ public class AfegirDada extends JFrame {
 			
 			public void mouseClicked(MouseEvent e) {
 				if (table.isEnabled()){
-					System.out.println("a");
 					tableModel.addRow(newRow);
 					adjacencies.add(tableModel.getRowCount()-1, null);
 				}
@@ -344,7 +342,9 @@ public class AfegirDada extends JFrame {
 	private void guardarDades() {
 		
 		if (tipus_dada != null) {
-			int id;
+			nom = txtIntrodueixUnNom.getText();
+			System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
+			int id = -1;
 			switch(tipus_dada) {
 			case "Autor":
 				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
@@ -367,6 +367,7 @@ public class AfegirDada extends JFrame {
 				guardarAdjacencies(id);
 				break;
 			}
+			System.out.println("El id resultante es: " + id);
 		}
 		
 		dispose();
@@ -374,6 +375,7 @@ public class AfegirDada extends JFrame {
 	
 	private void guardarAdjacencies(int id) {
 		if (adjacencies != null) {
+			System.out.println("ADJACENCIES: " + adjacencies);
 			if (tipus_dada.equals("Autor")) {
 				for (int i = 0; i < adjacencies.size(); ++i) {
 					if (adjacencies.get(i) != null) {
@@ -407,16 +409,20 @@ public class AfegirDada extends JFrame {
 						Integer id_ad = adjacencies.get(i).getKey();
 						String tipus_ad = adjacencies.get(i).getValue();
 						if (id_ad != null && tipus_ad != null) {
-							
+	
 							switch (tipus_ad) {
 							case "Autor":
 								cntrl.afegirAdjacenciaPaperAutor(id, id_ad);
+								System.out.println(tipus_ad + cntrl.consultarNomAutor(id_ad));
 								break;
 							case "Conferencia":
 								cntrl.setAdjacenciaPaperConferencia(id, id_ad);
+								System.out.println(tipus_ad + cntrl.consultarNomConferencia(id_ad));
 								break;
 							case "Terme":
-								cntrl.afegirAdjacenciaPaperTerme(id, id_ad);
+								boolean res = cntrl.afegirAdjacenciaPaperTerme(id, id_ad);
+								System.out.println(tipus_ad + " " + cntrl.consultarNomTerme(id_ad) + " " + res);
+								break;
 							}
 							
 						}
