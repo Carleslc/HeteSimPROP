@@ -18,7 +18,6 @@ import java.io.IOException;
 public class GestorConjuntDades extends JFrame {
 
 	private JPanel contentPane;
-	private ControladorPresentacioDomini ctrl;
 
 	/**
 	 * Launch the application.
@@ -41,7 +40,6 @@ public class GestorConjuntDades extends JFrame {
 	 * Create the frame.
 	 */
 	public GestorConjuntDades(ControladorPresentacioDomini ctrl) {
-		this.ctrl = ctrl;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -85,7 +83,7 @@ public class GestorConjuntDades extends JFrame {
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Importar x = new Importar();
+				Importar x = new Importar(ctrl);
 				x.setVisible(true);
 			}
 		});

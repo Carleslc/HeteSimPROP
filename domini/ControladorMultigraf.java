@@ -138,7 +138,9 @@ public class ControladorMultigraf extends ControladorGraf {
 	 */
 	@Override
 	public void guardar(String path) throws IOException {
-		super.guardar(path);
+		if (idActual != null) {
+			super.guardar(path);
+		}
 	}
 	
 	/**
