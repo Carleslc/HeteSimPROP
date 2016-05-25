@@ -687,8 +687,10 @@ public class ControladorPresentacioDomini {
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode) throws IllegalArgumentException {
+	public String consulta(String path, int idNode) throws IllegalArgumentException, InterruptedException, IOException {
 		return controladorConsultes.consulta(path, idNode);
 	}
 	
@@ -705,8 +707,10 @@ public class ControladorPresentacioDomini {
 	 * 			rellevants pel node amb id idNode segons el path indicat que passen el threshold.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats
 	 * 			o be algun dels nodes o el path del threshold no existeixen.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2, String thresholdPath) throws IllegalArgumentException {
+	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2, String thresholdPath) throws IllegalArgumentException, InterruptedException, IOException {
 		return controladorConsultes.consulta(path, idNode, idNodeThreshold1, idNodeThreshold2, thresholdPath);
 	}
 	
@@ -847,8 +851,10 @@ public class ControladorPresentacioDomini {
 	 * 			El node es de l'ultim tipus de node del path del threshold.
 	 * @param path. El nom del path del nou threshold.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void setThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException {
+	public void setThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException, InterruptedException, IOException {
 		controladorConsultes.setThreshold(idNode1, idNode2, path);
 	}
 	
@@ -858,8 +864,10 @@ public class ControladorPresentacioDomini {
 	 * @param id. L'id del node pel qual es vol modificar l'actual.
 	 * 			El node es del primer tipus de node de path.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void setPath(String path, int id) throws IllegalArgumentException {
+	public void setPath(String path, int id) throws IllegalArgumentException, InterruptedException, IOException {
 		controladorConsultes.setPath(path, id);
 	}
 	
@@ -868,8 +876,10 @@ public class ControladorPresentacioDomini {
 	 * @param id. L'id del node pel qual es vol modificar l'actual.
 	 * 			El node es del primer tipus de node del path de l'ultima consulta.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * @throws IOException 
+	 * @throws InterruptedException 
 	 */
-	public void setDada(int id) throws IllegalArgumentException {
+	public void setDada(int id) throws IllegalArgumentException, InterruptedException, IOException {
 		controladorConsultes.setDada(id);
 	}
 	
