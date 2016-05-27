@@ -1,38 +1,25 @@
 package presentacio;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-import java.awt.List;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.GridBagLayout;
-
 import javax.swing.JButton;
 
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-import javax.swing.JComboBox;
 
 public class MenuPrincipal extends JFrame {
 
+	private static final long serialVersionUID = -9206328603791933807L;
+	
 	private JPanel contentPane;
-	private ControladorPresentacioDomini ctrl;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -41,7 +28,7 @@ public class MenuPrincipal extends JFrame {
 			public void run() {
 				try {
 					ControladorPresentacioDomini ctrl = new ControladorPresentacioDomini();
-					MenuPrincipal2 frame = new MenuPrincipal2(ctrl);
+					MenuPrincipal frame = new MenuPrincipal(ctrl);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -56,7 +43,6 @@ public class MenuPrincipal extends JFrame {
 	public MenuPrincipal(ControladorPresentacioDomini ctrl) {
 	
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		this.ctrl = ctrl;
 		addWindowListener(new WindowAdapter() {
 			
 			public void windowClosing(WindowEvent e) {

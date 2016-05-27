@@ -1,12 +1,8 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
@@ -21,6 +17,10 @@ import java.io.IOException;
 
 public class InformacioAddicional extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1799024988380129469L;
 	private JPanel contentPane;
 	private String seltipus;
 
@@ -76,19 +76,8 @@ public class InformacioAddicional extends JFrame {
 		
 		
 		//desplegable
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<String>();
 		
-
-		//afegeixo les diferents opcions 
-		if (tipus.equals("paper")) {
-			comboBox.addItem("termes");
-			comboBox.addItem("autors");
-			comboBox.addItem("conferencies");
-			comboBox.setSelectedItem(null);
-		}
-		else {
-			comboBox.addItem("papers");
-		}
 		
 		
 		//listener que nomes actua si la dada sobre la qual es consulten relacions es un paper

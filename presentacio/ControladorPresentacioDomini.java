@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
-import persistencia.ControladorPersistencia;
 import domini.ControladorConsultes;
 import domini.ControladorDominiPersistenciaPropi;
 import domini.ControladorMultigraf;

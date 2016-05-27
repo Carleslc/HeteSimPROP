@@ -1,18 +1,12 @@
 package presentacio;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JFileChooser;
 import javax.swing.JButton;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -22,6 +16,10 @@ import javax.swing.JLabel;
 
 public class Importar extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5244204067392716257L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private String selDir;
