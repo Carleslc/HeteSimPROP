@@ -18,12 +18,13 @@ import domini.ControladorPaths;
 import domini.ControladorRelacions;
 
 public class ControladorPresentacio {
-	ControladorNodes controladorNodes;
-	ControladorRelacions controladorRelacions;
-	ControladorPaths controladorPaths;
-	ControladorMultigraf controladorMultigraf;
-	ControladorConsultes controladorConsultes;
-	ControladorDominiPersistenciaPropi controladorDominiPersistenciaPropi;
+	
+	private ControladorNodes controladorNodes;
+	private ControladorRelacions controladorRelacions;
+	private ControladorPaths controladorPaths;
+	private ControladorMultigraf controladorMultigraf;
+	private ControladorConsultes controladorConsultes;
+	private ControladorDominiPersistenciaPropi controladorDominiPersistenciaPropi;
 	
 	public ControladorPresentacio() throws IOException {
 		controladorMultigraf = new ControladorMultigraf();
