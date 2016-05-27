@@ -21,36 +21,17 @@ import java.io.IOException;
 
 public class InformacioAddicional extends JFrame {
 
-	private static final long serialVersionUID = -6379071660651045939L;
-	
 	private JPanel contentPane;
 	private String seltipus;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacioDomini ctrl = new ControladorPresentacioDomini();
-					int id = 0;
-					String tipus = "paper";
-					InformacioAddicional frame = new InformacioAddicional(ctrl,id,tipus);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
 	public InformacioAddicional(ControladorPresentacioDomini ctrl, int id, String tipus) {
+		setTitle("Dades Relacionades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 484, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -74,25 +55,15 @@ public class InformacioAddicional extends JFrame {
 		ctrl.afegirTerme("mmmm");
 		ctrl.afegirPaper("tercer");
 
-			
-		ctrl.afegirAdjacenciaPaperAutor(1, 0);
-		ctrl.afegirAdjacenciaPaperAutor(1, 1);
-		ctrl.afegirAdjacenciaPaperAutor(0, 1);
-
 	
-		ctrl.afegirAdjacenciaPaperTerme(0, 0);
-		ctrl.afegirAdjacenciaPaperTerme(0, 2);
-		ctrl.setAdjacenciaPaperConferencia(0, 0);
-
-
-		//label
-		JLabel lblNewLabel = new JLabel("Dades Relacionades:");
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.fill = GridBagConstraints.HORIZONTAL;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		contentPane.add(lblNewLabel, gbc_lblNewLabel);
+		
+		JLabel lblTipusNodeRelacionat = new JLabel("Tipus de node relacionat:");
+		GridBagConstraints gbc_lblTipusNodeRelacionat = new GridBagConstraints();
+		gbc_lblTipusNodeRelacionat.insets = new Insets(0, 0, 5, 5);
+		gbc_lblTipusNodeRelacionat.anchor = GridBagConstraints.EAST;
+		gbc_lblTipusNodeRelacionat.gridx = 1;
+		gbc_lblTipusNodeRelacionat.gridy = 0;
+		contentPane.add(lblTipusNodeRelacionat, gbc_lblTipusNodeRelacionat);
 		
 		//ScrollPane
 		JScrollPane scrollPane = new JScrollPane();
@@ -105,7 +76,7 @@ public class InformacioAddicional extends JFrame {
 		
 		
 		//desplegable
-		JComboBox<String> comboBox = new JComboBox<>();
+		JComboBox comboBox = new JComboBox();
 		
 
 		//afegeixo les diferents opcions 

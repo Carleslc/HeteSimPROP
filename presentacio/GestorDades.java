@@ -15,14 +15,14 @@ public class GestorDades extends JFrame {
 	private static final long serialVersionUID = 2697285126957563652L;
 	private JPanel contentPane;
 	
-	public GestorDades(ControladorPresentacioDomini ctrl) {
+	public GestorDades(ControladorPresentacioDomini ctrl, SeleccionarConjuntDeDades sd) {
 		config();
 		
 		JButton btnGestorConjDades = new JButton("Gestor de conjunts de dades");
 		btnGestorConjDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GestorConjuntDades frame = new GestorConjuntDades(ctrl);
+				GestorConjuntDades frame = new GestorConjuntDades(ctrl,sd);
 				configurarNovaFinestra(frame);
 			}
 		});

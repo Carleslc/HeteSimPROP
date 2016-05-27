@@ -17,31 +17,13 @@ import java.io.IOException;
 
 public class GestorConjuntDades extends JFrame {
 
-	private static final long serialVersionUID = 8463596687710765552L;
-	
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacioDomini ctrl = new ControladorPresentacioDomini();
-					GestorConjuntDades frame = new GestorConjuntDades(ctrl);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	
 	/**
 	 * Create the frame.
 	 */
-	public GestorConjuntDades(ControladorPresentacioDomini ctrl) {
+	public GestorConjuntDades(ControladorPresentacioDomini ctrl, SeleccionarConjuntDeDades sd) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -57,9 +39,10 @@ public class GestorConjuntDades extends JFrame {
 				String s = JOptionPane.showInputDialog(btnNewButton, "Crear nou Conjunt");
 				try {
 					ctrl.afegirGraf(s);
+					sd.update();
 				}
 				catch(IOException e1) {
-					JOptionPane.showConfirmDialog(btnNewButton, e1.getMessage());
+					new ErrorMessage(e1.getMessage());
 				}
 			}
 		});
@@ -85,7 +68,7 @@ public class GestorConjuntDades extends JFrame {
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Importar x = new Importar(ctrl);
+				Importar x = new Importar(ctrl,sd);
 				x.setVisible(true);
 			}
 		});

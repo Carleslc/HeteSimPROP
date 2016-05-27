@@ -37,7 +37,7 @@ public class ControladorMultigraf extends ControladorGraf {
 
 	/**
 	 * Consulta l'ID del graf actual.
-	 * @return l'ID del graf actual.
+	 * @return l'ID del graf actual o null si no hi ha cap seleccionat.
 	 */
 	public String getIdActual() {
 		return idActual;
@@ -133,5 +133,8 @@ public class ControladorMultigraf extends ControladorGraf {
 	 */
 	public void esborrarFitxerGraf() throws IOException {
 		ControladorPersistencia.esborrarFitxer(construirPath(idActual));
+		grafs.remove(idActual);
+		idActual = null;
+		graf = null;
 	}
 }
