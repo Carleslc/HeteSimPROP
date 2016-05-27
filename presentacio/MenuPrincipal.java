@@ -77,6 +77,7 @@ public class MenuPrincipal extends JFrame {
 			}
 		});
 		btnNewButton_2.setBounds(133, 165, 166, 42);
+		contentPane.add(btnNewButton_2);
 		
 		//Consulta button
 		JButton btnNewButton = new JButton("Consulta");
