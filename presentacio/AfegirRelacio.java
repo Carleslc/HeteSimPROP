@@ -47,7 +47,7 @@ public class AfegirRelacio extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				String path = textPath.getText().trim();
 				String description = textDescription.getText();
-				boolean b = ctrl.afegir(path, description);
+				boolean b = ctrl.afegir(path.toUpperCase(), description);
 				if (!b) JOptionPane.showMessageDialog(contentPane, "Error!\nPath incorrecte!");
 				else {
 					newPath = path;

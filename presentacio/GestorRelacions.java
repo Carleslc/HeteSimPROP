@@ -92,7 +92,7 @@ public class GestorRelacions extends JFrame {
 				if (option == JOptionPane.OK_OPTION) {
 					int row = Integer.valueOf(e.getActionCommand());
 					String path = (String)model.getValueAt(row, 0);
-					ctrl.esborrar(path);
+					ctrl.esborrar(path.toUpperCase());
 					model.removeRow(row);
 				}
 			}
@@ -131,7 +131,7 @@ public class GestorRelacions extends JFrame {
 						String description = frame.getNewDescription();
 						if (path != null) {
 							String[] fila = new String[4];
-							fila[0] = path;
+							fila[0] = path.toUpperCase();
 							fila[1] = description;
 							fila[2] = "Modificar descripci�";
 							fila[3] = "Esborrar";

@@ -44,7 +44,7 @@ public class ModificarConjuntDades extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JComboBox<String> comboBox = new SeleccionarConjuntDeDades(ctrl);
+		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector();
 		contentPane.add(comboBox);
 
 		JButton btnEsborrar = new JButton("Esborrar conjunt");
@@ -61,6 +61,7 @@ public class ModificarConjuntDades extends JFrame {
 					if (opt == JOptionPane.YES_OPTION) {
 						try {
 							ctrl.esborrarFitxerGraf();
+							ctrl.getSelectorConjunts().update();
 						} catch (IOException ex) {
 							new ErrorMessage(ex.getMessage());
 						}

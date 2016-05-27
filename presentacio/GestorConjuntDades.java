@@ -1,6 +1,5 @@
 package presentacio;
 
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -9,21 +8,15 @@ import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class GestorConjuntDades extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2784181985614807193L;
 	private JPanel contentPane;
 
-	
-	/**
-	 * Create the frame.
-	 */
-	public GestorConjuntDades(ControladorPresentacio ctrl, SeleccionarConjuntDeDades sd) {
+	public GestorConjuntDades(ControladorPresentacio ctrl) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -39,16 +32,15 @@ public class GestorConjuntDades extends JFrame {
 				String s = JOptionPane.showInputDialog(btnNewButton, "Crear nou Conjunt");
 				try {
 					ctrl.afegirGraf(s);
-					sd.update();
-				}
-				catch(IOException e1) {
-					new ErrorMessage(e1.getMessage());
+					ctrl.getSelectorConjunts().update();
+				} catch(FileNotFoundException ignore) {
+				} catch(IOException ex) {
+					new ErrorMessage(ex.getMessage());
 				}
 			}
 		});
 		btnNewButton.setBounds(116, 48, 229, 60);
 		contentPane.add(btnNewButton);
-		
 		
 		//modificar button
 		JButton btnNewButton_1 = new JButton("Modificar Conjunt de Dades");
@@ -62,20 +54,16 @@ public class GestorConjuntDades extends JFrame {
 		btnNewButton_1.setBounds(116, 115, 229, 60);
 		contentPane.add(btnNewButton_1);
 		
-		
 		//importar
 		JButton btnNewButton_2 = new JButton("Importar Conjunt de Dades");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Importar x = new Importar(ctrl,sd);
+				Importar x = new Importar(ctrl);
 				x.setVisible(true);
 			}
 		});
 		btnNewButton_2.setBounds(116, 187, 229, 53);
 		contentPane.add(btnNewButton_2);
 	}
-	
-	
-	
 }

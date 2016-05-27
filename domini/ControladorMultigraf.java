@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import persistencia.ControladorPersistencia;
 
@@ -86,6 +87,20 @@ public class ControladorMultigraf extends ControladorGraf {
 		grafs.add(nomGraf);
 		idActual = nomGraf;
 		hetesim = new HeteSim(graf);
+	}
+	
+	/**
+	 * Consulta si un graf està carregat.
+	 * @param nomGraf que Ã©s el nom del Graf que es vol consultar.
+	 * @return si el graf existeix i està carregat.
+	 */
+	public boolean exists(String nomGraf) {
+		Pattern pattern = Pattern.compile(nomGraf, Pattern.CASE_INSENSITIVE + Pattern.LITERAL);
+		for (String graf : grafs) {
+			if (pattern.matcher(graf).find())
+				return true;
+		}
+		return false;
 	}
 	
 	/**

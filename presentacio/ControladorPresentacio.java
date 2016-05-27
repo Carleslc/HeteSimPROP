@@ -19,12 +19,14 @@ import domini.ControladorRelacions;
 
 public class ControladorPresentacio {
 	
-	private ControladorNodes controladorNodes;
-	private ControladorRelacions controladorRelacions;
-	private ControladorPaths controladorPaths;
-	private ControladorMultigraf controladorMultigraf;
-	private ControladorConsultes controladorConsultes;
-	private ControladorDominiPersistenciaPropi controladorDominiPersistenciaPropi;
+	private final ControladorNodes controladorNodes;
+	private final ControladorRelacions controladorRelacions;
+	private final ControladorPaths controladorPaths;
+	private final ControladorMultigraf controladorMultigraf;
+	private final ControladorConsultes controladorConsultes;
+	private final ControladorDominiPersistenciaPropi controladorDominiPersistenciaPropi;
+	
+	private final SelectorConjunts selectorConjunts;
 	
 	public ControladorPresentacio() throws IOException {
 		controladorMultigraf = new ControladorMultigraf();
@@ -33,6 +35,7 @@ public class ControladorPresentacio {
 		controladorPaths = new ControladorPaths(controladorMultigraf);
 		controladorConsultes = new ControladorConsultes(controladorMultigraf, controladorPaths);
 		controladorDominiPersistenciaPropi = new ControladorDominiPersistenciaPropi(controladorMultigraf, controladorPaths, controladorConsultes);
+		selectorConjunts = new SelectorConjunts(this);
 	}
 	
 	//**************funcions de controladorNodes****************
@@ -551,6 +554,14 @@ public class ControladorPresentacio {
 		controladorMultigraf.importar(nomGraf, directori);
 	}
 	
+	/**
+	 * Consulta si un graf està carregat.
+	 * @param nomGraf que Ã©s el nom del Graf que es vol consultar.
+	 * @return si el graf existeix i està carregat.
+	 */
+	public boolean exists(String nomGraf) {
+		return controladorMultigraf.exists(nomGraf);
+	}
 	
 	/**
 	 * Selecciona el graf amb nom "nomGraf" com a graf actual.
@@ -977,5 +988,8 @@ public class ControladorPresentacio {
 		});
 	}
 	
+	public SelectorConjunts getSelectorConjunts() {
+		return selectorConjunts;
+	}
 
 }

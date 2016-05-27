@@ -42,7 +42,7 @@ public class InformacioAddicional extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		//proves
+		// FIXME eliminar proves
 		try{ctrl.afegirGraf("Graf1");}
 		catch(IOException e1){System.out.println("error");}
 		ctrl.afegirPaper("lele");
@@ -55,8 +55,6 @@ public class InformacioAddicional extends JFrame {
 		ctrl.afegirTerme("mmmm");
 		ctrl.afegirPaper("tercer");
 
-	
-		
 		JLabel lblTipusNodeRelacionat = new JLabel("Tipus de node relacionat:");
 		GridBagConstraints gbc_lblTipusNodeRelacionat = new GridBagConstraints();
 		gbc_lblTipusNodeRelacionat.insets = new Insets(0, 0, 5, 5);

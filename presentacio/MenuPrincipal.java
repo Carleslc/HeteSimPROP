@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -22,9 +23,6 @@ public class MenuPrincipal extends JFrame {
 	
 	private JPanel contentPane;
 	
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -39,11 +37,7 @@ public class MenuPrincipal extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public MenuPrincipal(ControladorPresentacio ctrl) {
-	
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			
@@ -69,9 +63,6 @@ public class MenuPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		
-	
-		
 		//guardar button
 		JButton btnNewButton_2 = new JButton("Guardar");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
@@ -94,8 +85,6 @@ public class MenuPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		contentPane.add(btnNewButton);
 		
-		
-		
 		//About button
 		JButton btnNewButton_3 = new JButton("About");
 		btnNewButton_3.addMouseListener(new MouseAdapter() {
@@ -107,18 +96,7 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_3.setBounds(16, 231, 66, 29);
 		contentPane.add(btnNewButton_3);
 	
-
-		final SeleccionarConjuntDeDades comboBox = new SeleccionarConjuntDeDades(ctrl);
-		comboBox.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					ctrl.seleccionarGraf((String)comboBox.getSelectedItem());
-				} catch (IOException e1) {
-					new ErrorMessage(e1.getMessage());
-				}
-			}
-		});
+		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector();
 		comboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -127,7 +105,6 @@ public class MenuPrincipal extends JFrame {
 				else
 					btnNewButton.setEnabled(true);
 			}
-			
 		});
 		comboBox.setToolTipText("Selecciona un conjunt de dades");
 		comboBox.setBounds(322, 6, 137, 27);
@@ -139,22 +116,11 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GestorDades frame2 = new GestorDades(ctrl, comboBox);
+				GestorDades frame2 = new GestorDades(ctrl);
 				frame2.setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(133, 106, 166, 47);
 		contentPane.add(btnNewButton_1);
-		contentPane.add(btnNewButton_2);
-	}
-	
-	public static void configurarNovaFinestra(JFrame from, JFrame to) {
-		to.setVisible(true);
-		from.setVisible(false);
-		to.addWindowListener(new WindowAdapter() {
-			public void windowClosed(WindowEvent e) {
-				from.setVisible(true);
-			}
-		});
 	}
 }
