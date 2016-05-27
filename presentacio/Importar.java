@@ -85,17 +85,17 @@ public class Importar extends JFrame {
 												+ "Comprova que has introduït correctament el directori i el nom.",
 												"Error a l'importar", false);
 									} catch (Exception e2) {
-										return new ErrorMessage(e2.getMessage(), "Error a l'importar el graf", false);
+										return new ErrorMessage(e2.getMessage(), "Error a l'importar", false);
 									}
 									return null;
 								},
-								(msg) -> {
-									if (msg != null)
-										msg.show();
+								(err) -> {
+									if (err != null)
+										err.show();
 									else
 										ctrl.getSelectorConjunts().update();
 									setEnabled(true);
-									return msg == null;
+									return err == null;
 								},
 								"Important dades...",
 								"Dades carregades correctament!",

@@ -48,7 +48,7 @@ public class AfegirRelacio extends JFrame {
 				String path = textPath.getText().trim();
 				String description = textDescription.getText();
 				boolean b = ctrl.afegir(path.toUpperCase(), description);
-				if (!b) JOptionPane.showMessageDialog(contentPane, "Error!\nPath incorrecte!");
+				if (!b) JOptionPane.showMessageDialog(contentPane, "Error!\nPath incorrecte o repetit!");
 				else {
 					newPath = path;
 					newDescription = description;
