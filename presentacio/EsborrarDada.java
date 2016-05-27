@@ -41,7 +41,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 import java.awt.Toolkit;
 
-public class EsborrarDades extends JFrame {
+public class EsborrarDada extends JFrame {
 
 	private static final long serialVersionUID = -4984707809082087185L;
 	private JPanel contentPane;
@@ -59,7 +59,7 @@ public class EsborrarDades extends JFrame {
 			public void run() {
 				try {
 					Integer p = 0;
-					EsborrarDades frame = new EsborrarDades(new ControladorPresentacioDomini());
+					EsborrarDada frame = new EsborrarDada(new ControladorPresentacioDomini());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -70,7 +70,7 @@ public class EsborrarDades extends JFrame {
 
 
 
-	public EsborrarDades(ControladorPresentacioDomini cntrl) {
+	public EsborrarDada(ControladorPresentacioDomini cntrl) {
 		setResizable(false);
 		setTitle("Esborrar Dada");
 		this.cntrl = cntrl;
@@ -135,7 +135,7 @@ public class EsborrarDades extends JFrame {
 		JButton btnEsborrar = new JButton("Esborrar");
 		btnEsborrar.setForeground(Color.BLACK);
 		btnEsborrar.setBackground(Color.WHITE);
-		btnEsborrar.setIcon(new ImageIcon(EsborrarDades.class.getResource("/javax/swing/plaf/metal/icons/Warn.gif")));
+		btnEsborrar.setIcon(new ImageIcon(EsborrarDada.class.getResource("/javax/swing/plaf/metal/icons/Warn.gif")));
 		GridBagConstraints gbc_btnEsborrar = new GridBagConstraints();
 		gbc_btnEsborrar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnEsborrar.gridwidth = 9;

@@ -76,7 +76,7 @@ public class AfegirDada extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AfegirDada frame = new AfegirDada(null);
+					AfegirDada frame = new AfegirDada(new ControladorPresentacioDomini());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
