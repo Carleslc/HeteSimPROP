@@ -93,7 +93,7 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton.setEnabled(false);
 		contentPane.setLayout(null);
 		contentPane.add(btnNewButton);
-		
+		// TODO add listeners
 		
 		
 		//About button
@@ -148,13 +148,5 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnNewButton_2);
 	}
 	
-	public static void configurarNovaFinestra(JFrame from, JFrame to) {
-		to.setVisible(true);
-		from.setVisible(false);
-		to.addWindowListener(new WindowAdapter() {
-			public void windowClosed(WindowEvent e) {
-				from.setVisible(true);
-			}
-		});
-	}
+	
 }
