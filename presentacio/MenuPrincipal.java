@@ -94,10 +94,7 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_3.setBounds(16, 231, 66, 29);
 		contentPane.add(btnNewButton_3);
 		
-		
-		String[] s = (String[])ctrl.getNomsGrafs().toArray();
-		
-		JComboBox comboBox = new JComboBox(s);
+		JComboBox<String> comboBox = new SeleccionarConjuntDeDades(ctrl.controladorMultigraf);
 		comboBox.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

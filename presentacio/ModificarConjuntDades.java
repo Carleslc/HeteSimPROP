@@ -38,7 +38,7 @@ public class ModificarConjuntDades extends JFrame {
 		});
 	}
 
-	public ModificarConjuntDades(ControladorPresentacioDomini ctrlPreDom, ControladorMultigraf ctrlMultigraf) {
+	public ModificarConjuntDades(ControladorPresentacioDomini ctrl) {
 		setTitle("Modificar conjunt de dades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -47,16 +47,7 @@ public class ModificarConjuntDades extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JComboBox<String> comboBox = new JComboBox<>();
-		comboBox.setToolTipText("Selecciona un conjunt de dades.");
-		comboBox.setBounds(199, 11, 225, 32);
-		comboBox.setEditable(false);
-		final DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>(new String[] {"- No hi ha cap conjunt seleccionat -"});
-		List<String> grafs = ctrlMultigraf.getNomsGrafs();
-		for (String graf : grafs)
-			comboBoxModel.addElement(graf);
-		comboBox.setModel(comboBoxModel);
-		comboBox.setSelectedIndex(grafs.isEmpty() ? 0 : 1 + grafs.indexOf(ctrlMultigraf.getIdActual()));
+		JComboBox<String> comboBox = new SeleccionarConjuntDeDades(ctrl.controladorMultigraf);
 		contentPane.add(comboBox);
 
 		JButton btnEsborrar = new JButton("Esborrar conjunt");
@@ -86,7 +77,7 @@ public class ModificarConjuntDades extends JFrame {
 		btnAfegirDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AfegirDada(ctrlPreDom).setVisible(true);
+				new AfegirDada(ctrl).setVisible(true);
 			}
 		});
 		contentPane.add(btnAfegirDades);
@@ -96,7 +87,7 @@ public class ModificarConjuntDades extends JFrame {
 		btnEsborrarDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new EsborrarDada(ctrlPreDom).setVisible(true);
+				new EsborrarDada(ctrl).setVisible(true);
 			}
 		});
 		contentPane.add(btnEsborrarDades);
