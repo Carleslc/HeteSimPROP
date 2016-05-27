@@ -1,6 +1,5 @@
 package drivers;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -19,7 +18,14 @@ import domini.Matriu;
 public class DriverHeteSim extends Driver {
 
 	public static void main(String[] args) {
-		HeteSim hs = crearHeteSim();
+		HeteSim hs = null;
+		try {
+			hs = crearHeteSim();
+		} catch (IOException e) {
+			println("Hi ha hagut un error!");
+			print(e);
+			System.exit(1);
+		}
 		
 		int opcio;
 		do {
@@ -31,13 +37,11 @@ public class DriverHeteSim extends Driver {
 					+ "5. heteSim(node, node, path)\n"
 					+ "6. heteSimAmbIdentificadors(node, path)\n"
 					+ "7. heteSimAmbNoms(node, path)\n"
-					+ "8. guardarClausures(system_path)\n"
-					+ "9. carregarClausures(system_path)\n"
-					+ "10. Afegir Autors\n"
-					+ "11. Afegir Papers\n"
-					+ "12. Afegir Adjacencia Paper-Autor\n"
-					+ "13. Eliminar Adjacencia Paper-Autor\n"
-					+ "14. Sortir del driver\n"
+					+ "8. Afegir Autors\n"
+					+ "9. Afegir Papers\n"
+					+ "10. Afegir Adjacencia Paper-Autor\n"
+					+ "11. Eliminar Adjacencia Paper-Autor\n"
+					+ "12. Sortir del driver\n"
 					+ "Opcio = ");
 			
 			opcio = nextInt();
@@ -106,33 +110,18 @@ public class DriverHeteSim extends Driver {
 						break;
 					}
 					case 8: {
-						print("Escriu el path i fitxer on guardarles: ");
-						String system_path = nextLine();
-						hs.guardarClausures(system_path);
-						File f = new File(system_path);
-						f.deleteOnExit();
-						println("El fitxer " + f.getAbsolutePath() + " sera eliminat al sortir del driver.");
-						break;
-					}
-					case 9: {
-						print("Escriu el path i fitxer on estan guardades: ");
-						hs.carregarClausures(nextLine());
-						println("Clausures carregades correctament.");
-						break;
-					}
-					case 10: {
 						print("Quants autors vols afegir?: ");
 						int autors = nextInt();
 						afegirAutors(autors, hs);
 						break;
 					}
-					case 11: {
+					case 9: {
 						print("Quants Papers vols afegir?: ");
 						int papers = nextInt();
 						afegirPapers(papers, hs);
 						break;
 					}
-					case 12: {
+					case 10: {
 						println("Entre quins Papers i Autors vols afegir una adjacencia? ");
 						print("Paper: ");
 						int paper = nextInt();
@@ -145,7 +134,7 @@ public class DriverHeteSim extends Driver {
 						}
 						break;
 					}
-					case 13: {
+					case 11: {
 						println("Entre quins Papers i Autors vols eliminar una adjacencia? ");
 						print("Paper: ");
 						int paper = nextInt();
@@ -158,10 +147,10 @@ public class DriverHeteSim extends Driver {
 						}
 						break;
 					}
-					case 14:
+					case 12:
 						break;
 					default:
-						println("Introdueix una opcio de la 1 a la 14.");
+						println("Introdueix una opcio de la 1 a la 12.");
 				}
 			} catch (Exception e) {
 				println("\nHi ha hagut un error:");
@@ -169,12 +158,12 @@ public class DriverHeteSim extends Driver {
 			}
 			
 			println();
-		} while (opcio != 14);
+		} while (opcio != 12);
 		
 		close();
 	}
 	
-	private static HeteSim crearHeteSim() {
+	private static HeteSim crearHeteSim() throws IOException {
 		Graf g = new Graf();
 		HeteSim h = new HeteSim(g);
 		return h;
@@ -212,7 +201,7 @@ public class DriverHeteSim extends Driver {
 		g.eliminarAdjacencia(g.consultarPaper(paper), g.consultarAutor(autor));
 	}
 	
-	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) throws IllegalArgumentException, InterruptedException {
+	private static double hetesimNodes(int paper, int autor, String path, HeteSim hs) throws IllegalArgumentException, InterruptedException, IOException {
 		if (path.startsWith("P") && path.endsWith("A"))
 			return hs.heteSim(hs.getGraf().consultarPaper(paper), hs.getGraf().consultarAutor(autor), path);
 		else if (path.startsWith("P") && path.endsWith("P"))

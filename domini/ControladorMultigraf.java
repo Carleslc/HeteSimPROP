@@ -14,16 +14,12 @@ public class ControladorMultigraf extends ControladorGraf {
 
 	private String idActual;
 	private HashSet<String> grafs;
-	private HeteSim heteSim; 
-	
 	
 	/**
 	 * Constructor 
 	 */
-	public ControladorMultigraf() {
-		super();
+	public ControladorMultigraf() throws IOException {
 		grafs = new HashSet<>();
-		heteSim = new HeteSim(graf);
 	}
 
 	/**
@@ -46,25 +42,11 @@ public class ControladorMultigraf extends ControladorGraf {
 	}
 	
 	/**
-	 * Marca les clausures del graf actual com a invalides (ja que s'ha modificat el graf)
-	 */
-	public void clausuresInvalides() {
-		HeteSim.clausuresInvalides();
-	}
-	
-	/**
 	 * Retorna una llista amb els noms de tots els grafs carregats.
 	 * @return llista amb els noms de tots els grafs carregats.
 	 */
 	public List<String> getNomsGrafs() {
 		return new ArrayList<String>(grafs);
-		}
-	/**
-	 * Retorna el controlador de l’algorisme HeteSim del graf actual.
-	 * @return el controlador de l’algorisme HeteSim del graf actual.
-	 */
-	public HeteSim getHeteSim() {
-		return heteSim;
 	}
 	
 	/**
@@ -79,7 +61,7 @@ public class ControladorMultigraf extends ControladorGraf {
 		}
 		graf = new Graf();
 		grafs.add(nomGraf);
-		heteSim = new HeteSim(graf);
+		hetesim = new HeteSim(graf);
 		idActual = nomGraf;
 	}
 	
@@ -101,7 +83,7 @@ public class ControladorMultigraf extends ControladorGraf {
 		super.importar(directori);
 		grafs.add(nomGraf);
 		idActual = nomGraf;
-		heteSim = new HeteSim(graf);
+		hetesim = new HeteSim(graf);
 	}
 	
 	/**
@@ -116,7 +98,7 @@ public class ControladorMultigraf extends ControladorGraf {
 		if (!grafs.contains(nomGraf)) return false;
 		carregar(construirPath(nomGraf));
 		idActual = nomGraf;
-		heteSim = new HeteSim(graf);
+		hetesim = new HeteSim(graf);
 		return true;
 	}
 	
@@ -142,43 +124,4 @@ public class ControladorMultigraf extends ControladorGraf {
 			super.guardar(path);
 		}
 	}
-	
-	/**
-	 * Carrega tots els grafs amb les seves clausures dels fitxers corresponents al directori donat. 
-	 * @param directori on estan continguts els fitxers a carregar
-	 * @throws IOException si no es pot llegir algun fitxer
-	 * @throws FileNotFoundException si no es troba algun fitxer
-	 
-	@Override
-	public void carregar(String directori) throws IOException {
-		File f = new File(directori);
-		if (f.isDirectory() && f.exists()) {
-			File[] fitxers = f.listFiles();
-			for (File fitxer: fitxers) {
-				String fileName = fitxer.getName();
-				if (fileName.matches("graf_.+\\.dat")) {
-					String nomGraf = fileName.substring(5, fileName.indexOf(".dat"));
-					graf = ControladorPersistencia.carregarGraf(directori + "\\" + fileName);
-					grafs.put(nomGraf, graf);
-					HeteSim heteSim = new HeteSim(graf);
-					heteSim.carregarClausures(directori + "\\" + "clausures_" + nomGraf + ".dat");
-					controladors.put(nomGraf, heteSim);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Guarda tots els grafs i les seves clausures en el directori donat.
-	 * Si algun fitxer existia es sobreescriu.
-	 * @throws IOException en cas de no poder-se escriure algun fitxer.
-	 
-	@Override
-	public void guardar(String directori) throws IOException {
-		for (String key: grafs.keySet()) {
-			ControladorPersistencia.guardarGraf(directori + "/" + "graf_"+ key + ".dat",grafs.get(key));
-			controladors.get(key).guardarClausures(directori + "/" + "clausures_" + key + ".dat");
-		}
-	}
-	*/
 }

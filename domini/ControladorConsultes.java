@@ -444,8 +444,9 @@ public class ControladorConsultes {
 	 * @param path. El nom del path del threshold.
 	 * @returns Retorna el threshold que s'ha creat.
 	 * @throws IllegalArgumentException si el path o els nodes indicats no existeixen.
+	 * @throws IOException si no es pot calcular la rellevancia
 	 */
-	private Threshold createThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException, InterruptedException {
+	private Threshold createThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException, InterruptedException, IOException {
 		if (!exists(path)) throw new IllegalArgumentException("El path del threshold no existeix.");
 		
 		Node n1 = getNode(path, 0, idNode1);

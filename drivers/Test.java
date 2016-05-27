@@ -1,4 +1,5 @@
 package drivers;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -44,6 +45,7 @@ public class Test extends Driver {
 	 * i també comprova que les funcions de normalitzar retornen els mateixos resultats.
 	 * @throws InterruptedException 
 	 */
+	@SuppressWarnings("unused")
 	private static String passTest(Graf g) throws InterruptedException {
 		// Test que hace la media del tiempo de 5 multiplicaciones iguales
 		Matriu m1 = g.consultarMatriuPaperConferencia().transposada().normalitzadaPerFiles();

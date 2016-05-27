@@ -22,7 +22,13 @@ public class DriverExportacio extends Driver {
 
 	public static void main(String[] args) {
 		println("Primerament crea un resultat buit:");
-		Resultat r = crearResultat();
+		Resultat r = null;
+		try {
+			r = crearResultat();
+		} catch (IOException e) {
+			println("Hi ha hagut un error!");
+			print(e);
+		}
 		
 		String filePath = null;
 		
@@ -80,7 +86,7 @@ public class DriverExportacio extends Driver {
 		ControladorPersistencia.llegirFitxer(filesystem_path).forEach(System.out::println);
 	}
 	
-	private static Resultat crearResultat() {
+	private static Resultat crearResultat() throws IOException {
 		Node n = crearNode();
 		print("Nom del path: ");
 		String nomp = nextLine().toUpperCase();

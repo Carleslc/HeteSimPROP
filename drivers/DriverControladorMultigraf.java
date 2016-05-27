@@ -1,11 +1,20 @@
 package drivers;
 
+import java.io.IOException;
+
 import domini.ControladorMultigraf;
 
 public final class DriverControladorMultigraf extends Driver {
 
 	public static void main(String[] args) {
-		ControladorMultigraf m = new ControladorMultigraf();
+		ControladorMultigraf m = null;
+		try {
+			m = new ControladorMultigraf();
+		} catch (IOException e) {
+			println("\nHi ha hagut un error:");
+			print(e);
+			System.exit(1);
+		}
 
 		int opcio;
 		do {

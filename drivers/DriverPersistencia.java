@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import domini.Autor;
 import domini.Graf;
+import domini.HeteSim;
 import domini.Matriu;
 import domini.Paper;
 import domini.Path;
@@ -19,7 +20,45 @@ import persistencia.ControladorPersistencia;
  */
 public class DriverPersistencia extends Driver {
 
+	// MINI-TEST
 	public static void main(String[] args) {
+		String path = "test.dat";
+		try {
+			ControladorPersistencia.guardarGraf(path, new Graf());
+			Graf g = ControladorPersistencia.carregarGraf(path);
+			System.out.println(g + "\n");
+
+			ArrayList<Path> paths = new ArrayList<>();
+			paths.add(new Path("APA"));
+			paths.add(new Path("PCPAPT"));
+			ControladorPersistencia.guardarPaths(path, paths);
+			mostrarFitxer(path); // Llegirà basura
+			System.out.println();
+			paths = new ArrayList<>(ControladorPersistencia.carregarPaths(path));
+			paths.forEach(System.out::println);
+			System.out.println();
+
+			ControladorPersistencia.guardarClausura(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, "PCPAPT", new Matriu(2, 3, .11), true);
+			ControladorPersistencia.guardarClausura(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, "APA", new Matriu(7, 4, .75), false);
+			ControladorPersistencia.actualitzaClausura(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, "APA", true);
+			System.out.println(ControladorPersistencia.carregarClausures(HeteSim.DEFAULT_DIRECTORI_CLAUSURES));
+			System.out.println();
+			System.out.println(ControladorPersistencia.carregarClausura(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, "PCPAPT"));
+			ControladorPersistencia.esborrarClausura(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, "APA");
+			ControladorPersistencia.esborrarClausura(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, "PCPAPT");
+			new File(HeteSim.DEFAULT_DIRECTORI_CLAUSURES).deleteOnExit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			File f = new File(path);
+			if (f.exists())
+				f.delete();
+		}
+	}
+	
+	@Deprecated
+	public static void deprecated_main(String[] args) {
 		
 		String pathPaths = null, pathClausures = null, pathGraf = null;
 		
@@ -31,9 +70,8 @@ public class DriverPersistencia extends Driver {
 					+ "3. carregarGraf\n"
 					+ "4. guardarPaths\n"
 					+ "5. carregarPaths\n"
-					+ "6. guardarClausures\n"
-					+ "7. carregarClausures\n"
-					+ "8. Sortir del driver\n"
+					+ "6. carregarClausures\n"
+					+ "7. Sortir del driver\n"
 					+ "Opcio = ");
 
 			opt = nextInt();
@@ -99,16 +137,6 @@ public class DriverPersistencia extends Driver {
 						break;
 					}
 					case 6: {
-						Map<String, Matriu> mapaClausures = crearClausures();
-						print("Escriu el path i fitxer on guardar les clausures: ");
-						pathClausures = nextLine();
-						ControladorPersistencia.guardarClausures(pathClausures, mapaClausures);
-						File f = new File(pathClausures);
-						f.deleteOnExit();
-						println("El fitxer " + f.getAbsolutePath() + " sera eliminat al sortir del driver.");
-						break;
-					}
-					case 7: {
 						if (pathClausures != null) {
 							println("Clausures carregades:");
 							ControladorPersistencia.carregarClausures(pathClausures).entrySet().forEach(e -> {
@@ -120,21 +148,22 @@ public class DriverPersistencia extends Driver {
 							println("No has guardat cap clausura.");
 						break;
 					}
-					case 8:
+					case 7:
 						break;
 					default:
-						println("Introdueix una opcio de la 1 a la 8.");
+						println("Introdueix una opcio de la 1 a la 7.");
 				}
 			} catch (Exception e) {
 				println("Hi ha hagut un error:");
 				print(e);
 			}
 			println();
-		} while (opt != 8);
+		} while (opt != 7);
 		
 		close();
 	}
 
+	@SuppressWarnings("unused")
 	private static Map<String, Matriu> crearClausures() {
 		Map<String, Matriu> mapaClausures = new LinkedHashMap<>();
 		print("Cuantes clausures vols afegir?: ");

@@ -1,5 +1,6 @@
 package drivers;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -12,7 +13,14 @@ import domini.ControladorConsultes;
 public class DriverControladorConsultes extends Driver {
 
 	public static void main(String[] args) {
-		ControladorMultigraf contrMultigraf = new ControladorMultigraf();
+		ControladorMultigraf contrMultigraf = null;
+		try {
+			contrMultigraf = new ControladorMultigraf();
+		} catch (IOException e) {
+			println("\nHi ha hagut un error:");
+			print(e);
+			System.exit(1);
+		}
 
 		println("Introdueix el graf:");
 		print("Primer, introdueix el nom del graf: ");
