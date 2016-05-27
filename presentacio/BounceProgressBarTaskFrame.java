@@ -31,9 +31,9 @@ public class BounceProgressBarTaskFrame<V> extends JFrame implements Callable<Vo
 		}
 	}
 
-	public BounceProgressBarTaskFrame(String title, Callable<V> task, TaskListener<V> listener, String progressLabel, String sucessLable, String failLabel) {
+	public BounceProgressBarTaskFrame(String title, Callable<V> task, TaskListener<V> listener, String progressLabel, String successLable, String failLabel) {
 		super(title);
-		barTask = new BounceProgressBarTask<>(this, task, listener, progressLabel, sucessLable, failLabel);
+		barTask = new BounceProgressBarTask<>(this, task, listener, progressLabel, successLable, failLabel);
 		getContentPane().add(barTask);
 	}
 
