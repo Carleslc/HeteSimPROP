@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 
+import persistencia.ControladorPersistencia;
 import domini.ControladorConsultes;
 import domini.ControladorDominiPersistenciaPropi;
 import domini.ControladorMultigraf;
@@ -577,6 +578,13 @@ public class ControladorPresentacioDomini {
 		controladorMultigraf.guardar(directori);
 	}
 
+	/**
+	 * Esborra el fitxer on esta guardat el graf actual
+	 * @throws IOException en cas de no poder-se esborrar el fitxer.
+	 */
+	public void esborrarFitxerGraf() throws IOException {
+		controladorMultigraf.esborrarFitxerGraf();
+	}
 	
 	//**************funcions de controladorGraf****************
 

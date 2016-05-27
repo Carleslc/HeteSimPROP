@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import persistencia.ControladorPersistencia;
+
 
 public class ControladorMultigraf extends ControladorGraf {
 
@@ -123,5 +125,13 @@ public class ControladorMultigraf extends ControladorGraf {
 		if (idActual != null) {
 			super.guardar(path);
 		}
+	}
+	
+	/**
+	 * Esborra el fitxer on esta guardat el graf actual
+	 * @throws IOException en cas de no poder-se esborrar el fitxer.
+	 */
+	public void esborrarFitxerGraf() throws IOException {
+		ControladorPersistencia.esborrarFitxer(construirPath(idActual));
 	}
 }
