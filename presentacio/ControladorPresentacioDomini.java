@@ -177,7 +177,7 @@ public class ControladorPresentacioDomini {
 	 * Elimina un autor.
 	 * @param idAutor de l'autor a eliminar.
 	 * @return si ha sigut possible (si existia).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean eliminarAutor(int idAutor) throws IOException {
 		boolean del = controladorNodes.eliminarAutor(idAutor);
@@ -190,7 +190,7 @@ public class ControladorPresentacioDomini {
 	 * Elimina un paper.
 	 * @param idPaper del paper a eliminar.
 	 * @return si ha sigut possible (si existia).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean eliminarPaper(int idPaper) throws IOException {
 		boolean del = controladorNodes.eliminarPaper(idPaper);
@@ -203,7 +203,7 @@ public class ControladorPresentacioDomini {
 	 * Elimina una conferencia.
 	 * @param idConferencia de la conferencia a eliminar.
 	 * @return si ha sigut possible (si existia).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean eliminarConferencia(int idConferencia) throws IOException {
 		boolean del = controladorNodes.eliminarConferencia(idConferencia);
@@ -216,7 +216,7 @@ public class ControladorPresentacioDomini {
 	 * Elimina un terme.
 	 * @param idTerme del terme a eliminar.
 	 * @return si ha sigut possible (si existia).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean eliminarTerme(int idTerme) throws IOException {
 		boolean del = controladorNodes.eliminarTerme(idTerme);
@@ -296,7 +296,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idAutor de l'autor
 	 * @return si ha sigut possible (si ambdos existeixen).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean afegirAdjacenciaPaperAutor(int idPaper, int idAutor) throws IOException {
 		boolean add = controladorRelacions.afegirAdjacenciaPaperAutor(idPaper, idAutor);
@@ -310,7 +310,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idTerme del terme
 	 * @return si ha sigut possible (si ambdos existeixen).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean afegirAdjacenciaPaperTerme(int idPaper, int idTerme) throws IOException {
 		boolean add = controladorRelacions.afegirAdjacenciaPaperTerme(idPaper, idTerme);
@@ -326,7 +326,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idConferencia de la conferencia
 	 * @return si ha sigut possible (si ambdos existeixen).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean setAdjacenciaPaperConferencia(int idPaper, int idConferencia) throws IOException {
 		boolean set = controladorRelacions.setAdjacenciaPaperConferencia(idPaper, idConferencia);
@@ -340,7 +340,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idAutor de l'autor
 	 * @return si ha sigut possible (si ambdos existeixen).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean eliminarAdjacenciaPaperAutor(int idPaper, int idAutor) throws IOException {
 		boolean del = controladorRelacions.eliminarAdjacenciaPaperAutor(idPaper, idAutor);
@@ -354,7 +354,7 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idTerme del terme
 	 * @return si ha sigut possible (si ambdos existeixen).
-	 * @throws IOException 
+	 * @throws IOException si no es poden llegir/escriure els fitxers de clausures
 	 */
 	public boolean eliminarAdjacenciaPaperTerme(int idPaper, int idTerme) throws IOException {
 		boolean del = controladorRelacions.eliminarAdjacenciaPaperTerme(idPaper, idTerme);
@@ -366,7 +366,7 @@ public class ControladorPresentacioDomini {
 	/**
 	 * Consulta totes les relacions d’una conferencia.
 	 * @param idConferencia de la conferencia
-	 * @return  una llista que conté els noms de tots els papers relacionats.
+	 * @return una llista que conté els noms de tots els papers relacionats.
 	 */
 	public List<String> consultarRelacionsConferencia(int idConferencia) {
 		return controladorRelacions.consultarRelacionsConferencia(idConferencia);
@@ -375,7 +375,7 @@ public class ControladorPresentacioDomini {
 	/**
 	 * Consulta totes les relacions d’un autor.
 	 * @param idAutor de l'autor
-	 * @return  una llista que conté els noms de tots els papers relacionats.
+	 * @return una llista que conté els noms de tots els papers relacionats.
 	 */
 	public List<String> consultarRelacionsAutor(int idAutor) {
 		return controladorRelacions.consultarRelacionsAutor(idAutor);
@@ -384,7 +384,7 @@ public class ControladorPresentacioDomini {
 	/**
 	 * Consulta totes les relacions d’un terme.
 	 * @param idTerme del terme
-	 * @return  una llista que conté els noms de tots els papers relacionats.
+	 * @return una llista que conté els noms de tots els papers relacionats.
 	 */
 	public List<String> consultarRelacionsTerme(int idTerme) {
 		return controladorRelacions.consultarRelacionsTerme(idTerme);

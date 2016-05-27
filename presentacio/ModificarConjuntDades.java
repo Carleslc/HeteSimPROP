@@ -49,13 +49,10 @@ public class ModificarConjuntDades extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (comboBox.getSelectedIndex() == 0)
-					JOptionPane.showMessageDialog(null,
-							"Selecciona un conjunt de dades primer.",
-							"Cap conjunt seleccionat",
-							JOptionPane.ERROR_MESSAGE);
+					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else {
 					int opt = JOptionPane.showConfirmDialog(null,
-							"El conjunt de dades s'esborrarà completament de disc. Vols esborrar-lo?",
+							"El conjunt de dades s'esborrarà completament de disc.\nRealment vols esborrar-lo?",
 							"Confirmació", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (opt == JOptionPane.YES_OPTION) {
 						// TODO Esborrar dades
