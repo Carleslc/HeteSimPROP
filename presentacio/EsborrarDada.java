@@ -1,6 +1,5 @@
 package presentacio;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,8 +9,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import domini.ControladorMultigraf;
 
 import java.awt.GridBagLayout;
 import javax.swing.JComboBox;
@@ -27,19 +24,16 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
-import java.awt.Toolkit;
 
 public class EsborrarDada extends JFrame {
 
@@ -58,7 +52,6 @@ public class EsborrarDada extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Integer p = 0;
 					EsborrarDada frame = new EsborrarDada(new ControladorPresentacioDomini());
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -94,7 +87,7 @@ public class EsborrarDada extends JFrame {
 		gbc_lblTipus.gridy = 0;
 		contentPane.add(lblTipus, gbc_lblTipus);
 		
-		JComboBox llistatipus = new JComboBox(tipus);
+		JComboBox<String> llistatipus = new JComboBox<>(tipus);
 		GridBagConstraints gbc_llistatipus = new GridBagConstraints();
 		gbc_llistatipus.gridwidth = java.awt.GridBagConstraints.RELATIVE;
 		gbc_llistatipus.weightx = 1.0;
@@ -108,7 +101,8 @@ public class EsborrarDada extends JFrame {
 		llistatipus.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JComboBox src = (JComboBox) e.getSource();
+				@SuppressWarnings("unchecked")
+				JComboBox<String> src = (JComboBox<String>) e.getSource();
 				selectedType = (String) src.getSelectedItem();
 				table.setEnabled(true);
 				buidarTable();

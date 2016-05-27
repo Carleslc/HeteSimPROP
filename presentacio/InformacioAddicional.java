@@ -21,6 +21,8 @@ import java.io.IOException;
 
 public class InformacioAddicional extends JFrame {
 
+	private static final long serialVersionUID = -6379071660651045939L;
+	
 	private JPanel contentPane;
 	private String seltipus;
 
@@ -103,7 +105,7 @@ public class InformacioAddicional extends JFrame {
 		
 		
 		//desplegable
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<>();
 		
 
 		//afegeixo les diferents opcions 

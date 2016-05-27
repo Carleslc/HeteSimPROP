@@ -7,14 +7,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import domini.ControladorMultigraf;
-
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 public class ModificarConjuntDades extends JFrame {
 
@@ -26,10 +22,7 @@ public class ModificarConjuntDades extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarConjuntDades frame = new ModificarConjuntDades(
-							new ControladorPresentacioDomini(),
-							new ControladorMultigraf()
-							);
+					ModificarConjuntDades frame = new ModificarConjuntDades(new ControladorPresentacioDomini());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

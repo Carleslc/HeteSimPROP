@@ -17,6 +17,8 @@ import java.io.IOException;
 
 public class GestorConjuntDades extends JFrame {
 
+	private static final long serialVersionUID = 8463596687710765552L;
+	
 	private JPanel contentPane;
 
 	/**

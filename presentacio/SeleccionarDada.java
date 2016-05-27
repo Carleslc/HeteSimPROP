@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -9,13 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
-
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
@@ -27,15 +19,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 import javax.swing.JScrollPane;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 /**
  * Aquesta vista permet seleccionar una dada a partir del seu nom (que pot estar repetit)
@@ -45,6 +32,8 @@ import javax.swing.JComboBox;
 
 public class SeleccionarDada extends JFrame {
 
+	private static final long serialVersionUID = -5536518442887894820L;
+	
 	private JPanel contentPane;
 	private ControladorPresentacioDomini cntrl;
 	private String nomDada;
@@ -144,7 +133,12 @@ public class SeleccionarDada extends JFrame {
 		table = new JTable(tableModel);
         
 		Action action = new AbstractAction() {
-		    public void actionPerformed(ActionEvent e)
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = -4401620008910150712L;
+
+			public void actionPerformed(ActionEvent e)
 		    {
 		    	System.out.println("IA");
 		    	InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus);

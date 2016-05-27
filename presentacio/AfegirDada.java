@@ -1,59 +1,45 @@
 package presentacio;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import domini.Pair;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
-
 import java.awt.Insets;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import javax.swing.JTextField;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 
 public class AfegirDada extends JFrame {
 
 	private static final long serialVersionUID = 5530817789038554299L;
+	
 	private JPanel contentPane;
 	private JTextField txtIntrodueixUnNom;
 	private JTable table;
@@ -126,7 +112,7 @@ public class AfegirDada extends JFrame {
 		gbc_lblTipus.gridy = 0;
 		contentPane.add(lblTipus, gbc_lblTipus);
 		
-		JComboBox<String> comboBoxtipus = new JComboBox(tipus);
+		JComboBox<String> comboBoxtipus = new JComboBox<>(tipus);
 		GridBagConstraints gbc_comboBoxtipus = new GridBagConstraints();
 		gbc_comboBoxtipus.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxtipus.fill = GridBagConstraints.HORIZONTAL;
@@ -204,7 +190,7 @@ public class AfegirDada extends JFrame {
 		gbc_lblEtiqueta.gridy = 1;
 		contentPane.add(lblEtiqueta, gbc_lblEtiqueta);
 		
-		JComboBox comboBoxetiqueta = new JComboBox(etiquetes);
+		JComboBox<String> comboBoxetiqueta = new JComboBox<>(etiquetes);
 		GridBagConstraints gbc_comboBoxetiqueta = new GridBagConstraints();
 		gbc_comboBoxetiqueta.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxetiqueta.fill = GridBagConstraints.HORIZONTAL;
@@ -216,7 +202,8 @@ public class AfegirDada extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JComboBox src = (JComboBox) e.getSource();
+				@SuppressWarnings("unchecked")
+				JComboBox<String> src = (JComboBox<String>) e.getSource();
 				etiqueta = (String)src.getSelectedItem();
 				System.out.println(etiqueta);
 			}
@@ -301,7 +288,12 @@ public class AfegirDada extends JFrame {
         
         
         Action delete = new AbstractAction() {
-		    public void actionPerformed(ActionEvent e)
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4857200046003157922L;
+
+			public void actionPerformed(ActionEvent e)
 		    {
 		        JTable table = (JTable)e.getSource();
 		        int modelRow = Integer.valueOf( e.getActionCommand() );
@@ -323,7 +315,6 @@ public class AfegirDada extends JFrame {
 		sd.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				// TODO Auto-generated method stub
 				SeleccionarDada src = (SeleccionarDada) e.getSource();
 				System.out.println("closed");
 				setEnabled(true);
@@ -433,8 +424,10 @@ public class AfegirDada extends JFrame {
 	}
 	
 	private class MyComboBoxEditor extends DefaultCellEditor {
-	    public MyComboBoxEditor(String[] items) {
-	        super(new JComboBox(items));
+		private static final long serialVersionUID = 610218728899535248L;
+
+		public MyComboBoxEditor(String[] items) {
+	        super(new JComboBox<>(items));
 	    }
 	}
 
