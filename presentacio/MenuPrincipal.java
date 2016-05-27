@@ -108,7 +108,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnNewButton_3);
 	
 
-		final SeleccionarConjuntDeDades comboBox = new SeleccionarConjuntDeDades(ctrl.controladorMultigraf);
+		final SeleccionarConjuntDeDades comboBox = new SeleccionarConjuntDeDades(ctrl);
 		comboBox.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

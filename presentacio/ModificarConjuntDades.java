@@ -7,10 +7,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import persistencia.ControladorPersistencia;
+
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 public class ModificarConjuntDades extends JFrame {
 
@@ -35,12 +38,13 @@ public class ModificarConjuntDades extends JFrame {
 		setTitle("Modificar conjunt de dades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JComboBox<String> comboBox = new SeleccionarConjuntDeDades(ctrl.controladorMultigraf);
+		JComboBox<String> comboBox = new SeleccionarConjuntDeDades(ctrl);
 		contentPane.add(comboBox);
 
 		JButton btnEsborrar = new JButton("Esborrar conjunt");
@@ -55,7 +59,11 @@ public class ModificarConjuntDades extends JFrame {
 							"El conjunt de dades s'esborrar� completament de disc.\nRealment vols esborrar-lo?",
 							"Confirmaci�", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (opt == JOptionPane.YES_OPTION) {
-						// TODO Esborrar dades
+						try {
+							ctrl.esborrarFitxerGraf();
+						} catch (IOException ex) {
+							new ErrorMessage(ex.getMessage());
+						}
 					}
 				}
 			}
@@ -67,7 +75,10 @@ public class ModificarConjuntDades extends JFrame {
 		btnAfegirDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new AfegirDada(ctrl).setVisible(true);
+				if (comboBox.getSelectedIndex() == 0)
+					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
+				else
+					new AfegirDada(ctrl).setVisible(true);
 			}
 		});
 		contentPane.add(btnAfegirDades);
@@ -77,7 +88,10 @@ public class ModificarConjuntDades extends JFrame {
 		btnEsborrarDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new EsborrarDada(ctrl).setVisible(true);
+				if (comboBox.getSelectedIndex() == 0)
+					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
+				else
+					new EsborrarDada(ctrl).setVisible(true);
 			}
 		});
 		contentPane.add(btnEsborrarDades);
@@ -87,7 +101,10 @@ public class ModificarConjuntDades extends JFrame {
 		btnModificarDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Obrir frame ModificarDades
+				if (comboBox.getSelectedIndex() == 0)
+					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
+				else
+					new ModificarDada(ctrl).setVisible(true);
 			}
 		});
 		contentPane.add(btnModificarDades);
