@@ -41,7 +41,7 @@ public class EsborrarDada extends JFrame {
 	private JPanel contentPane;
 	private String selectedType;
 	private Integer selectedID;
-	private ControladorPresentacioDomini cntrl;
+	private ControladorPresentacio cntrl;
 	private DefaultTableModel tableModel;
 	private static final String[] colnames = {"ID", "Nom", "Informaci� Adicional"};
 	private static final String[] tipus = {"Autor", "Conferencia", "Terme", "Paper"};
@@ -52,7 +52,7 @@ public class EsborrarDada extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EsborrarDada frame = new EsborrarDada(new ControladorPresentacioDomini());
+					EsborrarDada frame = new EsborrarDada(new ControladorPresentacio());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +63,7 @@ public class EsborrarDada extends JFrame {
 
 
 
-	public EsborrarDada(ControladorPresentacioDomini cntrl) {
+	public EsborrarDada(ControladorPresentacio cntrl) {
 		setResizable(false);
 		setTitle("Esborrar Dada");
 		this.cntrl = cntrl;

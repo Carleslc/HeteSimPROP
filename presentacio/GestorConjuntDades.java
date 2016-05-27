@@ -23,7 +23,7 @@ public class GestorConjuntDades extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GestorConjuntDades(ControladorPresentacioDomini ctrl, SeleccionarConjuntDeDades sd) {
+	public GestorConjuntDades(ControladorPresentacio ctrl, SeleccionarConjuntDeDades sd) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -55,8 +55,8 @@ public class GestorConjuntDades extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//ModificarConjuntDades x = new ModificarConjuntDades(ctrl);
-				//x.setVisible(true);
+				ModificarConjuntDades x = new ModificarConjuntDades(ctrl);
+				x.setVisible(true);
 			}
 		});
 		btnNewButton_1.setBounds(116, 115, 229, 60);

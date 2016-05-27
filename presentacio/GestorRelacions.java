@@ -39,9 +39,9 @@ public class GestorRelacions extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ControladorPresentacioDomini ctrl = new ControladorPresentacioDomini();
+					ControladorPresentacio ctrl = new ControladorPresentacio();
 					ctrl.afegir("AP", "Autoria");
-					ctrl.afegir("CPT", "Temàtica de conferència");
+					ctrl.afegir("CPT", "Temï¿½tica de conferï¿½ncia");
 					ctrl.afegir("APA", "Co-autoria");
 					ctrl.afegir("APC", "Conferenciant");
 					ctrl.afegir("APT", "Expert");
@@ -57,7 +57,7 @@ public class GestorRelacions extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GestorRelacions(ControladorPresentacioDomini ctrl) {
+	public GestorRelacions(ControladorPresentacio ctrl) {
 		config();
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -69,7 +69,7 @@ public class GestorRelacions extends JFrame {
 		gbc_scrollPane.gridy = 0;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		String[] names = new String[] {"Relació", "Descripció", "", ""};
+		String[] names = new String[] {"Relaciï¿½", "Descripciï¿½", "", ""};
 		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, names);
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
@@ -80,7 +80,7 @@ public class GestorRelacions extends JFrame {
 			String[] fila = new String[4];
 			fila[0] = s.substring(0, s.indexOf(':'));
 			fila[1] = s.substring(s.indexOf(':')+2, s.length());
-			fila[2] = "Modificar descripció";
+			fila[2] = "Modificar descripciï¿½";
 			fila[3] = "Esborrar";
 			model.addRow(fila);
 		}
@@ -88,7 +88,7 @@ public class GestorRelacions extends JFrame {
 		@SuppressWarnings("serial")
 		Action esborrar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				int option = JOptionPane.showConfirmDialog(contentPane, "Segur que vols esborrar?", "Esborrar relació", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+				int option = JOptionPane.showConfirmDialog(contentPane, "Segur que vols esborrar?", "Esborrar relaciï¿½", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (option == JOptionPane.OK_OPTION) {
 					int row = Integer.valueOf(e.getActionCommand());
 					String path = (String)model.getValueAt(row, 0);
@@ -119,7 +119,7 @@ public class GestorRelacions extends JFrame {
 		@SuppressWarnings("unused")
 		ButtonColumn buttonColumnModificar = new ButtonColumn(table, modificar, 2);
 		
-		JButton btnNewButton = new JButton("Afegir relació");
+		JButton btnNewButton = new JButton("Afegir relaciï¿½");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -133,7 +133,7 @@ public class GestorRelacions extends JFrame {
 							String[] fila = new String[4];
 							fila[0] = path;
 							fila[1] = description;
-							fila[2] = "Modificar descripció";
+							fila[2] = "Modificar descripciï¿½";
 							fila[3] = "Esborrar";
 							model.addRow(fila);
 						}

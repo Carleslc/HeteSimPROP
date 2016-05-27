@@ -28,7 +28,7 @@ public class InformacioAddicional extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public InformacioAddicional(ControladorPresentacioDomini ctrl, int id, String tipus) {
+	public InformacioAddicional(ControladorPresentacio ctrl, int id, String tipus) {
 		setTitle("Dades Relacionades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 484, 300);

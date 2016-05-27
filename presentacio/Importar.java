@@ -30,7 +30,7 @@ public class Importar extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Importar(ControladorPresentacioDomini ctrl, SeleccionarConjuntDeDades sd) {
+	public Importar(ControladorPresentacio ctrl, SeleccionarConjuntDeDades sd) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

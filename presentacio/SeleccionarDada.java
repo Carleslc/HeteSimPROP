@@ -35,7 +35,7 @@ public class SeleccionarDada extends JFrame {
 	private static final long serialVersionUID = -5536518442887894820L;
 	
 	private JPanel contentPane;
-	private ControladorPresentacioDomini cntrl;
+	private ControladorPresentacio cntrl;
 	private String nomDada;
 	private String tipus;
 	private ArrayList<Integer> resultats;
@@ -50,7 +50,7 @@ public class SeleccionarDada extends JFrame {
 	 * @param nomDada nom de la dada a seleccionar
 	 * @param tipus tipus de la dada a seleccionar
 	 */
-	public SeleccionarDada(ControladorPresentacioDomini cntrl, String nomDada, String tipus) {
+	public SeleccionarDada(ControladorPresentacio cntrl, String nomDada, String tipus) {
 		this.cntrl = cntrl;
 		this.nomDada = nomDada;
 		this.tipus = tipus;
@@ -106,7 +106,7 @@ public class SeleccionarDada extends JFrame {
 		
 	}
 	/**
-	 * Consulta el resultat de la selecció de dades
+	 * Consulta el resultat de la selecciï¿½ de dades
 	 * @return el ID de la dada seleccionada, -1 si cap dada ha sigut seleccionada
 	 */
 	public Integer getResultat() {
@@ -114,14 +114,14 @@ public class SeleccionarDada extends JFrame {
 	}
 	
 	private void configurarTable() {
-		String[] colnames = {"ID", "Nom", "Informació Adicional"};
+		String[] colnames = {"ID", "Nom", "Informaciï¿½ Adicional"};
 		
 		if (resultats != null) {
 			String[][] data = new String[resultats.size()][3];
 			for (int i = 0; i < resultats.size(); ++i) {
 				data[i][0] = String.valueOf(resultats.get(i));
 				data[i][1] = nomDada;
-				data[i][2] = "Informació Adicional";
+				data[i][2] = "Informaciï¿½ Adicional";
 			}
 			tableModel = new DefaultTableModel(data, colnames);
 		}

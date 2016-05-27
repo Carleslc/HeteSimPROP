@@ -22,7 +22,7 @@ public class ModificarConjuntDades extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarConjuntDades frame = new ModificarConjuntDades(new ControladorPresentacioDomini());
+					ModificarConjuntDades frame = new ModificarConjuntDades(new ControladorPresentacio());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,7 +31,7 @@ public class ModificarConjuntDades extends JFrame {
 		});
 	}
 
-	public ModificarConjuntDades(ControladorPresentacioDomini ctrl) {
+	public ModificarConjuntDades(ControladorPresentacio ctrl) {
 		setTitle("Modificar conjunt de dades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -52,8 +52,8 @@ public class ModificarConjuntDades extends JFrame {
 					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else {
 					int opt = JOptionPane.showConfirmDialog(null,
-							"El conjunt de dades s'esborrarà completament de disc.\nRealment vols esborrar-lo?",
-							"Confirmació", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+							"El conjunt de dades s'esborrarï¿½ completament de disc.\nRealment vols esborrar-lo?",
+							"Confirmaciï¿½", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (opt == JOptionPane.YES_OPTION) {
 						// TODO Esborrar dades
 					}

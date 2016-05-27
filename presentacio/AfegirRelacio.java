@@ -18,7 +18,7 @@ public class AfegirRelacio extends JFrame {
 	private String newPath;
 	private String newDescription;
 
-	public AfegirRelacio(ControladorPresentacioDomini ctrl) {
+	public AfegirRelacio(ControladorPresentacio ctrl) {
 		config();
 		
 		JTextField textPath = new JTextField();
@@ -31,12 +31,12 @@ public class AfegirRelacio extends JFrame {
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
-		JLabel lblPath = new JLabel("Relació:");
+		JLabel lblPath = new JLabel("Relaciï¿½:");
 		lblPath.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPath.setBounds(86, 56, 101, 14);
 		contentPane.add(lblPath);
 		
-		JLabel lblDescription = new JLabel("Descripció:");
+		JLabel lblDescription = new JLabel("Descripciï¿½:");
 		lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDescription.setBounds(86, 130, 101, 14);
 		contentPane.add(lblDescription);
@@ -59,7 +59,7 @@ public class AfegirRelacio extends JFrame {
 		btnAccept.setBounds(281, 211, 101, 23);
 		contentPane.add(btnAccept);
 		
-		JButton btnCancel = new JButton("Cancel·lar");
+		JButton btnCancel = new JButton("Cancelï¿½lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -79,7 +79,7 @@ public class AfegirRelacio extends JFrame {
 	}
 	
 	private void config() {
-		setTitle("Afegir relació");
+		setTitle("Afegir relaciï¿½");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

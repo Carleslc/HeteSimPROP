@@ -1,10 +1,14 @@
 package presentacio;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
+
+import javax.swing.JFrame;
 
 import domini.ControladorConsultes;
 import domini.ControladorDominiPersistenciaPropi;
@@ -13,7 +17,7 @@ import domini.ControladorNodes;
 import domini.ControladorPaths;
 import domini.ControladorRelacions;
 
-public class ControladorPresentacioDomini {
+public class ControladorPresentacio {
 	ControladorNodes controladorNodes;
 	ControladorRelacions controladorRelacions;
 	ControladorPaths controladorPaths;
@@ -21,7 +25,7 @@ public class ControladorPresentacioDomini {
 	ControladorConsultes controladorConsultes;
 	ControladorDominiPersistenciaPropi controladorDominiPersistenciaPropi;
 	
-	public ControladorPresentacioDomini() throws IOException {
+	public ControladorPresentacio() throws IOException {
 		controladorMultigraf = new ControladorMultigraf();
 		controladorNodes = new ControladorNodes(controladorMultigraf);
 		controladorRelacions = new ControladorRelacions(controladorMultigraf);
@@ -960,7 +964,17 @@ public class ControladorPresentacioDomini {
 		controladorDominiPersistenciaPropi.carregarDades();
 	}
 
-	
+	//**************funcions de presentació****************
+
+	public static void configurarNovaFinestra(JFrame from, JFrame to) {
+		to.setVisible(true);
+		from.setVisible(false);
+		to.addWindowListener(new WindowAdapter() {
+			public void windowClosed(WindowEvent e) {
+				from.setVisible(true);
+			}
+		});
+	}
 	
 
 }

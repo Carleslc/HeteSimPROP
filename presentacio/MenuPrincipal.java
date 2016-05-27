@@ -1,13 +1,15 @@
 package presentacio;
 
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import javax.swing.JButton;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
@@ -27,7 +29,7 @@ public class MenuPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ControladorPresentacioDomini ctrl = new ControladorPresentacioDomini();
+					ControladorPresentacio ctrl = new ControladorPresentacio();
 					MenuPrincipal frame = new MenuPrincipal(ctrl);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -40,7 +42,7 @@ public class MenuPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public MenuPrincipal(ControladorPresentacioDomini ctrl) {
+	public MenuPrincipal(ControladorPresentacio ctrl) {
 	
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -117,8 +119,17 @@ public class MenuPrincipal extends JFrame {
 				}
 			}
 		});
-	
-		comboBox.setToolTipText("");
+		comboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (comboBox.getSelectedIndex() == 0)
+					btnNewButton.setEnabled(false);
+				else
+					btnNewButton.setEnabled(true);
+			}
+			
+		});
+		comboBox.setToolTipText("Selecciona un conjunt de dades");
 		comboBox.setBounds(322, 6, 137, 27);
 		contentPane.add(comboBox);
 		
@@ -135,5 +146,15 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_1.setBounds(133, 106, 166, 47);
 		contentPane.add(btnNewButton_1);
 		contentPane.add(btnNewButton_2);
+	}
+	
+	public static void configurarNovaFinestra(JFrame from, JFrame to) {
+		to.setVisible(true);
+		from.setVisible(false);
+		to.addWindowListener(new WindowAdapter() {
+			public void windowClosed(WindowEvent e) {
+				from.setVisible(true);
+			}
+		});
 	}
 }

@@ -15,7 +15,7 @@ public class ModificarDescripcio extends JFrame {
 	private JPanel contentPane;
 	private JTextField textDescription;
 
-	public ModificarDescripcio(ControladorPresentacioDomini ctrl, String path) {
+	public ModificarDescripcio(ControladorPresentacio ctrl, String path) {
 		config();
 		
 		textDescription = new JTextField();
@@ -23,7 +23,7 @@ public class ModificarDescripcio extends JFrame {
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
-		JLabel lblDescription = new JLabel("Escriu la nova descripció:");
+		JLabel lblDescription = new JLabel("Escriu la nova descripciï¿½:");
 		lblDescription.setBounds(43, 69, 341, 14);
 		contentPane.add(lblDescription);
 		
@@ -39,7 +39,7 @@ public class ModificarDescripcio extends JFrame {
 		btnAccept.setBounds(283, 214, 101, 23);
 		contentPane.add(btnAccept);
 
-		JButton btnCancel = new JButton("Cancel·lar");
+		JButton btnCancel = new JButton("Cancelï¿½lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -51,7 +51,7 @@ public class ModificarDescripcio extends JFrame {
 	}
 	
 	private void config() {
-		setTitle("Modificar descripció");
+		setTitle("Modificar descripciï¿½");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

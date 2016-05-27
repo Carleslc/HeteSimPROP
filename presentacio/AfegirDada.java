@@ -59,7 +59,7 @@ public class AfegirDada extends JFrame {
 	private String tipus_dada;
 	private String nom;
 	private String etiqueta;
-	private ControladorPresentacioDomini cntrl;
+	private ControladorPresentacio cntrl;
 
 
 
@@ -67,7 +67,7 @@ public class AfegirDada extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AfegirDada frame = new AfegirDada(new ControladorPresentacioDomini());
+					AfegirDada frame = new AfegirDada(new ControladorPresentacio());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -77,7 +77,7 @@ public class AfegirDada extends JFrame {
 	}
 
 
-	public AfegirDada(ControladorPresentacioDomini cntrl) {
+	public AfegirDada(ControladorPresentacio cntrl) {
 		this.cntrl = cntrl;
 		adjacencies = new ArrayList<>();
 		setTitle("Afegir Dada");
