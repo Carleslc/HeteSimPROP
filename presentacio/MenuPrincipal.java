@@ -104,17 +104,6 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnNewButton_3.setBounds(16, 231, 66, 29);
 		contentPane.add(btnNewButton_3);
-		
-		//proves
-		try {
-			ctrl.afegirGraf("ei2");
-			ctrl.afegirGraf("ei3");
-			ctrl.afegirGraf("ei6");
-			ctrl.afegirGraf("ei7");		
-			ctrl.afegirGraf("ei");
-		}
-		catch(IOException e) {}
-			
 	
 
 		final SeleccionarConjuntDeDades comboBox = new SeleccionarConjuntDeDades(ctrl.controladorMultigraf);

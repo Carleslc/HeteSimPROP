@@ -43,7 +43,7 @@ public class EsborrarDada extends JFrame {
 	private Integer selectedID;
 	private ControladorPresentacioDomini cntrl;
 	private DefaultTableModel tableModel;
-	private static final String[] colnames = {"ID", "Nom", "Informació Adicional"};
+	private static final String[] colnames = {"ID", "Nom", "Informaciï¿½ Adicional"};
 	private static final String[] tipus = {"Autor", "Conferencia", "Terme", "Paper"};
 	private JTable table;
 
@@ -78,7 +78,7 @@ public class EsborrarDada extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JLabel lblTipus = new JLabel("Tipus:");
 		GridBagConstraints gbc_lblTipus = new GridBagConstraints();
 		gbc_lblTipus.anchor = GridBagConstraints.EAST;
@@ -86,7 +86,7 @@ public class EsborrarDada extends JFrame {
 		gbc_lblTipus.gridx = 0;
 		gbc_lblTipus.gridy = 0;
 		contentPane.add(lblTipus, gbc_lblTipus);
-		
+
 		JComboBox<String> llistatipus = new JComboBox<>(tipus);
 		GridBagConstraints gbc_llistatipus = new GridBagConstraints();
 		gbc_llistatipus.gridwidth = java.awt.GridBagConstraints.RELATIVE;
@@ -97,7 +97,7 @@ public class EsborrarDada extends JFrame {
 		gbc_llistatipus.gridx = 2;
 		gbc_llistatipus.gridy = 0;
 		contentPane.add(llistatipus, gbc_llistatipus);
-		
+
 		llistatipus.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -108,11 +108,11 @@ public class EsborrarDada extends JFrame {
 				buidarTable();
 				omplirTable();
 			}
-			
+
 		});
-		
+
 		configurarTable();
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 7;
@@ -123,9 +123,9 @@ public class EsborrarDada extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		
+
 		scrollPane.setViewportView(table);
-		
+
 		JButton btnEsborrar = new JButton("Esborrar");
 		btnEsborrar.setForeground(Color.BLACK);
 		btnEsborrar.setBackground(Color.WHITE);
@@ -138,13 +138,13 @@ public class EsborrarDada extends JFrame {
 		gbc_btnEsborrar.gridx = 0;
 		gbc_btnEsborrar.gridy = 8;
 		contentPane.add(btnEsborrar, gbc_btnEsborrar);
-		
+
 		btnEsborrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (selectedID != null && selectedType != null) {
-					String[] opcions = {"Cancelar", "No", "Sí"};
-					int n= JOptionPane.showOptionDialog(e.getComponent(), "Estàs segur d'esborrar aquesta dada?", "Estàs segur d'esborrar aquesta dada?", 
+					String[] opcions = {"Cancelar", "No", "Sï¿½"};
+					int n= JOptionPane.showOptionDialog(e.getComponent(), "Estï¿½s segur d'esborrar aquesta dada?", "Estï¿½s segur d'esborrar aquesta dada?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[1]);
 					System.out.println(n);
 					if (n == 2) {
@@ -156,63 +156,63 @@ public class EsborrarDada extends JFrame {
 		});
 
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void configurarTable() {
 		tableModel = new DefaultTableModel(colnames, 0);
 		table = new JTable(tableModel);
 		table.setEnabled(false);		
 		Action action = new AbstractAction() {
-		    public void actionPerformed(ActionEvent e)
-		    {
-		       InformacioAddicional ia = new InformacioAddicional(cntrl, selectedID, selectedType);
-		       ia.setVisible(true);
-		       setVisible(false);
-		       ia.addWindowListener(new WindowAdapter() {
-		    	   
-		    	   @Override
-			    	public void windowClosed(WindowEvent e) {
-		    		   setVisible(true);
-		    	   	}
-		    	   
-		       });
-		    }
+			public void actionPerformed(ActionEvent e)
+			{
+				InformacioAddicional ia = new InformacioAddicional(cntrl, selectedID, selectedType);
+				ia.setVisible(true);
+				setVisible(false);
+				ia.addWindowListener(new WindowAdapter() {
+
+					@Override
+					public void windowClosed(WindowEvent e) {
+						setVisible(true);
+					}
+
+				});
+			}
 		};
-		 
+
 		ButtonColumn buttonColumn = new ButtonColumn(table, action, 2);
 		buttonColumn.setMnemonic(KeyEvent.VK_D);
-		
+
 		ListSelectionModel ls = table.getSelectionModel();
 		ls.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				
+
 				if (table.isEnabled()) {
 					ListSelectionModel ls = (ListSelectionModel) e.getSource();
 					int row = -1;
 					int minIndex = ls.getMinSelectionIndex();
-			        int maxIndex = ls.getMaxSelectionIndex();
-			        for (int i = minIndex; i <= maxIndex; i++) {
-			          if (ls.isSelectedIndex(i)) {
-			            row = i;
-			          }
-			        }
-			        selectedID = Integer.valueOf((String) tableModel.getValueAt(row, 0));
+					int maxIndex = ls.getMaxSelectionIndex();
+					for (int i = minIndex; i <= maxIndex; i++) {
+						if (ls.isSelectedIndex(i)) {
+							row = i;
+						}
+					}
+					selectedID = Integer.valueOf((String) tableModel.getValueAt(row, 0));
 				}
 			}
-			
+
 		});
 	}
-	
+
 	private void buidarTable() {
 		tableModel.getDataVector().removeAllElements();
 	}
-	
+
 	private void omplirTable() {
-		
+
 		TreeMap<Integer, String> data = null;
-		
+
 		switch (selectedType) {
 		case "Autor":
 			data = cntrl.consultarAutors();
@@ -227,29 +227,33 @@ public class EsborrarDada extends JFrame {
 			data = cntrl.consultarTermes();
 			break;
 		}
-		
+
 		if (data != null) {
 			for (Entry<Integer, String> i : data.entrySet()) {
-				String[] row = {i.getKey().toString(), i.getValue(), "Informació Adicional"};
+				String[] row = {i.getKey().toString(), i.getValue(), "Informaciï¿½ Adicional"};
 				tableModel.addRow(row);
 			}
 		}
 	}
-	
+
 	private void esborrarDada() {
 		if (selectedID != null && selectedType != null) {
-			switch (selectedType) {
-			case "Autor":
-				cntrl.eliminarAutor(selectedID);
-				break;
-			case "Conferencia":
-				cntrl.eliminarConferencia(selectedID);
-				break;
-			case "Paper":
-				cntrl.eliminarPaper(selectedID);
-				break;
-			case "Terme":
-				cntrl.eliminarTerme(selectedID);
+			try {
+				switch (selectedType) {
+				case "Autor":
+					cntrl.eliminarAutor(selectedID);
+					break;
+				case "Conferencia":
+					cntrl.eliminarConferencia(selectedID);
+					break;
+				case "Paper":
+					cntrl.eliminarPaper(selectedID);
+					break;
+				case "Terme":
+					cntrl.eliminarTerme(selectedID);
+				}
+			} catch (Exception e) {
+				new ErrorMessage(e.getMessage());
 			}
 		}
 	}
