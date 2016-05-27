@@ -13,8 +13,6 @@ import domini.ControladorNodes;
 import domini.ControladorPaths;
 import domini.ControladorRelacions;
 
-
-
 public class ControladorPresentacioDomini {
 	ControladorNodes controladorNodes;
 	ControladorRelacions controladorRelacions;
@@ -23,9 +21,7 @@ public class ControladorPresentacioDomini {
 	ControladorConsultes controladorConsultes;
 	ControladorDominiPersistenciaPropi controladorDominiPersistenciaPropi;
 	
-
-	
-	public ControladorPresentacioDomini() {
+	public ControladorPresentacioDomini() throws IOException {
 		controladorMultigraf = new ControladorMultigraf();
 		controladorNodes = new ControladorNodes(controladorMultigraf);
 		controladorRelacions = new ControladorRelacions(controladorMultigraf);
@@ -33,7 +29,6 @@ public class ControladorPresentacioDomini {
 		controladorConsultes = new ControladorConsultes(controladorMultigraf, controladorPaths);
 		controladorDominiPersistenciaPropi = new ControladorDominiPersistenciaPropi(controladorMultigraf, controladorPaths, controladorConsultes);
 	}
-	
 	
 	//**************funcions de controladorNodes****************
 	
@@ -182,40 +177,52 @@ public class ControladorPresentacioDomini {
 	 * Elimina un autor.
 	 * @param idAutor de l'autor a eliminar.
 	 * @return si ha sigut possible (si existia).
+	 * @throws IOException 
 	 */
-	public boolean eliminarAutor(int idAutor) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorNodes.eliminarAutor(idAutor);
+	public boolean eliminarAutor(int idAutor) throws IOException {
+		boolean del = controladorNodes.eliminarAutor(idAutor);
+		if (del)
+			controladorMultigraf.getHeteSim().setUpdateAll("A", false);
+		return del;
 	}
 	
 	/**
 	 * Elimina un paper.
 	 * @param idPaper del paper a eliminar.
 	 * @return si ha sigut possible (si existia).
+	 * @throws IOException 
 	 */
-	public boolean eliminarPaper(int idPaper) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorNodes.eliminarPaper(idPaper);
+	public boolean eliminarPaper(int idPaper) throws IOException {
+		boolean del = controladorNodes.eliminarPaper(idPaper);
+		if (del)
+			controladorMultigraf.getHeteSim().setUpdateAll("P", false);
+		return del;
 	}
 	
 	/**
 	 * Elimina una conferencia.
 	 * @param idConferencia de la conferencia a eliminar.
 	 * @return si ha sigut possible (si existia).
+	 * @throws IOException 
 	 */
-	public boolean eliminarConferencia(int idConferencia) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorNodes.eliminarConferencia(idConferencia);
+	public boolean eliminarConferencia(int idConferencia) throws IOException {
+		boolean del = controladorNodes.eliminarConferencia(idConferencia);
+		if (del)
+			controladorMultigraf.getHeteSim().setUpdateAll("C", false);
+		return del;
 	}
 	
 	/**
 	 * Elimina un terme.
 	 * @param idTerme del terme a eliminar.
 	 * @return si ha sigut possible (si existia).
+	 * @throws IOException 
 	 */
-	public boolean eliminarTerme(int idTerme) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorNodes.eliminarTerme(idTerme);
+	public boolean eliminarTerme(int idTerme) throws IOException {
+		boolean del = controladorNodes.eliminarTerme(idTerme);
+		if (del)
+			controladorMultigraf.getHeteSim().setUpdateAll("T", false);
+		return del;
 	}
 
 	/**
@@ -289,10 +296,13 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idAutor de l'autor
 	 * @return si ha sigut possible (si ambdos existeixen).
+	 * @throws IOException 
 	 */
-	public boolean afegirAdjacenciaPaperAutor(int idPaper, int idAutor) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorRelacions.afegirAdjacenciaPaperAutor(idPaper, idAutor);
+	public boolean afegirAdjacenciaPaperAutor(int idPaper, int idAutor) throws IOException {
+		boolean add = controladorRelacions.afegirAdjacenciaPaperAutor(idPaper, idAutor);
+		if (add)
+			controladorMultigraf.getHeteSim().setUpdateAll("AP|PA", false);
+		return add;
 	}
 	
 	/**
@@ -300,10 +310,13 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idTerme del terme
 	 * @return si ha sigut possible (si ambdos existeixen).
+	 * @throws IOException 
 	 */
-	public boolean afegirAdjacenciaPaperTerme(int idPaper, int idTerme) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorRelacions.afegirAdjacenciaPaperTerme(idPaper, idTerme);
+	public boolean afegirAdjacenciaPaperTerme(int idPaper, int idTerme) throws IOException {
+		boolean add = controladorRelacions.afegirAdjacenciaPaperTerme(idPaper, idTerme);
+		if (add)
+			controladorMultigraf.getHeteSim().setUpdateAll("TP|PT", false);
+		return add;
 	}
 
 	/**
@@ -313,10 +326,13 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idConferencia de la conferencia
 	 * @return si ha sigut possible (si ambdos existeixen).
+	 * @throws IOException 
 	 */
-	public boolean setAdjacenciaPaperConferencia(int idPaper, int idConferencia) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorRelacions.setAdjacenciaPaperConferencia(idPaper, idConferencia);
+	public boolean setAdjacenciaPaperConferencia(int idPaper, int idConferencia) throws IOException {
+		boolean set = controladorRelacions.setAdjacenciaPaperConferencia(idPaper, idConferencia);
+		if (set)
+			controladorMultigraf.getHeteSim().setUpdateAll("CP|PC", false);
+		return set;
 	}
 	
 	/**
@@ -324,10 +340,13 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idAutor de l'autor
 	 * @return si ha sigut possible (si ambdos existeixen).
+	 * @throws IOException 
 	 */
-	public boolean eliminarAdjacenciaPaperAutor(int idPaper, int idAutor) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorRelacions.eliminarAdjacenciaPaperAutor(idPaper, idAutor);
+	public boolean eliminarAdjacenciaPaperAutor(int idPaper, int idAutor) throws IOException {
+		boolean del = controladorRelacions.eliminarAdjacenciaPaperAutor(idPaper, idAutor);
+		if (del)
+			controladorMultigraf.getHeteSim().setUpdateAll("AP|PA", false);
+		return del;
 	}
 	
 	/**
@@ -335,10 +354,13 @@ public class ControladorPresentacioDomini {
 	 * @param idPaper del paper
 	 * @param idTerme del terme
 	 * @return si ha sigut possible (si ambdos existeixen).
+	 * @throws IOException 
 	 */
-	public boolean eliminarAdjacenciaPaperTerme(int idPaper, int idTerme) {
-		controladorMultigraf.clausuresInvalides();
-		return controladorRelacions.eliminarAdjacenciaPaperTerme(idPaper, idTerme);
+	public boolean eliminarAdjacenciaPaperTerme(int idPaper, int idTerme) throws IOException {
+		boolean del = controladorRelacions.eliminarAdjacenciaPaperTerme(idPaper, idTerme);
+		if (del)
+			controladorMultigraf.getHeteSim().setUpdateAll("TP|PT", false);
+		return del;
 	}
 
 	/**
@@ -485,9 +507,10 @@ public class ControladorPresentacioDomini {
 	
 	/**
 	 * Marca les clausures del graf actual com a invalides (ja que s'ha modificat el graf)
+	 * @throws IOException 
 	 */
-	public void clausuresInvalides() {
-		controladorMultigraf.clausuresInvalides();
+	public void clausuresInvalides() throws IOException {
+		controladorMultigraf.getHeteSim().invalidarClausures();
 	}
 	
 	/**

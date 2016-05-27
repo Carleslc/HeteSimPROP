@@ -39,14 +39,9 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
-import net.miginfocom.swing.MigLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 import java.awt.Toolkit;
 
-public class EsborrarDada extends JFrame {
+public class EsborrarDades extends JFrame {
 
 	private static final long serialVersionUID = -4984707809082087185L;
 	private JPanel contentPane;
@@ -64,7 +59,7 @@ public class EsborrarDada extends JFrame {
 			public void run() {
 				try {
 					Integer p = 0;
-					EsborrarDada frame = new EsborrarDada(new ControladorPresentacioDomini());
+					EsborrarDades frame = new EsborrarDades(new ControladorPresentacioDomini());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -75,7 +70,7 @@ public class EsborrarDada extends JFrame {
 
 
 
-	public EsborrarDada(ControladorPresentacioDomini cntrl) {
+	public EsborrarDades(ControladorPresentacioDomini cntrl) {
 		setResizable(false);
 		setTitle("Esborrar Dada");
 		this.cntrl = cntrl;
