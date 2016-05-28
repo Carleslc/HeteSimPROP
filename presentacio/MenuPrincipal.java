@@ -38,6 +38,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public MenuPrincipal(ControladorPresentacio ctrl) {
+		MenuPrincipal ref = this;
 		setTitle("Men� Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
@@ -116,8 +117,7 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				GestorDades frame2 = new GestorDades(ctrl);
-				frame2.setVisible(true);
+				ControladorPresentacio.configurarNovaFinestra(ref, new GestorDades(ctrl));
 			}
 		});
 		btnNewButton_1.setBounds(133, 106, 166, 47);
