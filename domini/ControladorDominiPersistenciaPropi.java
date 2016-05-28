@@ -2,7 +2,6 @@ package domini;
 
 import java.io.File;
 import java.io.IOException;
-
 import domini.ControladorDominiPersistencia;
 
 /**
@@ -14,7 +13,7 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 
 	private static final long serialVersionUID = -325380240675964323L;
 
-	public static final String DEFAULT_DIRECTORY_GRAFS = "grafs\\";
+	public static final String DEFAULT_DIRECTORY_GRAFS = "grafs/";
 	private ControladorConsultes controladorConsultes;
 	
 	/**
