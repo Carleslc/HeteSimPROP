@@ -1,5 +1,6 @@
 package persistencia;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,14 +23,14 @@ import domini.Resultat;
  *
  */
 public abstract class ControladorPersistenciaPropi extends ControladorPersistencia {
-	
+
 	/**
 	 * Consulta els noms de tots els grafs disponibles en un directori recursivament.
 	 * <br>Es considerar‡n grafs els fitxers amb el format <code>graf_NOM.dat</code>
 	 * on <code>NOM</code> Ès el que s'afegeix a la llista de noms retornada.
 	 * @param dir el directori dels grafs
 	 * @return una llista amb tots els noms de tots els grafs disponibles a <b>dir</b>
-	 * @throws FileNotFoundException si dir Ès null o no Ès un directori existent
+	 * @throws FileNotFoundException si dir Ès null o no Ès un directori
 	 */
 	public static List<String> getNomsGrafs(String dir) throws FileNotFoundException {
 		if (dir == null)
@@ -37,24 +38,26 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 
 		File d = new File(dir);
 
-		if (!d.isDirectory())
-			throw new FileNotFoundException(dir + " no Ès un directori existent!");
-		
 		List<String> noms = new LinkedList<>();
-		
-		for (File f : d.listFiles()) {
-			if (!f.isDirectory()) {
-				Pattern pattern = Pattern.compile("graf_(.*)\\.dat");
-				Matcher matcher = pattern.matcher(f.getName());
-				if (matcher.find())
-					noms.add(matcher.replaceAll("$1"));
+		if (d.exists()) {
+
+			if (!d.isDirectory())
+				throw new FileNotFoundException(dir + " no Ès un directori!");
+
+			for (File f : d.listFiles()) {
+				if (!f.isDirectory()) {
+					Pattern pattern = Pattern.compile("graf_(.*)\\.dat");
+					Matcher matcher = pattern.matcher(f.getName());
+					if (matcher.find())
+						noms.add(matcher.replaceAll("$1"));
+				}
+				else
+					noms.addAll(getNomsGrafs(f.getPath()));
 			}
-			else
-				noms.addAll(getNomsGrafs(f.getPath()));
 		}
 		return noms;
 	}
-	
+
 	/**
 	 * Guarda els resultats a un fitxer corresponent al path donat.
 	 * @param filesystem_path Path del sistema que indica el fitxer a on es volen guardar els resultats.
@@ -68,7 +71,7 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 		out.close();
 		file.close();
 	}
-	
+
 	/**
 	 * Llegeix els resultats del fitxer corresponent al path donat.
 	 * @param filesystem_path Path del sistema que indica el fitxer des d'on es volen carregar els resultats.
@@ -76,20 +79,23 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 	 * @throws IOException Si el fitxer no existeix o no t√© el format correcte.
 	 */
 	@SuppressWarnings("unchecked")
-	public static TreeMap<Date, Resultat> carregarResultats (String filesystem_path) throws IOException {
-		FileInputStream file = new FileInputStream(filesystem_path);
-		ObjectInputStream in = new ObjectInputStream(file);
-		
-		TreeMap<Date, Resultat> res;
+	public static TreeMap<Date, Resultat> carregarResultats(String filesystem_path) throws IOException {
+		TreeMap<Date, Resultat> res = new TreeMap<>();
 		try {
-			res = (TreeMap<Date, Resultat>) in.readObject();
-		} catch (ClassNotFoundException e) {
-			throw new IOException(e);
-		} finally {
-			in.close();
-			file.close();
+			FileInputStream file = new FileInputStream(filesystem_path);
+			ObjectInputStream in = new ObjectInputStream(file);
+
+			try {
+				res = (TreeMap<Date, Resultat>) in.readObject();
+			} catch (ClassNotFoundException e) {
+				throw new IOException(e);
+			} finally {
+				in.close();
+				file.close();
+			}
+		} catch (EOFException ignore) {
+			// No hi ha cap resultat escrit
 		}
-		
 		return res;
 	}
 }

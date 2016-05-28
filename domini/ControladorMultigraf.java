@@ -1,9 +1,5 @@
 package domini;
 
-/**
- * @author Arnau Badia Sampera
- */
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,7 +10,9 @@ import java.util.regex.Pattern;
 import persistencia.ControladorPersistencia;
 import persistencia.ControladorPersistenciaPropi;
 
-
+/**
+ * @author Arnau Badia Sampera
+ */
 public class ControladorMultigraf extends ControladorGraf {
 
 	private String idActual;
@@ -25,20 +23,15 @@ public class ControladorMultigraf extends ControladorGraf {
 	 */
 	public ControladorMultigraf() throws IOException {
 		grafs = new HashSet<>();
-		try{grafs.addAll(ControladorPersistenciaPropi.getNomsGrafs(ControladorDominiPersistenciaPropi.DEFAULT_DIRECTORY_GRAFS));}
-		catch (FileNotFoundException ignorar) {
-		}
 	}
 
 	/**
-	 * Obt√© el path on s'ha de guardar el graf amb nomGraf
+	 * Obt√© el path on s'ha de guardar el graf amb nomGraf per defecte
 	 * @param nomGraf del graf a guardar
 	 * @return la string que cont√© el path desitjat
 	 */
-	private String construirPath(String nomGraf) {
-		String s = ControladorDominiPersistenciaPropi.DEFAULT_DIRECTORY_GRAFS;
-		s = s + "graf_" + idActual + ".dat";
-		return s;
+	public String construirPath(String nomGraf) {
+		return ControladorDominiPersistenciaPropi.DEFAULT_DIRECTORY_GRAFS + "graf_" + nomGraf + ".dat";
 	}
 
 	/**
@@ -125,26 +118,24 @@ public class ControladorMultigraf extends ControladorGraf {
 	}
 	
 	/**
-	 * Carrega el graf guardat en el fitxer corresponent al path donat. 
-	 * @param path on estan continguts els fitxers a carregar
-	 * @throws IOException si no es pot llegir algun fitxer
-	 * @throws FileNotFoundException si no es troba algun fitxer
+	 * Carrega els noms dels grafs guardats en el directori donat. 
+	 * @param dir on estan continguts els grafs
+	 * @throws FileNotFoundException si dir Ès null o no Ès un directori
 	 */
-	@Override
-	public void carregar(String path) throws IOException {
-		super.carregar(path);
+	public void carregarNoms(String dir) throws FileNotFoundException {
+		grafs.addAll(ControladorPersistenciaPropi.getNomsGrafs(dir));
 	}
 	
 	/**
-	 * Guarda el graf actual al fitxer corresponent al path donat.
-	 * Si algun fitxer existia es sobreescriu.
-	 * @throws IOException en cas de no poder-se escriure algun fitxer.
+	 * Guarda el graf actual al path donat.
+	 * Si el fitxer existia es sobreescriu.
+	 * @param path path on es vol guardar el graf.
+	 * @throws IOException en cas de no poder-se escriure en el fitxer.
 	 */
 	@Override
 	public void guardar(String path) throws IOException {
-		if (idActual != null) {
+		if (idActual != null)
 			super.guardar(path);
-		}
 	}
 	
 	/**

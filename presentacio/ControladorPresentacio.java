@@ -35,6 +35,7 @@ public class ControladorPresentacio {
 		controladorPaths = new ControladorPaths(controladorMultigraf);
 		controladorConsultes = new ControladorConsultes(controladorMultigraf, controladorPaths);
 		controladorDominiPersistenciaPropi = new ControladorDominiPersistenciaPropi(controladorMultigraf, controladorPaths, controladorConsultes);
+		controladorDominiPersistenciaPropi.carregarDades();
 		selectorConjunts = new SelectorConjunts(this);
 	}
 	

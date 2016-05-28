@@ -59,7 +59,6 @@ public class ModificarConjuntDades extends JFrame {
 					if (opt == JOptionPane.YES_OPTION) {
 						try {
 							ctrl.esborrarFitxerGraf();
-							ctrl.getSelectorConjunts().update();
 						} catch (IOException ex) {
 							new ErrorMessage(ex.getMessage());
 						}

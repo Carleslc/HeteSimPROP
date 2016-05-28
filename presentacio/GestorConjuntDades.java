@@ -33,7 +33,6 @@ public class GestorConjuntDades extends JFrame {
 				String s = JOptionPane.showInputDialog(btnNewButton, "Crear nou Conjunt");
 				try {
 					ctrl.afegirGraf(s);
-					ctrl.getSelectorConjunts().update();
 				} catch(FileNotFoundException ignore) {
 				} catch(IOException ex) {
 					new ErrorMessage(ex.getMessage());

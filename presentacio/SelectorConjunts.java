@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -9,10 +7,12 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 public class SelectorConjunts {
 	
-	private List<SeleccionarConjuntDeDades> selectors;
+	private LinkedList<SeleccionarConjuntDeDades> selectors;
 	private DefaultComboBoxModel<String> model;
 	private ControladorPresentacio ctrl;
 	
@@ -22,12 +22,13 @@ public class SelectorConjunts {
 	}
 	
 	public JComboBox<String> newSelector() {
-		SeleccionarConjuntDeDades scd = new SeleccionarConjuntDeDades();
+		SeleccionarConjuntDeDades scd;
+		scd = new SeleccionarConjuntDeDades();
 		selectors.add(scd);
 		update();
-		scd.addMouseListener(new MouseAdapter() {
+		scd.addPopupMenuListener(new PopupMenuListener() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
 				try {
 					ctrl.seleccionarGraf((String)scd.getSelectedItem());
 					update();
@@ -36,11 +37,13 @@ public class SelectorConjunts {
 					new ErrorMessage(ex.getMessage());
 				}
 			}
+			public void popupMenuWillBecomeVisible(PopupMenuEvent e) {}
+			public void popupMenuCanceled(PopupMenuEvent e) {}
 		});
 		return scd;
 	}
 	
-	public void update() {
+	private void update() {
 		model = new DefaultComboBoxModel<>(new String[] {"- No hi ha cap conjunt seleccionat -"});
 		List<String> grafs = ctrl.getNomsGrafs();
 		for (String graf : grafs)

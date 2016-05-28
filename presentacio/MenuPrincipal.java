@@ -41,7 +41,6 @@ public class MenuPrincipal extends JFrame {
 		setTitle("Men� Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
-			
 			public void windowClosing(WindowEvent e) {
 				int opt = JOptionPane.showConfirmDialog(null, "Vols guardar les dades abans de sortir?", "Guardar dades", JOptionPane.YES_NO_CANCEL_OPTION);
 				switch (opt) {
@@ -49,8 +48,8 @@ public class MenuPrincipal extends JFrame {
 					try {
 						ctrl.guardarDades();
 						dispose();
-					} catch (IOException e5) {
-						new ErrorMessage(e5.getMessage());
+					} catch (IOException ex) {
+						new ErrorMessage(ex.getMessage());
 					}
 					break;
 				case JOptionPane.NO_OPTION:
@@ -73,7 +72,7 @@ public class MenuPrincipal extends JFrame {
 					ctrl.guardarDades();
 				}
 				catch(IOException e1){
-					JOptionPane.showMessageDialog(contentPane, e1.getMessage());
+					new ErrorMessage(contentPane, e1.getMessage());
 				}
 			}
 		});
