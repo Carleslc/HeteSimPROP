@@ -49,8 +49,8 @@ public class ModificarDada extends JFrame {
 	private JTextField txtNouNom;
 	private JTable table;
 	private JButton btnGuardar;
-	private JComboBox comboBoxetiq;
-	private JComboBox comboBoxtipus;
+	private JComboBox<String> comboBoxetiq;
+	private JComboBox<String> comboBoxtipus;
 	private static final String[] tipus = {"Autor", "Conferencia", "Terme", "Paper"};
 	private static final String[] colNames = {"Tipus", "Nom", "Esborrar"};
 	private static final Object[] newRow = {"", "", "Esborrar"};
@@ -113,7 +113,7 @@ public class ModificarDada extends JFrame {
 		gbc_lblTipus.gridy = 0;
 		contentPane.add(lblTipus, gbc_lblTipus);
 		
-		comboBoxtipus = new JComboBox(tipus);
+		comboBoxtipus = new JComboBox<>(tipus);
 		GridBagConstraints gbc_comboBoxtipus = new GridBagConstraints();
 		gbc_comboBoxtipus.gridwidth = 4;
 		gbc_comboBoxtipus.insets = new Insets(0, 0, 5, 0);
@@ -224,7 +224,11 @@ public class ModificarDada extends JFrame {
 		gbc_lblEtiqueta.gridy = 4;
 		contentPane.add(lblEtiqueta, gbc_lblEtiqueta);
 		
+<<<<<<< HEAD
 		comboBoxetiq = new JComboBox(etiquetes);
+=======
+		comboBoxetiq = new JComboBox<>();
+>>>>>>> origin/master
 		GridBagConstraints gbc_comboBoxetiq = new GridBagConstraints();
 		gbc_comboBoxetiq.gridwidth = 4;
 		gbc_comboBoxetiq.insets = new Insets(0, 0, 5, 0);
@@ -238,7 +242,8 @@ public class ModificarDada extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JComboBox src = (JComboBox) e.getSource();
+				@SuppressWarnings("unchecked")
+				JComboBox<String> src = (JComboBox<String>) e.getSource();
 				if (src.isEnabled()) {
 					String label = (String) src.getSelectedItem();
 					switch (selectedType) {
