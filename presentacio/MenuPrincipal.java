@@ -38,7 +38,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public MenuPrincipal(ControladorPresentacio ctrl) {
-		setTitle("Menú Principal");
+		setTitle("Menï¿½ Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			
@@ -99,6 +99,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnNewButton_3);
 	
 		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector();
+		ctrl.getSelectorConjunts().update();
 		comboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
