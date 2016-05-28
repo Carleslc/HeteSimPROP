@@ -38,6 +38,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public MenuPrincipal(ControladorPresentacio ctrl) {
+		setTitle("Menú Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			
@@ -110,7 +111,6 @@ public class MenuPrincipal extends JFrame {
 		comboBox.setToolTipText("Selecciona un conjunt de dades");
 		comboBox.setBounds(322, 6, 137, 27);
 		contentPane.add(comboBox);
-		
 
 		//Gestio de dades button
 		JButton btnNewButton_1 = new JButton("GestiÃ³ de Dades");

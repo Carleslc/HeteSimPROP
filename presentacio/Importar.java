@@ -26,6 +26,7 @@ public class Importar extends JFrame {
 	private JButton btnAcceptar;
 
 	public Importar(ControladorPresentacio ctrl) {
+		setTitle("Importar conjunt de dades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

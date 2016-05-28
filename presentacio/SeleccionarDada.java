@@ -42,7 +42,6 @@ public class SeleccionarDada extends JFrame {
 	private Integer seleccio;
 	private JTable table;
 	private DefaultTableModel tableModel;
-	
 
 	/**
 	 * 

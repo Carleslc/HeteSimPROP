@@ -17,6 +17,7 @@ public class GestorConjuntDades extends JFrame {
 	private JPanel contentPane;
 
 	public GestorConjuntDades(ControladorPresentacio ctrl) {
+		setTitle("Gestor de conjunts de dades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
