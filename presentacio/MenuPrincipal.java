@@ -98,7 +98,6 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnNewButton_3);
 	
 		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector();
-		ctrl.getSelectorConjunts().update();
 		comboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
