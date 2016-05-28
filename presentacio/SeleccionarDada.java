@@ -140,8 +140,8 @@ public class SeleccionarDada extends JFrame {
 
 			public void actionPerformed(ActionEvent e)
 		    {
-		    	System.out.println("IA");
-		    	InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus);
+		    	System.out.println("tipus: " + tipus.toLowerCase());
+		    	InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus.toLowerCase());
 		    	ia.setVisible(true);
 		    }
 		};
