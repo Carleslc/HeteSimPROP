@@ -107,13 +107,16 @@ public class ControladorMultigraf extends ControladorGraf {
 	 * @return si ha sigut possible la selecció del graf (el graf existia).
 	 */
 	public boolean seleccionarGraf(String nomGraf) throws IOException {
-		if (idActual != null) {
-			guardar(construirPath(idActual));
+		if (nomGraf == null)
+			return false;
+		if (!nomGraf.equals(idActual)) {
+			if (idActual != null)
+				guardar(construirPath(idActual));
+			if (!grafs.contains(nomGraf)) return false;
+			carregar(construirPath(nomGraf));
+			idActual = nomGraf;
+			hetesim = new HeteSim(graf);
 		}
-		if (!grafs.contains(nomGraf)) return false;
-		carregar(construirPath(nomGraf));
-		idActual = nomGraf;
-		hetesim = new HeteSim(graf);
 		return true;
 	}
 	
