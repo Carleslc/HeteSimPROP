@@ -52,7 +52,9 @@ public class EsborrarDada extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EsborrarDada frame = new EsborrarDada(new ControladorPresentacio());
+					ControladorPresentacio cntrl = new ControladorPresentacio();
+					cntrl.importar("GRAF", "D:\\Descargas\\DBLP_four_area\\DBLP_four_area");
+					EsborrarDada frame = new EsborrarDada(cntrl);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -143,10 +145,9 @@ public class EsborrarDada extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (selectedID != null && selectedType != null) {
-					String[] opcions = {"Cancelar", "No", "Sï¿½"};
-					int n= JOptionPane.showOptionDialog(e.getComponent(), "Estï¿½s segur d'esborrar aquesta dada?", "Estï¿½s segur d'esborrar aquesta dada?", 
+					String[] opcions = {"Cancelar", "No", "Sí"};
+					int n= JOptionPane.showOptionDialog(e.getComponent(), "Estàs segur d'esborrar aquesta dada?", "Estàs segur d'esborrar aquesta dada?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[1]);
-					System.out.println(n);
 					if (n == 2) {
 						esborrarDada();
 						dispose();
@@ -167,15 +168,6 @@ public class EsborrarDada extends JFrame {
 			{
 				InformacioAddicional ia = new InformacioAddicional(cntrl, selectedID, selectedType);
 				ia.setVisible(true);
-				setVisible(false);
-				ia.addWindowListener(new WindowAdapter() {
-
-					@Override
-					public void windowClosed(WindowEvent e) {
-						setVisible(true);
-					}
-
-				});
 			}
 		};
 
@@ -198,7 +190,8 @@ public class EsborrarDada extends JFrame {
 							row = i;
 						}
 					}
-					selectedID = Integer.valueOf((String) tableModel.getValueAt(row, 0));
+					if (row <= tableModel.getRowCount())
+						selectedID = Integer.valueOf((String) tableModel.getValueAt(row, 0));
 				}
 			}
 
@@ -206,7 +199,9 @@ public class EsborrarDada extends JFrame {
 	}
 
 	private void buidarTable() {
+		table.setEnabled(false);
 		tableModel.getDataVector().removeAllElements();
+		table.setEnabled(true);
 	}
 
 	private void omplirTable() {
@@ -230,7 +225,7 @@ public class EsborrarDada extends JFrame {
 
 		if (data != null) {
 			for (Entry<Integer, String> i : data.entrySet()) {
-				String[] row = {i.getKey().toString(), i.getValue(), "Informaciï¿½ Adicional"};
+				String[] row = {i.getKey().toString(), i.getValue(), "Informació Adicional"};
 				tableModel.addRow(row);
 			}
 		}
