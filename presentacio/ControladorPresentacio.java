@@ -299,6 +299,7 @@ public class ControladorPresentacio {
 	
 	//**************funcions de controladorRelacions****************
 	
+	
 	/**
 	 * Afegeix una adjacencia al graf actual entre un paper i un autor.
 	 * @param idPaper del paper
@@ -342,6 +343,37 @@ public class ControladorPresentacio {
 			controladorMultigraf.getHeteSim().setUpdateAll("CP|PC", false);
 		return set;
 	}
+	
+	/**
+	 * Retorna si els dos nodes estan relacionats
+	 * @param idPaper
+	 * @param idAutor
+	 * @return si els dos nodes estan relacionats
+	 */
+	public boolean existeixRelacioPaperAutor(int idPaper, int idAutor) {
+		return controladorRelacions.existeixRelacioPaperAutor(idPaper, idAutor);
+	}
+	
+	/**
+	 * Retorna si els dos nodes estan relacionats
+	 * @param idPaper
+	 * @param idTerme
+	 * @return si els dos nodes estan relacionats
+	 */
+	public boolean existeixRelacioPaperTerme(int idPaper, int idTerme) {
+		return controladorRelacions.existeixRelacioPaperAutor(idPaper, idTerme);
+	}
+	
+	/**
+	 * Retorna si els dos nodes estan relacionats
+	 * @param idPaper
+	 * @param idConferencia
+	 * @return si els dos nodes estan relacionats
+	 */
+	public boolean existeixRelacioPaperConferencia(int idPaper, int idConferencia) {
+		return controladorRelacions.existeixRelacioPaperAutor(idPaper, idConferencia);
+	}
+	
 	
 	/**
 	 * Elimina la adjacencia entre un paper i un autor.
@@ -555,9 +587,9 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Consulta si un graf està carregat.
+	 * Consulta si un graf estï¿½ carregat.
 	 * @param nomGraf que Ã©s el nom del Graf que es vol consultar.
-	 * @return si el graf existeix i està carregat.
+	 * @return si el graf existeix i estï¿½ carregat.
 	 */
 	public boolean exists(String nomGraf) {
 		return controladorMultigraf.exists(nomGraf);
