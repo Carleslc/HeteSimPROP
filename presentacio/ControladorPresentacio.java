@@ -299,6 +299,38 @@ public class ControladorPresentacio {
 	
 	//**************funcions de controladorRelacions****************
 	
+	
+	/**
+	 * Retorna si existeix la relació entre els dos nodes
+	 * @param idPaper
+	 * @param idAutor
+	 * @return si existeix la relació entre els dos nodes
+	 */
+	public boolean existeixRelacioPaperAutor(int idPaper, int idAutor) {
+		return controladorRelacions.existeixRelacioPaperAutor(idPaper, idAutor);
+	}
+
+	/**
+	 * Retorna si existeix la relació entre els dos nodes
+	 * @param idPaper
+	 * @param idTerme
+	 * @return si existeix la relació entre els dos nodes
+	 */
+	public boolean existeixRelacioPaperTerme(int idPaper, int idTerme) {
+		return controladorRelacions.existeixRelacioPaperTerme(idPaper, idTerme);
+	}
+
+	/**
+	 * Retorna si existeix la relació entre els dos nodes
+	 * @param idPaper
+	 * @param idConferencia
+	 * @return si existeix la relació entre els dos nodes
+	 */
+	public boolean existeixRelacioPaperConferencia(int idPaper, int idConferencia) {
+		return controladorRelacions.existeixRelacioPaperConferencia(idPaper, idConferencia);
+	}
+	
+
 	/**
 	 * Afegeix una adjacencia al graf actual entre un paper i un autor.
 	 * @param idPaper del paper
@@ -555,9 +587,9 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Consulta si un graf est� carregat.
+	 * Consulta si un graf est� carregat.
 	 * @param nomGraf que és el nom del Graf que es vol consultar.
-	 * @return si el graf existeix i est� carregat.
+	 * @return si el graf existeix i est� carregat.
 	 */
 	public boolean exists(String nomGraf) {
 		return controladorMultigraf.exists(nomGraf);
