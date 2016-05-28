@@ -4,6 +4,7 @@ package domini;
  * @author Arnau Badia Sampera
  */
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import persistencia.ControladorPersistencia;
+import persistencia.ControladorPersistenciaPropi;
 
 
 public class ControladorMultigraf extends ControladorGraf {
@@ -23,6 +25,9 @@ public class ControladorMultigraf extends ControladorGraf {
 	 */
 	public ControladorMultigraf() throws IOException {
 		grafs = new HashSet<>();
+		try{grafs.addAll(ControladorPersistenciaPropi.getNomsGrafs(ControladorDominiPersistenciaPropi.DEFAULT_DIRECTORY_GRAFS));}
+		catch (FileNotFoundException ignorar) {
+		}
 	}
 
 	/**
@@ -90,9 +95,9 @@ public class ControladorMultigraf extends ControladorGraf {
 	}
 	
 	/**
-	 * Consulta si un graf està carregat.
+	 * Consulta si un graf estï¿½ carregat.
 	 * @param nomGraf que Ã©s el nom del Graf que es vol consultar.
-	 * @return si el graf existeix i està carregat.
+	 * @return si el graf existeix i estï¿½ carregat.
 	 */
 	public boolean exists(String nomGraf) {
 		Pattern pattern = Pattern.compile(nomGraf, Pattern.CASE_INSENSITIVE + Pattern.LITERAL);
