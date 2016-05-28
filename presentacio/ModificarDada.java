@@ -224,11 +224,7 @@ public class ModificarDada extends JFrame {
 		gbc_lblEtiqueta.gridy = 4;
 		contentPane.add(lblEtiqueta, gbc_lblEtiqueta);
 		
-<<<<<<< HEAD
-		comboBoxetiq = new JComboBox(etiquetes);
-=======
-		comboBoxetiq = new JComboBox<>();
->>>>>>> origin/master
+		comboBoxetiq = new JComboBox<>(etiquetes);
 		GridBagConstraints gbc_comboBoxetiq = new GridBagConstraints();
 		gbc_comboBoxetiq.gridwidth = 4;
 		gbc_comboBoxetiq.insets = new Insets(0, 0, 5, 0);
