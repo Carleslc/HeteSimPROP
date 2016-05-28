@@ -17,6 +17,7 @@ public class GestorConjuntDades extends JFrame {
 	private JPanel contentPane;
 
 	public GestorConjuntDades(ControladorPresentacio ctrl) {
+		GestorConjuntDades ref = this;
 		setTitle("Gestor de conjunts de dades");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -48,8 +49,7 @@ public class GestorConjuntDades extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ModificarConjuntDades x = new ModificarConjuntDades(ctrl);
-				x.setVisible(true);
+				ControladorPresentacio.configurarNovaFinestra(ref, new ModificarConjuntDades(ctrl));
 			}
 		});
 		btnNewButton_1.setBounds(116, 115, 229, 60);
@@ -60,8 +60,7 @@ public class GestorConjuntDades extends JFrame {
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Importar x = new Importar(ctrl);
-				x.setVisible(true);
+				ControladorPresentacio.configurarNovaFinestra(ref, new Importar(ctrl));
 			}
 		});
 		btnNewButton_2.setBounds(116, 187, 229, 53);
