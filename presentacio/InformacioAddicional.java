@@ -13,7 +13,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 
 public class InformacioAddicional extends JFrame {
 
@@ -42,18 +41,7 @@ public class InformacioAddicional extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		// FIXME eliminar proves
-		try{ctrl.afegirGraf("Graf1");}
-		catch(IOException e1){System.out.println("error");}
-		ctrl.afegirPaper("lele");
-		ctrl.afegirAutor("joan");
-		ctrl.afegirPaper("lala");
-		ctrl.afegirAutor("miki");
-		ctrl.afegirConferencia("KK");
-		ctrl.afegirTerme("siii");
-		ctrl.afegirTerme("nooo");
-		ctrl.afegirTerme("mmmm");
-		ctrl.afegirPaper("tercer");
+		
 
 		JLabel lblTipusNodeRelacionat = new JLabel("Tipus de node relacionat:");
 		GridBagConstraints gbc_lblTipusNodeRelacionat = new GridBagConstraints();
@@ -76,6 +64,13 @@ public class InformacioAddicional extends JFrame {
 		//desplegable
 		JComboBox<String> comboBox = new JComboBox<String>();
 		
+		//afegeixo items al combobox
+		if (tipus.equals("paper")) {
+			comboBox.addItem("autors");
+			comboBox.addItem("termes");
+			comboBox.addItem("conferencies");
+		}
+		else comboBox.addItem("papers");
 		
 		
 		//listener que nomes actua si la dada sobre la qual es consulten relacions es un paper
