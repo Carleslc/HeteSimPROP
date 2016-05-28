@@ -65,10 +65,11 @@ public class InformacioAddicional extends JFrame {
 		JComboBox<String> comboBox = new JComboBox<String>();
 		
 		//afegeixo items al combobox
-		if (tipus.equals("paper")) {
+		if (tipus.toLowerCase().equals("paper")) {
 			comboBox.addItem("autors");
 			comboBox.addItem("termes");
 			comboBox.addItem("conferencies");
+			comboBox.setSelectedItem(null);
 		}
 		else comboBox.addItem("papers");
 		
@@ -76,7 +77,7 @@ public class InformacioAddicional extends JFrame {
 		//listener que nomes actua si la dada sobre la qual es consulten relacions es un paper
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tipus.equals("paper")) {
+				if (tipus.toLowerCase().equals("paper")) {
 					seltipus = (String)comboBox.getSelectedItem();
 					switch(seltipus) {
 					case "termes":
@@ -103,8 +104,8 @@ public class InformacioAddicional extends JFrame {
 		});
 		
 		//Si la dada sobre la qual es consulten relacions no es un paper (es una conferencia, terme o autor)
-		if (!tipus.equals("paper")) {
-			switch(tipus) {
+		if (!tipus.toLowerCase().equals("paper")) {
+			switch(tipus.toLowerCase()) {
 			case "terme":
 				String[] s1 = new String [ctrl.consultarRelacionsTerme(id).size()];
 				ctrl.consultarRelacionsTerme(id).toArray(s1);
