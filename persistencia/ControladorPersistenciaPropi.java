@@ -1,12 +1,18 @@
 package persistencia;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import domini.Resultat;
 
@@ -15,9 +21,39 @@ import domini.Resultat;
  * @author Guillem Castro
  *
  */
-
 public abstract class ControladorPersistenciaPropi extends ControladorPersistencia {
 	
+	/**
+	 * Consulta els noms de tots els grafs disponibles en un directori recursivament.
+	 * <br>Es consideraràn grafs els fitxers amb el format <code>graf_NOM.dat</code>
+	 * on <code>NOM</code> és el que s'afegeix a la llista de noms retornada.
+	 * @param dir el directori dels grafs
+	 * @return una llista amb tots els noms de tots els grafs disponibles a <b>dir</b>
+	 * @throws FileNotFoundException si dir és null o no és un directori existent
+	 */
+	public static List<String> getNomsGrafs(String dir) throws FileNotFoundException {
+		if (dir == null)
+			throw new FileNotFoundException("El directori no pot ser null!");
+
+		File d = new File(dir);
+
+		if (!d.isDirectory())
+			throw new FileNotFoundException(dir + " no és un directori!");
+		
+		List<String> noms = new LinkedList<>();
+		
+		for (File f : d.listFiles()) {
+			if (!f.isDirectory()) {
+				Pattern pattern = Pattern.compile("graf_(.*)\\.dat");
+				Matcher matcher = pattern.matcher(f.getName());
+				if (matcher.find())
+					noms.add(matcher.replaceAll("$1"));
+			}
+			else
+				noms.addAll(getNomsGrafs(f.getPath()));
+		}
+		return noms;
+	}
 	
 	/**
 	 * Guarda els resultats a un fitxer corresponent al path donat.
@@ -32,7 +68,6 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 		out.close();
 		file.close();
 	}
-	
 	
 	/**
 	 * Llegeix els resultats del fitxer corresponent al path donat.
