@@ -43,7 +43,7 @@ public class SelectorConjunts {
 		return scd;
 	}
 	
-	private void update() {
+	public void update() {
 		model = new DefaultComboBoxModel<>(new String[] {"- No hi ha cap conjunt seleccionat -"});
 		List<String> grafs = ctrl.getNomsGrafs();
 		for (String graf : grafs)

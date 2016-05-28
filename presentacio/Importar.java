@@ -93,6 +93,8 @@ public class Importar extends JFrame {
 								(err) -> {
 									if (err != null)
 										err.show();
+									else
+										ctrl.getSelectorConjunts().update();
 									setEnabled(true);
 									return err == null;
 								},
