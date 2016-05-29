@@ -367,6 +367,8 @@ public class AfegirDada extends JFrame {
 					}
 					adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
 				}
+				else
+					new ErrorMessage("Has de seleccionar una dada!");
 			}
 		});
 
@@ -416,7 +418,6 @@ public class AfegirDada extends JFrame {
 
 	private void guardarAdjacencies(int id) {
 		if (adjacencies != null) {
-			System.out.println("ADJACENCIES: " + adjacencies);
 			if (tipus_dada.equals("Autor")) {
 				for (int i = 0; i < adjacencies.size(); ++i) {
 					if (adjacencies.get(i) != null) {
