@@ -77,10 +77,10 @@ public class GestorRelacions extends JFrame {
 		table.setBackground(SystemColor.menu);
 		
 		List<String> paths = ctrl.consultarPaths();
-		for(String s : paths) {
+		for (String p : paths) {
 			String[] fila = new String[4];
-			fila[0] = s.substring(0, s.indexOf(':'));
-			fila[1] = s.substring(s.indexOf(':')+2, s.length());
+			fila[0] = p;
+			fila[1] = ctrl.consultarDefinicio(p);
 			fila[2] = "Modificar descripci�";
 			fila[3] = "Esborrar";
 			model.addRow(fila);
