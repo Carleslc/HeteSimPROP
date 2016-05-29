@@ -36,7 +36,7 @@ public class Importar extends JFrame {
 		contentPane.setLayout(null);
 
 		nomField = new JTextField();
-		nomField.setBounds(105, 88, 194, 28);
+		nomField.setBounds(112, 88, 187, 28);
 		contentPane.add(nomField);
 		nomField.setColumns(10);
 
@@ -53,7 +53,7 @@ public class Importar extends JFrame {
 		contentPane.add(btnNewButton);
 
 		JLabel lblNomDelGraf = new JLabel("Nom del graf:");
-		lblNomDelGraf.setBounds(20, 94, 75, 16);
+		lblNomDelGraf.setBounds(20, 94, 86, 16);
 		contentPane.add(lblNomDelGraf);
 
 		JButton btnCancellar = new JButton("CancelÂ·lar");
@@ -84,7 +84,7 @@ public class Importar extends JFrame {
 										ctrl.importar(graf, dir);
 									} catch (FileNotFoundException e1) {
 										return new ErrorMessage("No s'ha trobat el conjunt de dades!\n"
-												+ "Comprova que has introduït correctament el directori i el nom.",
+												+ "Comprova que has introduï¿½t correctament el directori i el nom.",
 												"Error a l'importar", false);
 									} catch (Exception e2) {
 										return new ErrorMessage(e2.getMessage(), "Error a l'importar", false);
@@ -111,7 +111,7 @@ public class Importar extends JFrame {
 		contentPane.add(btnAcceptar);
 
 		directoriField = new JTextField();
-		directoriField.setBounds(105, 49, 194, 28);
+		directoriField.setBounds(88, 49, 211, 28);
 		contentPane.add(directoriField);
 		directoriField.setColumns(10);
 
