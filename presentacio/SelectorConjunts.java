@@ -1,6 +1,5 @@
 package presentacio;
 
-import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -13,7 +12,6 @@ import javax.swing.JComboBox;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.UIManager;
 
 public class SelectorConjunts {
 	
@@ -21,10 +19,6 @@ public class SelectorConjunts {
 	private DefaultComboBoxModel<String> model;
 	private ControladorPresentacio ctrl;
 	private boolean updating;
-
-	static {
-		UIManager.put("ComboBox:\"ComboBox.listRenderer\"[Selected].background", Color.LIGHT_GRAY);
-	}
 	
 	public SelectorConjunts(ControladorPresentacio ctrl) {
 		this.ctrl = ctrl;

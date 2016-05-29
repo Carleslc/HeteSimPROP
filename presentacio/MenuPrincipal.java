@@ -78,7 +78,13 @@ public class MenuPrincipal extends JFrame {
 		//Consulta button
 		JButton btnNewButton = new JButton("Consulta");
 		btnNewButton.setBounds(41, 63, 166, 47);
-		btnNewButton.setEnabled(false);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (btnNewButton.isEnabled())
+					ControladorPresentacio.configurarNovaFinestra(ref, new Consulta(ctrl));
+			}
+		});
 		contentPane.setLayout(null);
 		contentPane.add(btnNewButton);
 
@@ -137,10 +143,19 @@ public class MenuPrincipal extends JFrame {
 	private final void setDefaultStyle() {
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		try {
+			// Nimbus L&F style
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-			UIManager.put("control", Color.getHSBColor(170/360f, 0.05f, 0.97f)); // Base Background
-			UIManager.put("info", Color.getHSBColor(185/360f, 0.15f, 0.97f)); // ToolTip Background
-			UIManager.put("nimbusBase", Color.getHSBColor(200/360f, 0.15f, 0.65f)); // Buttons Background
+			// Base Background
+			UIManager.put("control", Color.getHSBColor(170/360f, 0.05f, 0.97f));
+			// ToolTip Background
+			UIManager.put("info", Color.getHSBColor(185/360f, 0.15f, 0.97f));
+			// Buttons Background
+			UIManager.put("nimbusBase", Color.getHSBColor(200/360f, 0.15f, 0.65f));
+			// ComboBox Highlight Background
+			UIManager.put("ComboBox:\"ComboBox.listRenderer\"[Selected].background", Color.LIGHT_GRAY);
+			// Default colors
+			UIManager.getLookAndFeelDefaults().put("nimbusOrange", UIManager.getColor("nimbusBase"));
+			UIManager.getLookAndFeelDefaults().put("nimbusGreen", Color.getHSBColor(100/360f, 0.65f, 0.85f));
 		} catch (Exception notFoundThenUseDefault) {}
 	}
 }

@@ -3,7 +3,6 @@ package presentacio;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.UIManager;
-import java.awt.Color;
 import java.util.concurrent.Callable;
 
 public class BounceProgressBarTask<V> extends JProgressBar implements Callable<Void> {
@@ -14,14 +13,6 @@ public class BounceProgressBarTask<V> extends JProgressBar implements Callable<V
 	private Callable<V> task;
 	private TaskListener<V> listener;
 	private String successLabel, failLabel;
-	
-	private static final Color FOREGROUND = UIManager.getColor("nimbusBase");
-	private static final Color BACKGROUND = UIManager.getColor("control");
-	private static final Color LABEL = UIManager.getColor("info");
-	
-	static {
-		UIManager.getLookAndFeelDefaults().put("nimbusOrange", FOREGROUND);
-	}
 
 	public BounceProgressBarTask(JFrame parent, Callable<V> task, TaskListener<V> listener,
 			String progressLabel, String successLabel, String failLabel) {
@@ -29,8 +20,8 @@ public class BounceProgressBarTask<V> extends JProgressBar implements Callable<V
 		setMinimum(0);
 		setMaximum(100);
 		setIndeterminate(true);
-		setBackground(BACKGROUND);
-		setForeground(LABEL);
+		setBackground(UIManager.getColor("control"));
+		setForeground(UIManager.getColor("info"));
 		setString(progressLabel);
 		setStringPainted(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
