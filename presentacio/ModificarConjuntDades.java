@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,19 +18,6 @@ public class ModificarConjuntDades extends JFrame {
 
 	private JPanel contentPane;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ModificarConjuntDades frame = new ModificarConjuntDades(new ControladorPresentacio());
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	public ModificarConjuntDades(ControladorPresentacio ctrl) {
 		JFrame ref = this;
 		setTitle("Modificar dades");
@@ -46,8 +31,8 @@ public class ModificarConjuntDades extends JFrame {
 		contentPane.setLayout(null);
 
 		// selector de conjunts
-		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector(ref);
-		contentPane.add(comboBox);
+		JComboBox<String> selector = ctrl.getSelectorConjunts().newSelector(ref);
+		contentPane.add(selector);
 
 		// esborrar conjunt
 		JButton btnEsborrar = new JButton("Esborrar conjunt");
@@ -56,13 +41,15 @@ public class ModificarConjuntDades extends JFrame {
 		btnEsborrar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (comboBox.getSelectedIndex() == 0)
+				if (selector.getSelectedIndex() == 0)
 					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else {
+					String actual = selector.getSelectedItem().toString();
 					int opt = JOptionPane.showConfirmDialog(null,
-							"Totes les dades que has modificat des de que vas importar aquest graf es perdràn."
-							+ "\nRealment vols esborrar-lo?",
-							"Confirmaciï¿½", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+							"<html>Totes les dades que has modificat des de que vas importar <b>"
+									+ actual + "</b> es perdràn.</html>\n<html><i>Realment vols esborrar <b>"
+									+ actual + "</b>?</i></html>",
+									"Confirmaciï¿½", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 					if (opt == JOptionPane.YES_OPTION) {
 						try {
 							ctrl.esborrarFitxerGraf();
@@ -82,7 +69,7 @@ public class ModificarConjuntDades extends JFrame {
 		btnAfegirDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (comboBox.getSelectedIndex() == 0)
+				if (selector.getSelectedIndex() == 0)
 					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else
 					ControladorPresentacio.configurarNovaFinestra(ref, new AfegirDada(ctrl));
@@ -96,7 +83,7 @@ public class ModificarConjuntDades extends JFrame {
 		btnEsborrarDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (comboBox.getSelectedIndex() == 0)
+				if (selector.getSelectedIndex() == 0)
 					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else
 					ControladorPresentacio.configurarNovaFinestra(ref, new EsborrarDada(ctrl));
@@ -110,7 +97,7 @@ public class ModificarConjuntDades extends JFrame {
 		btnModificarDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (comboBox.getSelectedIndex() == 0)
+				if (selector.getSelectedIndex() == 0)
 					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else
 					ControladorPresentacio.configurarNovaFinestra(ref, new ModificarDada(ctrl));
