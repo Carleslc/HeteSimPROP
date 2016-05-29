@@ -62,6 +62,9 @@ public class AfegirDada extends JFrame {
 	private ControladorPresentacio cntrl;
 	private JScrollPane scrollPane;
 	private MyComboBoxEditor mc;
+	boolean teConferencia = false;
+	Integer idCOnferencia;
+	boolean saved = false;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -97,15 +100,20 @@ public class AfegirDada extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				String[] opcions = {"Cancelar", "No", "Sï¿½"};
-				int n= JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
-				System.out.println(n);
-				if (n == 2) {
-					guardarDades();
-					dispose();
+				if (!saved) {
+					String[] opcions = {"Cancelar", "No", "Sí"};
+					int n= JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
+					System.out.println(n);
+					if (n == 2) {
+						guardarDades();
+						dispose();
+					}
+					else if (n == 1) {
+						dispose();
+					}
 				}
-				else if (n == 1) {
+				else {
 					dispose();
 				}
 			}
@@ -166,6 +174,7 @@ public class AfegirDada extends JFrame {
 				JButton src = (JButton) e.getSource();
 				if (src.isEnabled()) {
 					guardarDades();
+					saved = true;
 				}
 			}
 		});
@@ -291,13 +300,24 @@ public class AfegirDada extends JFrame {
 						if (src.getValueAt(row, 1).equals(null) || src.getValueAt(row, 1).equals(""))
 							adjacencies.set(row, new Pair<Integer, String>(null, (String)src.getValueAt(row, column)));
 						else {
-							consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
+								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							else {
+								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								tableModel.removeRow(row);
+								adjacencies.remove(row);
+							}
 						}
 					}
 					if (column == 1) {
 						if (!src.getValueAt(row, 0).equals(null) && !src.getValueAt(row, 0).equals("")) {
-							System.out.println(src.getValueAt(row, 0));
-							consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
+								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							else {
+								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								tableModel.removeRow(row);
+								adjacencies.remove(row);
+							}
 						}
 					}
 				}
@@ -339,8 +359,13 @@ public class AfegirDada extends JFrame {
 				setEnabled(true);
 				Integer res = src.getResultat();
 				System.out.println(res);
-				if (!res.equals(-1))
+				if (!res.equals(-1)) {
+					if (tipusDada.equals("Conferencia")) {
+						idCOnferencia = res;
+						teConferencia = true;
+					}
 					adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
+				}
 			}
 		});
 

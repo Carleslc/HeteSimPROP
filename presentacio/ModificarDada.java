@@ -270,12 +270,15 @@ public class ModificarDada extends JFrame {
 		gbc_btnAfegirRelaci.gridx = 1;
 		gbc_btnAfegirRelaci.gridy = 5;
 		contentPane.add(btnAfegirRelacio, gbc_btnAfegirRelaci);
+		btnAfegirRelacio.setEnabled(false);
 		
 		btnAfegirRelacio.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				tableModel.addRow(newRow);
-				adjacencies.add(tableModel.getRowCount()-1, null);
+				if(btnAfegirRelacio.isEnabled()) {
+					tableModel.addRow(newRow);
+					adjacencies.add(tableModel.getRowCount()-1, null);
+				}
 			}
 		});
 		
@@ -355,8 +358,14 @@ public class ModificarDada extends JFrame {
 									public void windowClosed(WindowEvent e) {
 										SeleccionarDada src = (SeleccionarDada) e.getSource();
 										Integer id = src.getResultat();
-										afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
-										adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+										if (id != -1) {
+											if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+												esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
+											afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
+											adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+										}
+										else
+											new ErrorMessage("Has de seleccionar una dada!");
 										setEnabled(true);
 									}
 								});
@@ -380,8 +389,12 @@ public class ModificarDada extends JFrame {
 									public void windowClosed(WindowEvent e) {
 										SeleccionarDada src = (SeleccionarDada) e.getSource();
 										Integer id = src.getResultat();
-										afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
-										adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+										if (id != -1) {
+											if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+												esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
+											afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
+											adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+										}
 										setEnabled(true);
 									}
 								});
@@ -501,7 +514,8 @@ public class ModificarDada extends JFrame {
 		switch(selectedType) {
 		case "Autor":
 			try {
-				cntrl.afegirAdjacenciaPaperAutor(id_ad, selectedID);
+				if (!cntrl.afegirAdjacenciaPaperAutor(id_ad, selectedID))
+					new ErrorMessage("No s'ha pogut afegir la relació");
 			}
 			catch(IOException e) {
 				new ErrorMessage(e.getMessage());
@@ -627,6 +641,7 @@ public class ModificarDada extends JFrame {
 		if(!selectedType.equals("Terme"))
 			comboBoxetiq.setEnabled(true);
 		txtNouNom.setEnabled(true);
+		btnAfegirRelacio.setEnabled(true);
 		configurarTable();
 		omplirTable();
 	}
@@ -636,6 +651,7 @@ public class ModificarDada extends JFrame {
 		btnGuardar.setEnabled(false);
 		comboBoxetiq.setEnabled(false);
 		txtNouNom.setEnabled(false);
+		btnAfegirRelacio.setEnabled(false);
 		tableModel.getDataVector().clear();
 		comboBoxtipus.setEnabled(true);
 		txtNom.setEnabled(true);
