@@ -2,39 +2,40 @@ package presentacio;
 
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
-import javax.swing.plaf.basic.BasicProgressBarUI;
-
+import javax.swing.UIManager;
 import java.awt.Color;
 import java.util.concurrent.Callable;
 
 public class BounceProgressBarTask<V> extends JProgressBar implements Callable<Void> {
-
+	
 	private static final long serialVersionUID = -3253566314659371833L;
-
+	
 	private JFrame frame;
 	private Callable<V> task;
 	private TaskListener<V> listener;
 	private String successLabel, failLabel;
+	
+	private static final Color FOREGROUND = UIManager.getColor("nimbusBase");
+	private static final Color BACKGROUND = UIManager.getColor("control");
+	private static final Color LABEL = UIManager.getColor("info");
+	
+	static {
+		UIManager.getLookAndFeelDefaults().put("nimbusOrange", FOREGROUND);
+	}
 
 	public BounceProgressBarTask(JFrame parent, Callable<V> task, TaskListener<V> listener,
 			String progressLabel, String successLabel, String failLabel) {
 		frame = parent;
-
 		setMinimum(0);
 		setMaximum(100);
 		setIndeterminate(true);
-		setBackground(Color.WHITE);
-		setForeground(Color.ORANGE);
+		setBackground(BACKGROUND);
+		setForeground(LABEL);
 		setString(progressLabel);
-		setUI(new BasicProgressBarUI() {
-			protected Color getSelectionBackground() { return Color.BLACK; }
-			protected Color getSelectionForeground() { return Color.WHITE; }
-		});
 		setStringPainted(true);
-
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setSize(250, 75);
-
+		frame.setSize(250, 85);
+		
 		this.task = task;
 		this.listener = listener;
 		this.successLabel = successLabel;
@@ -64,7 +65,11 @@ public class BounceProgressBarTask<V> extends JProgressBar implements Callable<V
 				} catch(Exception ignore) {
 					setString(failLabel);
 				}
-				try { Thread.sleep(1000); } catch (Exception ignore) {}
+				String label = getString();
+				if (label != null && !label.isEmpty()) {
+					setForeground(UIManager.getColor("text"));
+					try { Thread.sleep(1000); } catch (Exception ignore) {}
+				}
 			}
 			frame.dispose();
 		}).start();
@@ -76,5 +81,5 @@ public class BounceProgressBarTask<V> extends JProgressBar implements Callable<V
 	public interface TaskListener<V> {
 		boolean onDone(V result);
 	}
-
+	
 }

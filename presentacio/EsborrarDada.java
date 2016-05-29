@@ -30,6 +30,8 @@ import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.JScrollPane;
 
@@ -44,7 +46,6 @@ public class EsborrarDada extends JFrame {
 	private static final String[] colnames = {"ID", "Nom", "Informaciï¿½ Adicional"};
 	private static final String[] tipus = {"Autor", "Conferencia", "Terme", "Paper"};
 	private JTable table;
-
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -61,14 +62,15 @@ public class EsborrarDada extends JFrame {
 		});
 	}
 
-
-
 	public EsborrarDada(ControladorPresentacio cntrl) {
-		setResizable(false);
-		setTitle("Esborrar Dada");
 		this.cntrl = cntrl;
+		final int height = 570;
+		final int minWidth = 600;
+		setMinimumSize(new Dimension(minWidth, height));
+		setBounds(100, 100, minWidth, height);
+		setTitle("Esborrar Dada");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 753, 546);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -129,7 +131,7 @@ public class EsborrarDada extends JFrame {
 		JButton btnEsborrar = new JButton("Esborrar");
 		btnEsborrar.setForeground(Color.BLACK);
 		btnEsborrar.setBackground(Color.WHITE);
-		btnEsborrar.setIcon(new ImageIcon(EsborrarDada.class.getResource("/javax/swing/plaf/metal/icons/Warn.gif")));
+		btnEsborrar.setIcon(new ImageIcon(ControladorPresentacio.ICON_WARNING));
 		GridBagConstraints gbc_btnEsborrar = new GridBagConstraints();
 		gbc_btnEsborrar.insets = new Insets(0, 0, 5, 0);
 		gbc_btnEsborrar.gridwidth = 9;
@@ -144,7 +146,7 @@ public class EsborrarDada extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if (selectedID != null && selectedType != null) {
 					String[] opcions = {"Cancelar", "No", "Sí"};
-					int n= JOptionPane.showOptionDialog(e.getComponent(), "Estàs segur d'esborrar aquesta dada?", "Estàs segur d'esborrar aquesta dada?", 
+					int n = JOptionPane.showOptionDialog(e.getComponent(), "Estàs segur d'esborrar aquesta dada?", "Estàs segur d'esborrar aquesta dada?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[1]);
 					if (n == 2) {
 						esborrarDada();
@@ -160,7 +162,8 @@ public class EsborrarDada extends JFrame {
 	private void configurarTable() {
 		tableModel = new DefaultTableModel(colnames, 0);
 		table = new JTable(tableModel);
-		table.setEnabled(false);		
+		table.setRowHeight(20);
+		table.setEnabled(false);
 		Action action = new AbstractAction() {
 			public void actionPerformed(ActionEvent e)
 			{

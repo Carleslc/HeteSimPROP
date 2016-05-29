@@ -61,8 +61,6 @@ public class AfegirDada extends JFrame {
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
 
-
-
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -81,6 +79,7 @@ public class AfegirDada extends JFrame {
 		this.cntrl = cntrl;
 		adjacencies = new ArrayList<>();
 		setTitle("Afegir Dada");
+		setIconImage(ControladorPresentacio.ICON_ADD);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 477, 349);
 		contentPane = new JPanel();

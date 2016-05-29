@@ -72,6 +72,7 @@ public class GestorRelacions extends JFrame {
 		String[] names = new String[] {"Relaci�", "Descripci�", "", ""};
 		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, names);
 		table = new JTable(model);
+		table.setRowHeight(20);
 		scrollPane.setViewportView(table);
 		table.setBackground(SystemColor.menu);
 		
@@ -151,6 +152,7 @@ public class GestorRelacions extends JFrame {
 	
 	private void config() {
 		setTitle("Gestor de relacions");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

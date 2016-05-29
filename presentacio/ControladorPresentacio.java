@@ -1,5 +1,7 @@
 package presentacio;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
@@ -19,6 +21,25 @@ import domini.ControladorRelacions;
 
 public class ControladorPresentacio {
 	
+	public static final Image ICON_MAIN = Toolkit.getDefaultToolkit()
+			.createImage(ClassLoader.getSystemResource(
+					"javax/swing/plaf/metal/icons/ocean/computer.gif"));
+	public static final Image ICON_ADD = Toolkit.getDefaultToolkit()
+			.createImage(ClassLoader.getSystemResource(
+					"javax/swing/plaf/metal/icons/ocean/upFolder.gif"));
+	public static final Image ICON_INFO = Toolkit.getDefaultToolkit()
+			.createImage(ClassLoader.getSystemResource(
+					"javax/swing/plaf/metal/icons/ocean/info.png"));
+	public static final Image ICON_DISK = Toolkit.getDefaultToolkit()
+			.createImage(ClassLoader.getSystemResource(
+					"javax/swing/plaf/metal/icons/ocean/hardDrive.gif"));
+	public static final Image ICON_SAVE = Toolkit.getDefaultToolkit()
+			.createImage(ClassLoader.getSystemResource(
+					"javax/swing/plaf/metal/icons/ocean/floppy.gif"));
+	public static final Image ICON_WARNING = Toolkit.getDefaultToolkit()
+			.createImage(ClassLoader.getSystemResource(
+					"javax/swing/plaf/metal/icons/ocean/warning.png"));
+	
 	private final ControladorNodes controladorNodes;
 	private final ControladorRelacions controladorRelacions;
 	private final ControladorPaths controladorPaths;
@@ -34,7 +55,8 @@ public class ControladorPresentacio {
 		controladorRelacions = new ControladorRelacions(controladorMultigraf);
 		controladorPaths = new ControladorPaths(controladorMultigraf);
 		controladorConsultes = new ControladorConsultes(controladorMultigraf, controladorPaths);
-		controladorDominiPersistenciaPropi = new ControladorDominiPersistenciaPropi(controladorMultigraf, controladorPaths, controladorConsultes);
+		controladorDominiPersistenciaPropi = new ControladorDominiPersistenciaPropi(
+				controladorMultigraf, controladorPaths, controladorConsultes);
 		controladorDominiPersistenciaPropi.carregarDades();
 		selectorConjunts = new SelectorConjunts(this);
 	}
@@ -769,17 +791,20 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode) throws IllegalArgumentException, InterruptedException, IOException {
+	public String consulta(String path, int idNode) throws Exception {
 		return controladorConsultes.consulta(path, idNode);
 	}
 	
 	/**
-	 * Realitza una consulta de rellevancies a partir d'un node i un path i fent servir un threshold com a filtre.
+	 * Realitza una consulta de rellevancies a partir d'un node i un path i fent servir un threshold
+	 * com a filtre.
 	 * @param path. El nom del path que es vol fer servir per calcular rellevancies.
 	 * @param idNode. L'id del node del que es vol obtenir rellevancies amb altres nodes.
 	 * 			El node es del primer tipus de node del path.
-	 * @param idNodeThreshold1. L'id del primer node del threshold. El node es del primer tipus de node del path del threshold.
-	 * @param idNodeThreshold2. L'id del segon node del threshold. El node es de l'ultim tipus de node del path del threshold.
+	 * @param idNodeThreshold1. L'id del primer node del threshold. El node es del primer tipus
+	 * de node del path del threshold.
+	 * @param idNodeThreshold2. L'id del segon node del threshold. El node es de l'ultim tipus
+	 * de node del path del threshold.
 	 * @param thresholdPath. El nom del path del threshold.
 	 * @returns Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
@@ -789,7 +814,8 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2, String thresholdPath) throws IllegalArgumentException, InterruptedException, IOException {
+	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2,
+			String thresholdPath) throws Exception {
 		return controladorConsultes.consulta(path, idNode, idNodeThreshold1, idNodeThreshold2, thresholdPath);
 	}
 	
@@ -822,7 +848,8 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Elimina tots els resultats de l'ultima consulta excepte els resultats els nodes dels quals tenen l'etiqueta label.
+	 * Elimina tots els resultats de l'ultima consulta excepte els resultats els nodes dels quals
+	 * tenen l'etiqueta label.
 	 * @param label. L'etiqueta dels nodes dels resultats que no s'han d'eliminar.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
@@ -831,7 +858,8 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Elimina tots els resultats de l'ultima consulta excepte els que tenen una rellevancia entre min i max, ambdos inclosos.
+	 * Elimina tots els resultats de l'ultima consulta excepte els que tenen una rellevancia entre
+	 * min i max, ambdos inclosos.
 	 * @param min. La rellevancia minima dels resultats que no s'han d'eliminar.
 	 * @param max. La rellevancia maxima dels resultats que no s'han d'eliminar.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
@@ -933,7 +961,7 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void setThreshold(int idNode1, int idNode2, String path) throws IllegalArgumentException, InterruptedException, IOException {
+	public void setThreshold(int idNode1, int idNode2, String path) throws Exception {
 		controladorConsultes.setThreshold(idNode1, idNode2, path);
 	}
 	
@@ -946,7 +974,7 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void setPath(String path, int id) throws IllegalArgumentException, InterruptedException, IOException {
+	public void setPath(String path, int id) throws Exception {
 		controladorConsultes.setPath(path, id);
 	}
 	
@@ -958,7 +986,7 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void setDada(int id) throws IllegalArgumentException, InterruptedException, IOException {
+	public void setDada(int id) throws Exception {
 		controladorConsultes.setDada(id);
 	}
 	
@@ -968,7 +996,7 @@ public class ControladorPresentacio {
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
-	public void exportarResultat(String filesystem_path) throws IOException, IllegalArgumentException {
+	public void exportarResultat(String filesystem_path) throws Exception {
 		controladorConsultes.exportarResultat(filesystem_path);
 	}
 	

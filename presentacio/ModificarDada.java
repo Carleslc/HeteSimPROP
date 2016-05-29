@@ -58,11 +58,9 @@ public class ModificarDada extends JFrame {
 		});
 	}
 
-
-
 	public ModificarDada(ControladorPresentacio cntrl) {
 		this.cntrl = cntrl;
-		
+		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setTitle("Modificar Dada");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

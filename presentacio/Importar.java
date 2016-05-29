@@ -27,15 +27,16 @@ public class Importar extends JFrame {
 
 	public Importar(ControladorPresentacio ctrl) {
 		setTitle("Importar conjunt de dades");
+		setIconImage(ControladorPresentacio.ICON_DISK);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 325, 205);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		nomField = new JTextField();
-		nomField.setBounds(181, 109, 194, 28);
+		nomField.setBounds(105, 88, 194, 28);
 		contentPane.add(nomField);
 		nomField.setColumns(10);
 
@@ -48,11 +49,11 @@ public class Importar extends JFrame {
 			}
 		});
 
-		btnNewButton.setBounds(86, 35, 289, 29);
+		btnNewButton.setBounds(10, 11, 289, 29);
 		contentPane.add(btnNewButton);
 
 		JLabel lblNomDelGraf = new JLabel("Nom del graf:");
-		lblNomDelGraf.setBounds(86, 115, 106, 16);
+		lblNomDelGraf.setBounds(20, 94, 75, 16);
 		contentPane.add(lblNomDelGraf);
 
 		JButton btnCancellar = new JButton("Cancel·lar");
@@ -62,7 +63,7 @@ public class Importar extends JFrame {
 				dispose();
 			}
 		});
-		btnCancellar.setBounds(75, 197, 117, 29);
+		btnCancellar.setBounds(10, 127, 117, 29);
 		contentPane.add(btnCancellar);
 
 		btnAcceptar = new JButton("Importa graf");
@@ -77,7 +78,7 @@ public class Importar extends JFrame {
 						new ErrorMessage("Aquest graf ja existeix. Canvia el nom.");
 					else {
 						setEnabled(false);
-						new BounceProgressBarTaskFrame<Message>("Importar",
+						new BounceProgressBarTaskFrame<Message>(ControladorPresentacio.ICON_ADD, "Importar",
 								() -> {
 									try {
 										ctrl.importar(graf, dir);
@@ -105,12 +106,12 @@ public class Importar extends JFrame {
 				}
 			}
 		});
-		btnAcceptar.setBounds(232, 197, 143, 29);
+		btnAcceptar.setBounds(156, 127, 143, 29);
 		btnAcceptar.setEnabled(false);
 		contentPane.add(btnAcceptar);
 
 		directoriField = new JTextField();
-		directoriField.setBounds(181, 69, 194, 28);
+		directoriField.setBounds(105, 49, 194, 28);
 		contentPane.add(directoriField);
 		directoriField.setColumns(10);
 
@@ -139,7 +140,7 @@ public class Importar extends JFrame {
 		nomField.getDocument().addDocumentListener(textListener);
 
 		JLabel lblDirectori = new JLabel("Directori:");
-		lblDirectori.setBounds(86, 76, 106, 16);
+		lblDirectori.setBounds(20, 55, 75, 16);
 		contentPane.add(lblDirectori);
 	}
 
