@@ -61,10 +61,11 @@ public class InformacioAddicional extends JFrame {
 		
 		//afegeixo items al combobox
 		if (tipus.toLowerCase().equals("paper")) {
+			comboBox.addItem("- Selecciona el tipus de Dada relacionat - ");
 			comboBox.addItem("autors");
 			comboBox.addItem("termes");
 			comboBox.addItem("conferencies");
-			comboBox.setSelectedItem(null);
+			comboBox.setSelectedItem("- Selecciona el tipus de Dada relacionat - ");;
 		}
 		else comboBox.addItem("papers");
 		
