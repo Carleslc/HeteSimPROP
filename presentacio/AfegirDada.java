@@ -60,11 +60,8 @@ public class AfegirDada extends JFrame {
 	private String nom;
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
-<<<<<<< HEAD
-=======
 	private JScrollPane scrollPane;
 	private MyComboBoxEditor mc;
->>>>>>> origin/master
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

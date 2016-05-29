@@ -1,33 +1,23 @@
 package presentacio;
 
-<<<<<<< HEAD
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-=======
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
->>>>>>> origin/master
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
-<<<<<<< HEAD
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 public class SelectorConjunts {
-
-	private LinkedList<SeleccionarConjuntDeDades> selectors;
-=======
-
-public class SelectorConjunts {
 	
-	private List<SeleccionarConjuntDeDades> selectors;
->>>>>>> origin/master
+	private LinkedList<SeleccionarConjuntDeDades> selectors;
 	private DefaultComboBoxModel<String> model;
 	private ControladorPresentacio ctrl;
 	private boolean updating;
@@ -41,7 +31,6 @@ public class SelectorConjunts {
 		selectors = new LinkedList<>();
 		updating = false;
 	}
-<<<<<<< HEAD
 
 	public JComboBox<String> newSelector(JFrame parent) {
 		final SeleccionarConjuntDeDades scd = new SeleccionarConjuntDeDades();
@@ -76,22 +65,6 @@ public class SelectorConjunts {
 					}
 					else
 						update(); // evita seleccionar el primer de nou
-=======
-	
-	public JComboBox<String> newSelector() {
-		SeleccionarConjuntDeDades scd = new SeleccionarConjuntDeDades();
-		selectors.add(scd);
-		update();
-		scd.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					ctrl.seleccionarGraf((String)scd.getSelectedItem());
-					update();
-				} catch (FileNotFoundException ignore) {
-				} catch (IOException ex) {
-					new ErrorMessage(ex.getMessage());
->>>>>>> origin/master
 				}
 			}
 		});

@@ -16,14 +16,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = -9206328603791933807L;
 
 	private JPanel contentPane;
-	private boolean guardantDades;
+	private ControladorPresentacio ctrl;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -40,6 +39,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	public MenuPrincipal(ControladorPresentacio ctrl) {
+		this.ctrl = ctrl;
 		setDefaultStyle();
 		MenuPrincipal ref = this;
 		setBounds(100, 100, 255, 327);
@@ -51,12 +51,8 @@ public class MenuPrincipal extends JFrame {
 				int opt = JOptionPane.showConfirmDialog(ref, "Vols guardar les dades abans de sortir?", "Guardar dades", JOptionPane.YES_NO_CANCEL_OPTION);
 				switch (opt) {
 				case JOptionPane.YES_OPTION:
-					try {
-						ctrl.guardarDades();
-						dispose();
-					} catch (IOException ex) {
-						new ErrorMessage(ex.getMessage());
-					}
+					guardarDades();
+					dispose();
 					break;
 				case JOptionPane.NO_OPTION:
 					dispose();
@@ -69,25 +65,11 @@ public class MenuPrincipal extends JFrame {
 		setContentPane(contentPane);
 
 		//guardar button
-		guardantDades = false;
 		JButton btnNewButton_2 = new JButton("Guardar");
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (!guardantDades) {
-					guardantDades = true;
-					try {
-						new BounceProgressBarTaskFrame<Void>(ControladorPresentacio.ICON_SAVE,
-								"Guardar dades",
-								() -> {
-									ctrl.guardarDades();
-									return null;
-								},
-								(v) -> {return !(guardantDades = false);},
-								"Guardant dades...",
-								"Dades guardades correctament", "No s'han pogut guardar les dades!").call();
-					} catch (Exception ignore) {}
-				}
+				guardarDades();
 			}
 		});
 		btnNewButton_2.setBounds(41, 179, 166, 42);
@@ -135,6 +117,21 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnNewButton_1.setBounds(41, 121, 166, 47);
 		contentPane.add(btnNewButton_1);
+	}
+
+	private void guardarDades() {
+		setEnabled(false);
+		try {
+			new BounceProgressBarTaskFrame<Void>(ControladorPresentacio.ICON_SAVE,
+					"Guardar dades",
+					() -> {
+						ctrl.guardarDades();
+						return null;
+					},
+					(v) -> {setEnabled(true); return true;},
+					"Guardant dades...",
+					"Dades guardades correctament", "No s'han pogut guardar les dades!").call();
+		} catch (Exception ignore) {}
 	}
 
 	private final void setDefaultStyle() {
