@@ -168,9 +168,6 @@ public class ModificarDada extends JFrame {
 				
 				if (selectedType != null) {
 					seleccionarDada();
-					if (selectedType.equals("Paper")) {
-						teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
-					}
 				}
 			}
 		});
@@ -304,6 +301,33 @@ public class ModificarDada extends JFrame {
 		gbc_btnGuardar.gridy = 7;
 		contentPane.add(btnGuardar, gbc_btnGuardar);
 		btnGuardar.setEnabled(false);
+		
+		btnGuardar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				JButton src = (JButton)e.getSource();
+				if (src.isEnabled()) {
+					nouNom = txtNouNom.getText();
+					if (nouNom != null && !nouNom.equals("")) {
+						switch (selectedType) {
+						case "Autor":
+							cntrl.modificarAutor(nouNom, selectedID);
+							break;
+						case "Paper":
+							cntrl.modificarPaper(nouNom, selectedID);
+							break;
+						case "Conferencia":
+							cntrl.modificarConferencia(nouNom, selectedID);
+							break;
+						case "Terme":
+							cntrl.modificarTerme(nouNom, selectedID);
+							break;
+						}
+					}
+					disableComponents();	
+				}
+			}
+		});
 	}
 	
 	void configurarTable() {
@@ -313,6 +337,7 @@ public class ModificarDada extends JFrame {
 		tableModel.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
+				System.out.println("Vamos a modificar, teConferencia = " + teConferencia);
 				TableModel src = (TableModel) e.getSource();
 				if (e.getColumn() >= 0 && e.getColumn() < 2 && e.getFirstRow() >= 0 && e.getFirstRow() < src.getRowCount()) {
 					int column = e.getColumn();
@@ -321,7 +346,7 @@ public class ModificarDada extends JFrame {
 						if (src.getValueAt(row, 1).equals(null) || src.getValueAt(row, 1).equals(""))
 							adjacencies.set(row, new Pair<Integer, String>(null, (String)src.getValueAt(row, column)));
 						else {
-							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) {
+							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (tableModel.getValueAt(row, 0).equals("Conferencia") && teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) {
 								System.out.println("Añadiendo adjacencia1");
 								SeleccionarDada sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
 								sd.setVisible(true);
@@ -362,11 +387,11 @@ public class ModificarDada extends JFrame {
 									}
 								});
 							}
-						}
-						else {
-							new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
-							tableModel.removeRow(row);
-							adjacencies.remove(row);
+							else {
+								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
+								tableModel.removeRow(row);
+								adjacencies.remove(row);
+							}
 						}
 					}
 				}
@@ -380,7 +405,11 @@ public class ModificarDada extends JFrame {
 			{
 				JTable table = (JTable)e.getSource();
 				int modelRow = Integer.valueOf( e.getActionCommand() );
-				if (selectedType.equals("Conferencia") && adjacencies.get(modelRow) != null && adjacencies.get(modelRow).getKey() != null && !tableModel.getValueAt(modelRow, 1).equals("")) {
+				if (adjacencies.get(modelRow)==null || adjacencies.get(modelRow).getKey() == null || adjacencies.get(modelRow).getValue() == null) {
+					tableModel.removeRow(modelRow);
+					adjacencies.remove(modelRow);
+				}
+				else if (selectedType.equals("Conferencia") && adjacencies.get(modelRow) != null && adjacencies.get(modelRow).getKey() != null && !tableModel.getValueAt(modelRow, 1).equals("")) {
 					SeleccionarConferencia sc = new SeleccionarConferencia(cntrl, cntrl.consultarNomConferencia(selectedID), (String)tableModel.getValueAt(modelRow, 1));
 					sc.setVisible(true);
 					
@@ -528,16 +557,12 @@ public class ModificarDada extends JFrame {
 	
 	void afegirAdjacenciaambConferencia(Integer id_ad) {
 		System.out.println("teConferencia: " + teConferencia);
-		if (!teConferencia) {
-			try {
-				teConferencia = true;
-				cntrl.setAdjacenciaPaperConferencia(selectedID, id_ad);
-			} catch (IOException e) {
-				new ErrorMessage(e.getMessage());
-			}
-		}
-		else {
-			new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
+		try {
+			teConferencia = true;
+			idConferencia = id_ad;
+			cntrl.setAdjacenciaPaperConferencia(selectedID, id_ad);
+		} catch (IOException e) {
+			new ErrorMessage(e.getMessage());
 		}
 	}
 	
@@ -600,10 +625,30 @@ public class ModificarDada extends JFrame {
 	void enableComponents() {
 		table.setEnabled(true);
 		btnGuardar.setEnabled(true);
-		comboBoxetiq.setEnabled(true);
+		if(!selectedType.equals("Terme"))
+			comboBoxetiq.setEnabled(true);
 		txtNouNom.setEnabled(true);
 		configurarTable();
 		omplirTable();
+	}
+	
+	void disableComponents() {
+		table.setEnabled(false);
+		btnGuardar.setEnabled(false);
+		comboBoxetiq.setEnabled(false);
+		txtNouNom.setEnabled(false);
+		tableModel.getDataVector().clear();
+		comboBoxtipus.setEnabled(true);
+		txtNom.setEnabled(true);
+		txtNouNom.setText("");
+		txtNom.setText("");
+		selectedID = null;
+		selectedType = null;
+		nomOriginal = null;
+		nouNom = null;
+		adjacencies = new ArrayList<>();
+		teConferencia = false;
+		idConferencia = -1;
 	}
 	
 	void omplirTable() {
@@ -718,6 +763,11 @@ public class ModificarDada extends JFrame {
 					enableComponents();
 					txtNom.setEnabled(false);
 					comboBoxtipus.setEnabled(false);
+				}
+				if (selectedType.equals("Paper")) {
+					System.out.println("Size relacions = " + cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size());
+					if (cntrl.consultarRelacionsPaperAmbConferencia(selectedID) == null) teConferencia = false;
+					else teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
 				}
 			}
 		});

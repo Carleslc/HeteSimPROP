@@ -60,8 +60,8 @@ public class AfegirDada extends JFrame {
 	private String nom;
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
-
-
+	private JScrollPane scrollPane;
+	private MyComboBoxEditor mc;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -101,7 +101,8 @@ public class AfegirDada extends JFrame {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
 				System.out.println(n);
 				if (n == 2) {
-					guardarDades(); /*tamb� fa dispose()*/
+					guardarDades();
+					dispose();
 				}
 				else if (n == 1) {
 					dispose();
@@ -131,13 +132,21 @@ public class AfegirDada extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<?> cb = (JComboBox<?>) e.getSource();
 				if (!cb.getSelectedItem().equals(tipus[0])) {
-						tipus_dada = (String) cb.getSelectedItem();
+					String tipus_dada_temp = (String) cb.getSelectedItem();
+					if (tipus_dada != null && ((tipus_dada_temp.equals("Paper") && !tipus_dada.equals("Paper")) || (!tipus_dada_temp.equals("Paper") && tipus_dada.equals("Paper")))) {
+						for (int i = tableModel.getRowCount() -1; i >= 0; --i)
+							tableModel.removeRow(i);
+						tipus_dada = tipus_dada_temp;
+						table = new JTable();
+						scrollPane.setViewportView(table);
+						configurarTable();
+					}
+					tipus_dada = tipus_dada_temp;
 					if (!table.isEnabled()) {
 						table.setEnabled(true);
 						configurarTable();
 					}
 					btnAfegirDada.setEnabled(true);
-					cb.setEnabled(false);
 				}
 			}
 
@@ -244,7 +253,7 @@ public class AfegirDada extends JFrame {
 
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -368,7 +377,6 @@ public class AfegirDada extends JFrame {
 					break;
 				}
 				System.out.println("El id resultante es: " + id);
-				dispose();
 			}
 			else {
 				new ErrorMessage("El nom no pot estar buit!");
@@ -460,7 +468,7 @@ public class AfegirDada extends JFrame {
 
 	private class MyComboBoxEditor extends DefaultCellEditor {
 		private static final long serialVersionUID = 610218728899535248L;
-
+		
 		public MyComboBoxEditor(String[] items) {
 			super(new JComboBox<>(items));
 		}

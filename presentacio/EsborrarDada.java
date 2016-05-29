@@ -149,8 +149,11 @@ public class EsborrarDada extends JFrame {
 					int n= JOptionPane.showOptionDialog(e.getComponent(), "Estàs segur d'esborrar aquesta dada?", "Estàs segur d'esborrar aquesta dada?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[1]);
 					if (n == 2) {
+						table.setEnabled(false);
 						esborrarDada();
-						dispose();
+						buidarTable();
+						omplirTable();
+						table.setEnabled(true);
 					}
 				}
 			}
@@ -190,7 +193,7 @@ public class EsborrarDada extends JFrame {
 							row = i;
 						}
 					}
-					if (row <= tableModel.getRowCount())
+					if (row < tableModel.getRowCount() && row >= 0)
 						selectedID = Integer.valueOf((String) tableModel.getValueAt(row, 0));
 				}
 			}
@@ -200,7 +203,8 @@ public class EsborrarDada extends JFrame {
 
 	private void buidarTable() {
 		table.setEnabled(false);
-		tableModel.getDataVector().removeAllElements();
+		for (int i = tableModel.getRowCount()-1; i >= 0; --i)
+			tableModel.removeRow(i);
 		table.setEnabled(true);
 	}
 
