@@ -61,7 +61,8 @@ public class AfegirDada extends JFrame {
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
 	private JScrollPane scrollPane;
-	private MyComboBoxEditor mc;
+	// FIXME Si no se usará mejor quitarlo
+	// private MyComboBoxEditor mc;
 	boolean teConferencia = false;
 	Integer idCOnferencia;
 	boolean saved = false;

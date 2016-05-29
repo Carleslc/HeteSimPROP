@@ -1,27 +1,23 @@
 package presentacio;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
 import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
-import java.awt.Insets;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
 public class SeleccionarConferencia extends JFrame {
 
+	private static final long serialVersionUID = -1154857645777734392L;
+	
 	private JPanel contentPane;
 	private JTextField textField;
 	private Integer resultat;
