@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -47,7 +48,7 @@ public class AfegirRelacio extends JFrame {
 				String path = textPath.getText().trim();
 				String description = textDescription.getText();
 				boolean b = ctrl.afegir(path.toUpperCase(), description);
-				if (!b) new ErrorMessage(contentPane, "Path incorrecte o repetit!");
+				if (!b) JOptionPane.showMessageDialog(contentPane, "Error!\nPath incorrecte o repetit!");
 				else {
 					newPath = path;
 					newDescription = description;

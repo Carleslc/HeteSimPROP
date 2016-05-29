@@ -19,7 +19,7 @@ import persistencia.ControladorExportacio;
 
 public class ControladorConsultes {
 	
-	public static final String DEFAULT_PATH_RESULTATS = "resultats.dat";
+	public static String DEFAULT_PATH_RESULTATS = "resultats.dat";
 	private TreeMap<Date, Resultat> resultats;
 	private Date ultimaConsulta;
 	private ControladorMultigraf controladorMultigraf;

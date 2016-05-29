@@ -49,7 +49,7 @@ public class AfegirDada extends JFrame {
 	private JTextField txtIntrodueixUnNom;
 	private JTable table;
 	private JButton btnAfegirDada;
-	private static final String[] tipus = {"Autor", "Paper", "Conferencia", "Terme"};
+	private static final String[] tipus = {"Selecciona el tipus de dada", "Autor", "Paper", "Conferencia", "Terme"};
 	private static final String[] tipus_paper = {"Autor", "Conferencia", "Terme"};
 	private static final String[] tipus_altra = {"Paper"};
 	private static final String[] etiquetes = {"", "Database", "Data Mining", "AI", "Information Retrieval"};
@@ -60,6 +60,11 @@ public class AfegirDada extends JFrame {
 	private String nom;
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
+<<<<<<< HEAD
+=======
+	private JScrollPane scrollPane;
+	private MyComboBoxEditor mc;
+>>>>>>> origin/master
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -100,7 +105,8 @@ public class AfegirDada extends JFrame {
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
 				System.out.println(n);
 				if (n == 2) {
-					guardarDades(); /*tamb� fa dispose()*/
+					guardarDades();
+					dispose();
 				}
 				else if (n == 1) {
 					dispose();
@@ -129,13 +135,23 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<?> cb = (JComboBox<?>) e.getSource();
-				tipus_dada = (String) cb.getSelectedItem();
-				if (!table.isEnabled()) {
-					table.setEnabled(true);
-					configurarTable();
+				if (!cb.getSelectedItem().equals(tipus[0])) {
+					String tipus_dada_temp = (String) cb.getSelectedItem();
+					if (tipus_dada != null && ((tipus_dada_temp.equals("Paper") && !tipus_dada.equals("Paper")) || (!tipus_dada_temp.equals("Paper") && tipus_dada.equals("Paper")))) {
+						for (int i = tableModel.getRowCount() -1; i >= 0; --i)
+							tableModel.removeRow(i);
+						tipus_dada = tipus_dada_temp;
+						table = new JTable();
+						scrollPane.setViewportView(table);
+						configurarTable();
+					}
+					tipus_dada = tipus_dada_temp;
+					if (!table.isEnabled()) {
+						table.setEnabled(true);
+						configurarTable();
+					}
+					btnAfegirDada.setEnabled(true);
 				}
-				btnAfegirDada.setEnabled(true);
-				cb.setEnabled(false);
 			}
 
 		});
@@ -180,8 +196,10 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField t = (JTextField) e.getSource();
-				nom = t.getText();
-				System.out.println(nom);
+				if (!t.getText().equals("") && !t.getText().equals("Introdueix un nom"))
+					nom = t.getText();
+				else
+					new ErrorMessage("El nom no pot ser buit!");
 			}
 
 		});
@@ -239,7 +257,7 @@ public class AfegirDada extends JFrame {
 
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -335,37 +353,42 @@ public class AfegirDada extends JFrame {
 	}
 
 	private void guardarDades() {
-
 		if (tipus_dada != null) {
-			nom = txtIntrodueixUnNom.getText();
-			System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
-			int id = -1;
-			switch(tipus_dada) {
-			case "Autor":
-				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
-				else id = cntrl.afegirAutor(nom);
-				guardarAdjacencies(id);
-				break;
-			case "Conferencia":
-				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
-				else id = cntrl.afegirConferencia(nom);
-				guardarAdjacencies(id);
-				break;
-			case "Paper":
-				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
-				else id = cntrl.afegirPaper(nom);
-				guardarAdjacencies(id);
-				break;
-			case "Terme":
-				if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirAutor(nom);
-				else id = cntrl.afegirAutor(nom, etiqueta);
-				guardarAdjacencies(id);
-				break;
+			if (!txtIntrodueixUnNom.getText().equals("") && !txtIntrodueixUnNom.equals("Introdueix un nom")) {
+				nom = txtIntrodueixUnNom.getText();
+				System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
+				int id = -1;
+				switch(tipus_dada) {
+				case "Autor":
+					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
+					else id = cntrl.afegirAutor(nom);
+					guardarAdjacencies(id);
+					break;
+				case "Conferencia":
+					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
+					else id = cntrl.afegirConferencia(nom);
+					guardarAdjacencies(id);
+					break;
+				case "Paper":
+					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
+					else id = cntrl.afegirPaper(nom);
+					guardarAdjacencies(id);
+					break;
+				case "Terme":
+					if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirTerme(nom);
+					else id = cntrl.afegirTerme(nom);
+					guardarAdjacencies(id);
+					break;
+				}
+				System.out.println("El id resultante es: " + id);
 			}
-			System.out.println("El id resultante es: " + id);
+			else {
+				new ErrorMessage("El nom no pot estar buit!");
+			}
 		}
-
-		dispose();
+		else {
+			new ErrorMessage("Has de seleccionar un tipus de dada!");
+		}
 	}
 
 	private void guardarAdjacencies(int id) {
@@ -449,7 +472,7 @@ public class AfegirDada extends JFrame {
 
 	private class MyComboBoxEditor extends DefaultCellEditor {
 		private static final long serialVersionUID = 610218728899535248L;
-
+		
 		public MyComboBoxEditor(String[] items) {
 			super(new JComboBox<>(items));
 		}
