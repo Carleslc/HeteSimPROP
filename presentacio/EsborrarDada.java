@@ -43,8 +43,8 @@ public class EsborrarDada extends JFrame {
 	private Integer selectedID;
 	private ControladorPresentacio cntrl;
 	private DefaultTableModel tableModel;
-	private static final String[] colnames = {"ID", "Nom", "Informaciï¿½ Adicional"};
-	private static final String[] tipus = {"Autor", "Conferencia", "Terme", "Paper"};
+	private static final String[] colnames = {"ID", "Nom", "Informació Adicional"};
+	private static final String[] tipus = {"Selecciona el tipus de dada", "Autor", "Conferencia", "Terme", "Paper"};
 	private JTable table;
 
 	public static void main(String[] args) {
@@ -105,10 +105,12 @@ public class EsborrarDada extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> src = (JComboBox<String>) e.getSource();
-				selectedType = (String) src.getSelectedItem();
-				table.setEnabled(true);
-				buidarTable();
-				omplirTable();
+				if (!src.getSelectedItem().equals(tipus[0])) {
+					selectedType = (String) src.getSelectedItem();
+					table.setEnabled(true);
+					buidarTable();
+					omplirTable();
+				}
 			}
 
 		});

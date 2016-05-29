@@ -48,7 +48,7 @@ public class ModificarDada extends JFrame {
 	private JButton btnGuardar;
 	private JComboBox<String> comboBoxetiq;
 	private JComboBox<String> comboBoxtipus;
-	private static final String[] tipus = {"Autor", "Conferencia", "Terme", "Paper"};
+	private static final String[] tipus = {"Selecciona el tipus de dada", "Autor", "Conferencia", "Terme", "Paper"};
 	private static final String[] colNames = {"Tipus", "Nom", "Esborrar"};
 	private static final Object[] newRow = {"", "", "Esborrar"};
 	private static final String[] etiquetes = {"Database", "Data Mining", "AI", "Information Retrieval"};
@@ -124,14 +124,13 @@ public class ModificarDada extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("rawtypes")
 				JComboBox src = (JComboBox) e.getSource();
-				selectedType = (String) src.getSelectedItem();
-				System.out.println("." + txtNom.getText() + ".");
-				if (!txtNom.getText().equals(""))
-					nomOriginal = txtNom.getText();
-				if (nomOriginal != null) {
-					seleccionarDada();
-					if (selectedType.equals("Paper")) {
-						teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
+				if (!src.getSelectedItem().equals(tipus[0])) {
+					selectedType = (String) src.getSelectedItem();
+					System.out.println("." + txtNom.getText() + ".");
+					if (!txtNom.getText().equals(""))
+						nomOriginal = txtNom.getText();
+					if (nomOriginal != null) {
+						seleccionarDada();
 					}
 				}
 			}
