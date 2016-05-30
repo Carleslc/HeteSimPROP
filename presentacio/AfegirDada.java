@@ -142,7 +142,9 @@ public class AfegirDada extends JFrame {
 				JComboBox<?> cb = (JComboBox<?>) e.getSource();
 				if (!cb.getSelectedItem().equals(tipus[0])) {
 					String tipus_dada_temp = (String) cb.getSelectedItem();
-					if (tipus_dada != null && ((tipus_dada_temp.equals("Paper") && !tipus_dada.equals("Paper")) || (!tipus_dada_temp.equals("Paper") && tipus_dada.equals("Paper")))) {
+					if (tipus_dada != null && ((tipus_dada_temp.equals("Paper") &&
+							!tipus_dada.equals("Paper")) || (!tipus_dada_temp.equals("Paper")
+									&& tipus_dada.equals("Paper")))) {
 						for (int i = tableModel.getRowCount() -1; i >= 0; --i)
 							tableModel.removeRow(i);
 						tipus_dada = tipus_dada_temp;
@@ -277,7 +279,7 @@ public class AfegirDada extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		
+
 		String[] colNames = {"Tipus", "Nom", "Esborrar"};
 		tableModel = new DefaultTableModel(colNames, 0);
 		table = new JTable(tableModel);
@@ -394,27 +396,31 @@ public class AfegirDada extends JFrame {
 				nom = txtIntrodueixUnNom.getText();
 				System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
 				int id = -1;
-				switch(tipus_dada) {
-				case "Autor":
-					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
-					else id = cntrl.afegirAutor(nom);
-					guardarAdjacencies(id);
-					break;
-				case "Conferencia":
-					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
-					else id = cntrl.afegirConferencia(nom);
-					guardarAdjacencies(id);
-					break;
-				case "Paper":
-					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
-					else id = cntrl.afegirPaper(nom);
-					guardarAdjacencies(id);
-					break;
-				case "Terme":
-					if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirTerme(nom);
-					else id = cntrl.afegirTerme(nom);
-					guardarAdjacencies(id);
-					break;
+				try {
+					switch(tipus_dada) {
+						case "Autor":
+							if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
+							else id = cntrl.afegirAutor(nom);
+							guardarAdjacencies(id);
+							break;
+						case "Conferencia":
+							if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
+							else id = cntrl.afegirConferencia(nom);
+							guardarAdjacencies(id);
+							break;
+						case "Paper":
+							if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
+							else id = cntrl.afegirPaper(nom);
+							guardarAdjacencies(id);
+							break;
+						case "Terme":
+							if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirTerme(nom);
+							else id = cntrl.afegirTerme(nom);
+							guardarAdjacencies(id);
+							break;
+					}
+				} catch (IOException e) {
+					new ErrorMessage(e.getMessage());
 				}
 				System.out.println("El id resultante es: " + id);
 			}
@@ -450,7 +456,7 @@ public class AfegirDada extends JFrame {
 						Integer id_ad = adjacencies.get(i).getKey();
 						if (id_ad != null) {
 							try {
-							cntrl.setAdjacenciaPaperConferencia(id_ad, id);
+								cntrl.setAdjacenciaPaperConferencia(id_ad, id);
 							} catch (Exception e) {
 								new ErrorMessage(e.getMessage());
 							}
@@ -507,7 +513,7 @@ public class AfegirDada extends JFrame {
 
 	private class MyComboBoxEditor extends DefaultCellEditor {
 		private static final long serialVersionUID = 610218728899535248L;
-		
+
 		public MyComboBoxEditor(String[] items) {
 			super(new JComboBox<>(items));
 		}

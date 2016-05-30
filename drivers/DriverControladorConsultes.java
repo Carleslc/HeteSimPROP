@@ -36,32 +36,52 @@ public class DriverControladorConsultes extends Driver {
 		String nom = nextLine();
 		int id;
 		while(!nom.equals("-1")) {
-			id = contrNodes.afegirAutor(nom);
-			println("S'ha afegit un autor amb id " + id + " i nom " + nom);
+			try {
+				id = contrNodes.afegirAutor(nom);
+				println("S'ha afegit un autor amb id " + id + " i nom " + nom);
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
+			}
 			nom = nextLine();
 		}
 
 		println("Ara, introdueix els noms de totes les conferències. Acaba amb un -1:");
 		nom = nextLine();
 		while(!nom.equals("-1")) {
-			id = contrNodes.afegirConferencia(nom);
-			println("S'ha afegit una conferència amb id " + id + " i nom " + nom);
+			try {
+				id = contrNodes.afegirConferencia(nom);
+				println("S'ha afegit una conferència amb id " + id + " i nom " + nom);
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
+			}
 			nom = nextLine();
 		}
 
 		println("Ara, introdueix els noms de tots els papers. Acaba amb un -1:");
 		nom = nextLine();
 		while(!nom.equals("-1")) {
-			id = contrNodes.afegirPaper(nom);
-			println("S'ha afegit un paper amb id " + id + " i nom " + nom);
+			try {
+				id = contrNodes.afegirPaper(nom);
+				println("S'ha afegit un paper amb id " + id + " i nom " + nom);
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
+			}
 			nom = nextLine();
 		}
 
 		println("Ara, introdueix els noms de tots els termes. Acaba amb un -1:");
 		nom = nextLine();
 		while(!nom.equals("-1")) {
-			id = contrNodes.afegirTerme(nom);
-			println("S'ha afegit un terme amb id " + id + " i nom " + nom);
+			try {
+				id = contrNodes.afegirTerme(nom);
+				println("S'ha afegit un terme amb id " + id + " i nom " + nom);
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
+			}
 			nom = nextLine();
 		}
 
@@ -73,11 +93,16 @@ public class DriverControladorConsultes extends Driver {
 		int id2;
 		while(id1 != -1) {
 			id2 = nextInt();
-			if (contrRelacions.afegirAdjacenciaPaperAutor(id1, id2))
-				println("S'ha afegit correctament la relació.");
-			else {
-				println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
-				println("idPaper\n" + "idAutor");
+			try {
+				if (contrRelacions.afegirAdjacenciaPaperAutor(id1, id2))
+					println("S'ha afegit correctament la relació.");
+				else {
+					println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
+					println("idPaper\n" + "idAutor");
+				}
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
 			}
 			id1 = nextInt();
 		}
@@ -88,11 +113,16 @@ public class DriverControladorConsultes extends Driver {
 		id1 = nextInt();
 		while(id1 != -1) {
 			id2 = nextInt();
-			if (contrRelacions.setAdjacenciaPaperConferencia(id1, id2))
-				println("S'ha afegit correctament la relació.");
-			else {
-				println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
-				println("idPaper\n" + "idConferència");
+			try {
+				if (contrRelacions.setAdjacenciaPaperConferencia(id1, id2))
+					println("S'ha afegit correctament la relació.");
+				else {
+					println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
+					println("idPaper\n" + "idConferència");
+				}
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
 			}
 			id1 = nextInt();
 		}
@@ -103,11 +133,16 @@ public class DriverControladorConsultes extends Driver {
 		id1 = nextInt();
 		while(id1 != -1) {
 			id2 = nextInt();
-			if (contrRelacions.afegirAdjacenciaPaperTerme(id1, id2))
-				println("S'ha afegit correctament la relació.");
-			else {
-				println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
-				println("idPaper\n" + "idTerme");
+			try {
+				if (contrRelacions.afegirAdjacenciaPaperTerme(id1, id2))
+					println("S'ha afegit correctament la relació.");
+				else {
+					println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
+					println("idPaper\n" + "idTerme");
+				}
+			} catch (IOException e) {
+				println("Hi ha hagut un error:");
+				println(e);
 			}
 			id1 = nextInt();
 		}

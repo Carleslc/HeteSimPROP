@@ -75,8 +75,9 @@ public class ControladorPresentacio {
 	 * Afegeix un autor sense cap etiqueta al graf actual i retorna el seu identificador intern.
 	 * @param nom  de l'autor a afegir
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirAutor(String nom) {
+	public int afegirAutor(String nom) throws IOException {
 		return controladorNodes.afegirAutor(nom);
 	}
 
@@ -85,8 +86,9 @@ public class ControladorPresentacio {
 	 * @param nom de l'autor a afegir
 	 * @param label que tindrà l'autor
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirAutor(String nom, String label) {
+	public int afegirAutor(String nom, String label) throws IOException {
 		return controladorNodes.afegirAutor(nom, label);
 	}
 
@@ -105,8 +107,9 @@ public class ControladorPresentacio {
 	 * Afegeix una conferència al graf actual sense cap etiqueta i retorna el seu identificador intern.
 	 * @param nom de la conferencia a afegir
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirConferencia(String nom) {
+	public int afegirConferencia(String nom) throws IOException {
 		return controladorNodes.afegirConferencia(nom);
 	}
 
@@ -115,8 +118,9 @@ public class ControladorPresentacio {
 	 * @param nom de la conferencia a afegir
 	 * @param label que tindrà la conferencia
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirConferencia(String nom, String label) {
+	public int afegirConferencia(String nom, String label) throws IOException {
 		return controladorNodes.afegirConferencia(nom, label);
 	}
 
@@ -136,8 +140,9 @@ public class ControladorPresentacio {
 	 * Afegeix un paper al graf actual sense cap etiqueta i retorna el seu identificador intern.
 	 * @param nom del paper a afegir
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirPaper(String nom) {
+	public int afegirPaper(String nom) throws IOException {
 		return controladorNodes.afegirPaper(nom);
 	}
 
@@ -146,8 +151,9 @@ public class ControladorPresentacio {
 	 * @param nom del paper a afegir
 	 * @param label que tindrà el paper
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirPaper(String nom, String label) {
+	public int afegirPaper(String nom, String label) throws IOException {
 		return controladorNodes.afegirPaper(nom, label);
 	}
 
@@ -167,8 +173,9 @@ public class ControladorPresentacio {
 	 * Afegeix un terme al graf actual sense cap etiqueta i retorna el seu identificador intern.
 	 * @param nom del terme a afegir
 	 * @return el seu identificador intern
+	 * @throws IOException si hi ha un error invalidant clausures
 	 */
-	public int afegirTerme(String nom) {
+	public int afegirTerme(String nom) throws IOException {
 		return controladorNodes.afegirTerme(nom);
 	}
 
