@@ -62,11 +62,11 @@ public class ControladorConsultes {
 	 * @returns Retorna un String que representa el resultat de la data indicada.
 	 * @throws IllegalArgumentException si no existeix cap consulta realitzada en la data indicada.
 	 */
-	public String consultarResultat(Date data) throws IllegalArgumentException {
+	public ArrayList<Entry<Double, String>> consultarResultat(Date data) throws IllegalArgumentException {
 		if (!resultats.containsKey(data))
 			throw new IllegalArgumentException("No existeix cap consulta realitzada en la data especificada.");
 		ultimaConsulta = data;
-		return resultats.get(data).toString();
+		return resultats.get(data).getResultats();
 	}
 
 	/**
