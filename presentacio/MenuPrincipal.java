@@ -44,7 +44,7 @@ public class MenuPrincipal extends JFrame {
 		setDefaultStyle();
 		MenuPrincipal ref = this;
 		setBounds(100, 100, 255, 327);
-		setTitle("Menï¿½ Principal");
+		setTitle("Menú Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {

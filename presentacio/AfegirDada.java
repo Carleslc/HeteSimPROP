@@ -62,9 +62,10 @@ public class AfegirDada extends JFrame {
 	private ControladorPresentacio cntrl;
 	private JScrollPane scrollPane;
 	private JComboBox<String> comboBoxetiqueta;
-	boolean teConferencia = false;
-	Integer idCOnferencia;
-	boolean saved = false;
+	private boolean teConferencia = false;
+	private Integer idCOnferencia;
+	private boolean saved = false;
+	private boolean firstClickIntrodueixUnNom = true;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -204,15 +205,16 @@ public class AfegirDada extends JFrame {
 		gbc_txtIntrodueixUnNom.gridy = 1;
 		contentPane.add(txtIntrodueixUnNom, gbc_txtIntrodueixUnNom);
 		txtIntrodueixUnNom.setColumns(10);
-
-		txtIntrodueixUnNom.addActionListener(new ActionListener() {
+		
+		txtIntrodueixUnNom.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				JTextField t = (JTextField) e.getSource();
-				if (!t.getText().equals("") && !t.getText().equals("Introdueix un nom"))
-					nom = t.getText();
-				else
-					new ErrorMessage("El nom no pot ser buit!");
+				boolean defText = t.getText().equals("Introdueix un nom");
+				if (firstClickIntrodueixUnNom && defText) {
+					firstClickIntrodueixUnNom = false;
+					t.setText("");
+				}
 			}
 
 		});
@@ -393,30 +395,29 @@ public class AfegirDada extends JFrame {
 
 	private void guardarDades() {
 		if (tipus_dada != null) {
-			if (!txtIntrodueixUnNom.getText().equals("") && !txtIntrodueixUnNom.equals("Introdueix un nom")) {
+			if (!txtIntrodueixUnNom.getText().isEmpty() && !firstClickIntrodueixUnNom) {
 				nom = txtIntrodueixUnNom.getText();
 				System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
 				int id = -1;
 				try {
 					switch(tipus_dada) {
 						case "Autor":
-							if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
+							if (etiqueta != null && !etiqueta.isEmpty()) id = cntrl.afegirAutor(nom, etiqueta);
 							else id = cntrl.afegirAutor(nom);
 							guardarAdjacencies(id);
 							break;
 						case "Conferencia":
-							if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
+							if (etiqueta != null && !etiqueta.isEmpty()) id = cntrl.afegirConferencia(nom, etiqueta);
 							else id = cntrl.afegirConferencia(nom);
 							guardarAdjacencies(id);
 							break;
 						case "Paper":
-							if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
+							if (etiqueta != null && !etiqueta.isEmpty()) id = cntrl.afegirPaper(nom, etiqueta);
 							else id = cntrl.afegirPaper(nom);
 							guardarAdjacencies(id);
 							break;
 						case "Terme":
-							if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirTerme(nom);
-							else id = cntrl.afegirTerme(nom);
+							id = cntrl.afegirTerme(nom);
 							guardarAdjacencies(id);
 							break;
 					}
@@ -426,7 +427,7 @@ public class AfegirDada extends JFrame {
 				System.out.println("El id resultante es: " + id);
 			}
 			else {
-				new ErrorMessage("El nom no pot estar buit!");
+				new ErrorMessage("Has d'afegir un nom!");
 			}
 		}
 		else {
