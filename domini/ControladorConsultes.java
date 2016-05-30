@@ -423,16 +423,7 @@ public class ControladorConsultes {
 	 */
 	private boolean exists(String path) {
 		List<String> l = controladorPaths.consultarPaths();
-		for (String p : l) {
-			
-			String aux = "";
-			for (int i = 0; p.charAt(i) != ':'; i++) {
-				aux += p.charAt(i);
-			}
-			
-			if (aux.equals(path)) return true;
-		}
-		return false;
+		return l.contains(path);
 	}
 	
 	/**
