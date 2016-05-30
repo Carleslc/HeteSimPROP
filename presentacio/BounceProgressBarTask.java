@@ -25,7 +25,7 @@ public class BounceProgressBarTask<V> extends JProgressBar implements Callable<V
 		setString(progressLabel);
 		setStringPainted(true);
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setSize(250, 85);
+		frame.setSize(300, 85);
 		
 		this.task = task;
 		this.listener = listener;

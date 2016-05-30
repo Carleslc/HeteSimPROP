@@ -1,5 +1,6 @@
 package presentacio;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -21,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -31,18 +33,20 @@ public class Consulta extends JFrame {
 
 	private static final long serialVersionUID = -5805100415335714861L;
 
+	private ControladorPresentacio ctrl;
+	
 	private JPanel contentPane;
-
 	private JSpinner spinnerMinim, spinnerMaxim;
 	private JLabel lblRellevanciaMinima, lblRellevanciaMaxima, lblDada1,
 	lblDada2, lblRelacioThreshold, lblDada, lblRelacio;
 	private JComboBox<String> comboBox_dada1, comboBox_dada2, comboBox_relacioThreshold,
-	comboBox_dada, comboBox_relacio;
+	comboBox_dada, comboBox_relacio, selector;
 	private JButton btnConsultar, btnEsborrarCamps;
 	private JToggleButton tglbtnAfegirFiltre;
 	private boolean alreadySelected;
 
 	public Consulta(ControladorPresentacio ctrl) {
+		this.ctrl = ctrl;
 		setTitle("Consulta");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		Dimension min = new Dimension(480, 390);
@@ -52,8 +56,23 @@ public class Consulta extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow]", "[grow][grow][grow][grow][grow][grow][grow]"));
+		contentPane.setLayout(new MigLayout("", "[grow]",
+				"[grow][grow][grow][grow][grow][grow][grow]"));
 
+		// Selector de conjunts
+		selector = ctrl.getSelectorConjunts().newSelector(this);
+		alreadySelected = selector.getSelectedIndex() != 0;
+		selector.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (!alreadySelected) {
+					alreadySelected = selector.getSelectedIndex() != 0;
+					setConsultaEnabled(alreadySelected);
+				}
+			}
+		});
+		contentPane.add(selector, "cell 0 0,growx");
+		
 		// Afegir dades
 		JLabel lblRecuperarConsultaAnterior = new JLabel("Recuperar consulta anterior");
 		contentPane.add(lblRecuperarConsultaAnterior, "flowx,cell 0 1");
@@ -82,7 +101,8 @@ public class Consulta extends JFrame {
 		// Threshold
 		JPanel panel = new JPanel();
 		contentPane.add(panel, "cell 0 5,grow");
-		panel.setLayout(new MigLayout("", "[grow][grow][grow][87px,grow][grow][grow][grow][grow][grow][grow]",
+		panel.setLayout(new MigLayout("",
+				"[grow][grow][grow][87px,grow][grow][grow][grow][grow][grow][grow]",
 				"[grow][grow][grow][grow][grow][grow][grow]"));
 		panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
 
@@ -144,6 +164,70 @@ public class Consulta extends JFrame {
 
 		// Consultar
 		btnConsultar = new JButton("Consultar \u27A4");
+		btnConsultar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (btnConsultar.isEnabled()) {
+					Object pathObj = comboBox_relacio.getSelectedItem();
+					String path = pathObj == null ? "" : pathObj.toString();
+					if (!path.isEmpty()) {
+						@SuppressWarnings("unused") // S'usarà quan es facin les consultes
+						boolean ignorarClausura = false;
+						if (ctrl.existsClausura(path)) {
+							if (!ctrl.isUpdatedClausura(path)) {
+								int opt = JOptionPane.showOptionDialog(contentPane, "<html>S'ha detectat "
+										+ "una clausura per la relació <b>" + path + "</b> però "
+										+ "hi ha hagut canvis sobre<br>el conjunt de dades <b>"
+										+ selector.getSelectedItem().toString()
+										+ "</b> que podríen afectar als futurs càlculs amb aquesta clausura.<br>"
+										+ "<i>Vols recalcular la clausura <b>" + path +
+										"</b>?</i></html>", "Calcular clausura",
+										JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+										null, new String[] {
+												"Recalcular Clausura",
+												"Utilitzar Clausura sense recalcular",
+												"Ignorar Clausura"}, "Recalcular Clausura");
+								switch (opt) {
+									case JOptionPane.YES_OPTION: // Recalcular
+										calcularClausura(e.getComponent(), path);
+										break;
+									case JOptionPane.CANCEL_OPTION: // Ignorar
+										ignorarClausura = true;
+										break;
+								}
+							}
+						}
+						else {
+							int opt = JOptionPane.showConfirmDialog(contentPane, "<html>No s'ha detectat cap"
+									+ " clausura per la relació <b>" + path + "</b> i conjunt de dades <b>"
+									+ selector.getSelectedItem().toString() + "</b>,<br>"
+									+ "<i>Vols calcular la clausura <b>" + path +
+									"</b> per agilitzar futures consultes?</i></html>", "Calcular clausura",
+									JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+							if (opt == JOptionPane.YES_OPTION)
+								calcularClausura(e.getComponent(), path);
+						}
+						
+						// TODO Consultes (comprovar paràmetres i realitzar consulta)
+						
+						// FIXME ModificarDada, AfegirDada:
+						// Terme no té etiquetes i per tant no hauria de deixar afegir-les
+						// I... quin sentit té afegir etiquetes si no es poden consultar?
+						
+						// FIXME Sortir sense guardar dades (Menú Principal):
+						// Si es modifica un graf però no es guarden les dades després
+						// en altre execució les clausures queden desactualitzades.
+						
+						// FIXME ModificarDada: Després d'afegir una l'adjacència si no
+						// es troba cap que coincideixi salta un error:
+						// "Has de seleccionar una dada!" i no s'esborra l'adjacència
+					}
+					else
+						new ErrorMessage(contentPane, "No pots realitzar cap consulta"
+								+ " sense seleccionar una relació!");
+				}
+			}
+		});
 		// Main button, green background if Nimbus enabled and painted permantently as focused
 		btnConsultar.setFocusPainted(true);
 		btnConsultar.requestFocusInWindow();
@@ -159,20 +243,6 @@ public class Consulta extends JFrame {
 		btnConsultar.putClientProperty("Nimbus.Overrides", def);
 		//
 		contentPane.add(btnConsultar, "cell 0 6,growx,aligny center");
-
-		// Selector de conjunts
-		JComboBox<String> selector = ctrl.getSelectorConjunts().newSelector(this);
-		alreadySelected = selector.getSelectedIndex() != 0;
-		selector.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (!alreadySelected) {
-					alreadySelected = selector.getSelectedIndex() != 0;
-					setConsultaEnabled(alreadySelected);
-				}
-			}
-		});
-		contentPane.add(selector, "cell 0 0,growx");
 
 		setConsultaEnabled(selector.getSelectedIndex() != 0);
 		boolean enableThreshold = false;
@@ -202,5 +272,25 @@ public class Consulta extends JFrame {
 		btnConsultar.setBackground(UIManager.getColor(enable ? "nimbusGreen" : "nimbusBase"));
 		btnEsborrarCamps.setEnabled(enable);
 		tglbtnAfegirFiltre.setEnabled(enable);
+	}
+	
+	private void calcularClausura(Component parent, String path) {
+		new BounceProgressBarTaskFrame<Boolean>(ControladorPresentacio.ICON_DISK,
+				"Clausura " + path + " (" + selector.getSelectedItem().toString() + ")",
+				() -> {
+					try {
+						parent.setEnabled(false);
+						ctrl.clausura(path, true);
+					} catch (Exception ex) {
+						new ErrorMessage(ex.getMessage());
+						return false;
+					} finally {
+						parent.setEnabled(true);
+					}
+					return true;
+				},
+				(b) -> {return b;},
+				"Calculant clausura...", "",
+				"Error al calcular la clausura!").call();
 	}
 }

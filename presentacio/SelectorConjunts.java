@@ -37,7 +37,7 @@ public class SelectorConjunts {
 					int index = scd.getSelectedIndex();
 					if (index != 0) {
 						new BounceProgressBarTaskFrame<Boolean>(ControladorPresentacio.ICON_DISK,
-								"Seleccionar graf",
+								"Carregar conjunt de dades",
 								() -> {
 									try {
 										updating = true;

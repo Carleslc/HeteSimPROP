@@ -114,7 +114,7 @@ public class ControladorConsultes {
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 		
 		Node n = getNode(path, 0, idNode);
-		if (n .getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
+		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 		
 		Threshold t = createThreshold(idNodeThreshold1, idNodeThreshold2, thresholdPath);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, t.getRellevancia());
