@@ -7,10 +7,10 @@ import javax.swing.JButton;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowAdapter;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+
 
 public class GestorDades extends JFrame {
 
@@ -18,14 +18,20 @@ public class GestorDades extends JFrame {
 	private JPanel contentPane;
 	
 	public GestorDades(ControladorPresentacio ctrl) {
-		config();
+		setTitle("Gestor de dades");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		
+		content_pane();
+		JFrame ref = this;
 		
 		JButton btnGestorConjDades = new JButton("Gestor de conjunts de dades");
 		btnGestorConjDades.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				GestorConjuntDades frame = new GestorConjuntDades(ctrl);
-				configurarNovaFinestra(frame);
+				ControladorPresentacio.configurarNovaFinestra(ref, frame);
 			}
 		});
 		
@@ -34,7 +40,7 @@ public class GestorDades extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				GestorRelacions frame = new GestorRelacions(ctrl);
-				configurarNovaFinestra(frame);
+				ControladorPresentacio.configurarNovaFinestra(ref, frame);
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -60,23 +66,10 @@ public class GestorDades extends JFrame {
 		setResizable(false);
 	}
 	
-	private void config() {
-		setTitle("Gestor de dades");
-		setIconImage(ControladorPresentacio.ICON_MAIN);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 235, 160);
+
+	private void content_pane() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-	}
-	
-	private void configurarNovaFinestra(JFrame frame) {
-		frame.setVisible(true);
-		setVisible(false);
-		frame.addWindowListener(new WindowAdapter() {
-			public void windowClosed(WindowEvent e) {
-				setVisible(true);
-			}
-		});
 	}
 }

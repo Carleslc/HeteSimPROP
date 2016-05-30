@@ -16,14 +16,20 @@ public class ModificarDescripcio extends JFrame {
 	private JTextField textDescription;
 
 	public ModificarDescripcio(ControladorPresentacio ctrl, String path) {
-		config();
+		setTitle("Modificar descripció");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		
+		content_pane();
 		
 		textDescription = new JTextField();
 		textDescription.setBounds(9, 42, 341, 30);
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
-		JLabel lblDescription = new JLabel("Escriu la nova descripciï¿½:");
+		JLabel lblDescription = new JLabel("Escriu la nova descripció:");
+		//lblDescription.setBounds(43, 69, 341, 14);
 		lblDescription.setBounds(10, 11, 340, 20);
 		contentPane.add(lblDescription);
 		
@@ -39,7 +45,7 @@ public class ModificarDescripcio extends JFrame {
 		btnAccept.setBounds(249, 83, 101, 23);
 		contentPane.add(btnAccept);
 
-		JButton btnCancel = new JButton("Cancelï¿½lar");
+		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -50,17 +56,14 @@ public class ModificarDescripcio extends JFrame {
 		contentPane.add(btnCancel);
 	}
 	
-	private void config() {
-		setTitle("Modificar descripciï¿½");
-		setIconImage(ControladorPresentacio.ICON_MAIN);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 377, 155);
+
+	private void content_pane() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 	}
-	
+
 	private String getDefinicio() {
 		try {
 			String definicio = textDescription.getText().toString();

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Map.Entry;
-import java.util.List;
 import java.io.IOException;
 
 import persistencia.ControladorPersistenciaPropi;
@@ -44,7 +43,7 @@ public class ControladorConsultes {
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
 	public ArrayList<Entry<Double, String>> consultarResultat() throws IllegalArgumentException {
-		return resultats.get(getUltimaConsulta()).get();
+		return resultats.get(getUltimaConsulta()).getResultats();
 	}
 
 	/**
@@ -105,7 +104,7 @@ public class ControladorConsultes {
 		Date d = new Date();
 		resultats.put(d, r);
 		ultimaConsulta = d;
-		return r.get();
+		return r.getResultats();
 	}
 
 	/**
@@ -143,7 +142,7 @@ public class ControladorConsultes {
 		Date d = new Date();
 		resultats.put(d, r);
 		ultimaConsulta = d;
-		return r.get();
+		return r.getResultats();
 	}
 
 	/**
@@ -442,17 +441,7 @@ public class ControladorConsultes {
 	 * @returns Retorna cert si el path existeix al sistema i fals altrament.
 	 */
 	private boolean exists(String path) {
-		List<String> l = controladorPaths.consultarPaths();
-		for (String p : l) {
-
-			String aux = "";
-			for (int i = 0; p.charAt(i) != ':'; i++) {
-				aux += p.charAt(i);
-			}
-
-			if (aux.equals(path)) return true;
-		}
-		return false;
+		return controladorPaths.consultarPaths().contains(path);
 	}
 
 	/**

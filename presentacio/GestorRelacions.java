@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,67 +27,28 @@ import javax.swing.JScrollPane;
 public class GestorRelacions extends JFrame {
 
 	private static final long serialVersionUID = -1153947409010750568L;
+	private ControladorPresentacio ctrl;
 	private JPanel contentPane;
+	private JScrollPane scrollPane;
+	private DefaultTableModel model;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacio ctrl = new ControladorPresentacio();
-					ctrl.afegir("AP", "Autoria");
-					ctrl.afegir("CPT", "Temï¿½tica de conferï¿½ncia");
-					ctrl.afegir("APA", "Co-autoria");
-					ctrl.afegir("APC", "Conferenciant");
-					ctrl.afegir("APT", "Expert");
-					GestorRelacions frame = new GestorRelacions(ctrl);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public GestorRelacions(ControladorPresentacio ctrl) {
-		config();
+		this.ctrl = ctrl;
+		setTitle("Gestor de relacions");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
 		
-		JScrollPane scrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 3;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollPane.gridx = 0;
-		gbc_scrollPane.gridy = 0;
-		contentPane.add(scrollPane, gbc_scrollPane);
-		
-		String[] names = new String[] {"Relaciï¿½", "Descripciï¿½", "", ""};
-		DefaultTableModel model = new DefaultTableModel(new Object[][]{}, names);
-		table = new JTable(model);
-		table.setRowHeight(20);
-		scrollPane.setViewportView(table);
-		table.setBackground(SystemColor.menu);
-		
-		List<String> paths = ctrl.consultarPaths();
-		for (String p : paths) {
-			String[] fila = new String[4];
-			fila[0] = p;
-			fila[1] = ctrl.consultarDefinicio(p);
-			fila[2] = "Modificar descripciï¿½";
-			fila[3] = "Esborrar";
-			model.addRow(fila);
-		}
+
+		content_pane();
+		scroll_pane();
+		initTable();
 		
 		@SuppressWarnings("serial")
 		Action esborrar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				int option = JOptionPane.showConfirmDialog(contentPane, "Segur que vols esborrar?", "Esborrar relaciï¿½", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+				int option = JOptionPane.showConfirmDialog(contentPane, "Segur que vols esborrar?", "Esborrar relació", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (option == JOptionPane.OK_OPTION) {
 					int row = Integer.valueOf(e.getActionCommand());
 					String path = (String)model.getValueAt(row, 0);
@@ -120,8 +79,8 @@ public class GestorRelacions extends JFrame {
 		@SuppressWarnings("unused")
 		ButtonColumn buttonColumnModificar = new ButtonColumn(table, modificar, 2);
 		
-		JButton btnNewButton = new JButton("Afegir relaciï¿½");
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		JButton btnAfegir = new JButton("Afegir relació");
+		btnAfegir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				AfegirRelacio frame = new AfegirRelacio(ctrl);
@@ -134,7 +93,7 @@ public class GestorRelacions extends JFrame {
 							String[] fila = new String[4];
 							fila[0] = path.toUpperCase();
 							fila[1] = description;
-							fila[2] = "Modificar descripciï¿½";
+							fila[2] = "Modificar descripció";
 							fila[3] = "Esborrar";
 							model.addRow(fila);
 						}
@@ -147,14 +106,11 @@ public class GestorRelacions extends JFrame {
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 1;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
+		contentPane.add(btnAfegir, gbc_btnNewButton);
 	}
 	
-	private void config() {
-		setTitle("Gestor de relacions");
-		setIconImage(ControladorPresentacio.ICON_MAIN);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+	
+	private void content_pane() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -164,5 +120,34 @@ public class GestorRelacions extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
+	}
+	
+	private void scroll_pane() {
+		scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 0;
+		contentPane.add(scrollPane, gbc_scrollPane);
+	}
+	
+	private void initTable() {
+		String[] names = new String[] {"Relació", "Descripció", "", ""};
+		model = new DefaultTableModel(new Object[][]{}, names);
+		table = new JTable(model);
+		scrollPane.setViewportView(table);
+		table.setBackground(SystemColor.menu);
+		
+		List<String> paths = ctrl.consultarPaths();
+		for(String s : paths) {
+			String[] fila = new String[4];
+			fila[0] = s;
+			fila[1] = ctrl.consultarDefinicio(s);
+			fila[2] = "Modificar descripció";
+			fila[3] = "Esborrar";
+			model.addRow(fila);
+		}
 	}
 }

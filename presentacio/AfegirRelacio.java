@@ -18,7 +18,12 @@ public class AfegirRelacio extends JFrame {
 	private String newDescription;
 
 	public AfegirRelacio(ControladorPresentacio ctrl) {
-		config();
+		setTitle("Afegir relació");
+		setIconImage(ControladorPresentacio.ICON_ADD);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		
+		content_pane();
 		
 		JTextField textPath = new JTextField();
 		textPath.setBounds(87, 11, 194, 30);
@@ -30,12 +35,12 @@ public class AfegirRelacio extends JFrame {
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
-		JLabel lblPath = new JLabel("Relaciï¿½:");
+		JLabel lblPath = new JLabel("Relació:");
 		lblPath.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblPath.setBounds(10, 19, 67, 14);
 		contentPane.add(lblPath);
 		
-		JLabel lblDescription = new JLabel("Descripciï¿½:");
+		JLabel lblDescription = new JLabel("Descripció:");
 		lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDescription.setBounds(6, 60, 71, 14);
 		contentPane.add(lblDescription);
@@ -58,7 +63,7 @@ public class AfegirRelacio extends JFrame {
 		btnAccept.setBounds(180, 93, 101, 23);
 		contentPane.add(btnAccept);
 		
-		JButton btnCancel = new JButton("Cancelï¿½lar");
+		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -77,11 +82,8 @@ public class AfegirRelacio extends JFrame {
 		return newDescription;
 	}
 	
-	private void config() {
-		setTitle("Afegir relaciï¿½");
-		setIconImage(ControladorPresentacio.ICON_ADD);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 307, 164);
+	
+	private void content_pane() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

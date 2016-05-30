@@ -136,14 +136,6 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	}
 
 	/**
-	 * Getter de resultats
-	 * @returns nomGraf sobre el que s'ha fet la consulta
-	 */
-	public List<Pair<Double, Node>> getResultats() {
-		return resultats;
-	}
-
-	/**
 	 * Setter de threshold
 	 * @param threshold es el filtre per rellevancia que s'aplica al resultat
 	 */
@@ -179,7 +171,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	 * Retorna una llista amb tots els resultats amb els noms de les dades
 	 * @return tots els resultats amb els noms de les dades
 	 */
-	public ArrayList<Entry<Double, String>> get() {
+	public ArrayList<Entry<Double, String>> getResultats() {
 		return resultats.stream().map(p -> new Pair<>(p.getKey(), p.getValue().getNom()))
 				.collect(Collectors.toCollection(ArrayList::new));
 	}
@@ -382,6 +374,6 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 
 	@Override
 	public Iterator<Entry<Double, String>> iterator() {
-		return get().iterator();
+		return getResultats().iterator();
 	}
 }
