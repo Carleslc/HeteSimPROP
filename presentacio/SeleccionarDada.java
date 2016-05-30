@@ -30,7 +30,6 @@ import javax.swing.JButton;
  * @author Guillem Castro
  *
  */
-
 public class SeleccionarDada extends JFrame {
 
 	private static final long serialVersionUID = -5536518442887894820L;
@@ -44,7 +43,6 @@ public class SeleccionarDada extends JFrame {
 	private JTable table;
 	private DefaultTableModel tableModel;
 	
-
 	/**
 	 * Constructor
 	 * @param cntrl ControladorPresentacioDomini del programa
@@ -107,14 +105,23 @@ public class SeleccionarDada extends JFrame {
 		});
 
 	}
+	
 	/**
 	 * Consulta el resultat de la selecciï¿½ de dades
 	 * @return el ID de la dada seleccionada, -1 si cap dada ha sigut seleccionada
 	 */
-	public Integer getResultat() {
+	public int getResultat() {
 		return seleccio;
 	}
 
+	/**
+	 * Consulta si no hi ha cap dada per seleccionar
+	 * @return si no hi ha cap dada per seleccionar
+	 */
+	public boolean isEmpty() {
+		return resultats == null || resultats.isEmpty();
+	}
+	
 	private void configurarTable() {
 		String[] colnames = {"ID", "Nom", "Informació Adicional"};
 
@@ -180,7 +187,6 @@ public class SeleccionarDada extends JFrame {
 
 				System.out.println(row);
 				seleccio = Integer.valueOf((String) tableModel.getValueAt(row, 0));
-
 			}
 
 		});
@@ -229,4 +235,5 @@ public class SeleccionarDada extends JFrame {
 			resultats = null;
 		}
 	}
+	
 }

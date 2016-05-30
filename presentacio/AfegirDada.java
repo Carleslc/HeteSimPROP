@@ -358,17 +358,23 @@ public class AfegirDada extends JFrame {
 				SeleccionarDada src = (SeleccionarDada) e.getSource();
 				System.out.println("closed");
 				setEnabled(true);
-				Integer res = src.getResultat();
-				System.out.println(res);
-				if (!res.equals(-1)) {
-					if (tipusDada.equals("Conferencia")) {
-						idCOnferencia = res;
-						teConferencia = true;
+				if (!src.isEmpty()) {
+					Integer res = src.getResultat();
+					System.out.println(res);
+					if (!res.equals(-1)) {
+						if (tipusDada.equals("Conferencia")) {
+							idCOnferencia = res;
+							teConferencia = true;
+						}
+						adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
 					}
-					adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
+					else {
+						new ErrorMessage("Has de seleccionar una dada!");
+						// TODO Eliminar relació de la llista
+					}
 				}
 				else
-					new ErrorMessage("Has de seleccionar una dada!");
+					System.out.println("empty");
 			}
 		});
 

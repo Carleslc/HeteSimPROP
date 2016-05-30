@@ -194,6 +194,7 @@ public class Consulta extends JFrame {
 									case JOptionPane.CANCEL_OPTION: // Ignorar
 										ignorarClausura = true;
 										break;
+									// En altre cas: Utilitzar sense recalcular
 								}
 							}
 						}
