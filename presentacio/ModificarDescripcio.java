@@ -29,7 +29,6 @@ public class ModificarDescripcio extends JFrame {
 		textDescription.setColumns(10);
 		
 		JLabel lblDescription = new JLabel("Escriu la nova descripció:");
-		//lblDescription.setBounds(43, 69, 341, 14);
 		lblDescription.setBounds(10, 11, 340, 20);
 		contentPane.add(lblDescription);
 		

@@ -242,6 +242,24 @@ public class ControladorConsultes {
 	public boolean esborrar(int index) throws IllegalArgumentException {
 		return resultats.get(getUltimaConsulta()).esborrar(index);
 	}
+	
+	/**
+	 * Consultora de la dada de l'última consulta.
+	 * @returns Retorna el nom de la dada sobre la que s'ha fet l'última consulta.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public String getDada() throws IllegalArgumentException {
+		return resultats.get(getUltimaConsulta()).getNode().getNom();
+	}
+	
+	/**
+	 * Consultora del path de l'última consulta.
+	 * @returns Retorna el nom del path fet servir en l'última consulta.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public String getPath() throws IllegalArgumentException {
+		return resultats.get(getUltimaConsulta()).getPath();
+	}
 
 	/**
 	 * Consultora del tipus dels nodes dels resultats de l'última consulta.
