@@ -45,11 +45,12 @@ public class ModificarConjuntDades extends JFrame {
 					new ErrorMessage(contentPane, "Selecciona un conjunt de dades primer.", "Cap conjunt seleccionat");
 				else {
 					String actual = selector.getSelectedItem().toString();
-					int opt = JOptionPane.showConfirmDialog(null,
+					int opt = JOptionPane.showOptionDialog(null,
 							"<html>Totes les dades que has modificat des de que vas importar <b>"
 									+ actual + "</b> es perdràn.</html>\n<html><i>Realment vols esborrar <b>"
 									+ actual + "</b>?</i></html>",
-									"Confirmaciï¿½", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+									"Confirmaciï¿½", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+									null, new String[] {"Sí", "No"}, "No");
 					if (opt == JOptionPane.YES_OPTION) {
 						try {
 							ctrl.esborrarFitxerGraf();

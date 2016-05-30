@@ -25,6 +25,8 @@ import javax.swing.JComboBox;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -206,9 +208,9 @@ public class AfegirDada extends JFrame {
 		contentPane.add(txtIntrodueixUnNom, gbc_txtIntrodueixUnNom);
 		txtIntrodueixUnNom.setColumns(10);
 		
-		txtIntrodueixUnNom.addMouseListener(new MouseAdapter() {
+		txtIntrodueixUnNom.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(FocusEvent e) {
 				JTextField t = (JTextField) e.getSource();
 				boolean defText = t.getText().equals("Introdueix un nom");
 				if (firstClickIntrodueixUnNom && defText) {
