@@ -41,6 +41,10 @@ public class BounceProgressBarTaskFrame<V> extends JFrame implements Callable<Vo
 		this(task, "");
 	}
 	
+	public BounceProgressBarTaskFrame(Callable<V> task, String progressLabel, String successLabel, String failLabel) {
+		this(task, null, progressLabel, successLabel, failLabel);
+	}
+	
 	public BounceProgressBarTaskFrame(Callable<V> task, String progressLabel) {
 		this(task, null, progressLabel, "", "");
 	}
@@ -54,10 +58,22 @@ public class BounceProgressBarTaskFrame<V> extends JFrame implements Callable<Vo
 		setTitle(title);
 	}
 	
+	public BounceProgressBarTaskFrame(String title, Callable<V> task, String progressLabel, String successLabel, String failLabel) {
+		this(title, task, null, progressLabel, successLabel, failLabel);
+	}
+	
 	public BounceProgressBarTaskFrame(Image icon, String title, Callable<V> task, TaskListener<V> listener, String progressLabel, String successLabel, String failLabel) {
 		this(task, listener, progressLabel, successLabel, failLabel);
 		setTitle(title);
 		setIconImage(icon);
+	}
+	
+	public BounceProgressBarTaskFrame(Image icon, String title, Callable<V> task, String progressLabel, String successLabel, String failLabel) {
+		this(icon, title, task, null, progressLabel, successLabel, failLabel);
+	}
+	
+	public BounceProgressBarTaskFrame(Image icon, String title, Callable<V> task, String progressLabel) {
+		this(icon, title, task, null, progressLabel, "", "");
 	}
 
 	@Override

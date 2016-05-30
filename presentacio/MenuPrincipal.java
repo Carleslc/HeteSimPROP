@@ -52,18 +52,12 @@ public class MenuPrincipal extends JFrame {
 				int opt = JOptionPane.showConfirmDialog(ref, "Vols guardar els canvis abans de sortir?",
 						"Guardar dades", JOptionPane.YES_NO_CANCEL_OPTION);
 				switch (opt) {
-					case JOptionPane.YES_OPTION:
-						guardarDades();
-						dispose();
-						break;
-					case JOptionPane.NO_OPTION:
-						try {
-							ctrl.reestablirClausures();
-						} catch (IOException e1) {
-							new ErrorMessage(e1.getMessage());
-						}
-						dispose();
-						break;
+				case JOptionPane.YES_OPTION:
+					sortir(true);
+					break;
+				case JOptionPane.NO_OPTION:
+					sortir(false);
+					break;
 				}
 			}
 		});
@@ -133,6 +127,18 @@ public class MenuPrincipal extends JFrame {
 		});
 		btnNewButton_1.setBounds(41, 121, 166, 47);
 		contentPane.add(btnNewButton_1);
+	}
+
+	private void sortir(boolean guardar) {
+		if (guardar)
+			guardarDades();
+		else {
+			try {
+				setEnabled(false);
+				ctrl.reestablirClausures();
+			} catch (IOException ignore) {}
+		}
+		dispose();
 	}
 
 	private void guardarDades() {
