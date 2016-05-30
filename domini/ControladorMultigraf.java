@@ -62,7 +62,7 @@ public class ControladorMultigraf extends ControladorGraf {
 		}
 		graf = new Graf();
 		grafs.add(nomGraf);
-		hetesim = new HeteSim(graf);
+		hetesim = new HeteSim(graf, HeteSim.DEFAULT_DIRECTORI_CLAUSURES + idActual);
 		idActual = nomGraf;
 	}
 	
@@ -84,7 +84,7 @@ public class ControladorMultigraf extends ControladorGraf {
 		super.importar(directori);
 		grafs.add(nomGraf);
 		idActual = nomGraf;
-		hetesim = new HeteSim(graf);
+		hetesim = new HeteSim(graf, HeteSim.DEFAULT_DIRECTORI_CLAUSURES + idActual);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class ControladorMultigraf extends ControladorGraf {
 			if (!grafs.contains(nomGraf)) return false;
 			carregar(construirPath(nomGraf));
 			idActual = nomGraf;
-			hetesim = new HeteSim(graf);
+			hetesim = new HeteSim(graf, HeteSim.DEFAULT_DIRECTORI_CLAUSURES + idActual);
 		}
 		return true;
 	}

@@ -8,6 +8,10 @@ import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+
+
 public class GestorDades extends JFrame {
 
 	private static final long serialVersionUID = 2697285126957563652L;
@@ -15,6 +19,7 @@ public class GestorDades extends JFrame {
 	
 	public GestorDades(ControladorPresentacio ctrl) {
 		setTitle("Gestor de dades");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -29,8 +34,6 @@ public class GestorDades extends JFrame {
 				ControladorPresentacio.configurarNovaFinestra(ref, frame);
 			}
 		});
-		btnGestorConjDades.setBounds(102, 60, 223, 35);
-		contentPane.add(btnGestorConjDades);
 		
 		JButton btnGestorRelacions = new JButton("Gestor de relacions");
 		btnGestorRelacions.addMouseListener(new MouseAdapter() {
@@ -40,14 +43,33 @@ public class GestorDades extends JFrame {
 				ControladorPresentacio.configurarNovaFinestra(ref, frame);
 			}
 		});
-		btnGestorRelacions.setBounds(102, 143, 223, 35);
-		contentPane.add(btnGestorRelacions);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(7)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnGestorRelacions, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnGestorConjDades, GroupLayout.PREFERRED_SIZE, 206, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnGestorConjDades, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnGestorRelacions, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(39, Short.MAX_VALUE))
+		);
+		contentPane.setLayout(gl_contentPane);
+		setResizable(false);
 	}
 	
+
 	private void content_pane() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 	}
 }

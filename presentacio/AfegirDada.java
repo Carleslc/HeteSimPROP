@@ -49,7 +49,7 @@ public class AfegirDada extends JFrame {
 	private JTextField txtIntrodueixUnNom;
 	private JTable table;
 	private JButton btnAfegirDada;
-	private static final String[] tipus = {"Autor", "Paper", "Conferencia", "Terme"};
+	private static final String[] tipus = {"Selecciona el tipus de dada", "Autor", "Paper", "Conferencia", "Terme"};
 	private static final String[] tipus_paper = {"Autor", "Conferencia", "Terme"};
 	private static final String[] tipus_altra = {"Paper"};
 	private static final String[] etiquetes = {"", "Database", "Data Mining", "AI", "Information Retrieval"};
@@ -60,8 +60,11 @@ public class AfegirDada extends JFrame {
 	private String nom;
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
-
-
+	private JScrollPane scrollPane;
+	private JComboBox<String> comboBoxetiqueta;
+	boolean teConferencia = false;
+	Integer idCOnferencia;
+	boolean saved = false;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -81,6 +84,7 @@ public class AfegirDada extends JFrame {
 		this.cntrl = cntrl;
 		adjacencies = new ArrayList<>();
 		setTitle("Afegir Dada");
+		setIconImage(ControladorPresentacio.ICON_ADD);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 477, 349);
 		contentPane = new JPanel();
@@ -96,14 +100,20 @@ public class AfegirDada extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				String[] opcions = {"Cancelar", "No", "Sï¿½"};
-				int n= JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
-						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
-				System.out.println(n);
-				if (n == 2) {
-					guardarDades(); /*tambï¿½ fa dispose()*/
+				if (!saved) {
+					String[] opcions = {"Cancelar", "No", "Sí"};
+					int n= JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
+							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
+					System.out.println(n);
+					if (n == 2) {
+						guardarDades();
+						dispose();
+					}
+					else if (n == 1) {
+						dispose();
+					}
 				}
-				else if (n == 1) {
+				else {
 					dispose();
 				}
 			}
@@ -130,13 +140,27 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JComboBox<?> cb = (JComboBox<?>) e.getSource();
-				tipus_dada = (String) cb.getSelectedItem();
-				if (!table.isEnabled()) {
-					table.setEnabled(true);
-					configurarTable();
+				if (!cb.getSelectedItem().equals(tipus[0])) {
+					String tipus_dada_temp = (String) cb.getSelectedItem();
+					if (tipus_dada != null && ((tipus_dada_temp.equals("Paper") && !tipus_dada.equals("Paper")) || (!tipus_dada_temp.equals("Paper") && tipus_dada.equals("Paper")))) {
+						for (int i = tableModel.getRowCount() -1; i >= 0; --i)
+							tableModel.removeRow(i);
+						tipus_dada = tipus_dada_temp;
+						table = new JTable();
+						scrollPane.setViewportView(table);
+						configurarTable();
+					}
+					tipus_dada = tipus_dada_temp;
+					if (!table.isEnabled()) {
+						table.setEnabled(true);
+						configurarTable();
+					}
+					if (!tipus_dada.equals("Terme"))
+						comboBoxetiqueta.setEnabled(true);
+					else
+						comboBoxetiqueta.setEnabled(false);
+					btnAfegirDada.setEnabled(true);
 				}
-				btnAfegirDada.setEnabled(true);
-				cb.setEnabled(false);
 			}
 
 		});
@@ -154,6 +178,7 @@ public class AfegirDada extends JFrame {
 				JButton src = (JButton) e.getSource();
 				if (src.isEnabled()) {
 					guardarDades();
+					saved = true;
 				}
 			}
 		});
@@ -181,8 +206,10 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField t = (JTextField) e.getSource();
-				nom = t.getText();
-				System.out.println(nom);
+				if (!t.getText().equals("") && !t.getText().equals("Introdueix un nom"))
+					nom = t.getText();
+				else
+					new ErrorMessage("El nom no pot ser buit!");
 			}
 
 		});
@@ -195,13 +222,14 @@ public class AfegirDada extends JFrame {
 		gbc_lblEtiqueta.gridy = 1;
 		contentPane.add(lblEtiqueta, gbc_lblEtiqueta);
 
-		JComboBox<String> comboBoxetiqueta = new JComboBox<>(etiquetes);
+		comboBoxetiqueta = new JComboBox<>(etiquetes);
 		GridBagConstraints gbc_comboBoxetiqueta = new GridBagConstraints();
 		gbc_comboBoxetiqueta.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxetiqueta.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxetiqueta.gridx = 3;
 		gbc_comboBoxetiqueta.gridy = 1;
 		contentPane.add(comboBoxetiqueta, gbc_comboBoxetiqueta);
+		comboBoxetiqueta.setEnabled(false);
 
 		comboBoxetiqueta.addActionListener(new ActionListener() {
 
@@ -209,8 +237,10 @@ public class AfegirDada extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> src = (JComboBox<String>) e.getSource();
-				etiqueta = (String)src.getSelectedItem();
-				System.out.println(etiqueta);
+				if (src.isEnabled()) {
+					etiqueta = (String)src.getSelectedItem();
+					System.out.println(etiqueta);
+				}
 			}
 
 		});
@@ -240,25 +270,23 @@ public class AfegirDada extends JFrame {
 
 		});
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
-
-		table = new JTable();
-		lblRelacions.setLabelFor(table);
-		scrollPane.setViewportView(table);
-
-		table.setEnabled(false);
+		
 		String[] colNames = {"Tipus", "Nom", "Esborrar"};
 		tableModel = new DefaultTableModel(colNames, 0);
+		table = new JTable(tableModel);
+		lblRelacions.setLabelFor(table);
+		scrollPane.setViewportView(table);
+		table.setEnabled(false);
 	}
 
 	private void configurarTable() {
-		table.setModel(tableModel);
 		TableColumn col = table.getColumnModel().getColumn(0);
 		col.setCellEditor(new MyComboBoxEditor((tipus_dada.equals("Paper"))?tipus_paper:tipus_altra));
 
@@ -267,9 +295,6 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				TableModel src = (TableModel) e.getSource();
-				//System.out.println("ROW: " + e.getFirstRow() + " COLUMN: " + e.getColumn());
-				//System.out.println("ROW CONTENT: " + " " +  src.getValueAt(e.getFirstRow(), 0) + src.getValueAt(e.getFirstRow(), 1) + " " + src.getValueAt(e.getFirstRow(), 2));
-				//System.out.println(src.getValueAt(e.getFirstRow(), 0).equals(""));
 				if (e.getColumn() >= 0 && e.getColumn() < 2 && e.getFirstRow() >= 0 && e.getFirstRow() < src.getRowCount()) {
 					int column = e.getColumn();
 					int row = e.getFirstRow();
@@ -277,13 +302,24 @@ public class AfegirDada extends JFrame {
 						if (src.getValueAt(row, 1).equals(null) || src.getValueAt(row, 1).equals(""))
 							adjacencies.set(row, new Pair<Integer, String>(null, (String)src.getValueAt(row, column)));
 						else {
-							consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
+								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							else {
+								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								tableModel.removeRow(row);
+								adjacencies.remove(row);
+							}
 						}
 					}
 					if (column == 1) {
 						if (!src.getValueAt(row, 0).equals(null) && !src.getValueAt(row, 0).equals("")) {
-							System.out.println(src.getValueAt(row, 0));
-							consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
+								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+							else {
+								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								tableModel.removeRow(row);
+								adjacencies.remove(row);
+							}
 						}
 					}
 				}
@@ -323,10 +359,27 @@ public class AfegirDada extends JFrame {
 				SeleccionarDada src = (SeleccionarDada) e.getSource();
 				System.out.println("closed");
 				setEnabled(true);
-				Integer res = src.getResultat();
-				System.out.println(res);
-				if (!res.equals(-1))
-					adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
+				if (!src.isEmpty()) {
+					Integer res = src.getResultat();
+					System.out.println(res);
+					if (!res.equals(-1)) {
+						if (tipusDada.equals("Conferencia")) {
+							idCOnferencia = res;
+							teConferencia = true;
+						}
+						adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
+					}
+					else {
+						new ErrorMessage("Has de seleccionar una dada!");
+						adjacencies.remove(row);
+						tableModel.removeRow(row);
+					}
+				}
+				else {
+					System.out.println("empty");
+					adjacencies.remove(row);
+					tableModel.removeRow(row);
+				}
 			}
 		});
 
@@ -336,42 +389,46 @@ public class AfegirDada extends JFrame {
 	}
 
 	private void guardarDades() {
-
 		if (tipus_dada != null) {
-			nom = txtIntrodueixUnNom.getText();
-			System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
-			int id = -1;
-			switch(tipus_dada) {
-			case "Autor":
-				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
-				else id = cntrl.afegirAutor(nom);
-				guardarAdjacencies(id);
-				break;
-			case "Conferencia":
-				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
-				else id = cntrl.afegirConferencia(nom);
-				guardarAdjacencies(id);
-				break;
-			case "Paper":
-				if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
-				else id = cntrl.afegirPaper(nom);
-				guardarAdjacencies(id);
-				break;
-			case "Terme":
-				if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirAutor(nom);
-				else id = cntrl.afegirAutor(nom, etiqueta);
-				guardarAdjacencies(id);
-				break;
+			if (!txtIntrodueixUnNom.getText().equals("") && !txtIntrodueixUnNom.equals("Introdueix un nom")) {
+				nom = txtIntrodueixUnNom.getText();
+				System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
+				int id = -1;
+				switch(tipus_dada) {
+				case "Autor":
+					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirAutor(nom, etiqueta);
+					else id = cntrl.afegirAutor(nom);
+					guardarAdjacencies(id);
+					break;
+				case "Conferencia":
+					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirConferencia(nom, etiqueta);
+					else id = cntrl.afegirConferencia(nom);
+					guardarAdjacencies(id);
+					break;
+				case "Paper":
+					if (etiqueta != null && !etiqueta.equals("")) id = cntrl.afegirPaper(nom, etiqueta);
+					else id = cntrl.afegirPaper(nom);
+					guardarAdjacencies(id);
+					break;
+				case "Terme":
+					if (etiqueta == null || etiqueta.equals("")) id = cntrl.afegirTerme(nom);
+					else id = cntrl.afegirTerme(nom);
+					guardarAdjacencies(id);
+					break;
+				}
+				System.out.println("El id resultante es: " + id);
 			}
-			System.out.println("El id resultante es: " + id);
+			else {
+				new ErrorMessage("El nom no pot estar buit!");
+			}
 		}
-
-		dispose();
+		else {
+			new ErrorMessage("Has de seleccionar un tipus de dada!");
+		}
 	}
 
 	private void guardarAdjacencies(int id) {
 		if (adjacencies != null) {
-			System.out.println("ADJACENCIES: " + adjacencies);
 			if (tipus_dada.equals("Autor")) {
 				for (int i = 0; i < adjacencies.size(); ++i) {
 					if (adjacencies.get(i) != null) {
@@ -450,7 +507,7 @@ public class AfegirDada extends JFrame {
 
 	private class MyComboBoxEditor extends DefaultCellEditor {
 		private static final long serialVersionUID = 610218728899535248L;
-
+		
 		public MyComboBoxEditor(String[] items) {
 			super(new JComboBox<>(items));
 		}

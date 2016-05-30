@@ -16,19 +16,14 @@ import java.awt.event.ActionEvent;
 
 public class InformacioAddicional extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1799024988380129469L;
+	
 	private JPanel contentPane;
 	private String seltipus;
 
-	
-	/**
-	 * Create the frame.
-	 */
 	public InformacioAddicional(ControladorPresentacio ctrl, int id, String tipus) {
 		setTitle("Dades Relacionades");
+		setIconImage(ControladorPresentacio.ICON_INFO);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 484, 300);
 		contentPane = new JPanel();
@@ -66,10 +61,11 @@ public class InformacioAddicional extends JFrame {
 		
 		//afegeixo items al combobox
 		if (tipus.toLowerCase().equals("paper")) {
+			comboBox.addItem("- Selecciona tipus - ");
 			comboBox.addItem("autors");
 			comboBox.addItem("termes");
 			comboBox.addItem("conferencies");
-			comboBox.setSelectedItem(null);
+			comboBox.setSelectedItem("- Selecciona tipus - ");;
 		}
 		else comboBox.addItem("papers");
 		

@@ -40,7 +40,6 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 
 		List<String> noms = new LinkedList<>();
 		if (d.exists()) {
-
 			if (!d.isDirectory())
 				throw new FileNotFoundException(dir + " no és un directori!");
 

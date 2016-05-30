@@ -36,9 +36,11 @@ public class GestorRelacions extends JFrame {
 	public GestorRelacions(ControladorPresentacio ctrl) {
 		this.ctrl = ctrl;
 		setTitle("Gestor de relacions");
+		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
+
 		content_pane();
 		scroll_pane();
 		initTable();
@@ -106,6 +108,7 @@ public class GestorRelacions extends JFrame {
 		gbc_btnNewButton.gridy = 1;
 		contentPane.add(btnAfegir, gbc_btnNewButton);
 	}
+	
 	
 	private void content_pane() {
 		contentPane = new JPanel();

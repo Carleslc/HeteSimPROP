@@ -307,16 +307,16 @@ public class Resultat implements Serializable {
 	@Override
 	public String toString() {
 		String s = "RESULTATS:\n\n";
-		s = s + "Dada : " + dada.getNom() + "\n";
-		s = s + "Path : " + nomPath + "\n";
+		s = s + "Dada: " + dada.getNom() + "\n";
+		s = s + "Path: " + nomPath + "\n";
 		String def = controladorPaths.consultarDefinicio(nomPath);
 		if (def != null)
 			s = s + "Descripcio del path: " + def + "\n";
-		s = s + "Nom del graf : " + nomGraf + "\n";
+		s = s + "Nom del graf: " + nomGraf + "\n";
 		if (threshold != null) {
 			threshold.toString();
 		}
-		s = s + "Parelles : Rellevancia-dada\n";
+		s = s + "Parelles: Rellevancia-dada\n";
 		int i = 0;
 		for (Pair<Double,Node> p: resultats) {
 			s = s + i + ". " + p.getKey().toString() + "  " + p.getValue().getNom() + "\n";

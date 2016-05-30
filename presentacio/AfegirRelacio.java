@@ -19,29 +19,30 @@ public class AfegirRelacio extends JFrame {
 
 	public AfegirRelacio(ControladorPresentacio ctrl) {
 		setTitle("Afegir relació");
+		setIconImage(ControladorPresentacio.ICON_ADD);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
 		content_pane();
 		
 		JTextField textPath = new JTextField();
-		textPath.setBounds(192, 53, 110, 20);
+		textPath.setBounds(87, 11, 194, 30);
 		contentPane.add(textPath);
 		textPath.setColumns(10);
 		
 		JTextField textDescription = new JTextField();
-		textDescription.setBounds(192, 127, 110, 20);
+		textDescription.setBounds(87, 52, 194, 30);
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
 		JLabel lblPath = new JLabel("Relació:");
 		lblPath.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPath.setBounds(86, 56, 101, 14);
+		lblPath.setBounds(10, 19, 67, 14);
 		contentPane.add(lblPath);
 		
 		JLabel lblDescription = new JLabel("Descripció:");
 		lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescription.setBounds(86, 130, 101, 14);
+		lblDescription.setBounds(6, 60, 71, 14);
 		contentPane.add(lblDescription);
 		
 		JButton btnAccept = new JButton("Acceptar");
@@ -59,7 +60,7 @@ public class AfegirRelacio extends JFrame {
 				}
 			}
 		});
-		btnAccept.setBounds(281, 211, 101, 23);
+		btnAccept.setBounds(180, 93, 101, 23);
 		contentPane.add(btnAccept);
 		
 		JButton btnCancel = new JButton("Cancel·lar");
@@ -69,7 +70,7 @@ public class AfegirRelacio extends JFrame {
 				dispose();
 			}
 		});
-		btnCancel.setBounds(46, 211, 101, 23);
+		btnCancel.setBounds(10, 93, 101, 23);
 		contentPane.add(btnCancel);
 	}
 	
@@ -80,6 +81,7 @@ public class AfegirRelacio extends JFrame {
 	public String getNewDescription() {
 		return newDescription;
 	}
+	
 	
 	private void content_pane() {
 		contentPane = new JPanel();
