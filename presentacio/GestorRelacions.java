@@ -39,7 +39,6 @@ public class GestorRelacions extends JFrame {
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		
 
 		content_pane();
 		scroll_pane();
@@ -61,6 +60,8 @@ public class GestorRelacions extends JFrame {
 		@SuppressWarnings("unused")
 		ButtonColumn buttonColumnEsborrar = new ButtonColumn(table, esborrar, 3);
 		
+		JFrame ref = this;
+		
 		@SuppressWarnings("serial")
 		Action modificar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -68,8 +69,10 @@ public class GestorRelacions extends JFrame {
 				String path = model.getValueAt(row, 0).toString();
 				ModificarDescripcio frame = new ModificarDescripcio(ctrl, path);
 				frame.setVisible(true);
+				ref.setEnabled(false);
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
+						ref.setEnabled(true);
 						model.setValueAt(ctrl.consultarDefinicio(path), row, 1);
 					}
 				});
@@ -85,8 +88,10 @@ public class GestorRelacions extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				AfegirRelacio frame = new AfegirRelacio(ctrl);
 				frame.setVisible(true);
+				ref.setEnabled(false);
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
+						ref.setEnabled(true);
 						String path = frame.getNewPath();
 						String description = frame.getNewDescription();
 						if (path != null) {
