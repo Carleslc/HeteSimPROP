@@ -148,8 +148,9 @@ public class AfegirDada extends JFrame {
 						for (int i = tableModel.getRowCount() -1; i >= 0; --i)
 							tableModel.removeRow(i);
 						tipus_dada = tipus_dada_temp;
-						table = new JTable();
+						table = new JTable(tableModel);
 						scrollPane.setViewportView(table);
+						adjacencies = new ArrayList<>();
 						configurarTable();
 					}
 					tipus_dada = tipus_dada_temp;
