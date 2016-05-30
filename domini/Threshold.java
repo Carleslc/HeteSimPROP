@@ -100,8 +100,8 @@ public class Threshold implements Serializable {
 	 * @return Retorna un String que representa el Threshold.
 	 */
 	public String toString() {
-		String aux = "Node A: " + a.toString() + "\n" + "Node B: " +
-				b.toString() + "\n" + "Path: " + path + "\n" + "Rellevancia: " + rellevancia + "\n";
+		String aux = "Node A: " + a.toString() + "\nNode B: " +
+				b.toString() + "\nPath: " + path + "\nRellevancia: " + rellevancia + "\n";
 		return aux;
 	}
 	

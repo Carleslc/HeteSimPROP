@@ -350,22 +350,22 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 * que es passen per paràmetre.
 	 */
 	public String toString(ArrayList<Entry<Double, Entry<Integer, String>>> resultats) {
-		StringBuilder sb = new StringBuilder("RESULTATS:\n\n");
+		StringBuilder sb = new StringBuilder("RESULTATS:\n");
 		sb.append("Dada: ").append(dada.getNom()).append("\n");
 		sb.append("Path: ").append(nomPath).append("\n");
 		String def = controladorPaths.consultarDefinicio(nomPath);
 		if (def != null)
 			sb.append("Descripció del path: ").append(def).append("\n");
-		sb.append("Nom del graf: ").append(nomGraf).append("\n");
+		sb.append("Conjunt de dades: ").append(nomGraf).append("\n");
 		if (threshold != null)
 			sb.append(threshold.toString());
 		sb.append("Parelles rellevància-dada\n");
 		int i = 0;
 		for (Entry<Double, Entry<Integer, String>> p : resultats) {
-			// i. rellevància nomNode (idNode)
-			sb.append(i).append(". ").append(p.getKey()).append("  ")
-			.append(p.getValue().getValue()).append("(").append(p.getValue().getKey()).append(")\n");
-			++i;
+			// i. rellevància nomNode (ID idNode)
+			// rellevància amb 4 decimals
+			sb.append(i++).append(". ").append(String.format("%.4f", p.getKey())).append("  ")
+			.append(p.getValue().getValue()).append(" (ID ").append(p.getValue().getKey()).append(")\n");
 		}
 		return sb.toString();
 	}
