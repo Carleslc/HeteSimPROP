@@ -1084,6 +1084,14 @@ public class ControladorPresentacio {
 	public void carregarDades() throws IOException {
 		controladorDominiPersistenciaPropi.carregarDades();
 	}
+	
+	/**
+	 * Deixa l'estat de les clausures tal i com est‡ven abans d'iniciar el programa.
+	 * @throws IOException si no es poden guardar les clausures
+	 */
+	public void reestablirClausures() throws IOException {
+		controladorDominiPersistenciaPropi.reestablirClausures();
+	}
 
 	//**************funcions de presentaci√≥****************
 
@@ -1100,5 +1108,4 @@ public class ControladorPresentacio {
 	public SelectorConjunts getSelectorConjunts() {
 		return selectorConjunts;
 	}
-
 }

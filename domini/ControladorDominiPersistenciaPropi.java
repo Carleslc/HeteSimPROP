@@ -1,9 +1,10 @@
 package domini;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import domini.ControladorDominiPersistencia;
+import persistencia.ControladorPersistencia;
 
 /**
  * 
@@ -13,19 +14,25 @@ import domini.ControladorDominiPersistencia;
 public class ControladorDominiPersistenciaPropi extends ControladorDominiPersistencia {
 
 	private static final long serialVersionUID = -325380240675964323L;
-
-	public static final String DEFAULT_DIRECTORY_GRAFS = "grafs/";
-	private ControladorConsultes controladorConsultes;
 	
+	private static final String DIRECTORI_CLAUSURES_TEMPORAL = "clausures_temp/";
+	
+	public static final String DEFAULT_DIRECTORY_GRAFS = "grafs/";
+	
+	private ControladorConsultes controladorConsultes;
+
 	/**
 	 * Constructor 
 	 * @param ctrlGraf
 	 * @param ctrlPaths
 	 * @param ctrlConsultes
+	 * @throws IOException si hi ha un error al carregar les clausures
 	 */
-	public ControladorDominiPersistenciaPropi(ControladorMultigraf ctrlGraf, ControladorPaths ctrlPaths, ControladorConsultes ctrlConsultes) {
+	public ControladorDominiPersistenciaPropi(ControladorMultigraf ctrlGraf,
+			ControladorPaths ctrlPaths, ControladorConsultes ctrlConsultes) throws IOException {
 		super(ctrlGraf,ctrlPaths);
 		controladorConsultes = ctrlConsultes;
+		saveStatusClausures();
 	}
 
 	/**
@@ -55,6 +62,24 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 		controladorPaths.carregarPaths(DEFAULT_FILEPATH_PATHS);
 		new File(ControladorConsultes.DEFAULT_PATH_RESULTATS).createNewFile();
 		controladorConsultes.carregarResultats();
+	}
+
+	/**
+	 * Deixa l'estat de les clausures tal i com estàven abans d'iniciar el programa.
+	 * @throws IOException si no es poden guardar les clausures
+	 */
+	public void reestablirClausures() throws IOException {
+		ControladorPersistencia.copiar(DIRECTORI_CLAUSURES_TEMPORAL, HeteSim.DEFAULT_DIRECTORI_CLAUSURES);
+		ControladorPersistencia.esborrarFitxer(DIRECTORI_CLAUSURES_TEMPORAL);
+	}
+	
+	private void saveStatusClausures() throws IOException {
+		File dirClausures = new File(HeteSim.DEFAULT_DIRECTORI_CLAUSURES);
+		if (dirClausures.exists() && dirClausures.isDirectory())
+			ControladorPersistencia.copiar(HeteSim.DEFAULT_DIRECTORI_CLAUSURES, DIRECTORI_CLAUSURES_TEMPORAL);
+		else
+			throw new FileNotFoundException("No s'ha trobat el directori "
+					+ HeteSim.DEFAULT_DIRECTORI_CLAUSURES);
 	}
 
 }

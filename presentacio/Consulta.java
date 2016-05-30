@@ -210,18 +210,6 @@ public class Consulta extends JFrame {
 						}
 						
 						// TODO Consultes (comprovar paràmetres i realitzar consulta)
-						
-						// FIXME ModificarDada, AfegirDada:
-						// Terme no té etiquetes i per tant no hauria de deixar afegir-les
-						// I... quin sentit té afegir etiquetes si no es poden consultar?
-						
-						// FIXME Sortir sense guardar dades (Menú Principal):
-						// Si es modifica un graf però no es guarden les dades després
-						// en altre execució les clausures queden desactualitzades.
-						
-						// FIXME ModificarDada: Després d'afegir una l'adjacència si no
-						// es troba cap que coincideixi salta un error:
-						// "Has de seleccionar una dada!" i no s'esborra l'adjacència
 					}
 					else
 						new ErrorMessage(contentPane, "No pots realitzar cap consulta"
