@@ -159,24 +159,24 @@ public final class DriverResultat extends Driver {
 					case 21:
 						print("Entra n: ");
 						int nnn = nextInt();
-						r.filtrarElsPrimers(nnn);
+						r.filtrarElsPrimers(nnn, true);
 						break;
 					case 22:
 						print("Entra n: ");
 						int nn = nextInt();
-						r.filtrarElsUltims(nn);
+						r.filtrarElsUltims(nn, true);
 						break;
 					case 23:
 						print("Entra label: ");
 						String label = nextLine();
-						r.filtrarPerEtiqueta(label);
+						r.filtrarPerEtiqueta(label, true);
 						break;
 					case 24:
 						print("Entra min: ");
 						double min = nextDouble();
 						print("Entra max: ");
 						double max = nextDouble();
-						r.filtrarPerRellevancia(min,max);
+						r.filtrarPerRellevancia(min, max, true);
 						break;
 					case 25:
 						print(r.toString());

@@ -3,7 +3,6 @@ package drivers;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import domini.ControladorMultigraf;
 import domini.ControladorNodes;
 import domini.ControladorRelacions;
@@ -165,8 +164,8 @@ public class DriverControladorConsultes extends Driver {
 					path = nextWord();
 					print("Introdueix l'id del node amb el que vols fer la consulta: ");
 					id = nextInt();
-					String resultat = contrConsultes.consulta(path, id);
-					println("El resultat de la consulta és:\n" + resultat);
+					println("El resultat de la consulta és:\n");
+					contrConsultes.consulta(path, id).forEach(Driver::println);
 					break;
 				}
 
@@ -181,14 +180,14 @@ public class DriverControladorConsultes extends Driver {
 					int idT1 = nextInt();
 					print("Introdueix l'id del primer node del threshold: ");
 					int idT2 = nextInt();
-					String resultat = contrConsultes.consulta(path, id, idT1, idT2, pathT);
-					println("El resultat de la consulta és:\n" + resultat);
+					println("El resultat de la consulta és:\n");
+					contrConsultes.consulta(path, id, idT1, idT2, pathT).forEach(Driver::println);
 					break;
 				}
 
-				case 3: 
+				case 3:
 					println("Les dates en que s'han fet consultes són:");
-					println(contrConsultes.consultarDates());
+					contrConsultes.consultarDatesConsultes().forEach(Driver::println);
 					break;
 
 				case 4:
@@ -219,7 +218,7 @@ public class DriverControladorConsultes extends Driver {
 				case 7: {
 					print("Introdueix un enter: ");
 					int n = nextInt();
-					contrConsultes.filtrarElsPrimers(n);
+					contrConsultes.filtrarElsPrimers(n, true);
 					println("S'han esborrat tots els resultats de l'última consulta tret dels " + n + " primers.");
 					break;
 				}
@@ -227,7 +226,7 @@ public class DriverControladorConsultes extends Driver {
 				case 8: {
 					print("Introdueix un enter: ");
 					int n = nextInt();
-					contrConsultes.filtrarElsUltims(n);
+					contrConsultes.filtrarElsUltims(n, true);
 					println("S'han esborrat tots els resultats de l'última consulta tret dels " + n + " últims.");
 					break;
 				}
@@ -235,7 +234,7 @@ public class DriverControladorConsultes extends Driver {
 				case 9: {
 					print("Introdueix una etiqueta: ");
 					String label = nextWord();
-					contrConsultes.filtrarPerEtiqueta(label);
+					contrConsultes.filtrarPerEtiqueta(label, true);
 					println("S'han esborrat tots els resultats de l'última consulta tret dels que contenen l'etiqueta " + label);
 					break;
 				}
@@ -245,7 +244,7 @@ public class DriverControladorConsultes extends Driver {
 					Double min = nextDouble();
 					print("Introdueix la rellevància màxima que vols que tinguin els resultats: ");
 					Double max = nextDouble();
-					contrConsultes.filtrarPerRellevancia(min, max);
+					contrConsultes.filtrarPerRellevancia(min, max, true);
 					println("S'han esborrat tots els resultats de l'última consulta tret dels que tenen una rellevància major o igual que " + min + " i menor o igual que " + max);
 					break;
 				}
