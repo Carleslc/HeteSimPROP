@@ -39,10 +39,10 @@ public class ControladorConsultes {
 
 	/**
 	 * Consultora de l'últim resultat.
-	 * @returns Retorna un String que representa el resultat de l'última consulta.
+	 * @return tots els resultats amb el format [Rellevància, [ID_Dada, Nom_Dada]]
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public ArrayList<Entry<Double, String>> consultarResultat() throws IllegalArgumentException {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat() throws IllegalArgumentException {
 		return resultats.get(getUltimaConsulta()).getResultats();
 	}
 
@@ -59,10 +59,10 @@ public class ControladorConsultes {
 	/**
 	 * Consultora d'un resultat s'una data concreta.
 	 * @param data. La data el resultat de la qual volem consultar.
-	 * @returns Retorna un String que representa el resultat de la data indicada.
+	 * @return tots els resultats amb el format [Rellevància, [ID_Dada, Nom_Dada]]
 	 * @throws IllegalArgumentException si no existeix cap consulta realitzada en la data indicada.
 	 */
-	public ArrayList<Entry<Double, String>> consultarResultat(Date data) throws IllegalArgumentException {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat(Date data) throws IllegalArgumentException {
 		if (!resultats.containsKey(data))
 			throw new IllegalArgumentException("No existeix cap consulta realitzada en la data especificada.");
 		ultimaConsulta = data;
@@ -90,7 +90,7 @@ public class ControladorConsultes {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public ArrayList<Entry<Double, String>> consulta(String path, int idNode)
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode)
 			throws IllegalArgumentException, InterruptedException, IOException {
 		
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
@@ -126,7 +126,7 @@ public class ControladorConsultes {
 	 * 			o bé algun dels nodes o el path del threshold no existeixen.
 	 * @throws IOException 
 	 */
-	public ArrayList<Entry<Double, String>> consulta(String path, int idNode,
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
 			int idNodeThreshold1,int idNodeThreshold2, String thresholdPath)
 					throws IllegalArgumentException, InterruptedException, IOException {
 		
@@ -393,14 +393,29 @@ public class ControladorConsultes {
 	}
 
 	/**
-	 * Exporta l'última consulta al fitxer indicat.
-	 * @param filesystem_path. El fitxer on es vol exportar la consulta.
+	 * Exporta uns resultats amb les dades de la última consulta.
+	 * @param filesystem_path. El fitxer on es vol exportar els resultats.
+	 * @param resultats. Els resultats a exportar.
+	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public void exportarResultat(String filesystem_path, ArrayList<Entry<Double, Entry<Integer, String>>> resultats)
+			throws IOException, IllegalArgumentException {
+		Date ultimaConsulta = getUltimaConsulta();
+		ControladorExportacio.exportar(filesystem_path, ultimaConsulta,
+				this.resultats.get(ultimaConsulta).toString(resultats));
+	}
+	
+	/**
+	 * Exporta els resultats de la última consulta.
+	 * @param filesystem_path. El fitxer on es vol exportar els resultats.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
 	public void exportarResultat(String filesystem_path) throws IOException, IllegalArgumentException {
 		Date ultimaConsulta = getUltimaConsulta();
-		ControladorExportacio.exportar(filesystem_path, ultimaConsulta, resultats.get(ultimaConsulta));
+		ControladorExportacio.exportar(filesystem_path, ultimaConsulta,
+				this.resultats.get(ultimaConsulta).toString());
 	}
 
 	/**

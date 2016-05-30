@@ -56,7 +56,7 @@ public class DriverExportacio extends Driver {
 					case 3:
 						print("Escriu el path i fitxer on exportar el resultat: ");
 						filePath = nextLine();
-						ControladorExportacio.exportar(filePath, new Date(), r);
+						ControladorExportacio.exportar(filePath, new Date(), r.toString());
 						File f = new File(filePath);
 						f.deleteOnExit();
 						println("El fitxer " + f.getAbsolutePath() + " sera eliminat al sortir del driver.");

@@ -804,7 +804,7 @@ public class ControladorPresentacio {
 	 * @returns Retorna un String que representa el resultat de l'ultima consulta.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
-	public ArrayList<Entry<Double, String>> consultarResultat() throws IllegalArgumentException {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat() throws IllegalArgumentException {
 		return controladorConsultes.consultarResultat();
 	}
 
@@ -814,7 +814,7 @@ public class ControladorPresentacio {
 	 * @returns Retorna un String que representa el resultat de la data indicada.
 	 * @throws IllegalArgumentException si no existeix cap consulta realitzada en la data indicada.
 	 */
-	public ArrayList<Entry<Double, String>> consultarResultat(Date data)
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat(Date data)
 			throws IllegalArgumentException {
 		return controladorConsultes.consultarResultat(data);
 	}
@@ -839,7 +839,7 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public ArrayList<Entry<Double, String>> consulta(String path, int idNode) throws Exception {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode) throws Exception {
 		return controladorConsultes.consulta(path, idNode);
 	}
 
@@ -862,7 +862,7 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public ArrayList<Entry<Double, String>> consulta(String path, int idNode,
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
 			int idNodeThreshold1, int idNodeThreshold2,
 			String thresholdPath) throws Exception {
 		
@@ -888,7 +888,7 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public ArrayList<Entry<Double, String>> filtrarElsPrimers(int n, boolean aplicar)
+	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarElsPrimers(int n, boolean aplicar)
 			throws IllegalArgumentException {
 		return controladorConsultes.filtrarElsPrimers(n, aplicar).getResultats();
 	}
@@ -901,7 +901,7 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public ArrayList<Entry<Double, String>> filtrarElsUltims(int n, boolean aplicar)
+	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarElsUltims(int n, boolean aplicar)
 			throws IllegalArgumentException {
 		return controladorConsultes.filtrarElsUltims(n, aplicar).getResultats();
 	}
@@ -914,7 +914,7 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public ArrayList<Entry<Double, String>> filtrarPerEtiqueta(String label, boolean aplicar)
+	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarPerEtiqueta(String label, boolean aplicar)
 			throws IllegalArgumentException {
 		return controladorConsultes.filtrarPerEtiqueta(label, aplicar).getResultats();
 	}
@@ -928,7 +928,7 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public ArrayList<Entry<Double, String>> filtrarPerRellevancia(double min, double max,
+	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarPerRellevancia(double min, double max,
 			boolean aplicar) throws IllegalArgumentException {
 		return controladorConsultes.filtrarPerRellevancia(min, max, aplicar).getResultats();
 	}
@@ -1074,13 +1074,15 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Exporta l'ultima consulta al fitxer indicat.
-	 * @param filesystem_path. El fitxer on es vol exportar la consulta.
+	 * Exporta uns resultats amb les dades de la última consulta.
+	 * @param filesystem_path. El fitxer on es vol exportar els resultats.
+	 * @param resultats. Els resultats a exportar.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
-	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void exportarResultat(String filesystem_path) throws Exception {
-		controladorConsultes.exportarResultat(filesystem_path);
+	public void exportarResultat(String filesystem_path,
+			ArrayList<Entry<Double, Entry<Integer, String>>> resultats) throws Exception {
+		controladorConsultes.exportarResultat(filesystem_path, resultats);
 	}
 
 	/**

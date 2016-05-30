@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author Carla Claverol
  */
 
-public class Pair<K extends Comparable<K> & Serializable, V extends Serializable> implements Entry<K, V>, Comparable<Pair<K,V>>, Serializable {
+public class Pair<K extends Comparable<K> & Serializable, V> implements Entry<K, V>, Comparable<Pair<K,V>>, Serializable {
 	
 	private static final long serialVersionUID = -1708108678640588754L;
 	

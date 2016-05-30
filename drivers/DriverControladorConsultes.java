@@ -346,7 +346,7 @@ public class DriverControladorConsultes extends Driver {
 				case 21: {
 					println("Introdueix el filesystem_path on vols exportar el resultat.");
 					String f = nextLine();
-					contrConsultes.exportarResultat(f);
+					contrConsultes.exportarResultat(f, contrConsultes.consultarResultat());
 					println("S'ha exportat el resultat de l'última consulta.");
 					break;
 				}

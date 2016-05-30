@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -18,9 +19,9 @@ import java.util.stream.Collectors;
  * rellevancia de cada tupla. Si per exemple es canvia el threshold, no es reajustaran els resultats al nou
  * threshold, o si es canvia la rellevancia d'una tupla, no es comprovara que aquesta s'ajusti al threshold.
  */
-public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
+public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Integer, String>>> {
 
-	private static final long serialVersionUID = 6293912609608481009L;
+	private static final long serialVersionUID = 4300240155279574283L;
 
 	private Node dada;
 	private ControladorPaths controladorPaths;
@@ -38,13 +39,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	 */
 	public Resultat(Node dada, String nomPath, ControladorPaths controladorPaths,
 			String nomGraf, ArrayList<Pair<Double, Node>> resultats) {
-		this.dada = dada;
-		this.nomPath = nomPath;
-		this.controladorPaths = controladorPaths;
-		this.nomGraf = nomGraf;
-		this.threshold = null;
-		Collections.sort(resultats);
-		this.resultats = resultats;
+		this(dada, nomPath, controladorPaths, nomGraf, resultats, null, true);
 	}
 
 	/**
@@ -58,24 +53,19 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	 */
 	public Resultat(Node dada, String nomPath, ControladorPaths controladorPaths,
 			String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold) {
-		this.dada = dada;
-		this.nomPath = nomPath;
-		this.controladorPaths = controladorPaths;
-		this.nomGraf = nomGraf;
-		Collections.sort(resultats);
-		this.resultats = resultats;
-		this.threshold = threshold;
+		this(dada, nomPath, controladorPaths, nomGraf, resultats, threshold, true);
 	}
 
-	// Pre: resultats està ordenat decreixentment
 	private Resultat(Node dada, String nomPath, ControladorPaths controladorPaths,
 			String nomGraf, ArrayList<Pair<Double, Node>> resultats, Threshold threshold, boolean sort) {
 		this.dada = dada;
 		this.nomPath = nomPath;
 		this.controladorPaths = controladorPaths;
 		this.nomGraf = nomGraf;
-		this.resultats = resultats;
 		this.threshold = threshold;
+		if (sort)
+			Collections.sort(resultats);
+		this.resultats = resultats;
 	}
 
 	/**
@@ -168,12 +158,11 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	}
 
 	/**
-	 * Retorna una llista amb tots els resultats amb els noms de les dades
-	 * @return tots els resultats amb els noms de les dades
+	 * Retorna una llista de resultats [Rellevància, [ID_Dada, Nom_Dada]]
+	 * @return tots els resultats amb el format [Rellevància, [ID_Dada, Nom_Dada]]
 	 */
-	public ArrayList<Entry<Double, String>> getResultats() {
-		return resultats.stream().map(p -> new Pair<>(p.getKey(), p.getValue().getNom()))
-				.collect(Collectors.toCollection(ArrayList::new));
+	public ArrayList<Entry<Double, Entry<Integer, String>>> getResultats() {
+		return Conversions.convert(resultats);
 	}
 
 	/**
@@ -217,9 +206,9 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	 */
 
 	public void afegir(Pair<Double, Node> p) {
-		int pos = Collections.binarySearch(resultats,p);
+		int pos = Collections.binarySearch(resultats, p);
 		if (pos < 0) pos = -(pos) -1;
-		resultats.add(pos,p);
+		resultats.add(pos, p);
 	}
 
 	/**
@@ -353,6 +342,14 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 	 */
 	@Override
 	public String toString() {
+		return toString(getResultats());
+	}
+
+	/**
+	 * Retorna un String que representa aquest objecte però amb els resultats
+	 * que es passen per paràmetre.
+	 */
+	public String toString(ArrayList<Entry<Double, Entry<Integer, String>>> resultats) {
 		StringBuilder sb = new StringBuilder("RESULTATS:\n\n");
 		sb.append("Dada: ").append(dada.getNom()).append("\n");
 		sb.append("Path: ").append(nomPath).append("\n");
@@ -364,16 +361,47 @@ public class Resultat implements Serializable, Iterable<Entry<Double, String>> {
 			sb.append(threshold.toString());
 		sb.append("Parelles rellevància-dada\n");
 		int i = 0;
-		for (Pair<Double,Node> p: resultats) {
+		for (Entry<Double, Entry<Integer, String>> p : resultats) {
+			// i. rellevància nomNode (idNode)
 			sb.append(i).append(". ").append(p.getKey()).append("  ")
-			.append(p.getValue().getNom()).append("\n");
+			.append(p.getValue().getValue()).append("(").append(p.getValue().getKey()).append(")\n");
 			++i;
 		}
 		return sb.toString();
 	}
 
 	@Override
-	public Iterator<Entry<Double, String>> iterator() {
+	public Iterator<Entry<Double, Entry<Integer, String>>> iterator() {
 		return getResultats().iterator();
 	}
+
+	/**
+	 * Classe per convertir els resultats a tipus bàsics
+	 * de Java que es puguin passar a altres capes.
+	 */
+	private static class Conversions {
+		
+		private static final WeakHashMap<List<Pair<Double, Node>>,
+			ArrayList<Entry<Double, Entry<Integer, String>>>> conversionBuffer = new WeakHashMap<>();
+
+		public static ArrayList<Entry<Double, Entry<Integer, String>>> convert(List<Pair<Double, Node>> list) {
+			if (!conversionBuffer.containsKey(list)) {
+				ArrayList<Entry<Double, Entry<Integer, String>>> aux = new ArrayList<>(list.size());
+				for (Entry<Double, Node> res : list)
+					aux.add(convert(res));
+				conversionBuffer.put(list, aux);
+				return aux;
+			}
+			return conversionBuffer.get(list);
+		}
+
+		private static Entry<Double, Entry<Integer, String>> convert(Entry<Double, Node> p) {
+			return new Pair<Double, Entry<Integer, String>>(p.getKey(), convert(p.getValue()));
+		}
+
+		private static Pair<Integer, String> convert(Node n) {
+			return new Pair<>(n.getId(), n.getNom());
+		}
+	}
+
 }
