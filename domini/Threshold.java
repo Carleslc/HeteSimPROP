@@ -100,7 +100,8 @@ public class Threshold implements Serializable {
 	 * @return Retorna un String que representa el Threshold.
 	 */
 	public String toString() {
-		String aux = "Node A: " + a.toString() + "\n" + "Node B: " + b.toString() + "\n" + "Path: " + path + "\n" + "Rellevancia: " + rellevancia + "\n";
+		String aux = "Node A: " + a.toString() + "\n" + "Node B: " +
+				b.toString() + "\n" + "Path: " + path + "\n" + "Rellevancia: " + rellevancia + "\n";
 		return aux;
 	}
 	
@@ -113,7 +114,8 @@ public class Threshold implements Serializable {
 	 * 			algun dels Nodes no es correspon amb el path.
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
-	private double calculateRellevancia() throws IllegalArgumentException, InterruptedException, IOException {
+	private double calculateRellevancia()
+			throws IllegalArgumentException, InterruptedException, IOException {
 		return hs.heteSim(a, b, path);
 	}
 }

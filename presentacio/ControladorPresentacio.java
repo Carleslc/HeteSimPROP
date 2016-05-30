@@ -6,8 +6,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
@@ -794,18 +797,14 @@ public class ControladorPresentacio {
 		return controladorMultigraf.consultarMidaConferencies();
 	}
 
-
-
-
 	//**************funcions de controladorConsultes****************
-
 
 	/**
 	 * Consultora de l'ultim resultat.
 	 * @returns Retorna un String que representa el resultat de l'ultima consulta.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
-	public String consultarResultat() throws IllegalArgumentException {
+	public ArrayList<Entry<Double, String>> consultarResultat() throws IllegalArgumentException {
 		return controladorConsultes.consultarResultat();
 	}
 
@@ -821,10 +820,10 @@ public class ControladorPresentacio {
 
 	/**
 	 * Consultora de les dates en que s'han realitzat consultes.
-	 * @returns Retorna un String que representa totes les dates en que s'han realitzat consultes.
+	 * @return retorna una llista de les dates en que s'han realitzat consultes ordenada decreixentment.
 	 */
-	public String consultarDates() {
-		return controladorConsultes.consultarDates();
+	public LinkedList<Date> consultarDatesConsultes() {
+		return controladorConsultes.consultarDatesConsultes();
 	}
 
 	/**
@@ -839,7 +838,7 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode) throws Exception {
+	public ArrayList<Entry<Double, String>> consulta(String path, int idNode) throws Exception {
 		return controladorConsultes.consulta(path, idNode);
 	}
 
@@ -862,58 +861,72 @@ public class ControladorPresentacio {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public String consulta(String path, int idNode, int idNodeThreshold1, int idNodeThreshold2,
+	public ArrayList<Entry<Double, String>> consulta(String path, int idNode,
+			int idNodeThreshold1, int idNodeThreshold2,
 			String thresholdPath) throws Exception {
-		return controladorConsultes.consulta(path, idNode, idNodeThreshold1, idNodeThreshold2, thresholdPath);
+		
+		return controladorConsultes.consulta(path, idNode,
+				idNodeThreshold1, idNodeThreshold2, thresholdPath);
 	}
 
 	/**
 	 * Esborra la consulta indicada.
 	 * @param data. La data la consulta de la qual volem esborrar.
-	 * @returns Retorna cert si s'ha pogut esborrar la consulta (existeix una consulta amb la data indicada)
-	 * 			i fals altrament.
+	 * @returns Retorna cert si s'ha pogut esborrar la consulta
+	 * (existeix una consulta amb la data indicada) i fals altrament.
 	 */
 	public boolean esborrarConsulta(Date data) {
 		return controladorConsultes.esborrarConsulta(data);
 	}
 
 	/**
-	 * Elimina tots els resultats de l'ultima consulta excepte els n primers.
-	 * @param n. El nombre de resultats de mes rellevancia que no s'esborraran.
-	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * Obté els n primers resultats
+	 * @param n nombre de resultats amb mes rellevancia que s'han de conservar
+	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
+	 * si es posa a false l'ultim resultat no es veura modificat.
+	 * @return el resultat amb el filtratge aplicat
+	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void filtrarElsPrimers(int n) throws IllegalArgumentException {
-		controladorConsultes.filtrarElsPrimers(n);
+	public String filtrarElsPrimers(int n, boolean aplicar) throws IllegalArgumentException {
+		return controladorConsultes.filtrarElsPrimers(n, aplicar).toString();
 	}
 
 	/**
-	 * Elimina tots els resultats de l'ultima consulta excepte els n ultims.
-	 * @param n. El nombre de resultats de menys rellevancia que no s'esborraran.
-	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * Obté els n ultims resultats
+	 * @param n nombre de resultats amb menys rellevancia que s'han de conservar
+	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
+	 * si es posa a false l'ultim resultat no es veura modificat.
+	 * @return el resultat amb el filtratge aplicat
+	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void filtrarElsUltims(int n) throws IllegalArgumentException {
-		controladorConsultes.filtrarElsUltims(n);
+	public String filtrarElsUltims(int n, boolean aplicar) throws IllegalArgumentException {
+		return controladorConsultes.filtrarElsUltims(n, aplicar).toString();
 	}
 
 	/**
-	 * Elimina tots els resultats de l'ultima consulta excepte els resultats els nodes dels quals
-	 * tenen l'etiqueta label.
-	 * @param label. L'etiqueta dels nodes dels resultats que no s'han d'eliminar.
-	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * Obté tots els resultats que tenen el node amb l'etiqueta label.
+	 * @param label de les tuples del resultat que s'han de conservar
+	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
+	 * si es posa a false l'ultim resultat no es veura modificat.
+	 * @return el resultat amb el filtratge aplicat
+	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void filtrarPerEtiqueta(String label) throws IllegalArgumentException {
-		controladorConsultes.filtrarPerEtiqueta(label);
+	public String filtrarPerEtiqueta(String label, boolean aplicar) throws IllegalArgumentException {
+		return controladorConsultes.filtrarPerEtiqueta(label, aplicar).toString();
 	}
 
 	/**
-	 * Elimina tots els resultats de l'ultima consulta excepte els que tenen una rellevancia entre
-	 * min i max, ambdos inclosos.
-	 * @param min. La rellevancia minima dels resultats que no s'han d'eliminar.
-	 * @param max. La rellevancia maxima dels resultats que no s'han d'eliminar.
-	 * @throws IllegalArgumentException si no existeix una ultima consulta.
+	 * Obté tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
+	 * @param min es el minim de rellevancia
+	 * @param max es el maxim de rellevancia
+	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
+	 * si es posa a false l'ultim resultat no es veura modificat.
+	 * @return el resultat amb el filtratge aplicat
+	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void filtrarPerRellevancia(double min, double max) throws IllegalArgumentException {
-		controladorConsultes.filtrarPerRellevancia(min, max);
+	public String filtrarPerRellevancia(double min, double max, boolean aplicar)
+			throws IllegalArgumentException {
+		return controladorConsultes.filtrarPerRellevancia(min, max, aplicar).toString();
 	}
 
 	/**

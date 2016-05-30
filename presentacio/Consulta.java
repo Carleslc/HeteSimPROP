@@ -6,9 +6,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.LinkedList;
-import java.util.List;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -77,14 +76,19 @@ public class Consulta extends JFrame {
 		JLabel lblRecuperarConsultaAnterior = new JLabel("Recuperar consulta anterior");
 		contentPane.add(lblRecuperarConsultaAnterior, "flowx,cell 0 1");
 
-		JComboBox<String> comboBox_consultaAnterior = new JComboBox<>();
+		JComboBox<Date> comboBox_consultaAnterior = new JComboBox<>();
+		LinkedList<Date> datesConsultesAnteriors = ctrl.consultarDatesConsultes();
+		datesConsultesAnteriors.addFirst(null);
+		Date[] dates = new Date[datesConsultesAnteriors.size()];
+		dates = datesConsultesAnteriors.toArray(dates);
+		comboBox_consultaAnterior.setModel(new DefaultComboBoxModel<>(dates));
 		contentPane.add(comboBox_consultaAnterior, "cell 0 1,growx,aligny center");
-
+		
 		lblRelacio = new JLabel("Relaci\u00F3");
 		contentPane.add(lblRelacio, "flowx,cell 0 3,alignx left");
 
 		comboBox_relacio = new JComboBox<>();
-		List<String> paths = new LinkedList<String>();
+		LinkedList<String> paths = new LinkedList<String>();
 		paths.add("");
 		paths.addAll(ctrl.consultarPaths());
 		String[] relacions = new String[paths.size()];
