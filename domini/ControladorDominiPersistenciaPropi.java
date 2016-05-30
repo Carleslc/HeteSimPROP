@@ -32,7 +32,6 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 			ControladorPaths ctrlPaths, ControladorConsultes ctrlConsultes) throws IOException {
 		super(ctrlGraf,ctrlPaths);
 		controladorConsultes = ctrlConsultes;
-		saveStatusClausures();
 	}
 
 	/**
@@ -47,6 +46,7 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 		controladorGraf.guardar(controladorGraf.construirPath(controladorGraf.getIdActual()));
 		controladorPaths.guardarPaths(DEFAULT_FILEPATH_PATHS);
 		controladorConsultes.guardarResultats();
+		saveStatusClausures();
 	}
 
 	/**
@@ -62,6 +62,7 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 		controladorPaths.carregarPaths(DEFAULT_FILEPATH_PATHS);
 		new File(ControladorConsultes.DEFAULT_PATH_RESULTATS).createNewFile();
 		controladorConsultes.carregarResultats();
+		saveStatusClausures();
 	}
 
 	/**
@@ -73,6 +74,10 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 		ControladorPersistencia.esborrarFitxer(DIRECTORI_CLAUSURES_TEMPORAL);
 	}
 	
+	/**
+	 * Guarda l'estat de les clausures.
+	 * @throws IOException si no s'ha pogut actualitzar l'estat de les clausures
+	 */
 	private void saveStatusClausures() throws IOException {
 		File dirClausures = new File(HeteSim.DEFAULT_DIRECTORI_CLAUSURES);
 		if (dirClausures.exists() && dirClausures.isDirectory())
