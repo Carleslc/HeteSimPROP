@@ -354,14 +354,23 @@ public class ModificarDada extends JFrame {
 									public void windowClosed(WindowEvent e) {
 										SeleccionarDada src = (SeleccionarDada) e.getSource();
 										Integer id = src.getResultat();
-										if (id != -1) {
-											if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
-												esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
-											afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
-											adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+										if (!src.isEmpty()) {
+											if (id != -1) {
+												if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+													esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
+												afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
+												adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+											}
+											else {
+												new ErrorMessage("Has de seleccionar una dada!");
+												adjacencies.remove(row);
+												tableModel.removeRow(row);
+											}
 										}
-										else
-											new ErrorMessage("Has de seleccionar una dada!");
+										else {
+											adjacencies.remove(row);
+											tableModel.removeRow(row);
+										}
 										setEnabled(true);
 									}
 								});
@@ -385,11 +394,22 @@ public class ModificarDada extends JFrame {
 									public void windowClosed(WindowEvent e) {
 										SeleccionarDada src = (SeleccionarDada) e.getSource();
 										Integer id = src.getResultat();
-										if (id != -1) {
-											if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
-												esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
-											afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
-											adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+										if (!src.isEmpty()) {
+											if (id != -1) {
+												if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+													esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
+												afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
+												adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+											}
+											else {
+												new ErrorMessage("Has de seleccionar una dada!");
+												adjacencies.remove(row);
+												tableModel.removeRow(row);
+											}
+										}
+										else {
+											adjacencies.remove(row);
+											tableModel.removeRow(row);
 										}
 										setEnabled(true);
 									}

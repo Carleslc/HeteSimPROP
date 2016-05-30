@@ -277,18 +277,16 @@ public class AfegirDada extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
-
-		table = new JTable();
-		lblRelacions.setLabelFor(table);
-		scrollPane.setViewportView(table);
-
-		table.setEnabled(false);
+		
 		String[] colNames = {"Tipus", "Nom", "Esborrar"};
 		tableModel = new DefaultTableModel(colNames, 0);
+		table = new JTable(tableModel);
+		lblRelacions.setLabelFor(table);
+		scrollPane.setViewportView(table);
+		table.setEnabled(false);
 	}
 
 	private void configurarTable() {
-		table.setModel(tableModel);
 		TableColumn col = table.getColumnModel().getColumn(0);
 		col.setCellEditor(new MyComboBoxEditor((tipus_dada.equals("Paper"))?tipus_paper:tipus_altra));
 
@@ -297,9 +295,6 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void tableChanged(TableModelEvent e) {
 				TableModel src = (TableModel) e.getSource();
-				//System.out.println("ROW: " + e.getFirstRow() + " COLUMN: " + e.getColumn());
-				//System.out.println("ROW CONTENT: " + " " +  src.getValueAt(e.getFirstRow(), 0) + src.getValueAt(e.getFirstRow(), 1) + " " + src.getValueAt(e.getFirstRow(), 2));
-				//System.out.println(src.getValueAt(e.getFirstRow(), 0).equals(""));
 				if (e.getColumn() >= 0 && e.getColumn() < 2 && e.getFirstRow() >= 0 && e.getFirstRow() < src.getRowCount()) {
 					int column = e.getColumn();
 					int row = e.getFirstRow();
@@ -376,11 +371,15 @@ public class AfegirDada extends JFrame {
 					}
 					else {
 						new ErrorMessage("Has de seleccionar una dada!");
-						// TODO Eliminar relació de la llista
+						adjacencies.remove(row);
+						tableModel.removeRow(row);
 					}
 				}
-				else
+				else {
 					System.out.println("empty");
+					adjacencies.remove(row);
+					tableModel.removeRow(row);
+				}
 			}
 		});
 
