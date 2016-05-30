@@ -888,8 +888,9 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public String filtrarElsPrimers(int n, boolean aplicar) throws IllegalArgumentException {
-		return controladorConsultes.filtrarElsPrimers(n, aplicar).toString();
+	public ArrayList<Entry<Double, String>> filtrarElsPrimers(int n, boolean aplicar)
+			throws IllegalArgumentException {
+		return controladorConsultes.filtrarElsPrimers(n, aplicar).getResultats();
 	}
 
 	/**
@@ -900,8 +901,9 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public String filtrarElsUltims(int n, boolean aplicar) throws IllegalArgumentException {
-		return controladorConsultes.filtrarElsUltims(n, aplicar).toString();
+	public ArrayList<Entry<Double, String>> filtrarElsUltims(int n, boolean aplicar)
+			throws IllegalArgumentException {
+		return controladorConsultes.filtrarElsUltims(n, aplicar).getResultats();
 	}
 
 	/**
@@ -912,8 +914,9 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public String filtrarPerEtiqueta(String label, boolean aplicar) throws IllegalArgumentException {
-		return controladorConsultes.filtrarPerEtiqueta(label, aplicar).toString();
+	public ArrayList<Entry<Double, String>> filtrarPerEtiqueta(String label, boolean aplicar)
+			throws IllegalArgumentException {
+		return controladorConsultes.filtrarPerEtiqueta(label, aplicar).getResultats();
 	}
 
 	/**
@@ -925,9 +928,9 @@ public class ControladorPresentacio {
 	 * @return el resultat amb el filtratge aplicat
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public String filtrarPerRellevancia(double min, double max, boolean aplicar)
-			throws IllegalArgumentException {
-		return controladorConsultes.filtrarPerRellevancia(min, max, aplicar).toString();
+	public ArrayList<Entry<Double, String>> filtrarPerRellevancia(double min, double max,
+			boolean aplicar) throws IllegalArgumentException {
+		return controladorConsultes.filtrarPerRellevancia(min, max, aplicar).getResultats();
 	}
 
 	/**
