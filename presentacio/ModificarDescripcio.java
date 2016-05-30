@@ -13,7 +13,6 @@ public class ModificarDescripcio extends JFrame {
 
 	private static final long serialVersionUID = 8426179096403489103L;
 	private JPanel contentPane;
-	private JTextField textDescription;
 
 	public ModificarDescripcio(ControladorPresentacio ctrl, String path) {
 		setTitle("Modificar descripció");
@@ -23,7 +22,7 @@ public class ModificarDescripcio extends JFrame {
 		
 		content_pane();
 		
-		textDescription = new JTextField();
+		JTextField textDescription = new JTextField();
 		textDescription.setBounds(9, 42, 341, 30);
 		contentPane.add(textDescription);
 		textDescription.setColumns(10);
@@ -36,7 +35,7 @@ public class ModificarDescripcio extends JFrame {
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String definicio = getDefinicio();
+				String definicio = textDescription.getText().toString();
 				ctrl.modificarDefinicio(path, definicio);
 				dispose();
 			}
@@ -61,16 +60,6 @@ public class ModificarDescripcio extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-	}
-
-	private String getDefinicio() {
-		try {
-			String definicio = textDescription.getText().toString();
-			return definicio;
-		}
-		catch (Exception e) {
-			return null;
-		}
 	}
 
 }
