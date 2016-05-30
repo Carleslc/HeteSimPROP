@@ -61,8 +61,7 @@ public class AfegirDada extends JFrame {
 	private String etiqueta;
 	private ControladorPresentacio cntrl;
 	private JScrollPane scrollPane;
-	// FIXME Si no se usará mejor quitarlo
-	// private MyComboBoxEditor mc;
+	private JComboBox<String> comboBoxetiqueta;
 	boolean teConferencia = false;
 	Integer idCOnferencia;
 	boolean saved = false;
@@ -156,6 +155,10 @@ public class AfegirDada extends JFrame {
 						table.setEnabled(true);
 						configurarTable();
 					}
+					if (!tipus_dada.equals("Terme"))
+						comboBoxetiqueta.setEnabled(true);
+					else
+						comboBoxetiqueta.setEnabled(false);
 					btnAfegirDada.setEnabled(true);
 				}
 			}
@@ -219,13 +222,14 @@ public class AfegirDada extends JFrame {
 		gbc_lblEtiqueta.gridy = 1;
 		contentPane.add(lblEtiqueta, gbc_lblEtiqueta);
 
-		JComboBox<String> comboBoxetiqueta = new JComboBox<>(etiquetes);
+		comboBoxetiqueta = new JComboBox<>(etiquetes);
 		GridBagConstraints gbc_comboBoxetiqueta = new GridBagConstraints();
 		gbc_comboBoxetiqueta.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBoxetiqueta.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxetiqueta.gridx = 3;
 		gbc_comboBoxetiqueta.gridy = 1;
 		contentPane.add(comboBoxetiqueta, gbc_comboBoxetiqueta);
+		comboBoxetiqueta.setEnabled(false);
 
 		comboBoxetiqueta.addActionListener(new ActionListener() {
 
@@ -233,8 +237,10 @@ public class AfegirDada extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> src = (JComboBox<String>) e.getSource();
-				etiqueta = (String)src.getSelectedItem();
-				System.out.println(etiqueta);
+				if (src.isEnabled()) {
+					etiqueta = (String)src.getSelectedItem();
+					System.out.println(etiqueta);
+				}
 			}
 
 		});
