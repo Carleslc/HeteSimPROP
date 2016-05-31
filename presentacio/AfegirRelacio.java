@@ -9,6 +9,14 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+
+/**
+ * Vista per afegir una nova relació al programa.
+ * @author Carla Claverol
+ *
+ */
 
 public class AfegirRelacio extends JFrame {
 
@@ -17,34 +25,38 @@ public class AfegirRelacio extends JFrame {
 	private String newPath;
 	private String newDescription;
 
+	/**
+	 * Constructor.
+	 * @param ctrl. El ControladorPresentacio del programa.
+	 */
 	public AfegirRelacio(ControladorPresentacio ctrl) {
 		setTitle("Afegir relació");
 		setIconImage(ControladorPresentacio.ICON_ADD);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 300, 160);
 		
-		content_pane();
+		//contentPane
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 		
+		//textField pel nom de la relació
 		JTextField textPath = new JTextField();
-		textPath.setBounds(87, 11, 194, 30);
-		contentPane.add(textPath);
 		textPath.setColumns(10);
 		
+		//textField per la descripció de la relació
 		JTextField textDescription = new JTextField();
-		textDescription.setBounds(87, 52, 194, 30);
-		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
+		//etiqueta relació
 		JLabel lblPath = new JLabel("Relació:");
 		lblPath.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblPath.setBounds(10, 19, 67, 14);
-		contentPane.add(lblPath);
 		
+		//etiqueta descripció
 		JLabel lblDescription = new JLabel("Descripció:");
 		lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblDescription.setBounds(6, 60, 71, 14);
-		contentPane.add(lblDescription);
 		
+		//botó per acceptar
 		JButton btnAccept = new JButton("Acceptar");
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
@@ -60,9 +72,8 @@ public class AfegirRelacio extends JFrame {
 				}
 			}
 		});
-		btnAccept.setBounds(180, 93, 101, 23);
-		contentPane.add(btnAccept);
 		
+		//botó per cancel·lar
 		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -70,23 +81,64 @@ public class AfegirRelacio extends JFrame {
 				dispose();
 			}
 		});
-		btnCancel.setBounds(10, 93, 101, 23);
-		contentPane.add(btnCancel);
+		
+		//layout
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(lblPath, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(textPath, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(1)
+					.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+					.addGap(10)
+					.addComponent(textDescription, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+					.addGap(69)
+					.addComponent(btnAccept, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(6)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(8)
+							.addComponent(lblPath))
+						.addComponent(textPath, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(8)
+							.addComponent(lblDescription))
+						.addComponent(textDescription, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+					.addGap(11)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnCancel)
+						.addComponent(btnAccept)))
+		);
+		contentPane.setLayout(gl_contentPane);
+		setResizable(false);
 	}
 	
+	/**
+	 * Consultora del nom de la relació afegida.
+	 * @return el nom de la relació afegida, o null si no s'ha afegit cap relació.
+	 */
 	public String getNewPath() {
 		return newPath;
 	}
 	
+	/**
+	 * Consultora de la descripció de la relació afegida.
+	 * @return la descripció de la relació afegida, o null si no s'ha afegit cap relació.
+	 */
 	public String getNewDescription() {
 		return newDescription;
-	}
-	
-	
-	private void content_pane() {
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
 	}
 }

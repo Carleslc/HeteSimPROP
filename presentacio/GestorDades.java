@@ -11,21 +11,34 @@ import java.awt.event.MouseEvent;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
+/**
+ * Vista de gestió de dades: permet escollir entre gestionar els conjunts de dades o els paths del programa.
+ * @author Carla Claverol
+ *
+ */
 
 public class GestorDades extends JFrame {
 
 	private static final long serialVersionUID = 2697285126957563652L;
 	private JPanel contentPane;
 	
+	/**
+	 * Constructor.
+	 * @param ctrl. ControladorPresentacio del programa.
+	 */
 	public GestorDades(ControladorPresentacio ctrl) {
 		setTitle("Gestor de dades");
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 234, 155);
-		
-		content_pane();
 		JFrame ref = this;
 		
+		//contentPane
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		//gestionar conjunts de dades
 		JButton btnGestorConjDades = new JButton("Gestor de conjunts de dades");
 		btnGestorConjDades.addMouseListener(new MouseAdapter() {
 			@Override
@@ -35,6 +48,7 @@ public class GestorDades extends JFrame {
 			}
 		});
 		
+		//gestionar relacions
 		JButton btnGestorRelacions = new JButton("Gestor de relacions");
 		btnGestorRelacions.addMouseListener(new MouseAdapter() {
 			@Override
@@ -43,6 +57,8 @@ public class GestorDades extends JFrame {
 				ControladorPresentacio.configurarNovaFinestra(ref, frame);
 			}
 		});
+		
+		//layout
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -64,12 +80,5 @@ public class GestorDades extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 		setResizable(false);
-	}
-	
-
-	private void content_pane() {
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
 	}
 }
