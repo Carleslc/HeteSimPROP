@@ -26,6 +26,7 @@ import javax.swing.JSpinner;
 public class AfegirResultat extends JFrame {
 
 	private static final long serialVersionUID = 2629156937342951370L;
+	
 	private JPanel contentPane;
 	private ControladorPresentacio ctrl;
 	private String tipus;
