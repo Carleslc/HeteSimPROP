@@ -8,29 +8,44 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+
+/**
+ * Vista per modificar la descripció d'una de les relacions del programa.
+ * @author Carla Claverol
+ *
+ */
 
 public class ModificarDescripcio extends JFrame {
 
 	private static final long serialVersionUID = 8426179096403489103L;
 	private JPanel contentPane;
 
+	/**
+	 * Constructor.
+	 * @param ctrl. El ControladorPresentacio del programa.
+	 * @param path. El nom de la relació la descripció de la qual volem modificar.
+	 */
 	public ModificarDescripcio(ControladorPresentacio ctrl, String path) {
 		setTitle("Modificar descripció");
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 370, 150);
 		
-		content_pane();
+		//contentPane
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
 		
+		//textField
 		JTextField textDescription = new JTextField();
-		textDescription.setBounds(9, 42, 341, 30);
-		contentPane.add(textDescription);
 		textDescription.setColumns(10);
 		
+		//etiqueta
 		JLabel lblDescription = new JLabel("Escriu la nova descripció:");
-		lblDescription.setBounds(10, 11, 340, 20);
-		contentPane.add(lblDescription);
 		
+		//botó per acceptar
 		JButton btnAccept = new JButton("Acceptar");
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
@@ -40,9 +55,8 @@ public class ModificarDescripcio extends JFrame {
 				dispose();
 			}
 		});
-		btnAccept.setBounds(249, 83, 101, 23);
-		contentPane.add(btnAccept);
 
+		//botó per cancel·lar
 		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -50,16 +64,36 @@ public class ModificarDescripcio extends JFrame {
 				dispose();
 			}
 		});
-		btnCancel.setBounds(19, 83, 101, 23);
-		contentPane.add(btnCancel);
+		
+		//layout
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(5)
+					.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 340, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(4)
+					.addComponent(textDescription, GroupLayout.PREFERRED_SIZE, 341, GroupLayout.PREFERRED_SIZE))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(14)
+					.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+					.addGap(129)
+					.addComponent(btnAccept, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(6)
+					.addComponent(lblDescription, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addComponent(textDescription, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+					.addGap(11)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnCancel)
+						.addComponent(btnAccept)))
+		);
+		contentPane.setLayout(gl_contentPane);
+		setResizable(false);
 	}
-	
-
-	private void content_pane() {
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-	}
-
 }
