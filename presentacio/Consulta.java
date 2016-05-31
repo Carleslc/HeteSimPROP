@@ -282,4 +282,16 @@ public class Consulta extends JFrame {
 				return null;
 			}).call();
 	}
+	
+	@SuppressWarnings("unused") // TODO
+	private TipusDada getTipusDada(char c) {
+		c = Character.toUpperCase(c);
+		switch (c) {
+			case 'P': return TipusDada.Paper;
+			case 'A': return TipusDada.Autor;
+			case 'C': return TipusDada.Conferencia;
+			case 'T': return TipusDada.Terme;
+		}
+		return null;
+	}
 }

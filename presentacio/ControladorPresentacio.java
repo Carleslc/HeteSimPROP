@@ -995,7 +995,7 @@ public class ControladorPresentacio {
 	 * 			"Autor", "Conferencia", "Terme" o "Paper".
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
-	public String getTipusNode() throws IllegalArgumentException{
+	public TipusDada getTipusNode() throws IllegalArgumentException{
 		return controladorConsultes.getTipusNode();
 	}
 

@@ -337,9 +337,6 @@ public class AfegirDada extends JFrame {
 
 
 		Action delete = new AbstractAction() {
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = 4857200046003157922L;
 
 			public void actionPerformed(ActionEvent e)
@@ -361,7 +358,7 @@ public class AfegirDada extends JFrame {
 
 	private void consultarID(String nomDada, String tipusDada, int row) {
 		if (sd == null) {
-			sd = new SeleccionarDada(cntrl, nomDada, tipusDada);
+			sd = new SeleccionarDada(cntrl, nomDada, TipusDada.valueOf(tipusDada));
 			sd.addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosed(WindowEvent e) {
@@ -396,7 +393,6 @@ public class AfegirDada extends JFrame {
 			sd.setVisible(true);
 			setEnabled(false);
 		}
-
 	}
 
 	private void guardarDades() {

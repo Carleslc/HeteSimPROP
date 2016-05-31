@@ -37,7 +37,7 @@ public class SeleccionarDada extends JFrame {
 	private JPanel contentPane;
 	private ControladorPresentacio cntrl;
 	private String nomDada;
-	private String tipus;
+	private TipusDada tipus;
 	private ArrayList<Integer> resultats;
 	private Integer seleccio;
 	private JTable table;
@@ -49,7 +49,7 @@ public class SeleccionarDada extends JFrame {
 	 * @param nomDada nom de la dada a seleccionar
 	 * @param tipus tipus de la dada a seleccionar
 	 */
-	public SeleccionarDada(ControladorPresentacio cntrl, String nomDada, String tipus) {
+	public SeleccionarDada(ControladorPresentacio cntrl, String nomDada, TipusDada tipus) {
 		this.cntrl = cntrl;
 		this.nomDada = nomDada;
 		this.tipus = tipus;
@@ -72,7 +72,8 @@ public class SeleccionarDada extends JFrame {
 
 		int size = (resultats!=null)?resultats.size():0;
 
-		JLabel lblNewLabel = new JLabel("S'han trobat " + size + " " + tipus.toLowerCase() + " amb aquest nom, selecciona la que desitgis:");
+		JLabel lblNewLabel = new JLabel("S'han trobat " + size + " " + tipus.toString().toLowerCase() 
+				+ " amb aquest nom, selecciona la que desitgis:");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
 		gbc_lblNewLabel.gridx = 0;
@@ -130,16 +131,16 @@ public class SeleccionarDada extends JFrame {
 			for (int i = 0; i < resultats.size(); ++i) {
 				data[i][0] = String.valueOf(resultats.get(i));
 				switch(tipus) {
-				case "Autor":
+				case Autor:
 					data[i][1] = cntrl.consultarNomAutor(resultats.get(i));
 					break;
-				case "Paper":
+				case Paper:
 					data[i][1] = cntrl.consultarNomPaper(resultats.get(i));
 					break;
-				case "Conferencia":
+				case Conferencia:
 					data[i][1] = cntrl.consultarNomConferencia(resultats.get(i));
 					break;
-				case "Terme":
+				case Terme:
 					data[i][1] = cntrl.consultarNomTerme(resultats.get(i));
 					break;
 				}
@@ -160,8 +161,8 @@ public class SeleccionarDada extends JFrame {
 
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println("tipus: " + tipus.toLowerCase());
-				InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus.toLowerCase());
+				System.out.println("tipus: " + tipus.toString().toLowerCase());
+				InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus);
 				ia.setVisible(true);
 			}
 		};
@@ -195,44 +196,44 @@ public class SeleccionarDada extends JFrame {
 	private void consultarDada() {
 		resultats = new ArrayList<>();
 		switch(tipus) {
-		case "Autor":
-			//resultats = (ArrayList<Integer>) cntrl.consultarAutor(nomDada);
-			for (Map.Entry<Integer, String> en : cntrl.consultarAutors().entrySet()) {
-				String nom = en.getValue();
-				if (nom.contains(nomDada)) {
-					resultats.add(en.getKey());
+			case Autor:
+				//resultats = (ArrayList<Integer>) cntrl.consultarAutor(nomDada);
+				for (Map.Entry<Integer, String> en : cntrl.consultarAutors().entrySet()) {
+					String nom = en.getValue();
+					if (nom.contains(nomDada)) {
+						resultats.add(en.getKey());
+					}
 				}
-			}
-			break;
-		case "Conferencia":
-			//resultats = (ArrayList<Integer>) cntrl.consultarConferencia(nomDada);
-			for (Map.Entry<Integer, String> en : cntrl.consultarConferencies().entrySet()) {
-				String nom = en.getValue();
-				if (nom.contains(nomDada)) {
-					resultats.add(en.getKey());
+				break;
+			case Conferencia:
+				//resultats = (ArrayList<Integer>) cntrl.consultarConferencia(nomDada);
+				for (Map.Entry<Integer, String> en : cntrl.consultarConferencies().entrySet()) {
+					String nom = en.getValue();
+					if (nom.contains(nomDada)) {
+						resultats.add(en.getKey());
+					}
 				}
-			}
-			break;
-		case "Paper":
-			//resultats = (ArrayList<Integer>) cntrl.consultarPaper(nomDada);
-			for (Map.Entry<Integer, String> en : cntrl.consultarPapers().entrySet()) {
-				String nom = en.getValue();
-				if (nom.contains(nomDada)) {
-					resultats.add(en.getKey());
+				break;
+			case Paper:
+				//resultats = (ArrayList<Integer>) cntrl.consultarPaper(nomDada);
+				for (Map.Entry<Integer, String> en : cntrl.consultarPapers().entrySet()) {
+					String nom = en.getValue();
+					if (nom.contains(nomDada)) {
+						resultats.add(en.getKey());
+					}
 				}
-			}
-			break;
-		case "Terme":
-			//resultats = (ArrayList<Integer>) cntrl.consultarTerme(nomDada);
-			for (Map.Entry<Integer, String> en : cntrl.consultarTermes().entrySet()) {
-				String nom = en.getValue();
-				if (nom.contains(nomDada)) {
-					resultats.add(en.getKey());
+				break;
+			case Terme:
+				//resultats = (ArrayList<Integer>) cntrl.consultarTerme(nomDada);
+				for (Map.Entry<Integer, String> en : cntrl.consultarTermes().entrySet()) {
+					String nom = en.getValue();
+					if (nom.contains(nomDada)) {
+						resultats.add(en.getKey());
+					}
 				}
-			}
-			break;
-		default:
-			resultats = null;
+				break;
+			default:
+				resultats = null;
 		}
 	}
 	

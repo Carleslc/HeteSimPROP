@@ -1,6 +1,7 @@
 package presentacio;
 
 import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ public class AfegirResultat extends JFrame {
 	
 	private JPanel contentPane;
 	private ControladorPresentacio ctrl;
-	private String tipus;
+	private TipusDada tipus;
 	private double rellevancia;
 	private int id;
 	private String nom;
@@ -45,7 +46,7 @@ public class AfegirResultat extends JFrame {
 					ctrl.afegirAutor("Joan");
 					ctrl.afegirAutor("Anna");
 					ctrl.afegirAutor("Albert");
-					AfegirResultat frame = new AfegirResultat(ctrl, "Autor");
+					AfegirResultat frame = new AfegirResultat(ctrl, TipusDada.Autor);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +55,7 @@ public class AfegirResultat extends JFrame {
 		});
 	}
 
-	public AfegirResultat(ControladorPresentacio ctrl, String tipus) {
+	public AfegirResultat(ControladorPresentacio ctrl, TipusDada tipus) {
 		this.ctrl = ctrl;
 		this.tipus = tipus;
 
@@ -157,25 +158,48 @@ public class AfegirResultat extends JFrame {
 	}
 
 	private String[] getDades() {
-		TreeMap<Integer, String> map;
-
-		if (tipus == "Autor") map = ctrl.consultarAutors();
-		else if (tipus == "Conferencia") map = ctrl.consultarConferencies();
-		else if (tipus == "Paper") map = ctrl.consultarPapers();
-		else map = ctrl.consultarTermes();
-
+		TreeMap<Integer, String> map = new TreeMap<>();
+		
+		switch (tipus) {
+			case Autor:
+				map = ctrl.consultarAutors();
+				break;
+			case Conferencia:
+				map = ctrl.consultarConferencies();
+				break;
+			case Paper:
+				map = ctrl.consultarPapers();
+				break;
+			case Terme:
+				map = ctrl.consultarTermes();
+				break;
+			default:
+				break;
+		}
+		
 		Set<String> dades = new HashSet<String>(map.values());
-		return dades.toArray(new String[0]);
+		return dades.toArray(new String[dades.size()]);
 	}
-
+	
 	private List<Integer> llistaId(String dada) {
-		List<Integer> id;
+		List<Integer> id = new ArrayList<>();
 
-		if (tipus == "Autor") id = ctrl.consultarAutor(dada);
-		else if (tipus == "Conferencia") id = ctrl.consultarConferencia(dada);
-		else if (tipus == "Paper") id = ctrl.consultarPaper(dada);
-		else id = ctrl.consultarTerme(dada);
-
+		switch (tipus) {
+			case Autor:
+				id = ctrl.consultarAutor(dada);
+				break;
+			case Conferencia:
+				id = ctrl.consultarConferencia(dada);
+				break;
+			case Paper:
+				id = ctrl.consultarPaper(dada);
+				break;
+			case Terme:
+				id = ctrl.consultarTerme(dada);
+				break;
+			default:
+				break;
+		}
 		return id;
 	}
 }
