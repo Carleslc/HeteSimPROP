@@ -33,7 +33,7 @@ public class Consulta extends JFrame {
 	private static final long serialVersionUID = -5805100415335714861L;
 
 	private ControladorPresentacio ctrl;
-	
+
 	private JPanel contentPane;
 	private JSpinner spinnerMinim, spinnerMaxim;
 	private JLabel lblRellevanciaMinima, lblRellevanciaMaxima, lblDada1,
@@ -71,7 +71,7 @@ public class Consulta extends JFrame {
 			}
 		});
 		contentPane.add(selector, "cell 0 0,growx");
-		
+
 		// Afegir dades
 		JLabel lblRecuperarConsultaAnterior = new JLabel("Recuperar consulta anterior");
 		contentPane.add(lblRecuperarConsultaAnterior, "flowx,cell 0 1");
@@ -83,7 +83,7 @@ public class Consulta extends JFrame {
 		dates = datesConsultesAnteriors.toArray(dates);
 		comboBox_consultaAnterior.setModel(new DefaultComboBoxModel<>(dates));
 		contentPane.add(comboBox_consultaAnterior, "cell 0 1,growx,aligny center");
-		
+
 		lblRelacio = new JLabel("Relaci\u00F3");
 		contentPane.add(lblRelacio, "flowx,cell 0 3,alignx left");
 
@@ -138,7 +138,7 @@ public class Consulta extends JFrame {
 		comboBox_relacioThreshold = new JComboBox<>();
 		comboBox_relacioThreshold.setModel(new DefaultComboBoxModel<>(relacions));
 		panel.add(comboBox_relacioThreshold, "cell 0 6 10 1,growx");
-		
+
 		spinnerMaxim = new JSpinner();
 		spinnerMaxim.setModel(new SpinnerNumberModel(1f, 0f, 1f, 0.01f));
 		panel.add(spinnerMaxim, "cell 8 0 2 1,growx,aligny center");
@@ -190,14 +190,14 @@ public class Consulta extends JFrame {
 										null, new String[] {
 												"Recalcular Clausura",
 												"Utilitzar Clausura sense recalcular",
-												"Ignorar Clausura"}, "Recalcular Clausura");
+								"Ignorar Clausura"}, "Recalcular Clausura");
 								switch (opt) {
-									case JOptionPane.YES_OPTION: // Recalcular
-										calcularClausura(e.getComponent(), path);
-										break;
-									case JOptionPane.CANCEL_OPTION: // Ignorar
-										ignorarClausura = true;
-										break;
+								case JOptionPane.YES_OPTION: // Recalcular
+									calcularClausura(e.getComponent(), path);
+									break;
+								case JOptionPane.CANCEL_OPTION: // Ignorar
+									ignorarClausura = true;
+									break;
 									// En altre cas: Utilitzar sense recalcular
 								}
 							}
@@ -212,7 +212,7 @@ public class Consulta extends JFrame {
 							if (opt == JOptionPane.YES_OPTION)
 								calcularClausura(e.getComponent(), path);
 						}
-						
+
 						// TODO Consultes (comprovar paràmetres i realitzar consulta)
 					}
 					else
@@ -266,24 +266,20 @@ public class Consulta extends JFrame {
 		btnEsborrarCamps.setEnabled(enable);
 		tglbtnAfegirFiltre.setEnabled(enable);
 	}
-	
+
 	private void calcularClausura(Component parent, String path) {
-		new BounceProgressBarTaskFrame<Boolean>(ControladorPresentacio.ICON_DISK,
-				"Clausura " + path + " (" + selector.getSelectedItem().toString() + ")",
-				() -> {
-					try {
-						parent.setEnabled(false);
-						ctrl.clausura(path, true);
-					} catch (Exception ex) {
-						new ErrorMessage(ex.getMessage());
-						return false;
-					} finally {
-						parent.setEnabled(true);
-					}
-					return true;
-				},
-				(b) -> {return b;},
-				"Calculant clausura...", "",
-				"Error al calcular la clausura!").call();
+		new TaskConsole<Void>(ControladorPresentacio.ICON_DISK,
+			"Clausura " + path + " (" + selector.getSelectedItem().toString() + ")",
+			() -> {
+				try {
+					parent.setEnabled(false);
+					ctrl.clausura(path, true);
+				} catch (Exception ex) {
+					throw ex;
+				} finally {
+					parent.setEnabled(true);
+				}
+				return null;
+			}).call();
 	}
 }
