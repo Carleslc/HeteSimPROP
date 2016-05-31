@@ -70,7 +70,7 @@ public class MenuPrincipal extends JFrame {
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				guardarDades();
+				guardarDades(false);
 			}
 		});
 		btnNewButton_2.setBounds(41, 179, 166, 42);
@@ -131,17 +131,22 @@ public class MenuPrincipal extends JFrame {
 
 	private void sortir(boolean guardar) {
 		if (guardar)
-			guardarDades();
+			guardarDades(true);
 		else {
 			try {
 				setEnabled(false);
 				ctrl.reestablirClausures();
 			} catch (IOException ignore) {}
+			exit();
 		}
+	}
+	
+	private void exit() {
+		ctrl.esborrarFitxersTemporals();
 		dispose();
 	}
 
-	private void guardarDades() {
+	private void guardarDades(boolean sortir) {
 		setEnabled(false);
 		try {
 			new BounceProgressBarTaskFrame<Void>(ControladorPresentacio.ICON_SAVE,
@@ -150,7 +155,12 @@ public class MenuPrincipal extends JFrame {
 						ctrl.guardarDades();
 						return null;
 					},
-					(v) -> {setEnabled(true); return true;},
+					(v) -> {
+						setEnabled(true);
+						if (sortir)
+							exit();
+						return true;
+					},
 					"Guardant dades...",
 					"Dades guardades correctament", "No s'han pogut guardar les dades!").call();
 		} catch (Exception ignore) {}

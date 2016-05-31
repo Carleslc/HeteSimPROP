@@ -71,7 +71,6 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 	 */
 	public void reestablirClausures() throws IOException {
 		ControladorPersistencia.copiar(DIRECTORI_CLAUSURES_TEMPORAL, HeteSim.DEFAULT_DIRECTORI_CLAUSURES);
-		ControladorPersistencia.esborrarFitxer(DIRECTORI_CLAUSURES_TEMPORAL);
 	}
 	
 	/**
@@ -85,6 +84,13 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 		else
 			throw new FileNotFoundException("No s'ha trobat el directori "
 					+ HeteSim.DEFAULT_DIRECTORI_CLAUSURES);
+	}
+	
+	/**
+	 * Esborra tots els fitxers temporals creats pel programa.
+	 */
+	public void esborrarFitxersTemporals() {
+		ControladorPersistencia.esborrarFitxer(DIRECTORI_CLAUSURES_TEMPORAL);
 	}
 
 }

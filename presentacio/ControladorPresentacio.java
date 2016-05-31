@@ -1136,6 +1136,13 @@ public class ControladorPresentacio {
 	public void reestablirClausures() throws IOException {
 		controladorDominiPersistenciaPropi.reestablirClausures();
 	}
+	
+	/**
+	 * Esborra tots els fitxers temporals creats pel programa.
+	 */
+	public void esborrarFitxersTemporals() {
+		controladorDominiPersistenciaPropi.esborrarFitxersTemporals();
+	}
 
 	//**************funcions de presentació****************
 
