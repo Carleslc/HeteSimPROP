@@ -93,15 +93,15 @@ public class TaskConsole<V> extends JFrame implements Callable<Void> {
 					V result = task.call();
 					if (listener != null)
 						listener.onDone(result);
+					dispose();
 				} catch (Exception e) {
 					textArea.setForeground(Color.RED);
-					System.err.println(e.toString());
+					e.printStackTrace();
 				} finally {
 					System.setOut(out);
 					System.setErr(err);
 				}
 			}
-			dispose();
 		}).start();
 		return null;
 	}
