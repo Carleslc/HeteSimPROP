@@ -1,11 +1,14 @@
 package presentacio;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import domini.Pair;
 
@@ -27,6 +30,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import java.awt.Insets;
@@ -50,17 +54,17 @@ public class Resultats extends JFrame {
 	private JTable table;
 	private ArrayList<Entry<Double, Entry<Integer, String>>> resultat;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
 					ControladorPresentacio ctrl = new ControladorPresentacio();
-					ctrl.afegir("AP");
-					int n = ctrl.afegirAutor("anna");
-					ctrl.consulta("AP", n);
+					ctrl.afegir("PA");
+					ctrl.afegirGraf("test");
+					int na = ctrl.afegirAutor("anna");
+					int np = ctrl.afegirPaper("El misterio del bug");
+					ctrl.afegirAdjacenciaPaperAutor(np, na);
+					ctrl.consulta("AP", na);
 					Resultats frame = new Resultats(ctrl);
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -70,16 +74,15 @@ public class Resultats extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Resultats(ControladorPresentacio ctrl) {
 		this.ctrl = ctrl;
 		resultat = ctrl.consultarResultat();
 		setTitle("Resultats");
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		Dimension min = new Dimension(650, 300);
+		setMinimumSize(min);
+		setBounds(100, 100, min.width, 450);
 		
 		JFrame ref = this;
 		content_pane();
@@ -272,7 +275,16 @@ public class Resultats extends JFrame {
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
 		table.setBackground(SystemColor.menu);
-		
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+		TableColumnModel cModel = table.getColumnModel();
+		cModel.getColumn(0).setPreferredWidth(80);
+		cModel.getColumn(1).setCellRenderer(centerRenderer);
+		cModel.getColumn(1).setPreferredWidth(10);
+		cModel.getColumn(2).setPreferredWidth(100);
+		cModel.getColumn(3).setPreferredWidth(50);
+		cModel.getColumn(4).setPreferredWidth(50);
+		table.setDefaultRenderer(String.class, centerRenderer);
 		fillTable();
 		
 		JButton btnAfegirDada = new JButton("Afegir dada");
@@ -326,8 +338,7 @@ public class Resultats extends JFrame {
 			}
 		};
 		
-		@SuppressWarnings("unused")
-		ButtonColumn buttonColumnAddInfo = new ButtonColumn(table, showAddInfo, 2);
+		new ButtonColumn(table, showAddInfo, 2);
 		
 		@SuppressWarnings("serial")
 		Action modificar = new AbstractAction() {
@@ -351,8 +362,7 @@ public class Resultats extends JFrame {
 			}
 		};
 		
-		@SuppressWarnings("unused")
-		ButtonColumn buttonColumnModificar = new ButtonColumn(table, modificar, 3);
+		new ButtonColumn(table, modificar, 3);
 		
 		@SuppressWarnings("serial")
 		Action esborrar = new AbstractAction() {
@@ -366,8 +376,7 @@ public class Resultats extends JFrame {
 			}
 		};
 		
-		@SuppressWarnings("unused")
-		ButtonColumn buttonColumnEsborrar = new ButtonColumn(table, esborrar, 4);
+		new ButtonColumn(table, esborrar, 4);
 	}
 	
 	
