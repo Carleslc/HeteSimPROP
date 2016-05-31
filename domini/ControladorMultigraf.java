@@ -90,7 +90,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	/**
 	 * Consulta si un graf est� carregat.
 	 * @param nomGraf que és el nom del Graf que es vol consultar.
-	 * @return si el graf existeix i est� carregat.
+	 * @return si el graf existeix
 	 */
 	public boolean exists(String nomGraf) {
 		Pattern pattern = Pattern.compile(nomGraf, Pattern.CASE_INSENSITIVE + Pattern.LITERAL);

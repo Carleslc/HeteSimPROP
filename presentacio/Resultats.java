@@ -39,6 +39,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.text.DecimalFormat;
 
 public class Resultats extends JFrame {
 
@@ -298,13 +299,14 @@ public class Resultats extends JFrame {
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
 						ref.setEnabled(true);
+						DecimalFormat df = new DecimalFormat("#.####");
 						Pair<Double, Pair<Integer, String>> nouRes = frame.getNouResultat();
 						if (nouRes.getValue().getKey() != null) {
 							resultat = ctrl.consultarResultat();
 							int index = resultat.indexOf(nouRes);
 							String[] fila = new String[5];
 							fila[0] = nouRes.getValue().getValue();
-							fila[1] = nouRes.getKey().toString();
+							fila[1] = df.format(nouRes.getKey());
 							fila[2] = "Informació addicional";
 							fila[3] = "Modificar";
 							fila[4] = "Esborrar";

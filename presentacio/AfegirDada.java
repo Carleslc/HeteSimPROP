@@ -105,7 +105,7 @@ public class AfegirDada extends JFrame {
 			public void windowClosing(WindowEvent e) {
 				if (!saved) {
 					String[] opcions = {"Cancelar", "No", "Sí"};
-					int n= JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
+					int n = JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
 					System.out.println(n);
 					if (n == 2) {

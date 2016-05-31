@@ -1,6 +1,7 @@
 package domini;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -305,7 +306,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 */
 	public Resultat filtrarPerEtiqueta(String label, boolean aplicar) {
 		ArrayList<Pair<Double, Node>> aux = resultats.stream()
-				.filter(p -> p.getValue().getLabel().equalsIgnoreCase(label))
+				.filter(p -> label.equalsIgnoreCase(p.getValue().getLabel()))
 				.collect(Collectors.toCollection(ArrayList::new));
 		if (aplicar) {
 			resultats = aux;
@@ -361,10 +362,11 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 			sb.append(threshold.toString());
 		sb.append("Parelles rellevància-dada\n");
 		int i = 0;
+		DecimalFormat df = new DecimalFormat("#.####");
 		for (Entry<Double, Entry<Integer, String>> p : resultats) {
 			// i. rellevància nomNode (ID idNode)
 			// rellevància amb 4 decimals
-			sb.append(i++).append(". ").append(String.format("%.4f", p.getKey())).append("  ")
+			sb.append(i++).append(". ").append(df.format(p.getKey())).append("  ")
 			.append(p.getValue().getValue()).append(" (ID ").append(p.getValue().getKey()).append(")\n");
 		}
 		return sb.toString();
@@ -396,7 +398,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 		}
 
 		private static Entry<Double, Entry<Integer, String>> convert(Entry<Double, Node> p) {
-			return new Pair<Double, Entry<Integer, String>>(p.getKey(), convert(p.getValue()));
+			return new Pair<>(p.getKey(), convert(p.getValue()));
 		}
 
 		private static Pair<Integer, String> convert(Node n) {

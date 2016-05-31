@@ -44,6 +44,10 @@ public class GestorConjuntDades extends JFrame {
 						new ErrorMessage("El nom no pot ser buit!");
 						mouseClicked(e);
 					}
+					else if (ctrl.exists(s)) {
+						new ErrorMessage("Ja existeix un graf amb aquest nom!");
+						mouseClicked(e);
+					}
 					else {
 						try {
 							ctrl.afegirGraf(s);
