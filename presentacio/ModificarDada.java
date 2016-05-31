@@ -65,6 +65,7 @@ public class ModificarDada extends JFrame {
 	private ArrayList<Pair<Integer,String>> adjacencies;
 	private boolean teConferencia = false;
 	private Integer idConferencia = -1;
+	private SeleccionarDada sd;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -345,38 +346,41 @@ public class ModificarDada extends JFrame {
 							adjacencies.set(row, new Pair<Integer, String>(null, (String)src.getValueAt(row, column)));
 						else {
 							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (tableModel.getValueAt(row, 0).equals("Conferencia") && teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) {
-								System.out.println("Añadiendo adjacencia1");
-								SeleccionarDada sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
-								sd.setVisible(true);
-								setEnabled(false);
-								sd.addWindowListener(new WindowAdapter() {
-									@Override
-									public void windowClosed(WindowEvent e) {
-										SeleccionarDada src = (SeleccionarDada) e.getSource();
-										Integer id = src.getResultat();
-										if (!src.isEmpty()) {
-											if (id != -1) {
-												if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
-													esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
-												afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
-												adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+								System.out.println("Aï¿½adiendo adjacencia1");
+								if (sd == null) {
+									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
+									sd.setVisible(true);
+									setEnabled(false);
+									sd.addWindowListener(new WindowAdapter() {
+										@Override
+										public void windowClosed(WindowEvent e) {
+											SeleccionarDada src = (SeleccionarDada) e.getSource();
+											Integer id = src.getResultat();
+											if (!src.isEmpty()) {
+												if (id != -1) {
+													if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+														esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
+													afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
+													adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+												}
+												else {
+													new ErrorMessage("Has de seleccionar una dada!");
+													adjacencies.remove(row);
+													tableModel.removeRow(row);
+												}
 											}
 											else {
-												new ErrorMessage("Has de seleccionar una dada!");
 												adjacencies.remove(row);
 												tableModel.removeRow(row);
 											}
+											setEnabled(true);
+											sd = null;
 										}
-										else {
-											adjacencies.remove(row);
-											tableModel.removeRow(row);
-										}
-										setEnabled(true);
-									}
-								});
+									});
+								}
 							}
 							else {
-								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
+								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja tï¿½ una Conferencia relacionada");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -385,38 +389,41 @@ public class ModificarDada extends JFrame {
 					if (column == 1) {
 						if (!src.getValueAt(row, 0).equals(null) && !src.getValueAt(row, 0).equals("")) {
 							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) { 
-								System.out.println("Añadiendo adjacencia2");
-								SeleccionarDada sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
-								sd.setVisible(true);
-								setEnabled(false);
-								sd.addWindowListener(new WindowAdapter() {
-									@Override
-									public void windowClosed(WindowEvent e) {
-										SeleccionarDada src = (SeleccionarDada) e.getSource();
-										Integer id = src.getResultat();
-										if (!src.isEmpty()) {
-											if (id != -1) {
-												if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
-													esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
-												afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
-												adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+								System.out.println("Aï¿½adiendo adjacencia2");
+								if (sd == null) {
+									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
+									sd.setVisible(true);
+									setEnabled(false);
+									sd.addWindowListener(new WindowAdapter() {
+										@Override
+										public void windowClosed(WindowEvent e) {
+											SeleccionarDada src = (SeleccionarDada) e.getSource();
+											Integer id = src.getResultat();
+											if (!src.isEmpty()) {
+												if (id != -1) {
+													if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+														esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
+													afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
+													adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
+												}
+												else {
+													new ErrorMessage("Has de seleccionar una dada!");
+													adjacencies.remove(row);
+													tableModel.removeRow(row);
+												}
 											}
 											else {
-												new ErrorMessage("Has de seleccionar una dada!");
 												adjacencies.remove(row);
 												tableModel.removeRow(row);
 											}
+											setEnabled(true);
+											sd = null;
 										}
-										else {
-											adjacencies.remove(row);
-											tableModel.removeRow(row);
-										}
-										setEnabled(true);
-									}
-								});
+									});
+								}
 							}
 							else {
-								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
+								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja tï¿½ una Conferencia relacionada");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -531,7 +538,7 @@ public class ModificarDada extends JFrame {
 		case "Autor":
 			try {
 				if (!cntrl.afegirAdjacenciaPaperAutor(id_ad, selectedID))
-					new ErrorMessage("No s'ha pogut afegir la relació");
+					new ErrorMessage("No s'ha pogut afegir la relaciï¿½");
 			}
 			catch(IOException e) {
 				new ErrorMessage(e.getMessage());
@@ -547,7 +554,7 @@ public class ModificarDada extends JFrame {
 			break;
 		case "Conferencia":
 			if (cntrl.consultarRelacionsPaperAmbConferencia(id_ad).size() >= 1) {
-				int option = JOptionPane.showConfirmDialog(null, "El Paper ja té una relació amb una altra Conferencia,\n estàs segur de cambiar-la?", "Cambiar de Conferencia", JOptionPane.YES_NO_OPTION);
+				int option = JOptionPane.showConfirmDialog(null, "El Paper ja tï¿½ una relaciï¿½ amb una altra Conferencia,\n estï¿½s segur de cambiar-la?", "Cambiar de Conferencia", JOptionPane.YES_NO_OPTION);
 				if (option == 0) {
 					try {
 						cntrl.setAdjacenciaPaperConferencia(id_ad, selectedID);

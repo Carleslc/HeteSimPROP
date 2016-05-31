@@ -68,6 +68,8 @@ public class AfegirDada extends JFrame {
 	private Integer idCOnferencia;
 	private boolean saved = false;
 	private boolean firstClickIntrodueixUnNom = true;
+	private boolean ignorarTable = false;
+	private SeleccionarDada sd;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,7 +106,7 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				if (!saved) {
-					String[] opcions = {"Cancelar", "No", "Sí"};
+					String[] opcions = {"Cancelar", "No", "Sï¿½"};
 					int n= JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
 					System.out.println(n);
@@ -151,8 +153,8 @@ public class AfegirDada extends JFrame {
 						for (int i = tableModel.getRowCount() -1; i >= 0; --i)
 							tableModel.removeRow(i);
 						tipus_dada = tipus_dada_temp;
-						table = new JTable(tableModel);
-						scrollPane.setViewportView(table);
+						/*table = new JTable(tableModel);
+						scrollPane.setViewportView(table);*/
 						adjacencies = new ArrayList<>();
 						configurarTable();
 					}
@@ -287,6 +289,7 @@ public class AfegirDada extends JFrame {
 
 		String[] colNames = {"Tipus", "Nom", "Esborrar"};
 		tableModel = new DefaultTableModel(colNames, 0);
+		
 		table = new JTable(tableModel);
 		lblRelacions.setLabelFor(table);
 		scrollPane.setViewportView(table);
@@ -301,18 +304,22 @@ public class AfegirDada extends JFrame {
 
 			@Override
 			public void tableChanged(TableModelEvent e) {
+				System.out.println(e.getSource());
 				TableModel src = (TableModel) e.getSource();
-				if (e.getColumn() >= 0 && e.getColumn() < 2 && e.getFirstRow() >= 0 && e.getFirstRow() < src.getRowCount()) {
+				if (e.getColumn() >= 0 && e.getColumn() < 2 && e.getFirstRow() >= 0 && e.getFirstRow() < src.getRowCount() && table.isEnabled() && !ignorarTable) {
 					int column = e.getColumn();
 					int row = e.getFirstRow();
 					if (column == 0 && !src.getValueAt(row, column).equals(null)) {
 						if (src.getValueAt(row, 1).equals(null) || src.getValueAt(row, 1).equals(""))
 							adjacencies.set(row, new Pair<Integer, String>(null, (String)src.getValueAt(row, column)));
 						else {
-							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
+							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia)) {
+								ignorarTable = true;
 								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+								ignorarTable = false;
+							}
 							else {
-								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								new ErrorMessage("El Paper ja tï¿½ una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -320,10 +327,13 @@ public class AfegirDada extends JFrame {
 					}
 					if (column == 1) {
 						if (!src.getValueAt(row, 0).equals(null) && !src.getValueAt(row, 0).equals("")) {
-							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
+							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia)) {
+								ignorarTable = true;
 								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
+								ignorarTable = false;
+							}
 							else {
-								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								new ErrorMessage("El Paper ja tï¿½ una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -359,39 +369,46 @@ public class AfegirDada extends JFrame {
 	}
 
 	private void consultarID(String nomDada, String tipusDada, int row) {
-		SeleccionarDada sd = new SeleccionarDada(cntrl, nomDada, tipusDada);
-		sd.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				SeleccionarDada src = (SeleccionarDada) e.getSource();
-				System.out.println("closed");
-				setEnabled(true);
-				if (!src.isEmpty()) {
-					Integer res = src.getResultat();
-					System.out.println(res);
-					if (!res.equals(-1)) {
-						if (tipusDada.equals("Conferencia")) {
-							idCOnferencia = res;
-							teConferencia = true;
+		if (sd == null) {
+			sd = new SeleccionarDada(cntrl, nomDada, tipusDada);
+			setEnabled(false);
+			sd.setVisible(true);
+			sd.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosed(WindowEvent e) {
+					SeleccionarDada src = (SeleccionarDada) e.getSource();
+					System.out.println("closed");
+					setEnabled(true);
+					if (!src.isEmpty()) {
+						Integer res = src.getResultat();
+						System.out.println(res);
+						if (!res.equals(-1)) {
+							if (tipusDada.equals("Conferencia")) {
+								idCOnferencia = res;
+								teConferencia = true;
+							}
+							if (row < adjacencies.size())
+								adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
 						}
-						adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
+						else {
+							new ErrorMessage("Has de seleccionar una dada!");
+							if (row < adjacencies.size())
+								adjacencies.remove(row);
+							if (row < tableModel.getRowCount())
+								tableModel.removeRow(row);
+						}
 					}
 					else {
-						new ErrorMessage("Has de seleccionar una dada!");
-						adjacencies.remove(row);
-						tableModel.removeRow(row);
+						System.out.println("empty");
+						if (row < adjacencies.size())
+							adjacencies.remove(row);
+						if (row < tableModel.getRowCount())
+							tableModel.removeRow(row);
 					}
+					sd = null;
 				}
-				else {
-					System.out.println("empty");
-					adjacencies.remove(row);
-					tableModel.removeRow(row);
-				}
-			}
-		});
-
-		sd.setVisible(true);
-		setEnabled(false);
+			});
+		}
 
 	}
 
