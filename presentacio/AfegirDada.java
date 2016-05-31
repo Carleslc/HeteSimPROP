@@ -68,6 +68,7 @@ public class AfegirDada extends JFrame {
 	private Integer idCOnferencia;
 	private boolean saved = false;
 	private boolean firstClickIntrodueixUnNom = true;
+	private SeleccionarDada sd;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -104,7 +105,7 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				if (!saved) {
-					String[] opcions = {"Cancelar", "No", "Sí"};
+					String[] opcions = {"Cancelar", "No", "Sï¿½"};
 					int n = JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
 					System.out.println(n);
@@ -312,7 +313,7 @@ public class AfegirDada extends JFrame {
 							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
 								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
 							else {
-								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								new ErrorMessage("El Paper ja tï¿½ una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -323,7 +324,7 @@ public class AfegirDada extends JFrame {
 							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
 								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
 							else {
-								new ErrorMessage("El Paper ja té una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								new ErrorMessage("El Paper ja tï¿½ una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -359,39 +360,42 @@ public class AfegirDada extends JFrame {
 	}
 
 	private void consultarID(String nomDada, String tipusDada, int row) {
-		SeleccionarDada sd = new SeleccionarDada(cntrl, nomDada, tipusDada);
-		sd.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosed(WindowEvent e) {
-				SeleccionarDada src = (SeleccionarDada) e.getSource();
-				System.out.println("closed");
-				setEnabled(true);
-				if (!src.isEmpty()) {
-					Integer res = src.getResultat();
-					System.out.println(res);
-					if (!res.equals(-1)) {
-						if (tipusDada.equals("Conferencia")) {
-							idCOnferencia = res;
-							teConferencia = true;
+		if (sd == null) {
+			sd = new SeleccionarDada(cntrl, nomDada, tipusDada);
+			sd.addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosed(WindowEvent e) {
+					SeleccionarDada src = (SeleccionarDada) e.getSource();
+					System.out.println("closed");
+					setEnabled(true);
+					if (!src.isEmpty()) {
+						Integer res = src.getResultat();
+						System.out.println(res);
+						if (!res.equals(-1)) {
+							if (tipusDada.equals("Conferencia")) {
+								idCOnferencia = res;
+								teConferencia = true;
+							}
+							adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
 						}
-						adjacencies.set(row, new Pair<Integer, String>(res, (String)tableModel.getValueAt(row, 0)));
+						else {
+							new ErrorMessage("Has de seleccionar una dada!");
+							adjacencies.remove(row);
+							tableModel.removeRow(row);
+						}
 					}
 					else {
-						new ErrorMessage("Has de seleccionar una dada!");
+						System.out.println("empty");
 						adjacencies.remove(row);
 						tableModel.removeRow(row);
 					}
+					sd = null;
 				}
-				else {
-					System.out.println("empty");
-					adjacencies.remove(row);
-					tableModel.removeRow(row);
-				}
-			}
-		});
-
-		sd.setVisible(true);
-		setEnabled(false);
+			});
+	
+			sd.setVisible(true);
+			setEnabled(false);
+		}
 
 	}
 
