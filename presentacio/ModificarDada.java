@@ -359,7 +359,7 @@ public class ModificarDada extends JFrame {
 											Integer id = src.getResultat();
 											if (!src.isEmpty()) {
 												if (id != -1) {
-													if (adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
+													if (adjacencies.get(row) != null && adjacencies.get(row).getKey() != null && id != adjacencies.get(row).getKey() &&  adjacencies.get(row).getKey() != -1) 
 														esborrarAdjacencia(adjacencies.get(row).getKey(), adjacencies.get(row).getValue());
 													afegirAdjacencia(id, (String)tableModel.getValueAt(row, 0));
 													adjacencies.set(row, new Pair<Integer, String>(id, (String)tableModel.getValueAt(row, 0)));
