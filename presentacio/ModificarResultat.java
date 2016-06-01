@@ -1,6 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +19,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
+
+/**
+ * Vista per modificar un resultat concret de l'última consulta.
+ * Es poden modificar tant la dada com la rellevància del resultat.
+ * @author Carla Claverol
+ *
+ */
 
 public class ModificarResultat extends JFrame {
 
@@ -28,106 +35,100 @@ public class ModificarResultat extends JFrame {
 	private JPanel contentPane;
 	private ControladorPresentacio ctrl;
 	private String tipus;
-	private String dada;
+	private int id;
+	private String nom;
 	private double rellevancia;
+	private int index;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacio ctrl = new ControladorPresentacio();
-					ctrl.afegirGraf("test");
-					ctrl.afegirAutor("Anna");
-					ctrl.afegirAutor("Maria");
-					ctrl.afegirAutor("Joan");
-					ctrl.afegirAutor("Anna");
-					ctrl.afegirAutor("Albert");
-					ModificarResultat frame = new ModificarResultat(ctrl, "Autor", "Joan", 0.5, 0);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public ModificarResultat(ControladorPresentacio ctrl, String tipus, String nom, Double rel, int index) {
+	
+	/**
+	 * Constructor.
+	 * @param ctrl. El ControladorPresentacio del programa.
+	 * @param tipus. El tipus de la dada del resultat que es vol modificar (Autor, Paper, Conferencia o Terme).
+	 * @param id. L'id de la dada original del resultat que es vol modificar.
+	 * @param nom. El nom de la dada original del resultat que es vol modificar.
+	 * @param rellevancia. La rellevància original del resultat que es vol modificar.
+	 * @param index. La posició original del resultat que es vol modificar en el vector de resultats
+	 * 				de l'última consulta.
+	 */
+	public ModificarResultat(ControladorPresentacio ctrl, String tipus, int id, String nom, double rellevancia, int index) {
 		this.ctrl = ctrl;
 		this.tipus = tipus;
-		dada = nom;
-		rellevancia = rel;
+		this.id = id;
+		this.nom = nom;
+		this.rellevancia = rellevancia;
+		this.index = index;
 		
-		setTitle("Afegir resultat");
+		setTitle("Modificar resultat");
 		setIconImage(ControladorPresentacio.ICON_ADD);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 266, 130);
 		setResizable(false);
 		
-		content_pane();
+		//contentPane
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 		
+		//etiqueta dada
 		JLabel lblDada = new JLabel("Dada:");
 		lblDada.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblDada.setBounds(10, 11, 51, 14);
 		contentPane.add(lblDada);
 		
+		//etiqueta rellevància
 		JLabel lblRellevancia = new JLabel("Rellevància:");
 		lblRellevancia.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRellevancia.setBounds(10, 36, 71, 14);
 		contentPane.add(lblRellevancia);
 		
+		//comboBox per sel·leccionar la nova dada
 		String[] dades = getDades();
 		JComboBox<String> comboBox = new JComboBox<>(dades);
 		comboBox.setSelectedItem(nom);
-		int original = comboBox.getSelectedIndex();
 		comboBox.setBounds(71, 8, 168, 20);
 		contentPane.add(comboBox);
 		
+		//spinner per escollir la nova rellevància
 		JSpinner spinner_rell = new JSpinner();
 		spinner_rell.setModel(new SpinnerNumberModel(0f, 0f, 1f, 0.01f));
 		spinner_rell.setBounds(91, 33, 148, 20);
 		contentPane.add(spinner_rell);
 		
+		//botó per acceptar
 		JButton btnAccept = new JButton("Acceptar");
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				try {
-					if (comboBox.getSelectedIndex() != original) {
-						dada = comboBox.getSelectedItem().toString();
-						rellevancia = (double)spinner_rell.getValue();
-						List<Integer> id = llistaId(dada);
-						
-						if (id.size() == 1) {
-							ctrl.setDada(index, id.get(0));
-							ctrl.setRellevancia(index, rellevancia);
-							dispose();
-						}
-						else {
-							SeleccionarDada frame = new SeleccionarDada(ctrl, dada, tipus);
-							frame.setVisible(true);
-							frame.addWindowListener(new WindowAdapter() {
-								public void windowClosed(WindowEvent e) {
-									Integer res = frame.getResultat();
-									if (res != -1) {
-										ctrl.setDada(index, res);
-										ctrl.setRellevancia(index, rellevancia);
-										dispose();
-									}
-								}
-							});
-						}
-					}
-					else
-						new ErrorMessage(contentPane, "Escull una dada diferent i introdueix la rellevància.");
+				String novaDada = comboBox.getSelectedItem().toString();
+				double novaRell = (double)spinner_rell.getValue();
+				
+				List<Integer> llistaIds = llistaId(novaDada);
+				
+				if (llistaIds.size() == 1) {
+					int nouId = llistaIds.get(0);
+					modificar(nouId, novaDada, novaRell);
 				}
-				catch (Exception exc) {
-					new ErrorMessage(exc.getMessage());
+				else {
+					SeleccionarDada frame = new SeleccionarDada(ctrl, novaDada, tipus);
+					frame.setVisible(true);
+					setEnabled(false);
+					frame.addWindowListener(new WindowAdapter() {
+						public void windowClosed(WindowEvent e) {
+							setEnabled(true);
+							setVisible(true);
+							int nouId = frame.getResultat();
+							modificar(nouId, novaDada, novaRell);
+						}
+					});
 				}
 			}
 		});
 		btnAccept.setBounds(139, 61, 100, 23);
 		contentPane.add(btnAccept);
 		
+		//botó per cancel·lar
 		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -139,22 +140,38 @@ public class ModificarResultat extends JFrame {
 		contentPane.add(btnCancel);
 	}
 	
-	public String getNovaDada() {
-		return dada;
+	/**
+	 * Consultora de l'identificador de la dada del resultat que volem modificar.
+	 * @return l'identificador de la dada del resultat que volem modificar: el nou si s'ha modificat
+	 * 			o l'original si no.
+	 */
+	public int getNouId() {
+		return id;
 	}
 	
+	/**
+	 * Consultora del nom de la dada del resultat que volem modificar.
+	 * @return el nom de la dada del resultat que volem modificar: el nou si s'ha modificat
+	 * 			o l'original si no.
+	 */
+	public String getNovaDada() {
+		return nom;
+	}
+	
+	/**
+	 * Consultora de la rellevància del resultat que volem modificar.
+	 * @return la rellevància del resultat que volem modificar: la nova si s'ha modificat o l'original si no.
+	 */
 	public double getNovaRellevancia() {
 		return rellevancia;
 	}
+
 	
-	
-	private void content_pane() {
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-	}
-	
+	/**
+	 * Métode per obtenir els noms de totes les dades del tipus indicat.
+	 * @return un array amb els noms de totes les dades del conjunt de dades actual que siguin
+	 * 			del tipus indicat per l'atibut tipus de la classe, sense repeticions.
+	 */
 	private String[] getDades() {
 		TreeMap<Integer, String> map;
 		
@@ -167,6 +184,12 @@ public class ModificarResultat extends JFrame {
 		return dades.toArray(new String[0]);
 	}
 	
+	/**
+	 * Métode per obtenir els identificadors de totes les dades del tipus indicat amb un nom concret.
+	 * @param dada. El nom de les dades de les quals volem obtenir els identificadors.
+	 * @return una llista amb els identificadors de totes les dades del conjunt de dades actual
+	 * 			que tenen el nom indicat i que són del tipus indicat per l'atribut tipus de la classe.
+	 */
 	private List<Integer> llistaId(String dada) {
 		List<Integer> id;
 		
@@ -176,5 +199,32 @@ public class ModificarResultat extends JFrame {
 		else id = ctrl.consultarTerme(dada);
 		
 		return id;
+	}
+	
+	/**
+	 * Modifica el resultat indicat de l'última consulta si aquesta existeix i l'usuari ha
+	 * introduït algun canvi, i tanca la finestra. Altrament, mostra un missatge d'error.
+	 * @param nouId. L'identificador de la dada per la qual volem modificar la dada del resultat indicat.
+	 * @param novaDada. El nom de la dada per la qual volem modificar la dada del resultat indicat.
+	 * @param novaRell. La rellevància per la qual volem modificar la rellevància del resultat indicat.
+	 */
+	private void modificar(int nouId, String novaDada, double novaRell) {
+		try {
+			DecimalFormat df = new DecimalFormat("#.####");
+			if (nouId == id && df.format(novaRell).equals(df.format(rellevancia))) {
+				new ErrorMessage(contentPane, "No has fet cap modificació.\nEscull una dada o una rellevància diferents.", "No has modificat res!");
+			}
+			else {
+				ctrl.setDada(index, nouId);
+				ctrl.setRellevancia(index, novaRell);
+				id = nouId;
+				nom = novaDada;
+				rellevancia = novaRell;
+				dispose();
+			}
+		}
+		catch (Exception e) {
+			new ErrorMessage(contentPane, e.getMessage());
+		}
 	}
 }

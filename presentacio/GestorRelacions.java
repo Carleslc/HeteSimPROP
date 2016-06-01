@@ -48,7 +48,6 @@ public class GestorRelacions extends JFrame {
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
-		JFrame ref = this;
 
 		//contentPane
 		contentPane = new JPanel();
@@ -109,11 +108,11 @@ public class GestorRelacions extends JFrame {
 				String path = model.getValueAt(row, 0).toString();
 				ModificarDescripcio frame = new ModificarDescripcio(ctrl, path);
 				frame.setVisible(true);
-				ref.setEnabled(false);
+				setEnabled(false);
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
-						ref.setEnabled(true);
-						ref.setVisible(true);
+						setEnabled(true);
+						setVisible(true);
 						model.setValueAt(ctrl.consultarDefinicio(path), row, 1);
 					}
 				});
@@ -129,11 +128,11 @@ public class GestorRelacions extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				AfegirRelacio frame = new AfegirRelacio(ctrl);
 				frame.setVisible(true);
-				ref.setEnabled(false);
+				setEnabled(false);
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
-						ref.setEnabled(true);
-						ref.setVisible(true);
+						setEnabled(true);
+						setVisible(true);
 						String path = frame.getNewPath();
 						String description = frame.getNewDescription();
 						if (path != null) {

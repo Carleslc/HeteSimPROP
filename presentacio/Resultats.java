@@ -41,6 +41,15 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 
+/**
+ * Vista que mostra tots els resultats de l'última consulta, ordenats decreixentment per rellevància.
+ * Permet modificar els resultats, esborrar-los o afegir-ne de nous, a més d'aplicar un filtre
+ * per tal que només es mostrin els primers resultats, els últims o els que tinguin una determinada etiqueta.
+ * També permet exportar els resultats.
+ * @author Carla Claverol
+ *
+ */
+
 public class Resultats extends JFrame {
 
 	private static final long serialVersionUID = 6679289486869864394L;
@@ -51,6 +60,7 @@ public class Resultats extends JFrame {
 	JComboBox<String> cbEtiquetes;
 	private static final String[] etiquetes = {"- Sel·lecciona una etiqueta -", "Database", "Data Mining", "AI", "Information Retrieval"};
 	private static final String[] columnes = {"Dada", "Rellevància", "", "", ""};
+	private static final DecimalFormat df = new DecimalFormat("#.####");
 	DefaultTableModel model;
 	private JTable table;
 	private ArrayList<Entry<Double, Entry<Integer, String>>> resultat;
@@ -60,10 +70,12 @@ public class Resultats extends JFrame {
 			public void run() {
 				try {
 					ControladorPresentacio ctrl = new ControladorPresentacio();
-					ctrl.afegir("PA");
+					ctrl.afegir("AP");
 					ctrl.afegirGraf("test");
 					int na = ctrl.afegirAutor("anna");
 					int np = ctrl.afegirPaper("El misterio del bug");
+					ctrl.afegirPaper("hola");
+					ctrl.afegirLabelPaper("Database", np);
 					ctrl.afegirAdjacenciaPaperAutor(np, na);
 					ctrl.consulta("AP", na);
 					Resultats frame = new Resultats(ctrl);
@@ -75,6 +87,10 @@ public class Resultats extends JFrame {
 		});
 	}
 
+	/**
+	 * Constructor.
+	 * @param ctrl. El ControladorPresentacio del programa.
+	 */
 	public Resultats(ControladorPresentacio ctrl) {
 		this.ctrl = ctrl;
 		resultat = ctrl.consultarResultat();
@@ -84,10 +100,20 @@ public class Resultats extends JFrame {
 		Dimension min = new Dimension(650, 300);
 		setMinimumSize(min);
 		setBounds(100, 100, min.width, 450);
-		
 		JFrame ref = this;
-		content_pane();
 		
+		//contentPane
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{90, 33, 16, 30, 89, 40, 99, 0};
+		gbl_contentPane.rowHeights = new int[]{23, 2, 23, 23, 23, 2, 23, 95, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		//etiqueta relació
 		JLabel lblRelacio = new JLabel("Relació: " + ctrl.getPath());
 		GridBagConstraints gbc_lblRelacio = new GridBagConstraints();
 		gbc_lblRelacio.insets = new Insets(0, 0, 5, 5);
@@ -96,6 +122,7 @@ public class Resultats extends JFrame {
 		gbc_lblRelacio.gridy = 0;
 		contentPane.add(lblRelacio, gbc_lblRelacio);
 		
+		//etiqueta dada
 		JLabel lblDada = new JLabel("Dada: " + ctrl.getDada());
 		GridBagConstraints gbc_lblDada = new GridBagConstraints();
 		gbc_lblDada.fill = GridBagConstraints.HORIZONTAL;
@@ -105,6 +132,7 @@ public class Resultats extends JFrame {
 		gbc_lblDada.gridy = 0;
 		contentPane.add(lblDada, gbc_lblDada);
 		
+		//botó per exportar
 		JButton btnExportar = new JButton("Exportar");
 		btnExportar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -118,7 +146,7 @@ public class Resultats extends JFrame {
 						ctrl.exportarResultat(file, resultat);
 					}
 					catch (Exception exc) {
-						new ErrorMessage(contentPane, "S'ha produït un error en l'exportació.\n Torna-ho a intentar.");
+						new ErrorMessage(contentPane, "S'ha produït un error en l'exportació.\nTorna-ho a intentar.");
 					}
 				}
 			}
@@ -130,6 +158,7 @@ public class Resultats extends JFrame {
 		gbc_btnExportar.gridy = 0;
 		contentPane.add(btnExportar, gbc_btnExportar);
 		
+		//separador
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.anchor = GridBagConstraints.NORTH;
@@ -140,8 +169,10 @@ public class Resultats extends JFrame {
 		gbc_separator.gridy = 1;
 		contentPane.add(separator, gbc_separator);
 		
+		//radioButtons
 		ButtonGroup filtres = new ButtonGroup();
 		
+		//radioButton per filtrar els primers
 		JRadioButton rdbtnFiltrarPrimers = new JRadioButton("Filtrar els");
 		GridBagConstraints gbc_rdbtnFiltrarPrimers = new GridBagConstraints();
 		gbc_rdbtnFiltrarPrimers.anchor = GridBagConstraints.NORTH;
@@ -152,6 +183,7 @@ public class Resultats extends JFrame {
 		contentPane.add(rdbtnFiltrarPrimers, gbc_rdbtnFiltrarPrimers);
 		filtres.add(rdbtnFiltrarPrimers);
 		
+		//textField per filtrar els primers
 		textPrimers = new JTextField();
 		GridBagConstraints gbc_textPrimers = new GridBagConstraints();
 		gbc_textPrimers.fill = GridBagConstraints.HORIZONTAL;
@@ -161,6 +193,7 @@ public class Resultats extends JFrame {
 		contentPane.add(textPrimers, gbc_textPrimers);
 		textPrimers.setColumns(10);
 		
+		//etiqueta primers
 		JLabel lblPrimers = new JLabel("primers");
 		GridBagConstraints gbc_lblPrimers = new GridBagConstraints();
 		gbc_lblPrimers.fill = GridBagConstraints.HORIZONTAL;
@@ -170,6 +203,7 @@ public class Resultats extends JFrame {
 		gbc_lblPrimers.gridy = 2;
 		contentPane.add(lblPrimers, gbc_lblPrimers);
 		
+		//radioButton per filtrar els últims
 		JRadioButton rdbtnFiltrarUltims = new JRadioButton("Filtrar els");
 		GridBagConstraints gbc_rdbtnFiltrarUltims = new GridBagConstraints();
 		gbc_rdbtnFiltrarUltims.anchor = GridBagConstraints.NORTH;
@@ -180,6 +214,7 @@ public class Resultats extends JFrame {
 		contentPane.add(rdbtnFiltrarUltims, gbc_rdbtnFiltrarUltims);
 		filtres.add(rdbtnFiltrarUltims);
 		
+		//textField per filtrar els últims
 		textUltims = new JTextField();
 		GridBagConstraints gbc_textUltims = new GridBagConstraints();
 		gbc_textUltims.fill = GridBagConstraints.HORIZONTAL;
@@ -189,6 +224,7 @@ public class Resultats extends JFrame {
 		contentPane.add(textUltims, gbc_textUltims);
 		textUltims.setColumns(10);
 		
+		//etiqueta últims
 		JLabel lblUltims = new JLabel("últims");
 		GridBagConstraints gbc_lblUltims = new GridBagConstraints();
 		gbc_lblUltims.fill = GridBagConstraints.HORIZONTAL;
@@ -198,6 +234,7 @@ public class Resultats extends JFrame {
 		gbc_lblUltims.gridy = 3;
 		contentPane.add(lblUltims, gbc_lblUltims);
 		
+		//radioButton per filtrar per etiquetes
 		JRadioButton rdbtnFiltrarEtiquetes = new JRadioButton("Filtrar per etiquetes:");
 		GridBagConstraints gbc_rdbtnFiltrarEtiquetes = new GridBagConstraints();
 		gbc_rdbtnFiltrarEtiquetes.anchor = GridBagConstraints.NORTH;
@@ -209,6 +246,7 @@ public class Resultats extends JFrame {
 		contentPane.add(rdbtnFiltrarEtiquetes, gbc_rdbtnFiltrarEtiquetes);
 		filtres.add(rdbtnFiltrarEtiquetes);
 		
+		//comboBox per filtrar per etiquetes
 		cbEtiquetes = new JComboBox<>(etiquetes);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.anchor = GridBagConstraints.WEST;
@@ -219,6 +257,7 @@ public class Resultats extends JFrame {
 		contentPane.add(cbEtiquetes, gbc_comboBox);
 		cbEtiquetes.setSelectedItem("- Sel·lecciona una etiqueta -");
 		
+		//radioButton per no aplicar cap filtre
 		JRadioButton rdbtnSenseFiltres = new JRadioButton("Sense filtres", true);
 		GridBagConstraints gbc_rdbtnSenseFiltres = new GridBagConstraints();
 		gbc_rdbtnSenseFiltres.anchor = GridBagConstraints.NORTH;
@@ -228,6 +267,7 @@ public class Resultats extends JFrame {
 		contentPane.add(rdbtnSenseFiltres, gbc_rdbtnSenseFiltres);
 		filtres.add(rdbtnSenseFiltres);
 		
+		//botó per aplicar el filtre
 		JButton btnAplicarFiltre = new JButton("Aplicar filtre");
 		btnAplicarFiltre.addMouseListener(new MouseAdapter() {
 			@Override
@@ -254,6 +294,7 @@ public class Resultats extends JFrame {
 		gbc_btnAplicarFiltre.gridy = 4;
 		contentPane.add(btnAplicarFiltre, gbc_btnAplicarFiltre);
 		
+		//separador
 		JSeparator separator_1 = new JSeparator();
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
 		gbc_separator_1.anchor = GridBagConstraints.NORTH;
@@ -264,6 +305,7 @@ public class Resultats extends JFrame {
 		gbc_separator_1.gridy = 5;
 		contentPane.add(separator_1, gbc_separator_1);
 		
+		//scrollPane
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -272,6 +314,7 @@ public class Resultats extends JFrame {
 		gbc_scrollPane.gridy = 7;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
+		//table
 		model = new DefaultTableModel(new Object[][]{}, columnes);
 		table = new JTable(model);
 		scrollPane.setViewportView(table);
@@ -288,6 +331,7 @@ public class Resultats extends JFrame {
 		table.setDefaultRenderer(String.class, centerRenderer);
 		fillTable();
 		
+		//botó per afegir una dada
 		JButton btnAfegirDada = new JButton("Afegir dada");
 		btnAfegirDada.addMouseListener(new MouseAdapter() {
 			@Override
@@ -295,21 +339,17 @@ public class Resultats extends JFrame {
 				String tipus = ctrl.getTipusNode();
 				AfegirResultat frame = new AfegirResultat(ctrl, tipus);
 				frame.setVisible(true);
-				ref.setEnabled(false);
+				setEnabled(false);
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
-						ref.setEnabled(true);
-						DecimalFormat df = new DecimalFormat("#.####");
+						setEnabled(true);
+						setVisible(true);
 						Pair<Double, Pair<Integer, String>> nouRes = frame.getNouResultat();
-						if (nouRes.getValue().getKey() != null) {
+						if (nouRes.getValue().getKey() != -1) {
 							resultat = ctrl.consultarResultat();
-							int index = resultat.indexOf(nouRes);
-							String[] fila = new String[5];
-							fila[0] = nouRes.getValue().getValue();
-							fila[1] = df.format(nouRes.getKey());
-							fila[2] = "Informació addicional";
-							fila[3] = "Modificar";
-							fila[4] = "Esborrar";
+							double rellevancia = nouRes.getKey();
+							String[] fila = createRow(nouRes.getValue().getValue(), rellevancia);
+							int index = getIndex(rellevancia, 0, resultat.size()-1);
 							model.insertRow(index, fila);
 						}
 					}
@@ -323,6 +363,7 @@ public class Resultats extends JFrame {
 		gbc_btnAfegirDada.gridy = 6;
 		contentPane.add(btnAfegirDada, gbc_btnAfegirDada);
 		
+		//informació addicional
 		@SuppressWarnings("serial")
 		Action showAddInfo = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -335,6 +376,7 @@ public class Resultats extends JFrame {
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
 						ref.setEnabled(true);
+						ref.setVisible(true);
 					}
 				});
 			}
@@ -342,23 +384,31 @@ public class Resultats extends JFrame {
 		
 		new ButtonColumn(table, showAddInfo, 2);
 		
+		//modificar dada
 		@SuppressWarnings("serial")
 		Action modificar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				int row = Integer.valueOf(e.getActionCommand());
 				String tipus = ctrl.getTipusNode();
+				int id = resultat.get(row).getValue().getKey();
 				String dada = resultat.get(row).getValue().getValue();
 				double rellevancia = resultat.get(row).getKey();
-				ModificarResultat frame = new ModificarResultat(ctrl, tipus, dada, rellevancia, row);
+				ModificarResultat frame = new ModificarResultat(ctrl, tipus, id, dada, rellevancia, row);
 				frame.setVisible(true);
 				ref.setEnabled(false);
 				frame.addWindowListener(new WindowAdapter() {
 					public void windowClosed(WindowEvent e) {
 						ref.setEnabled(true);
-						String novaDada = frame.getNovaDada();
+						ref.setVisible(true);
+						resultat = ctrl.consultarResultat();
+						
+						if (frame.getNouId() != id)  model.setValueAt(frame.getNovaDada(), row, 0);
+						
 						double novaRellevancia = frame.getNovaRellevancia();
-						model.setValueAt(novaDada, row, 0);
-						model.setValueAt(novaRellevancia, row, 1);
+						if (novaRellevancia != rellevancia) {
+							model.setValueAt(df.format(novaRellevancia), row, 1);
+							model.moveRow(row, row, getIndex(novaRellevancia, 0, resultat.size()-1));
+						}
 					}
 				});
 			}
@@ -366,6 +416,7 @@ public class Resultats extends JFrame {
 		
 		new ButtonColumn(table, modificar, 3);
 		
+		//esborrar dada
 		@SuppressWarnings("serial")
 		Action esborrar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -373,6 +424,7 @@ public class Resultats extends JFrame {
 				if (option == JOptionPane.OK_OPTION) {
 					int row = Integer.valueOf(e.getActionCommand());
 					ctrl.esborrar(row);
+					resultat.remove(row);
 					model.removeRow(row);
 				}
 			}
@@ -382,34 +434,46 @@ public class Resultats extends JFrame {
 	}
 	
 	
-	private void content_pane() {
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{90, 33, 16, 30, 89, 40, 99, 0};
-		gbl_contentPane.rowHeights = new int[]{23, 2, 23, 23, 23, 2, 23, 95, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+	/**
+	 * Crea una fila de la taula table amb els valors indicats (però no afegeix la fila a la taula).
+	 * @param nom. El nom de la dada del resultat que volem afegir a la taula.
+	 * @param rellevancia. La rellevància del resultat que volem afegir a la taula.
+	 * @return un vector que representa una fila de table, amb el nom de la dada i la rellevància
+	 * indicats i els botons d'informació addicional, de modificar el resultat i d'esborrar el resultat.
+	 */
+	private String[] createRow(String nom, double rellevancia) {
+		String[] fila = new String[5];
+		fila[0] = nom;
+		fila[1] = df.format(rellevancia);
+		fila[2] = "Informació addicional";
+		fila[3] = "Modificar";
+		fila[4] = "Esborrar";
+		return fila;
 	}
 	
+	/**
+	 * Afegeix a la taula table tots els elements de resultat.
+	 * Per cada element s'afegeix una fila amb el nom de la dada, la rellevància
+	 * i els botons d'informació addicional, de modificar el resultat i d'esborrar el resultat.
+	 */
 	private void fillTable() {
 		for(Entry<Double, Entry<Integer, String>> r : resultat) {
-			String[] fila = new String[5];
-			fila[0] = r.getValue().getValue();
-			fila[1] = r.getKey().toString();
-			fila[2] = "Informació addicional";
-			fila[3] = "Modificar";
-			fila[4] = "Esborrar";
+			String[] fila = createRow(r.getValue().getValue(), r.getKey());
 			model.addRow(fila);
 		}
 	}
 	
+	/**
+	 * Esborra totes les files de la taula table, i la deixa buida.
+	 */
 	private void esborrarTaula() {
-		for (int i = 0; i < model.getRowCount(); ++i) model.removeRow(i);
+		while (model.getRowCount() != 0) model.removeRow(0);
 	}
 	
+	/**
+	 * Métode per mostrar només els n primers resultats, on n és un nombre introduït
+	 * per l'usuari a textPrimers.
+	 */
 	private void filtrarPrimers() {
 		try {
 			int n = Integer.parseInt(textPrimers.getText());
@@ -418,10 +482,16 @@ public class Resultats extends JFrame {
 			fillTable();
 		}
 		catch (Exception e) {
-			new ErrorMessage(contentPane, "Introdueix un nombre al camp sel·lecionat.");
+			new ErrorMessage(contentPane, "Introdueix un nombre entre 0 i "
+											+ resultat.size()
+											+ " al camp sel·lecionat.");
 		}
 	}
 	
+	/**
+	 * Métode per mostrar només els n últims resultats, on n és un nombre introduït
+	 * per l'usuari a textUltims.
+	 */
 	private void filtrarUltims() {
 		try {
 			int n = Integer.parseInt(textUltims.getText());
@@ -430,10 +500,16 @@ public class Resultats extends JFrame {
 			fillTable();
 		}
 		catch (Exception e) {
-			new ErrorMessage(contentPane, "Introdueix un nombre al camp sel·lecionat.");
+			new ErrorMessage(contentPane, "Introdueix un nombre entre 0 i "
+											+ resultat.size()
+											+ " al camp sel·lecionat.");
 		}
 	}
 	
+	/**
+	 * Métode per mostrar només els resultats la dada dels quals té l'etiqueta indicada
+	 * per l'usuari a cbEtiquetes.
+	 */
 	private void filtrarEtiquetes() {
 		String label = cbEtiquetes.getSelectedItem().toString();
 		if (label == "- Sel·lecciona una etiqueta -") new ErrorMessage(contentPane, "Sel·lecciona una etiqueta.");
@@ -442,5 +518,22 @@ public class Resultats extends JFrame {
 			esborrarTaula();
 			fillTable();
 		}
+	}
+	
+	/**
+	 * Cerca dicotòmica per obtenir una fila de table on espot d'insertar un resultat concret
+	 * per tal que la taula segueixi ordenada decreixentment per la rellevància dels resultats.
+	 * @param rellevancia. La rellevància del resultat que volem insertar a la taula.
+	 * @return l'índex d'una fila on es pot insertar un resultat amb la rellevància indicada
+	 * 			(totes les files amb índexs inferiors tenen rellevàncies iguals o superiors
+	 * 			i totes les files amb índexs superiors tenen rellevàncies iguals o inferiors).
+	 */
+	private int getIndex(double rellevancia, int left, int right) {
+		int m = (left+right)/2;
+		if (right < left) return left;
+		double rell = resultat.get(m).getKey();
+		if (rell == rellevancia) return m;
+		if(rell > rellevancia) return getIndex(rellevancia, m+1, right);
+		return getIndex(rellevancia, left, m-1);
 	}
 }
