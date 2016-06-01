@@ -434,9 +434,10 @@ public class ControladorConsultes {
 		Node n = getNode(path, 0, id);
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
-		Double filtre = 0.;
+		Double filtre;
 		Threshold t = r.getThreshold();
 		if (t != null) filtre = Math.max(t.getRellevancia(), threshold);
+		else filtre = threshold;
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, filtre, false);
 		r.setPath(path);
 		r.setNode(n);
@@ -458,9 +459,10 @@ public class ControladorConsultes {
 		Node n = getNode(r.getPath(), 0, id);
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
-		Double filtre = 0.;
+		Double filtre;
 		Threshold t = r.getThreshold();
 		if (t != null) filtre = Math.max(t.getRellevancia(), threshold);
+		else filtre = threshold;
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), filtre, false);
 		r.setNode(n);
 		r.setResultats(res);
@@ -596,7 +598,7 @@ public class ControladorConsultes {
 		ArrayList<Pair<Double, Node>> res = new ArrayList<>();
 
 		for(Entry<Double, Integer> reshs : resultatshs) {
-			if (reshs.getKey() < filtre || reshs.getKey() == 0) break;
+			if (reshs.getKey() < filtre) break;
 
 			Node nodeResultat = copia(getNode(path, path.length()-1, reshs.getValue()));
 
