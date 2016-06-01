@@ -15,6 +15,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javax.swing.JLabel;
 
+/**
+ * 
+ * @author Arnau Badia Sampera
+ *
+ */
 public class Importar extends JFrame {
 
 	private static final long serialVersionUID = -5244204067392716257L;
