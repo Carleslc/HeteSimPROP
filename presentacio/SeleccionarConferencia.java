@@ -68,7 +68,7 @@ public class SeleccionarConferencia extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				SeleccionarDada sd = new SeleccionarDada(cntrl, textField.getText(), "Conferencia");
+				SeleccionarDada sd = new SeleccionarDada(cntrl, textField.getText(), TipusDada.Conferencia);
 				sd.setVisible(true);
 				sd.addWindowListener(new WindowAdapter() {
 					@Override

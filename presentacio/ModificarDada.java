@@ -72,6 +72,7 @@ public class ModificarDada extends JFrame {
 			public void run() {
 				try {
 					ControladorPresentacio cntrl = new ControladorPresentacio();
+					cntrl.afegirGraf("test");
 					cntrl.afegirPaper("aa");
 					cntrl.afegirConferencia("op");
 					cntrl.afegirConferencia("op2");
@@ -348,7 +349,7 @@ public class ModificarDada extends JFrame {
 							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (tableModel.getValueAt(row, 0).equals("Conferencia") && teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) {
 								System.out.println("A�adiendo adjacencia1");
 								if (sd == null) {
-									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
+									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), TipusDada.valueOf((String)src.getValueAt(row, 0)));
 									sd.setVisible(true);
 									setEnabled(false);
 									sd.addWindowListener(new WindowAdapter() {
@@ -391,7 +392,7 @@ public class ModificarDada extends JFrame {
 							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) { 
 								System.out.println("A�adiendo adjacencia2");
 								if (sd == null) {
-									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0));
+									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), TipusDada.valueOf((String)src.getValueAt(row, 0)));
 									sd.setVisible(true);
 									setEnabled(false);
 									sd.addWindowListener(new WindowAdapter() {
@@ -490,7 +491,7 @@ public class ModificarDada extends JFrame {
 						}
 						else {
 							System.out.println("OPCION B");
-							SeleccionarDada sd = new SeleccionarDada(cntrl, (String) tableModel.getValueAt(modelRow, 1), (String) tableModel.getValueAt(modelRow, 0));
+							SeleccionarDada sd = new SeleccionarDada(cntrl, (String) tableModel.getValueAt(modelRow, 1), TipusDada.valueOf((String)tableModel.getValueAt(modelRow, 0)));
 							String tipus_ad = (String) tableModel.getValueAt(modelRow, 0);
 							sd.setVisible(true);
 							sd.addWindowListener(new WindowAdapter() {
@@ -788,24 +789,26 @@ public class ModificarDada extends JFrame {
 	}
 	
 	void seleccionarDada() {
-		SeleccionarDada sd = new SeleccionarDada(cntrl, nomOriginal, selectedType);
+		SeleccionarDada sd = new SeleccionarDada(cntrl, nomOriginal, TipusDada.valueOf(selectedType));
 		sd.setVisible(true);
 		sd.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosed(WindowEvent e) {
-				selectedID = sd.getResultat();
-				if (selectedID == -1) {
-					new ErrorMessage("Has de seleccionar una dada!");
-				}
-				if (selectedType != null && selectedID != -1) {
-					enableComponents();
-					txtNom.setEnabled(false);
-					comboBoxtipus.setEnabled(false);
-				}
-				if (selectedType.equals("Paper")) {
-					System.out.println("Size relacions = " + cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size());
-					if (cntrl.consultarRelacionsPaperAmbConferencia(selectedID) == null) teConferencia = false;
-					else teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
+				if (!sd.isEmpty()) {
+					selectedID = sd.getResultat();
+					if (selectedID == -1) {
+						new ErrorMessage("Has de seleccionar una dada!");
+					}
+					if (selectedType != null && selectedID != -1) {
+						enableComponents();
+						txtNom.setEnabled(false);
+						comboBoxtipus.setEnabled(false);
+					}
+					else if (TipusDada.valueOf(selectedType) == TipusDada.Paper) {
+						System.out.println("Size relacions = " + cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size());
+						if (cntrl.consultarRelacionsPaperAmbConferencia(selectedID) == null) teConferencia = false;
+						else teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
+					}
 				}
 			}
 		});

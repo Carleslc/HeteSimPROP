@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -382,19 +381,12 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 * de Java que es puguin passar a altres capes.
 	 */
 	private static class Conversions {
-		
-		private static final WeakHashMap<List<Pair<Double, Node>>,
-			ArrayList<Entry<Double, Entry<Integer, String>>>> conversionBuffer = new WeakHashMap<>();
 
 		public static ArrayList<Entry<Double, Entry<Integer, String>>> convert(List<Pair<Double, Node>> list) {
-			if (!conversionBuffer.containsKey(list)) {
-				ArrayList<Entry<Double, Entry<Integer, String>>> aux = new ArrayList<>(list.size());
-				for (Entry<Double, Node> res : list)
-					aux.add(convert(res));
-				conversionBuffer.put(list, aux);
-				return aux;
-			}
-			return conversionBuffer.get(list);
+			ArrayList<Entry<Double, Entry<Integer, String>>> aux = new ArrayList<>(list.size());
+			for (Entry<Double, Node> res : list)
+				aux.add(convert(res));
+			return aux;
 		}
 
 		private static Entry<Double, Entry<Integer, String>> convert(Entry<Double, Node> p) {

@@ -336,7 +336,7 @@ public class Resultats extends JFrame {
 		btnAfegirDada.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String tipus = ctrl.getTipusNode();
+				TipusDada tipus = ctrl.getTipusNode();
 				AfegirResultat frame = new AfegirResultat(ctrl, tipus);
 				frame.setVisible(true);
 				setEnabled(false);
@@ -369,7 +369,7 @@ public class Resultats extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				int row = Integer.valueOf(e.getActionCommand());
 				int id = resultat.get(row).getValue().getKey();
-				String tipus = ctrl.getTipusNode();
+				TipusDada tipus = ctrl.getTipusNode();
 				InformacioAddicional frame = new InformacioAddicional(ctrl, id, tipus);
 				frame.setVisible(true);
 				ref.setEnabled(false);
@@ -389,10 +389,12 @@ public class Resultats extends JFrame {
 		Action modificar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				int row = Integer.valueOf(e.getActionCommand());
-				String tipus = ctrl.getTipusNode();
+				TipusDada tipus = ctrl.getTipusNode();
+				
 				int id = resultat.get(row).getValue().getKey();
 				String dada = resultat.get(row).getValue().getValue();
 				double rellevancia = resultat.get(row).getKey();
+				
 				ModificarResultat frame = new ModificarResultat(ctrl, tipus, id, dada, rellevancia, row);
 				frame.setVisible(true);
 				ref.setEnabled(false);

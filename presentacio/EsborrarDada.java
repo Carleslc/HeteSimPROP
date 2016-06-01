@@ -39,7 +39,7 @@ public class EsborrarDada extends JFrame {
 
 	private static final long serialVersionUID = -4984707809082087185L;
 	private JPanel contentPane;
-	private String selectedType;
+	private TipusDada selectedType;
 	private Integer selectedID;
 	private ControladorPresentacio cntrl;
 	private DefaultTableModel tableModel;
@@ -106,7 +106,7 @@ public class EsborrarDada extends JFrame {
 				@SuppressWarnings("unchecked")
 				JComboBox<String> src = (JComboBox<String>) e.getSource();
 				if (!src.getSelectedItem().equals(tipus[0])) {
-					selectedType = (String) src.getSelectedItem();
+					selectedType = TipusDada.valueOf((String)src.getSelectedItem());
 					table.setEnabled(true);
 					buidarTable();
 					omplirTable();
@@ -216,16 +216,16 @@ public class EsborrarDada extends JFrame {
 		TreeMap<Integer, String> data = null;
 
 		switch (selectedType) {
-		case "Autor":
+		case Autor:
 			data = cntrl.consultarAutors();
 			break;
-		case "Conferencia":
+		case Conferencia:
 			data = cntrl.consultarConferencies();
 			break;
-		case "Paper":
+		case Paper:
 			data = cntrl.consultarPapers();
 			break;
-		case "Terme":
+		case Terme:
 			data = cntrl.consultarTermes();
 			break;
 		}
@@ -242,16 +242,16 @@ public class EsborrarDada extends JFrame {
 		if (selectedID != null && selectedType != null) {
 			try {
 				switch (selectedType) {
-				case "Autor":
+				case Autor:
 					cntrl.eliminarAutor(selectedID);
 					break;
-				case "Conferencia":
+				case Conferencia:
 					cntrl.eliminarConferencia(selectedID);
 					break;
-				case "Paper":
+				case Paper:
 					cntrl.eliminarPaper(selectedID);
 					break;
-				case "Terme":
+				case Terme:
 					cntrl.eliminarTerme(selectedID);
 				}
 			} catch (Exception e) {

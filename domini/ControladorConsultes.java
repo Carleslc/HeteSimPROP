@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.io.IOException;
 
 import persistencia.ControladorPersistenciaPropi;
+import presentacio.TipusDada;
 import persistencia.ControladorExportacio;
 
 /**
@@ -267,12 +268,12 @@ public class ControladorConsultes {
 	 * 			"Autor", "Conferencia", "Terme" o "Paper".
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public String getTipusNode() throws IllegalArgumentException{
+	public TipusDada getTipusNode() throws IllegalArgumentException{
 		String path = resultats.get(getUltimaConsulta()).getPath();
-		if (path.charAt(path.length()-1) == 'A') return "Autor";
-		if (path.charAt(path.length()-1) == 'C') return "Conferencia";
-		if (path.charAt(path.length()-1) == 'T') return "Terme";
-		return "Paper";
+		if (path.charAt(path.length()-1) == 'A') return TipusDada.Autor;
+		if (path.charAt(path.length()-1) == 'C') return TipusDada.Conferencia;
+		if (path.charAt(path.length()-1) == 'T') return TipusDada.Terme;
+		return TipusDada.Paper;
 	}
 
 	/**

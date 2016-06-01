@@ -1,5 +1,6 @@
 package presentacio;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class ModificarResultat extends JFrame {
 	
 	private JPanel contentPane;
 	private ControladorPresentacio ctrl;
-	private String tipus;
+	private TipusDada tipus;
 	private int id;
 	private String nom;
 	private double rellevancia;
@@ -51,7 +52,7 @@ public class ModificarResultat extends JFrame {
 	 * @param index. La posició original del resultat que es vol modificar en el vector de resultats
 	 * 				de l'última consulta.
 	 */
-	public ModificarResultat(ControladorPresentacio ctrl, String tipus, int id, String nom, double rellevancia, int index) {
+	public ModificarResultat(ControladorPresentacio ctrl, TipusDada tipus, int id, String nom, double rellevancia, int index) {
 		this.ctrl = ctrl;
 		this.tipus = tipus;
 		this.id = id;
@@ -173,15 +174,27 @@ public class ModificarResultat extends JFrame {
 	 * 			del tipus indicat per l'atibut tipus de la classe, sense repeticions.
 	 */
 	private String[] getDades() {
-		TreeMap<Integer, String> map;
+		TreeMap<Integer, String> map = new TreeMap<>();
 		
-		if (tipus == "Autor") map = ctrl.consultarAutors();
-		else if (tipus == "Conferencia") map = ctrl.consultarConferencies();
-		else if (tipus == "Paper") map = ctrl.consultarPapers();
-		else map = ctrl.consultarTermes();
+		switch (tipus) {
+			case Autor:
+				map = ctrl.consultarAutors();
+				break;
+			case Conferencia:
+				map = ctrl.consultarConferencies();
+				break;
+			case Paper:
+				map = ctrl.consultarPapers();
+				break;
+			case Terme:
+				map = ctrl.consultarTermes();
+				break;
+			default:
+				break;
+		}
 		
 		Set<String> dades = new HashSet<String>(map.values());
-		return dades.toArray(new String[0]);
+		return dades.toArray(new String[dades.size()]);
 	}
 	
 	/**
@@ -191,13 +204,24 @@ public class ModificarResultat extends JFrame {
 	 * 			que tenen el nom indicat i que són del tipus indicat per l'atribut tipus de la classe.
 	 */
 	private List<Integer> llistaId(String dada) {
-		List<Integer> id;
-		
-		if (tipus == "Autor") id = ctrl.consultarAutor(dada);
-		else if (tipus == "Conferencia") id = ctrl.consultarConferencia(dada);
-		else if (tipus == "Paper") id = ctrl.consultarPaper(dada);
-		else id = ctrl.consultarTerme(dada);
-		
+		List<Integer> id = new ArrayList<>();
+
+		switch (tipus) {
+			case Autor:
+				id = ctrl.consultarAutor(dada);
+				break;
+			case Conferencia:
+				id = ctrl.consultarConferencia(dada);
+				break;
+			case Paper:
+				id = ctrl.consultarPaper(dada);
+				break;
+			case Terme:
+				id = ctrl.consultarTerme(dada);
+				break;
+			default:
+				break;
+		}
 		return id;
 	}
 	

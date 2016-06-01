@@ -1,5 +1,6 @@
 package presentacio;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
@@ -35,7 +36,7 @@ public class AfegirResultat extends JFrame {
 	
 	private JPanel contentPane;
 	private ControladorPresentacio ctrl;
-	private String tipus;
+	private TipusDada tipus;
 	private int id = -1;
 	private String nom;
 	private double rellevancia;
@@ -46,7 +47,7 @@ public class AfegirResultat extends JFrame {
 	 * @param ctrl. El ControladorPresentacio del programa.
 	 * @param tipus. El tipus de dada que es vol afegir al resultat (Autor, Paper, Conferencia o Terme).
 	 */
-	public AfegirResultat(ControladorPresentacio ctrl, String tipus) {
+	public AfegirResultat(ControladorPresentacio ctrl, TipusDada tipus) {
 		this.ctrl = ctrl;
 		this.tipus = tipus;
 
@@ -156,15 +157,27 @@ public class AfegirResultat extends JFrame {
 	 * 			del tipus indicat per l'atibut tipus de la classe, sense repeticions.
 	 */
 	private String[] getDades() {
-		TreeMap<Integer, String> map;
-
-		if (tipus == "Autor") map = ctrl.consultarAutors();
-		else if (tipus == "Conferencia") map = ctrl.consultarConferencies();
-		else if (tipus == "Paper") map = ctrl.consultarPapers();
-		else map = ctrl.consultarTermes();
-
+		TreeMap<Integer, String> map = new TreeMap<>();
+		
+		switch (tipus) {
+			case Autor:
+				map = ctrl.consultarAutors();
+				break;
+			case Conferencia:
+				map = ctrl.consultarConferencies();
+				break;
+			case Paper:
+				map = ctrl.consultarPapers();
+				break;
+			case Terme:
+				map = ctrl.consultarTermes();
+				break;
+			default:
+				break;
+		}
+		
 		Set<String> dades = new HashSet<String>(map.values());
-		return dades.toArray(new String[0]);
+		return dades.toArray(new String[dades.size()]);
 	}
 
 	/**
@@ -173,13 +186,25 @@ public class AfegirResultat extends JFrame {
 	 * @return una llista amb els identificadors de totes les dades del conjunt de dades actual
 	 * 			que tenen el nom indicat i que són del tipus indicat per l'atribut tipus de la classe.
 	 */
-	private List<Integer> llistaId(String nom) {
-		List<Integer> id;
+	private List<Integer> llistaId(String dada) {
+		List<Integer> id = new ArrayList<>();
 
-		if (tipus == "Autor") id = ctrl.consultarAutor(nom);
-		else if (tipus == "Conferencia") id = ctrl.consultarConferencia(nom);
-		else if (tipus == "Paper") id = ctrl.consultarPaper(nom);
-		else id = ctrl.consultarTerme(nom);
+		switch (tipus) {
+			case Autor:
+				id = ctrl.consultarAutor(dada);
+				break;
+			case Conferencia:
+				id = ctrl.consultarConferencia(dada);
+				break;
+			case Paper:
+				id = ctrl.consultarPaper(dada);
+				break;
+			case Terme:
+				id = ctrl.consultarTerme(dada);
+				break;
+			default:
+				break;
+		}
 
 		return id;
 	}
