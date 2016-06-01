@@ -56,8 +56,8 @@ public class ModificarDescripcio extends JFrame {
 			}
 		});
 
-		//bot\u00F3 per cancel·lar
-		JButton btnCancel = new JButton("Cancel·lar");
+		//bot\u00F3 per cancel\u00B7lar
+		JButton btnCancel = new JButton("Cancel\u00B7lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

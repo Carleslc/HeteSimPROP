@@ -35,15 +35,11 @@ public class MenuPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new BounceProgressBarTaskFrame<ControladorPresentacio>(ControladorPresentacio.ICON_DISK,
-							"Iniciar programa", () -> {
-						return new ControladorPresentacio();
-					},
-					(ctrl) -> {
-						MenuPrincipal frame = new MenuPrincipal(ctrl);
-						frame.setVisible(true);
-						return true;
-					}, "Carregant dades...", "Benvingut!", "Error al carregar dades!").call();
+					System.out.println("Carregant dades...");
+					ControladorPresentacio ctrl = new ControladorPresentacio();
+					MenuPrincipal frame = new MenuPrincipal(ctrl);
+					frame.setVisible(true);
+					System.out.println("Programa iniciat.");
 				} catch (Exception uncaught) {
 					new ErrorMessage(uncaught.getMessage());
 				}
@@ -57,6 +53,7 @@ public class MenuPrincipal extends JFrame {
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setBounds(100, 100, 255, 327);
 		setTitle("Men\u00FA Principal");
+		setDefaultStyle();
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
@@ -179,7 +176,7 @@ public class MenuPrincipal extends JFrame {
 		} catch (Exception ignore) {}
 	}
 
-	public static final void setDefaultStyle() {
+	private static final void setDefaultStyle() {
 		try {
 			// Nimbus L&F style
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");

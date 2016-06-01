@@ -69,7 +69,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	/**
 	 * Importa i crea un graf que tindr\u00E0 el nom donat mitjan\u00E7ant els fitxers
 	 * del directori que es passen com a par\u00E0metre (autors, papers, conferÃ¨ncies, 
-	 * labels i relacions). Aquest graf sâ€™estableix com lâ€™actual. 
+	 * labels i relacions). Aquest graf s€™estableix com l€™actual. 
 	 * El graf passa a ser el graf importat i idActual passar\u00E0 a ser nomGraf.
 	 * @param nomGraf que Ã©s el nom del nou Graf importat
 	 * @param directori on es troben els fitxers a patir dels quals es fa la importaci\u00F3.

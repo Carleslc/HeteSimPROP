@@ -56,7 +56,7 @@ public class Resultats extends JFrame {
 	JTextField textPrimers;
 	JTextField textUltims;
 	JComboBox<String> cbEtiquetes;
-	private static final String[] etiquetes = {"- Sel·lecciona una etiqueta -", "Database", "Data Mining", "AI", "Information Retrieval"};
+	private static final String[] etiquetes = {"- Sel\u00B7lecciona una etiqueta -", "Database", "Data Mining", "AI", "Information Retrieval"};
 	private static final String[] columnes = {"Dada", "Rellev\u00E0ncia", "", "", ""};
 	private static final DecimalFormat df = new DecimalFormat("#.####");
 	DefaultTableModel model;
@@ -231,7 +231,7 @@ public class Resultats extends JFrame {
 		gbc_comboBox.gridx = 2;
 		gbc_comboBox.gridy = 4;
 		contentPane.add(cbEtiquetes, gbc_comboBox);
-		cbEtiquetes.setSelectedItem("- Sel·lecciona una etiqueta -");
+		cbEtiquetes.setSelectedItem("- Sel\u00B7lecciona una etiqueta -");
 		
 		//radioButton per no aplicar cap filtre
 		JRadioButton rdbtnSenseFiltres = new JRadioButton("Sense filtres", true);
@@ -460,7 +460,7 @@ public class Resultats extends JFrame {
 			fillTable();
 		}
 		catch (Exception e) {
-			new ErrorMessage(contentPane, "Introdueix un nombre positiu al camp sel·lecionat.");
+			new ErrorMessage(contentPane, "Introdueix un nombre positiu al camp sel\u00B7lecionat.");
 		}
 	}
 	
@@ -476,7 +476,7 @@ public class Resultats extends JFrame {
 			fillTable();
 		}
 		catch (Exception e) {
-			new ErrorMessage(contentPane, "Introdueix un nombre positiu al camp sel·lecionat.");
+			new ErrorMessage(contentPane, "Introdueix un nombre positiu al camp sel\u00B7lecionat.");
 		}
 	}
 	
@@ -486,7 +486,7 @@ public class Resultats extends JFrame {
 	 */
 	private void filtrarEtiquetes() {
 		String label = cbEtiquetes.getSelectedItem().toString();
-		if (label == "- Sel·lecciona una etiqueta -") new ErrorMessage(contentPane, "Sel·lecciona una etiqueta.");
+		if (label == "- Sel\u00B7lecciona una etiqueta -") new ErrorMessage(contentPane, "Sel\u00B7lecciona una etiqueta.");
 		else {
 			resultat = ctrl.filtrarPerEtiqueta (label, false);
 			esborrarTaula();

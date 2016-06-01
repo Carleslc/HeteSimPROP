@@ -61,7 +61,7 @@ public class Importar extends JFrame {
 		lblNomDelGraf.setBounds(20, 94, 86, 16);
 		contentPane.add(lblNomDelGraf);
 
-		JButton btnCancellar = new JButton("CancelÂ·lar");
+		JButton btnCancellar = new JButton("CancelÂ\u00B7lar");
 		btnCancellar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -75,11 +75,11 @@ public class AfegirResultat extends JFrame {
 		lblRellevancia.setBounds(10, 36, 79, 14);
 		contentPane.add(lblRellevancia);
 
-		//comboBox per sel·leccionar la dada
+		//comboBox per sel\u00B7leccionar la dada
 		String[] dades = getDades();
 		JComboBox<String> comboBox = new JComboBox<>(dades);
-		comboBox.insertItemAt("- Sel·lecciona una dada -", 0);
-		comboBox.setSelectedItem("- Sel·lecciona una dada -");
+		comboBox.insertItemAt("- Sel\u00B7lecciona una dada -", 0);
+		comboBox.setSelectedItem("- Sel\u00B7lecciona una dada -");
 		comboBox.setBounds(74, 8, 160, 20);
 		contentPane.add(comboBox);
 
@@ -127,8 +127,8 @@ public class AfegirResultat extends JFrame {
 		btnAccept.setBounds(132, 73, 102, 23);
 		contentPane.add(btnAccept);
 
-		//bot\u00F3 per cancel·lar
-		JButton btnCancel = new JButton("Cancel·lar");
+		//bot\u00F3 per cancel\u00B7lar
+		JButton btnCancel = new JButton("Cancel\u00B7lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -84,7 +84,7 @@ public class ModificarResultat extends JFrame {
 		lblRellevancia.setBounds(10, 36, 71, 14);
 		contentPane.add(lblRellevancia);
 		
-		//comboBox per sel·leccionar la nova dada
+		//comboBox per sel\u00B7leccionar la nova dada
 		String[] dades = getDades();
 		JComboBox<String> comboBox = new JComboBox<>(dades);
 		comboBox.setSelectedItem(nom);
@@ -129,8 +129,8 @@ public class ModificarResultat extends JFrame {
 		btnAccept.setBounds(139, 61, 100, 23);
 		contentPane.add(btnAccept);
 		
-		//bot\u00F3 per cancel·lar
-		JButton btnCancel = new JButton("Cancel·lar");
+		//bot\u00F3 per cancel\u00B7lar
+		JButton btnCancel = new JButton("Cancel\u00B7lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
