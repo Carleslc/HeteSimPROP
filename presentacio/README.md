@@ -1,17 +1,17 @@
-##Clases de la capa de presentació
+##Clases de la capa de presentaci\u00F3
 
-###Utilització de ButtonColumn.java
+###Utilitzaci\u00F3 de ButtonColumn.java
 
 La creadora de ButtonColumn és: ```public ButtonColumn(JTable table, Action action, int column)```
 * table serà la JTable on es vol dibuixar el JButton,
-* action és una implementació de Action que es vol que s'executi al clicar el botó,
-* column és la columna on es dibuixarà el botó
+* action és una implementaci\u00F3 de Action que es vol que s'executi al clicar el bot\u00F3,
+* column és la columna on es dibuixarà el bot\u00F3
 
 Per utilitzar ButtonColumn s'ha de fer el següent:
 ```
 Action action = new AbstractAction() {
   public void actionPerformed(ActionEvent e) {
-		       /*Acció a realitzar*/
+		       /*Acci\u00F3 a realitzar*/
 	}
 };
 		 

@@ -61,7 +61,7 @@ public class Test extends Driver {
 			times.add(time);
 			System.out.println(time + "ns");
 		}
-		// Test per comprovar si les funcions de normalització funcionen correctament
+		// Test per comprovar si les funcions de normalitzaci\u00F3 funcionen correctament
 		// Compara els resultats de normalitzadaPerFilas/Columnes amb els creats mitjançant
 		// la fila/columna normalitzada corresponent
 		long start = System.nanoTime();

@@ -131,7 +131,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Afegeix una etiqueta a una conferencia del graf i retorna el seu identificador intern.
-	 * Llençara una excepció en cas de que conferencia no existeixi en el graf actual.
+	 * Llençara una excepci\u00F3 en cas de que conferencia no existeixi en el graf actual.
 	 * @param label que es vol afegir
 	 * @param idConferencia es l'id de la conferencia
 	 * @return identificador intern de la conferencia
@@ -164,7 +164,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Afegeix una etiqueta a un paper del graf i retorna el seu identificador intern.
-	 *  Llençarà una excepció en cas de que paper no existeixi en el graf actual.
+	 *  Llençarà una excepci\u00F3 en cas de que paper no existeixi en el graf actual.
 	 * @param label que es vol afegir
 	 * @param idPaper es l'id del paper
 	 * @return identificador intern del paper
@@ -344,30 +344,30 @@ public class ControladorPresentacio {
 
 
 	/**
-	 * Retorna si existeix la relació entre els dos nodes
+	 * Retorna si existeix la relaci\u00F3 entre els dos nodes
 	 * @param idPaper
 	 * @param idAutor
-	 * @return si existeix la relació entre els dos nodes
+	 * @return si existeix la relaci\u00F3 entre els dos nodes
 	 */
 	public boolean existeixRelacioPaperAutor(int idPaper, int idAutor) {
 		return controladorRelacions.existeixRelacioPaperAutor(idPaper, idAutor);
 	}
 
 	/**
-	 * Retorna si existeix la relació entre els dos nodes
+	 * Retorna si existeix la relaci\u00F3 entre els dos nodes
 	 * @param idPaper
 	 * @param idTerme
-	 * @return si existeix la relació entre els dos nodes
+	 * @return si existeix la relaci\u00F3 entre els dos nodes
 	 */
 	public boolean existeixRelacioPaperTerme(int idPaper, int idTerme) {
 		return controladorRelacions.existeixRelacioPaperTerme(idPaper, idTerme);
 	}
 
 	/**
-	 * Retorna si existeix la relació entre els dos nodes
+	 * Retorna si existeix la relaci\u00F3 entre els dos nodes
 	 * @param idPaper
 	 * @param idConferencia
-	 * @return si existeix la relació entre els dos nodes
+	 * @return si existeix la relaci\u00F3 entre els dos nodes
 	 */
 	public boolean existeixRelacioPaperConferencia(int idPaper, int idConferencia) {
 		return controladorRelacions.existeixRelacioPaperConferencia(idPaper, idConferencia);
@@ -404,7 +404,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Estableix una adjacencia al graf actual entre un paper i una conferencia.
-	 * En cas de que hi hagués prèviament una altra relació entre aquests dos nodes 
+	 * En cas de que hi hagués prèviament una altra relaci\u00F3 entre aquests dos nodes 
 	 * aquesta és eliminada ja que un paper només pot estar relacionat amb una conferència.
 	 * @param idPaper del paper
 	 * @param idConferencia de la conferencia
@@ -522,7 +522,7 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Modifica la definció d’un path 
+	 * Modifica la definci\u00F3 d’un path 
 	 * @param path
 	 * @param definicio nova del path
 	 * @return si ha sigut possible (el path existeix).
@@ -597,7 +597,7 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Actualitza o desactualitza una clausura si est� disponible
+	 * Actualitza o desactualitza una clausura si est\u00E0 disponible
 	 * @param path la clausura a actualitzar/desactualitzar
 	 * @param updated si es vol actualitzar o desactualitzar
 	 * @throws IOException si no es pot llegir/escriure el fitxer de clausura
@@ -607,17 +607,17 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Consulta si una clausura est� actualitzada
+	 * Consulta si una clausura est\u00E0 actualitzada
 	 * @param path la clausura a comprovar
-	 * @return Si la clausura est� disponible retorna si est� actualitzada.
-	 * Retorna <code>false</code> si la clausura no est� disponible.
+	 * @return Si la clausura est\u00E0 disponible retorna si est\u00E0 actualitzada.
+	 * Retorna <code>false</code> si la clausura no est\u00E0 disponible.
 	 */
 	public boolean isUpdatedClausura(String path) {
 		return controladorMultigraf.getHeteSim().isUpdated(path);
 	}
 
 	/**
-	 * Consulta si est� disponible una clausura
+	 * Consulta si est\u00E0 disponible una clausura
 	 * @param path la clausura a comprovar
 	 * @return si esta disponible la clausura
 	 */
@@ -631,7 +631,7 @@ public class ControladorPresentacio {
 	 * @param ignorarClausura true si no es vol utilitzar cap clausura existent
 	 * (es calculara com si no hi fos)
 	 * @throws IllegalArgumentException si <b>path</b> es <code>null</code> o es buit
-	 * @throws InterruptedException si s'aborta el c�lcul
+	 * @throws InterruptedException si s'aborta el c\u00E0lcul
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
 	public void clausura(String path, boolean ignorarClausura)
@@ -663,7 +663,7 @@ public class ControladorPresentacio {
 	 * labels i relacions). Aquest graf s’estableix com l’actual. 
 	 * El graf passa a ser el graf importat i idActual passarà a ser nomGraf.
 	 * @param nomGraf que és el nom del nou Graf importat
-	 * @param directori on es troben els fitxers a patir dels quals es fa la importació.
+	 * @param directori on es troben els fitxers a patir dels quals es fa la importaci\u00F3.
 	 * @throws IOException en cas de que algun fitxer no tingui el format correcte 
 	 * o bé no sigui possible llegir-lo.
 	 * @throws FileNotFoundException en cas de que algun fitxer no es trobi.
@@ -673,9 +673,9 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Consulta si un graf est� carregat.
+	 * Consulta si un graf est\u00E0 carregat.
 	 * @param nomGraf que és el nom del Graf que es vol consultar.
-	 * @return si el graf existeix i est� carregat.
+	 * @return si el graf existeix i est\u00E0 carregat.
 	 */
 	public boolean exists(String nomGraf) {
 		return controladorMultigraf.exists(nomGraf);
@@ -684,7 +684,7 @@ public class ControladorPresentacio {
 	/**
 	 * Selecciona el graf amb nom "nomGraf" com a graf actual.
 	 * @param nomGraf que és el nom del Graf que es vol seleccionar.
-	 * @return si ha sigut possible la selecció del graf (el graf existia).
+	 * @return si ha sigut possible la selecci\u00F3 del graf (el graf existia).
 	 */
 	public boolean seleccionarGraf(String nomGraf) throws IOException {
 		return controladorMultigraf.seleccionarGraf(nomGraf);
@@ -840,9 +840,9 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Modificadora de la �ltima consulta
+	 * Modificadora de la \u00FAltima consulta
 	 * @param date la data de la consulta
-	 * @throw IllegalArgumentException si date �s null o no existeix cap consulta en date
+	 * @throw IllegalArgumentException si date \u00E9s null o no existeix cap consulta en date
 	 */
 	public void setUltimaConsulta(Date date) throws IllegalArgumentException {
 		controladorConsultes.setUltimaConsulta(date);
@@ -853,10 +853,10 @@ public class ControladorPresentacio {
 	 * @param path El nom del path que es vol fer servir per calcular rellevancies.
 	 * @param idNode L'id del node del que es vol obtenir rellevancies amb altres nodes.<br>
 	 * 			El node es del primer tipus de node del path.
-	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c�lcul.
-	 * @param min La rellev�ncia m�nima que han de tenir tots els nodes de la llista.
-	 * @param max La rellev�ncia m�xima que han de tenir tots els nodes de la llista.
-	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c�lcul.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul.
+	 * @param min La rellev\u00E0ncia m\u00EDnima que han de tenir tots els nodes de la llista.
+	 * @param max La rellev\u00E0ncia m\u00E0xima que han de tenir tots els nodes de la llista.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul.
 	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat.
@@ -881,10 +881,10 @@ public class ControladorPresentacio {
 	 * @param idNodeThreshold2 L'id del segon node del threshold.<br>
 	 * El node es de l'ultim tipus de node del path del threshold.
 	 * @param thresholdPath El nom del path del threshold.
-	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c�lcul.
-	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el c�lcul del threshold.
-	 * @param min la m�nima rellev�ncia que ha de tenir qualsevol resultat que es retorni
-	 * @param max la m�xima rellev�ncia que ha de tenir qualsevol resultat que es retorni
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul.
+	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
+	 * @param min la m\u00EDnima rellev\u00E0ncia que ha de tenir qualsevol resultat que es retorni
+	 * @param max la m\u00E0xima rellev\u00E0ncia que ha de tenir qualsevol resultat que es retorni
 	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat que passen el threshold.
@@ -913,12 +913,12 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obt� els n primers resultats
+	 * Obt\u00E9 els n primers resultats
 	 * @param n nombre de resultats amb mes rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarElsPrimers(int n, boolean aplicar)
 			throws IllegalArgumentException {
@@ -926,12 +926,12 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obt� els n ultims resultats
+	 * Obt\u00E9 els n ultims resultats
 	 * @param n nombre de resultats amb menys rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarElsUltims(int n, boolean aplicar)
 			throws IllegalArgumentException {
@@ -939,12 +939,12 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obt� tots els resultats que tenen el node amb l'etiqueta label.
+	 * Obt\u00E9 tots els resultats que tenen el node amb l'etiqueta label.
 	 * @param label de les tuples del resultat que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarPerEtiqueta(String label, boolean aplicar)
 			throws IllegalArgumentException {
@@ -952,13 +952,13 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obt� tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
+	 * Obt\u00E9 tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
 	 * @param min es el minim de rellevancia
 	 * @param max es el maxim de rellevancia
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarPerRellevancia(double min, double max,
 			boolean aplicar) throws IllegalArgumentException {
@@ -997,18 +997,18 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Consultora de la dada de l'�ltima consulta.
-	 * @returns Retorna el nom de la dada sobre la que s'ha fet l'�ltima consulta.
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * Consultora de la dada de l'\u00FAltima consulta.
+	 * @returns Retorna el nom de la dada sobre la que s'ha fet l'\u00FAltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public String getDada() throws IllegalArgumentException {
 		return controladorConsultes.getDada();
 	}
 	
 	/**
-	 * Consultora del path de l'�ltima consulta.
-	 * @returns Retorna el nom del path fet servir en l'�ltima consulta.
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * Consultora del path de l'\u00FAltima consulta.
+	 * @returns Retorna el nom del path fet servir en l'\u00FAltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public String getPath() throws IllegalArgumentException {
 		return controladorConsultes.getPath();
@@ -1072,7 +1072,7 @@ public class ControladorPresentacio {
 	 * @param idNode2 L'id del segon node del nou threshold.
 	 * 			El node es de l'ultim tipus de node del path del threshold.
 	 * @param path El nom del path del nou threshold.
-	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c�lcul del threshold.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 * @throws IOException 
 	 * @throws InterruptedException 
@@ -1107,11 +1107,11 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Exporta uns resultats amb les dades de la �ltima consulta.
+	 * Exporta uns resultats amb les dades de la \u00FAltima consulta.
 	 * @param filesystem_path El fitxer on es vol exportar els resultats.
 	 * @param resultats Els resultats a exportar.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
-	 * @throws IllegalArgumentException si no existeix una �ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public void exportarResultat(String filesystem_path,
 			ArrayList<Entry<Double, Entry<Integer, String>>> resultats) throws Exception {
@@ -1156,7 +1156,7 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Deixa l'estat de les clausures tal i com est�ven abans d'iniciar el programa.
+	 * Deixa l'estat de les clausures tal i com est\u00E0ven abans d'iniciar el programa.
 	 * @throws IOException si no es poden guardar les clausures
 	 */
 	public void reestablirClausures() throws IOException {
@@ -1170,7 +1170,7 @@ public class ControladorPresentacio {
 		controladorDominiPersistenciaPropi.esborrarFitxersTemporals();
 	}
 
-	//**************funcions de presentació****************
+	//**************funcions de presentaci\u00F3****************
 
 	public static void configurarNovaFinestra(JFrame from, JFrame to) {
 		to.setVisible(true);

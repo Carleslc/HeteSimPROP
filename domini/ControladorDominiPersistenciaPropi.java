@@ -66,7 +66,7 @@ public class ControladorDominiPersistenciaPropi extends ControladorDominiPersist
 	}
 
 	/**
-	 * Deixa l'estat de les clausures tal i com estàven abans d'iniciar el programa.
+	 * Deixa l'estat de les clausures tal i com est\u00E0ven abans d'iniciar el programa.
 	 * @throws IOException si no es poden guardar les clausures
 	 */
 	public void reestablirClausures() throws IOException {

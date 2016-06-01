@@ -13,7 +13,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 /**
- * Vista per afegir una nova relació al programa.
+ * Vista per afegir una nova relaci\u00F3 al programa.
  * @author Carla Claverol
  *
  */
@@ -30,7 +30,7 @@ public class AfegirRelacio extends JFrame {
 	 * @param ctrl. El ControladorPresentacio del programa.
 	 */
 	public AfegirRelacio(ControladorPresentacio ctrl) {
-		setTitle("Afegir relació");
+		setTitle("Afegir relaci\u00F3");
 		setIconImage(ControladorPresentacio.ICON_ADD);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 300, 160);
@@ -40,23 +40,23 @@ public class AfegirRelacio extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		//textField pel nom de la relació
+		//textField pel nom de la relaci\u00F3
 		JTextField textPath = new JTextField();
 		textPath.setColumns(10);
 		
-		//textField per la descripció de la relació
+		//textField per la descripci\u00F3 de la relaci\u00F3
 		JTextField textDescription = new JTextField();
 		textDescription.setColumns(10);
 		
-		//etiqueta relació
-		JLabel lblPath = new JLabel("Relació:");
+		//etiqueta relaci\u00F3
+		JLabel lblPath = new JLabel("Relaci\u00F3:");
 		lblPath.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		//etiqueta descripció
-		JLabel lblDescription = new JLabel("Descripció:");
+		//etiqueta descripci\u00F3
+		JLabel lblDescription = new JLabel("Descripci\u00F3:");
 		lblDescription.setHorizontalAlignment(SwingConstants.RIGHT);
 		
-		//botó per acceptar
+		//bot\u00F3 per acceptar
 		JButton btnAccept = new JButton("Acceptar");
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
@@ -73,7 +73,7 @@ public class AfegirRelacio extends JFrame {
 			}
 		});
 		
-		//botó per cancel·lar
+		//bot\u00F3 per cancel·lar
 		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -127,16 +127,16 @@ public class AfegirRelacio extends JFrame {
 	}
 	
 	/**
-	 * Consultora del nom de la relació afegida.
-	 * @return el nom de la relació afegida, o null si no s'ha afegit cap relació.
+	 * Consultora del nom de la relaci\u00F3 afegida.
+	 * @return el nom de la relaci\u00F3 afegida, o null si no s'ha afegit cap relaci\u00F3.
 	 */
 	public String getNewPath() {
 		return newPath;
 	}
 	
 	/**
-	 * Consultora de la descripció de la relació afegida.
-	 * @return la descripció de la relació afegida, o null si no s'ha afegit cap relació.
+	 * Consultora de la descripci\u00F3 de la relaci\u00F3 afegida.
+	 * @return la descripci\u00F3 de la relaci\u00F3 afegida, o null si no s'ha afegit cap relaci\u00F3.
 	 */
 	public String getNewDescription() {
 		return newDescription;

@@ -47,10 +47,10 @@ public class ModificarConjuntDades extends JFrame {
 					String actual = selector.getSelectedItem().toString();
 					int opt = JOptionPane.showOptionDialog(null,
 							"<html>Totes les dades que has modificat des de que vas importar <b>"
-									+ actual + "</b> es perdràn.</html>\n<html><i>Realment vols esborrar <b>"
+									+ actual + "</b> es perdr\u00E0n.</html>\n<html><i>Realment vols esborrar <b>"
 									+ actual + "</b>?</i></html>",
-									"Confirmaciï¿½", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
-									null, new String[] {"Sí", "No"}, "No");
+									"Confirmaci\u00F3", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE,
+									null, new String[] {"S\u00ED", "No"}, "No");
 					if (opt == JOptionPane.YES_OPTION) {
 						try {
 							ctrl.esborrarFitxerGraf();

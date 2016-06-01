@@ -90,7 +90,7 @@ public class AfegirDada extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				if (!saved) {
-					String[] opcions = {"Cancelar", "No", "S�"};
+					String[] opcions = {"Cancelar", "No", "S\u00ED"};
 					int n = JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
 					if (n == 2) {
@@ -296,7 +296,7 @@ public class AfegirDada extends JFrame {
 							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
 								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
 							else {
-								new ErrorMessage("El Paper ja t� una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								new ErrorMessage("El Paper ja t\u00E9 una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -307,7 +307,7 @@ public class AfegirDada extends JFrame {
 							if (!src.getValueAt(row, 0).equals("Conferencia") || !teConferencia || (teConferencia && adjacencies.get(row).getKey() != null && adjacencies.get(row).getKey() == idCOnferencia))
 								consultarID((String)src.getValueAt(row, 1), (String)src.getValueAt(row, 0), row);
 							else {
-								new ErrorMessage("El Paper ja t� una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
+								new ErrorMessage("El Paper ja t\u00E9 una Conferencia relacionada!\nModifica l'existent per cambiar de Conferencia");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}

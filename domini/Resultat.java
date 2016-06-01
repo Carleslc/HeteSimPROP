@@ -158,8 +158,8 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	}
 
 	/**
-	 * Retorna una llista de resultats [Rellevància, [ID_Dada, Nom_Dada]]
-	 * @return tots els resultats amb el format [Rellevància, [ID_Dada, Nom_Dada]]
+	 * Retorna una llista de resultats [Rellev\u00E0ncia, [ID_Dada, Nom_Dada]]
+	 * @return tots els resultats amb el format [Rellev\u00E0ncia, [ID_Dada, Nom_Dada]]
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> getResultats() {
 		return Conversions.convert(resultats);
@@ -260,7 +260,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 * Obté els n primers resultats
 	 * @param n nombre de resultats amb mes rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre a this,
-	 * si es posa a false this no es veurà modificat.
+	 * si es posa a false this no es veur\u00E0 modificat.
 	 * @return el resultat amb el filtratge aplicat
 	 */
 	public Resultat filtrarElsPrimers(int n, boolean aplicar) {
@@ -278,8 +278,8 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	/**
 	 * Obté els n ultims resultats
 	 * @param n nombre de resultats amb menys rellevancia que s'han de conservar
-	 * @param aplicar si es vol aplicar el filtre al últim resultat,
-	 * si es posa a false this no es veurà modificat.
+	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
+	 * si es posa a false this no es veur\u00E0 modificat.
 	 * @return el resultat amb el filtratge aplicat
 	 */
 	public Resultat filtrarElsUltims(int n, boolean aplicar) {
@@ -300,8 +300,8 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	/**
 	 * Obté tots els resultats que tenen el node amb l'etiqueta label.
 	 * @param label de les tuples del resultat que s'han de conservar
-	 * @param aplicar si es vol aplicar el filtre al últim resultat,
-	 * si es posa a false this no es veurà modificat.
+	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
+	 * si es posa a false this no es veur\u00E0 modificat.
 	 * @return el resultat amb el filtratge aplicat
 	 */
 	public Resultat filtrarPerEtiqueta(String label, boolean aplicar) {
@@ -321,8 +321,8 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 * Obté tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
 	 * @param min es el minim de rellevancia
 	 * @param max es el maxim de rellevancia
-	 * @param aplicar si es vol aplicar el filtre al últim resultat,
-	 * si es posa a false this no es veurà modificat.
+	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
+	 * si es posa a false this no es veur\u00E0 modificat.
 	 * @return el resultat amb el filtratge aplicat
 	 */
 	public Resultat filtrarPerRellevancia(double min, double max, boolean aplicar) {
@@ -348,7 +348,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 
 	/**
 	 * Retorna un String que representa aquest objecte però amb els resultats
-	 * que es passen per paràmetre.
+	 * que es passen per par\u00E0metre.
 	 */
 	public String toString(ArrayList<Entry<Double, Entry<Integer, String>>> resultats) {
 		StringBuilder sb = new StringBuilder("RESULTATS:\n");
@@ -356,16 +356,16 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 		sb.append("Path: ").append(nomPath).append("\n");
 		String def = controladorPaths.consultarDefinicio(nomPath);
 		if (def != null)
-			sb.append("Descripció del path: ").append(def).append("\n");
+			sb.append("Descripci\u00F3 del path: ").append(def).append("\n");
 		sb.append("Conjunt de dades: ").append(nomGraf).append("\n");
 		if (threshold != null)
 			sb.append(threshold.toString());
-		sb.append("Parelles rellevància-dada\n");
+		sb.append("Parelles rellev\u00E0ncia-dada\n");
 		int i = 0;
 		DecimalFormat df = new DecimalFormat("#.####");
 		for (Entry<Double, Entry<Integer, String>> p : resultats) {
-			// i. rellevància nomNode (ID idNode)
-			// rellevància amb 4 decimals
+			// i. rellev\u00E0ncia nomNode (ID idNode)
+			// rellev\u00E0ncia amb 4 decimals
 			sb.append(i++).append(". ").append(df.format(p.getKey())).append("  ")
 			.append(p.getValue().getValue()).append(" (ID ").append(p.getValue().getKey()).append(")\n");
 		}
@@ -378,7 +378,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	}
 
 	/**
-	 * Classe per convertir els resultats a tipus bàsics
+	 * Classe per convertir els resultats a tipus b\u00E0sics
 	 * de Java que es puguin passar a altres capes.
 	 */
 	private static class Conversions {

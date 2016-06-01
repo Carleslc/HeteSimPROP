@@ -41,7 +41,7 @@ public class EsborrarDada extends JFrame {
 	private Integer selectedID;
 	private ControladorPresentacio cntrl;
 	private DefaultTableModel tableModel;
-	private static final String[] colnames = {"ID", "Nom", "Informació Adicional"};
+	private static final String[] colnames = {"ID", "Nom", "Informaci\u00F3 Adicional"};
 	private static final String[] tipus = {"Selecciona el tipus de dada", "Autor", "Conferencia", "Terme", "Paper"};
 	private JTable table;
 
@@ -130,8 +130,8 @@ public class EsborrarDada extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (selectedID != null && selectedType != null) {
-					String[] opcions = {"Cancelar", "No", "Sí"};
-					int n = JOptionPane.showOptionDialog(e.getComponent(), "Estàs segur d'esborrar aquesta dada?", "Estàs segur d'esborrar aquesta dada?", 
+					String[] opcions = {"Cancelar", "No", "S\u00ED"};
+					int n = JOptionPane.showOptionDialog(e.getComponent(), "Est\u00E0s segur d'esborrar aquesta dada?", "Est\u00E0s segur d'esborrar aquesta dada?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[1]);
 					if (n == 2) {
 						table.setEnabled(false);
@@ -215,7 +215,7 @@ public class EsborrarDada extends JFrame {
 
 		if (data != null) {
 			for (Entry<Integer, String> i : data.entrySet()) {
-				String[] row = {i.getKey().toString(), i.getValue(), "Informació Adicional"};
+				String[] row = {i.getKey().toString(), i.getValue(), "Informaci\u00F3 Adicional"};
 				tableModel.addRow(row);
 			}
 		}

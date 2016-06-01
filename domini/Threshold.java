@@ -5,11 +5,11 @@ import java.io.IOException;
 import java.io.Serializable;
 
 /**
- * Classe que implementa un threshold que es podrà fer servir per filtrar resultats
+ * Classe que implementa un threshold que es podr\u00E0 fer servir per filtrar resultats
  * d'una consulta segons la rellevancia de dos nodes.
- * Conté informació sobre els dos nodes, el nom d'un path i una rellevància
- * (una introduïda explícitament o bé la rellevància entre els dos nodes
- * segons el path fent servir el HeteSim del graf amb el que s'està treballant).
+ * Conté informaci\u00F3 sobre els dos nodes, el nom d'un path i una rellev\u00E0ncia
+ * (una introduïda expl\u00EDcitament o bé la rellev\u00E0ncia entre els dos nodes
+ * segons el path fent servir el HeteSim del graf amb el que s'est\u00E0 treballant).
  * 
  * @author Carla Claverol
  */
@@ -26,7 +26,7 @@ public class Threshold implements Serializable {
 	private HeteSim hs;
 	
 	/**
-	 * Constructor de la classe amb rellevància.
+	 * Constructor de la classe amb rellev\u00E0ncia.
 	 * @param rellevancia. La rellevancia del Threshold.
 	 * @param a. El primer Node.
 	 * @param b. El segon Node.
@@ -40,15 +40,15 @@ public class Threshold implements Serializable {
 	}
 	
 	/**
-	 * Constructor de la classe que calcula la rellevància entre els dos Nodes.
+	 * Constructor de la classe que calcula la rellev\u00E0ncia entre els dos Nodes.
 	 * @param a. El primer Node del Threshold.
 	 * @param b. El segon Node.
 	 * @param path. El nom del Path del Threshold.
 	 * @param hs. El HeteSim del Graf amb el que estem treballant.
-	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el càlcul del threshold.
+	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
 	 * @throws IllegalArgumentException si path és null o bé si el Node a
 	 * 			no és del tipus indicat pel primer tipus de node de path o bé si
-	 * 			el Node b no és del tipus indicat per l'úlitm tipus de node de path.
+	 * 			el Node b no és del tipus indicat per l'\u00FAlitm tipus de node de path.
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
 	public Threshold(Node a, Node b, String path, HeteSim hs, boolean ignorarClausura)
@@ -96,7 +96,7 @@ public class Threshold implements Serializable {
 	}
 	
 	/**
-	 * Representació en String del Threshold.
+	 * Representaci\u00F3 en String del Threshold.
 	 * @return Retorna un String que representa el Threshold.
 	 */
 	public String toString() {
@@ -106,10 +106,10 @@ public class Threshold implements Serializable {
 	}
 	
 	/**
-	 * Calcula la rellevància entre els dos Nodes segons el Path del Threshold
+	 * Calcula la rellev\u00E0ncia entre els dos Nodes segons el Path del Threshold
 	 * fent servir el HeteSim d'aquest.
-	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el càlcul de rellevància.
-	 * @return Retorna la rellevància entre els dos Nodes del Threshold
+	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el c\u00E0lcul de rellev\u00E0ncia.
+	 * @return Retorna la rellev\u00E0ncia entre els dos Nodes del Threshold
 	 * 			segons el Path d'aquest.
 	 * @throws IllegalArgumentException si el nom del path és null o bé si
 	 * 			algun dels Nodes no es correspon amb el path.

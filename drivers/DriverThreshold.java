@@ -62,7 +62,7 @@ public class DriverThreshold extends Driver {
 		while(id1 != -1) {
 			id2 = nextInt();
 			if (contrRelacions.afegirAdjacenciaPaperAutor(id1, id2))
-				println("S'ha afegit correctament la relació.");
+				println("S'ha afegit correctament la relaci\u00F3.");
 			else {
 				println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
 				println("idPaper\n" + "idAutor");
@@ -77,7 +77,7 @@ public class DriverThreshold extends Driver {
 		while(id1 != -1) {
 			id2 = nextInt();
 			if (contrRelacions.setAdjacenciaPaperConferencia(id1, id2))
-				println("S'ha afegit correctament la relació.");
+				println("S'ha afegit correctament la relaci\u00F3.");
 			else {
 				println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
 				println("idPaper\n" + "idConferència");
@@ -92,7 +92,7 @@ public class DriverThreshold extends Driver {
 		while(id1 != -1) {
 			id2 = nextInt();
 			if (contrRelacions.afegirAdjacenciaPaperTerme(id1, id2))
-				println("S'ha afegit correctament la relació.");
+				println("S'ha afegit correctament la relaci\u00F3.");
 			else {
 				println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
 				println("idPaper\n" + "idTerme");
@@ -145,8 +145,8 @@ public class DriverThreshold extends Driver {
 			try {
 				println("Per obtenir els nodes del threshold prem 1.");
 				println("Per obtenir el nom del path del threshold prem 2.");
-				println("Per obtenir la rellevància prem 3.");
-				println("Per canviar la rellevància prem 4.");
+				println("Per obtenir la rellev\u00E0ncia prem 3.");
+				println("Per canviar la rellev\u00E0ncia prem 4.");
 				println("Per passar el threshold a string prem 5.");
 				println("Per sortir prem 0.");
 
@@ -157,7 +157,7 @@ public class DriverThreshold extends Driver {
 					break;
 
 				case 1: {
-					println("Els nodes del threshold són:");
+					println("Els nodes del threshold s\u00F3n:");
 					println(t.getNodes().toString());
 					break;
 				}
@@ -167,13 +167,13 @@ public class DriverThreshold extends Driver {
 					break;
 
 				case 3:
-					println("La rellevància és: " + t.getRellevancia());
+					println("La rellev\u00E0ncia és: " + t.getRellevancia());
 					break;
 
 				case 4: {
-					print("Introdueix la nova rellevància: ");
+					print("Introdueix la nova rellev\u00E0ncia: ");
 					t.setRellevancia(nextDouble());
-					println("La rellevància s'ha modificat. La nova rellevància és " + t.getRellevancia());
+					println("La rellev\u00E0ncia s'ha modificat. La nova rellev\u00E0ncia és " + t.getRellevancia());
 					break;
 				}
 

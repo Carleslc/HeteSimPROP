@@ -32,7 +32,7 @@ public class DriverPersistencia extends Driver {
 			paths.add(new Path("APA"));
 			paths.add(new Path("PCPAPT"));
 			ControladorPersistencia.guardarPaths(path, paths);
-			mostrarFitxer(path); // Llegirà basura
+			mostrarFitxer(path); // Llegir\u00E0 basura
 			System.out.println();
 			paths = new ArrayList<>(ControladorPersistencia.carregarPaths(path));
 			paths.forEach(System.out::println);

@@ -106,7 +106,7 @@ public class SeleccionarDada extends JFrame {
 	}
 	
 	/**
-	 * Consulta el resultat de la selecci� de dades
+	 * Consulta el resultat de la selecci\u00F3 de dades
 	 * @return el ID de la dada seleccionada, -1 si cap dada ha sigut seleccionada
 	 */
 	public int getResultat() {
@@ -115,8 +115,8 @@ public class SeleccionarDada extends JFrame {
 	
 	/**
 	 * Consulta el nom de la dada.
-	 * Si hi ha un resultat, el nom �s el nom seleccionat.
-	 * D'altre manera el nom �s el del constructor.
+	 * Si hi ha un resultat, el nom \u00E9s el nom seleccionat.
+	 * D'altre manera el nom \u00E9s el del constructor.
 	 * @return el nom de la dada.
 	 */
 	public String getNomDada() {
@@ -132,7 +132,7 @@ public class SeleccionarDada extends JFrame {
 	}
 	
 	private void configurarTable() {
-		String[] colnames = {"ID", "Nom", "Informaci� Adicional"};
+		String[] colnames = {"ID", "Nom", "Informaci\u00F3 Adicional"};
 
 		if (resultats != null) {
 			String[][] data = new String[resultats.size()][3];
@@ -152,7 +152,7 @@ public class SeleccionarDada extends JFrame {
 					data[i][1] = cntrl.consultarNomTerme(resultats.get(i));
 					break;
 				}
-				data[i][2] = "Informaci� Adicional";
+				data[i][2] = "Informaci\u00F3 Adicional";
 			}
 			tableModel = new DefaultTableModel(data, colnames);
 		}

@@ -45,7 +45,7 @@ public class Importar extends JFrame {
 		contentPane.add(nomField);
 		nomField.setColumns(10);
 
-		JButton btnNewButton = new JButton("Escollir directori amb dades d'importació");
+		JButton btnNewButton = new JButton("Escollir directori amb dades d'importaci\u00F3");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -89,7 +89,7 @@ public class Importar extends JFrame {
 										ctrl.importar(graf, dir);
 									} catch (FileNotFoundException e1) {
 										return new ErrorMessage("No s'ha trobat el conjunt de dades!\n"
-												+ "Comprova que has introdu�t correctament el directori i el nom.",
+												+ "Comprova que has introdu\u00EFt correctament el directori i el nom.",
 												"Error a l'importar", false);
 									} catch (Exception e2) {
 										return new ErrorMessage(e2.getMessage(), "Error a l'importar", false);

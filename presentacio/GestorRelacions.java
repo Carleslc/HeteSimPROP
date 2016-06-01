@@ -37,7 +37,7 @@ public class GestorRelacions extends JFrame {
 	private JPanel contentPane;
 	private DefaultTableModel model;
 	private JTable table;
-	private static final String[] columnes = {"Relació", "Descripció", "", ""};
+	private static final String[] columnes = {"Relaci\u00F3", "Descripci\u00F3", "", ""};
 
 	/**
 	 * Constructor.
@@ -84,11 +84,11 @@ public class GestorRelacions extends JFrame {
 			addRow(s, ctrl.consultarDefinicio(s));
 		}
 		
-		//esborrar relació
+		//esborrar relaci\u00F3
 		@SuppressWarnings("serial")
 		Action esborrar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				int option = JOptionPane.showConfirmDialog(contentPane, "Segur que vols esborrar?", "Esborrar relació", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+				int option = JOptionPane.showConfirmDialog(contentPane, "Segur que vols esborrar?", "Esborrar relaci\u00F3", JOptionPane.OK_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 				if (option == JOptionPane.OK_OPTION) {
 					int row = Integer.valueOf(e.getActionCommand());
 					String path = (String)model.getValueAt(row, 0);
@@ -100,7 +100,7 @@ public class GestorRelacions extends JFrame {
 		@SuppressWarnings("unused")
 		ButtonColumn buttonColumnEsborrar = new ButtonColumn(table, esborrar, 3);
 		
-		//modificar descripció de la relació
+		//modificar descripci\u00F3 de la relaci\u00F3
 		@SuppressWarnings("serial")
 		Action modificar = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -121,8 +121,8 @@ public class GestorRelacions extends JFrame {
 		@SuppressWarnings("unused")
 		ButtonColumn buttonColumnModificar = new ButtonColumn(table, modificar, 2);
 		
-		//afegir relació
-		JButton btnAfegir = new JButton("Afegir relació");
+		//afegir relaci\u00F3
+		JButton btnAfegir = new JButton("Afegir relaci\u00F3");
 		btnAfegir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -152,15 +152,15 @@ public class GestorRelacions extends JFrame {
 
 	
 	/**
-	 * Afegeix una fila a la taula table amb el nom i la descripció d'una relació.
-	 * @param path. El nom de la relació que volem afegir a la taula.
-	 * @param description. La descripció de la relació que volem afegir a la taula.
+	 * Afegeix una fila a la taula table amb el nom i la descripci\u00F3 d'una relaci\u00F3.
+	 * @param path. El nom de la relaci\u00F3 que volem afegir a la taula.
+	 * @param description. La descripci\u00F3 de la relaci\u00F3 que volem afegir a la taula.
 	 */
 	private void addRow(String path, String description) {
 		String[] fila = new String[4];
 		fila[0] = path;
 		fila[1] = description;
-		fila[2] = "Modificar descripció";
+		fila[2] = "Modificar descripci\u00F3";
 		fila[3] = "Esborrar";
 		model.addRow(fila);
 	}

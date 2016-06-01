@@ -25,7 +25,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JSpinner;
 
 /**
- * Vista per afegir un resultat (dada i rellevància) a l'última consulta.
+ * Vista per afegir un resultat (dada i rellev\u00E0ncia) a l'\u00FAltima consulta.
  * @author Carla Claverol
  *
  */
@@ -69,8 +69,8 @@ public class AfegirResultat extends JFrame {
 		lblDada.setBounds(10, 11, 54, 14);
 		contentPane.add(lblDada);
 
-		//etiqueta rellevància
-		JLabel lblRellevancia = new JLabel("Rellevància:");
+		//etiqueta rellev\u00E0ncia
+		JLabel lblRellevancia = new JLabel("Rellev\u00E0ncia:");
 		lblRellevancia.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblRellevancia.setBounds(10, 36, 79, 14);
 		contentPane.add(lblRellevancia);
@@ -83,13 +83,13 @@ public class AfegirResultat extends JFrame {
 		comboBox.setBounds(74, 8, 160, 20);
 		contentPane.add(comboBox);
 
-		//spinner per escollir la rellevància
+		//spinner per escollir la rellev\u00E0ncia
 		JSpinner spinner_rell = new JSpinner();
 		spinner_rell.setModel(new SpinnerNumberModel(0f, 0f, 1f, 0.01f));
 		spinner_rell.setBounds(99, 33, 135, 20);
 		contentPane.add(spinner_rell);
 
-		//botó per acceptar
+		//bot\u00F3 per acceptar
 		JButton btnAccept = new JButton("Acceptar");
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
@@ -121,13 +121,13 @@ public class AfegirResultat extends JFrame {
 					}
 				}
 				else
-					new ErrorMessage(contentPane, "Escull una dada i introdueix la rellevància.");
+					new ErrorMessage(contentPane, "Escull una dada i introdueix la rellev\u00E0ncia.");
 			}
 		});
 		btnAccept.setBounds(132, 73, 102, 23);
 		contentPane.add(btnAccept);
 
-		//botó per cancel·lar
+		//bot\u00F3 per cancel·lar
 		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -140,9 +140,9 @@ public class AfegirResultat extends JFrame {
 	}
 
 	/**
-	 * Consultora del resultat afegit a l'última consulta.
-	 * @return la rellevància i l'identificador i el nom de la dada del resultat afegit.
-	 * 			Si no s'ha afegit cap resultat, l'identificador serà -1, la rellevància 0 i el nom null.
+	 * Consultora del resultat afegit a l'\u00FAltima consulta.
+	 * @return la rellev\u00E0ncia i l'identificador i el nom de la dada del resultat afegit.
+	 * 			Si no s'ha afegit cap resultat, l'identificador ser\u00E0 -1, la rellev\u00E0ncia 0 i el nom null.
 	 */
 	public Pair<Double,Pair<Integer, String>> getNouResultat() {
 		Pair<Integer, String> dada = new Pair<>(id, nom);
@@ -184,7 +184,7 @@ public class AfegirResultat extends JFrame {
 	 * Métode per obtenir els identificadors de totes les dades del tipus indicat amb un nom concret.
 	 * @param nom. El nom de les dades de les quals volem obtenir els identificadors.
 	 * @return una llista amb els identificadors de totes les dades del conjunt de dades actual
-	 * 			que tenen el nom indicat i que són del tipus indicat per l'atribut tipus de la classe.
+	 * 			que tenen el nom indicat i que s\u00F3n del tipus indicat per l'atribut tipus de la classe.
 	 */
 	private List<Integer> llistaId(String dada) {
 		List<Integer> id = new ArrayList<>();
@@ -210,16 +210,16 @@ public class AfegirResultat extends JFrame {
 	}
 	
 	/**
-	 * Afegeix un resultat a l'última consulta si aquesta existeix i el resultat encara
+	 * Afegeix un resultat a l'\u00FAltima consulta si aquesta existeix i el resultat encara
 	 * no forma part d'ella, i tanca la finestra. Altrament, mostra un missatge d'error.
 	 * @param nouNom. El nom de la dada del resultat que volem afegir.
-	 * @param novaRellevancia. La rellevància del resultat que volem afegir.
+	 * @param novaRellevancia. La rellev\u00E0ncia del resultat que volem afegir.
 	 */
 	private void afegir(String nouNom, double novaRellevancia) {
 		try {
 			if (jaAfegit()){
 				id = -1;
-				new ErrorMessage(contentPane, "Aquest resultat ja està afegit.");
+				new ErrorMessage(contentPane, "Aquest resultat ja est\u00E0 afegit.");
 			}
 			else{
 				ctrl.afegir(novaRellevancia, id);
@@ -235,9 +235,9 @@ public class AfegirResultat extends JFrame {
 	}
 	
 	/**
-	 * Métode per consultar si el resultat que volem afegir ja forma part de lúltima consulta.
+	 * Métode per consultar si el resultat que volem afegir ja forma part de l\u00FAltima consulta.
 	 * @return cert si l'atribut de la classe id és l'identificador d'algun resultat de
-	 * 			l'última consulta, i fals altrament.
+	 * 			l'\u00FAltima consulta, i fals altrament.
 	 */
 	private boolean jaAfegit() {
 		for (Entry<Double, Entry<Integer, String>> res : ctrl.consultarResultat()) {

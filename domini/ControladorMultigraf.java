@@ -72,7 +72,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	 * labels i relacions). Aquest graf s’estableix com l’actual. 
 	 * El graf passa a ser el graf importat i idActual passarà a ser nomGraf.
 	 * @param nomGraf que és el nom del nou Graf importat
-	 * @param directori on es troben els fitxers a patir dels quals es fa la importació.
+	 * @param directori on es troben els fitxers a patir dels quals es fa la importaci\u00F3.
 	 * @throws IOException en cas de que algun fitxer no tingui el format correcte 
 	 * o bé no sigui possible llegir-lo.
 	 * @throws FileNotFoundException en cas de que algun fitxer no es trobi.
@@ -88,7 +88,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	}
 	
 	/**
-	 * Consulta si un graf est� carregat.
+	 * Consulta si un graf est\u00E0 carregat.
 	 * @param nomGraf que és el nom del Graf que es vol consultar.
 	 * @return si el graf existeix
 	 */
@@ -104,7 +104,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	/**
 	 * Selecciona el graf amb nom "nomGraf" com a graf actual.
 	 * @param nomGraf que és el nom del Graf que es vol seleccionar.
-	 * @return si ha sigut possible la selecció del graf (el graf existia).
+	 * @return si ha sigut possible la selecci\u00F3 del graf (el graf existia).
 	 */
 	public boolean seleccionarGraf(String nomGraf) throws IOException {
 		if (nomGraf == null)

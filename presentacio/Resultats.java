@@ -40,9 +40,9 @@ import java.io.File;
 import java.text.DecimalFormat;
 
 /**
- * Vista que mostra tots els resultats de l'última consulta, ordenats decreixentment per rellevància.
+ * Vista que mostra tots els resultats de l'\u00FAltima consulta, ordenats decreixentment per rellev\u00E0ncia.
  * Permet modificar els resultats, esborrar-los o afegir-ne de nous, a més d'aplicar un filtre
- * per tal que només es mostrin els primers resultats, els últims o els que tinguin una determinada etiqueta.
+ * per tal que només es mostrin els primers resultats, els \u00FAltims o els que tinguin una determinada etiqueta.
  * També permet exportar els resultats.
  * @author Carla Claverol
  *
@@ -57,7 +57,7 @@ public class Resultats extends JFrame {
 	JTextField textUltims;
 	JComboBox<String> cbEtiquetes;
 	private static final String[] etiquetes = {"- Sel·lecciona una etiqueta -", "Database", "Data Mining", "AI", "Information Retrieval"};
-	private static final String[] columnes = {"Dada", "Rellevància", "", "", ""};
+	private static final String[] columnes = {"Dada", "Rellev\u00E0ncia", "", "", ""};
 	private static final DecimalFormat df = new DecimalFormat("#.####");
 	DefaultTableModel model;
 	private JTable table;
@@ -89,8 +89,8 @@ public class Resultats extends JFrame {
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		//etiqueta relació
-		JLabel lblRelacio = new JLabel("Relació: " + ctrl.getPath());
+		//etiqueta relaci\u00F3
+		JLabel lblRelacio = new JLabel("Relaci\u00F3: " + ctrl.getPath());
 		GridBagConstraints gbc_lblRelacio = new GridBagConstraints();
 		gbc_lblRelacio.insets = new Insets(0, 0, 5, 5);
 		gbc_lblRelacio.gridwidth = 3;
@@ -108,7 +108,7 @@ public class Resultats extends JFrame {
 		gbc_lblDada.gridy = 0;
 		contentPane.add(lblDada, gbc_lblDada);
 		
-		//botó per exportar
+		//bot\u00F3 per exportar
 		JButton btnExportar = new JButton("Exportar");
 		btnExportar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -122,7 +122,7 @@ public class Resultats extends JFrame {
 						ctrl.exportarResultat(file, resultat);
 					}
 					catch (Exception exc) {
-						new ErrorMessage(contentPane, "S'ha produït un error en l'exportació.\nTorna-ho a intentar.");
+						new ErrorMessage(contentPane, "S'ha produït un error en l'exportaci\u00F3.\nTorna-ho a intentar.");
 					}
 				}
 			}
@@ -179,7 +179,7 @@ public class Resultats extends JFrame {
 		gbc_lblPrimers.gridy = 2;
 		contentPane.add(lblPrimers, gbc_lblPrimers);
 		
-		//radioButton per filtrar els últims
+		//radioButton per filtrar els \u00FAltims
 		JRadioButton rdbtnFiltrarUltims = new JRadioButton("Filtrar els");
 		GridBagConstraints gbc_rdbtnFiltrarUltims = new GridBagConstraints();
 		gbc_rdbtnFiltrarUltims.anchor = GridBagConstraints.NORTH;
@@ -190,7 +190,7 @@ public class Resultats extends JFrame {
 		contentPane.add(rdbtnFiltrarUltims, gbc_rdbtnFiltrarUltims);
 		filtres.add(rdbtnFiltrarUltims);
 		
-		//textField per filtrar els últims
+		//textField per filtrar els \u00FAltims
 		textUltims = new JTextField();
 		GridBagConstraints gbc_textUltims = new GridBagConstraints();
 		gbc_textUltims.fill = GridBagConstraints.HORIZONTAL;
@@ -200,8 +200,8 @@ public class Resultats extends JFrame {
 		contentPane.add(textUltims, gbc_textUltims);
 		textUltims.setColumns(10);
 		
-		//etiqueta últims
-		JLabel lblUltims = new JLabel("últims");
+		//etiqueta \u00FAltims
+		JLabel lblUltims = new JLabel("\u00FAltims");
 		GridBagConstraints gbc_lblUltims = new GridBagConstraints();
 		gbc_lblUltims.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblUltims.insets = new Insets(0, 0, 5, 5);
@@ -243,7 +243,7 @@ public class Resultats extends JFrame {
 		contentPane.add(rdbtnSenseFiltres, gbc_rdbtnSenseFiltres);
 		filtres.add(rdbtnSenseFiltres);
 		
-		//botó per aplicar el filtre
+		//bot\u00F3 per aplicar el filtre
 		JButton btnAplicarFiltre = new JButton("Aplicar filtre");
 		btnAplicarFiltre.addMouseListener(new MouseAdapter() {
 			@Override
@@ -307,7 +307,7 @@ public class Resultats extends JFrame {
 		table.setDefaultRenderer(String.class, centerRenderer);
 		fillTable();
 		
-		//botó per afegir una dada
+		//bot\u00F3 per afegir una dada
 		JButton btnAfegirDada = new JButton("Afegir dada");
 		btnAfegirDada.addMouseListener(new MouseAdapter() {
 			@Override
@@ -339,7 +339,7 @@ public class Resultats extends JFrame {
 		gbc_btnAfegirDada.gridy = 6;
 		contentPane.add(btnAfegirDada, gbc_btnAfegirDada);
 		
-		//informació addicional
+		//informaci\u00F3 addicional
 		@SuppressWarnings("serial")
 		Action showAddInfo = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -415,15 +415,15 @@ public class Resultats extends JFrame {
 	/**
 	 * Crea una fila de la taula table amb els valors indicats (però no afegeix la fila a la taula).
 	 * @param nom. El nom de la dada del resultat que volem afegir a la taula.
-	 * @param rellevancia. La rellevància del resultat que volem afegir a la taula.
-	 * @return un vector que representa una fila de table, amb el nom de la dada i la rellevància
-	 * indicats i els botons d'informació addicional, de modificar el resultat i d'esborrar el resultat.
+	 * @param rellevancia. La rellev\u00E0ncia del resultat que volem afegir a la taula.
+	 * @return un vector que representa una fila de table, amb el nom de la dada i la rellev\u00E0ncia
+	 * indicats i els botons d'informaci\u00F3 addicional, de modificar el resultat i d'esborrar el resultat.
 	 */
 	private String[] createRow(String nom, double rellevancia) {
 		String[] fila = new String[5];
 		fila[0] = nom;
 		fila[1] = df.format(rellevancia);
-		fila[2] = "Informació addicional";
+		fila[2] = "Informaci\u00F3 addicional";
 		fila[3] = "Modificar";
 		fila[4] = "Esborrar";
 		return fila;
@@ -431,8 +431,8 @@ public class Resultats extends JFrame {
 	
 	/**
 	 * Afegeix a la taula table tots els elements de resultat.
-	 * Per cada element s'afegeix una fila amb el nom de la dada, la rellevància
-	 * i els botons d'informació addicional, de modificar el resultat i d'esborrar el resultat.
+	 * Per cada element s'afegeix una fila amb el nom de la dada, la rellev\u00E0ncia
+	 * i els botons d'informaci\u00F3 addicional, de modificar el resultat i d'esborrar el resultat.
 	 */
 	private void fillTable() {
 		for(Entry<Double, Entry<Integer, String>> r : resultat) {
@@ -465,7 +465,7 @@ public class Resultats extends JFrame {
 	}
 	
 	/**
-	 * Métode per mostrar només els n últims resultats, on n és un nombre introduït
+	 * Métode per mostrar només els n \u00FAltims resultats, on n és un nombre introduït
 	 * per l'usuari a textUltims.
 	 */
 	private void filtrarUltims() {
@@ -496,11 +496,11 @@ public class Resultats extends JFrame {
 	
 	/**
 	 * Cerca dicotòmica per obtenir una fila de table on espot d'insertar un resultat concret
-	 * per tal que la taula segueixi ordenada decreixentment per la rellevància dels resultats.
-	 * @param rellevancia. La rellevància del resultat que volem insertar a la taula.
-	 * @return l'índex d'una fila on es pot insertar un resultat amb la rellevància indicada
-	 * 			(totes les files amb índexs inferiors tenen rellevàncies iguals o superiors
-	 * 			i totes les files amb índexs superiors tenen rellevàncies iguals o inferiors).
+	 * per tal que la taula segueixi ordenada decreixentment per la rellev\u00E0ncia dels resultats.
+	 * @param rellevancia. La rellev\u00E0ncia del resultat que volem insertar a la taula.
+	 * @return l'\u00EDndex d'una fila on es pot insertar un resultat amb la rellev\u00E0ncia indicada
+	 * 			(totes les files amb \u00EDndexs inferiors tenen rellev\u00E0ncies iguals o superiors
+	 * 			i totes les files amb \u00EDndexs superiors tenen rellev\u00E0ncies iguals o inferiors).
 	 */
 	private int getIndex(double rellevancia, int left, int right) {
 		int m = (left+right)/2;

@@ -12,7 +12,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 /**
- * Vista per modificar la descripció d'una de les relacions del programa.
+ * Vista per modificar la descripci\u00F3 d'una de les relacions del programa.
  * @author Carla Claverol
  *
  */
@@ -25,10 +25,10 @@ public class ModificarDescripcio extends JFrame {
 	/**
 	 * Constructor.
 	 * @param ctrl. El ControladorPresentacio del programa.
-	 * @param path. El nom de la relació la descripció de la qual volem modificar.
+	 * @param path. El nom de la relaci\u00F3 la descripci\u00F3 de la qual volem modificar.
 	 */
 	public ModificarDescripcio(ControladorPresentacio ctrl, String path) {
-		setTitle("Modificar descripció");
+		setTitle("Modificar descripci\u00F3");
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 370, 150);
@@ -43,9 +43,9 @@ public class ModificarDescripcio extends JFrame {
 		textDescription.setColumns(10);
 		
 		//etiqueta
-		JLabel lblDescription = new JLabel("Escriu la nova descripció:");
+		JLabel lblDescription = new JLabel("Escriu la nova descripci\u00F3:");
 		
-		//botó per acceptar
+		//bot\u00F3 per acceptar
 		JButton btnAccept = new JButton("Acceptar");
 		btnAccept.addMouseListener(new MouseAdapter() {
 			@Override
@@ -56,7 +56,7 @@ public class ModificarDescripcio extends JFrame {
 			}
 		});
 
-		//botó per cancel·lar
+		//bot\u00F3 per cancel·lar
 		JButton btnCancel = new JButton("Cancel·lar");
 		btnCancel.addMouseListener(new MouseAdapter() {
 			@Override

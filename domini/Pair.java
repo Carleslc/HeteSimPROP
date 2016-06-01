@@ -4,8 +4,8 @@ import java.util.Map.Entry;
 import java.io.Serializable;
 
 /**
- * Classe genèrica amb dos paràmetres que implementa l'interfície Entry<K, V>.
- * El primer paràmetre és la clau i el segon, el valor.
+ * Classe genèrica amb dos par\u00E0metres que implementa l'interf\u00EDcie Entry<K, V>.
+ * El primer par\u00E0metre és la clau i el segon, el valor.
  * 
  * @author Carla Claverol
  */
@@ -69,7 +69,7 @@ public class Pair<K extends Comparable<K> & Serializable, V> implements Entry<K,
 	/**
 	 * Comparador de la classe. Compara només segons les claus.
 	 * @param p. Pair amb el que comparem el nostre pair.
-	 * @return Retorna 0 si els dos pairs són iguals, un valor negatiu si el pair original
+	 * @return Retorna 0 si els dos pairs s\u00F3n iguals, un valor negatiu si el pair original
 	 * 			és més gran que p o un valor positiu si el pair original és més petit que p
 	 */
 	@Override
@@ -78,7 +78,7 @@ public class Pair<K extends Comparable<K> & Serializable, V> implements Entry<K,
 	}
 	
 	/**
-	 * Representació en String del pair.
+	 * Representaci\u00F3 en String del pair.
 	 * @return Retorna un String que representa el pair.
 	 */
 	public String toString() {

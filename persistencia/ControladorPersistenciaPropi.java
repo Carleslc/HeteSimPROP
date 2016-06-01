@@ -26,7 +26,7 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 
 	/**
 	 * Consulta els noms de tots els grafs disponibles en un directori recursivament.
-	 * <br>Es considerar‡n grafs els fitxers amb el format <code>graf_NOM.dat</code>
+	 * <br>Es considerar\u00E0n grafs els fitxers amb el format <code>graf_NOM.dat</code>
 	 * on <code>NOM</code> Ès el que s'afegeix a la llista de noms retornada.
 	 * @param dir el directori dels grafs
 	 * @return una llista amb tots els noms de tots els grafs disponibles a <b>dir</b>
@@ -61,7 +61,7 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 	 * Guarda els resultats a un fitxer corresponent al path donat.
 	 * @param filesystem_path Path del sistema que indica el fitxer a on es volen guardar els resultats.
 	 * @param resultats Conjunt de resultats a guardar.
-	 * @throws IOException Si no es pot escriure al fitxer, llen√ßar√° una IOException.
+	 * @throws IOException Si no es pot escriure al fitxer, llen√ßar\u00E1 una IOException.
 	 */
 	public static void guardarResultats(String filesystem_path, TreeMap<Date, Resultat> resultats) throws IOException {
 		FileOutputStream file = new FileOutputStream(filesystem_path, false);

@@ -262,10 +262,10 @@ public class Consulta extends JFrame {
 		if (ctrl.existsClausura(path)) {
 			if (!ctrl.isUpdatedClausura(path)) {
 				int opt = JOptionPane.showOptionDialog(contentPane, "<html>S'ha detectat "
-						+ "una clausura per la relació <b>" + path + "</b> però "
+						+ "una clausura per la relaci\u00F3 <b>" + path + "</b> però "
 						+ "hi ha hagut canvis sobre<br>el conjunt de dades <b>"
 						+ selector.getSelectedItem().toString()
-						+ "</b> que podríen afectar als futurs càlculs amb aquesta clausura.<br>"
+						+ "</b> que podr\u00EDen afectar als futurs c\u00E0lculs amb aquesta clausura.<br>"
 						+ "<i>Vols recalcular la clausura <b>" + path +
 						"</b>?</i></html>", "Calcular clausura (" + tipusClausura + ")",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
@@ -295,7 +295,7 @@ public class Consulta extends JFrame {
 		else {
 			if (path != null && !path.isEmpty()) {
 				int opt = JOptionPane.showConfirmDialog(contentPane, "<html>No s'ha detectat cap"
-						+ " clausura per la relació <b>" + path + "</b> i conjunt de dades <b>"
+						+ " clausura per la relaci\u00F3 <b>" + path + "</b> i conjunt de dades <b>"
 						+ selector.getSelectedItem().toString()
 						+ "</b>,<br><i>Vols calcular la clausura <b>" + path
 						+ "</b> per agilitzar futures consultes?</i></html>", "Calcular clausura",
@@ -436,7 +436,7 @@ public class Consulta extends JFrame {
 	}
 
 	/**
-	 * Comprova i modifica l'estat per fer una selecció pas a pas de les dades.
+	 * Comprova i modifica l'estat per fer una selecci\u00F3 pas a pas de les dades.
 	 */
 	private void checkStatus() {
 		setConsultaEnabled(false);
@@ -461,7 +461,7 @@ public class Consulta extends JFrame {
 						spinnerMaxim.setEnabled(true);
 						lblRelacioThreshold.setEnabled(true);
 						comboBox_relacioThreshold.setEnabled(true);
-						// Si la relació del threshold està seleccionada
+						// Si la relaci\u00F3 del threshold est\u00E0 seleccionada
 						if (comboBox_relacioThreshold.getSelectedIndex() != 0) {
 							lblDada1.setEnabled(true);
 							lblDada2.setEnabled(true);

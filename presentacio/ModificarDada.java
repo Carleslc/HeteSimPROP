@@ -514,7 +514,7 @@ public class ModificarDada extends JFrame {
 		case "Autor":
 			try {
 				if (!cntrl.afegirAdjacenciaPaperAutor(id_ad, selectedID))
-					new ErrorMessage("No s'ha pogut afegir la relaci�");
+					new ErrorMessage("No s'ha pogut afegir la relaci\u00F3");
 			}
 			catch(IOException e) {
 				new ErrorMessage(e.getMessage());
@@ -530,7 +530,7 @@ public class ModificarDada extends JFrame {
 			break;
 		case "Conferencia":
 			if (cntrl.consultarRelacionsPaperAmbConferencia(id_ad).size() >= 1) {
-				int option = JOptionPane.showConfirmDialog(null, "El Paper ja t� una relaci� amb una altra Conferencia,\n est�s segur de cambiar-la?", "Cambiar de Conferencia", JOptionPane.YES_NO_OPTION);
+				int option = JOptionPane.showConfirmDialog(null, "El Paper ja t\u00E9 una relaci\u00F3 amb una altra Conferencia,\n est\u00E0s segur de cambiar-la?", "Cambiar de Conferencia", JOptionPane.YES_NO_OPTION);
 				if (option == 0) {
 					try {
 						cntrl.setAdjacenciaPaperConferencia(id_ad, selectedID);

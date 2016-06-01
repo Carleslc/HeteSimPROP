@@ -12,7 +12,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 /**
- * Vista de gestió de dades: permet escollir entre gestionar els conjunts de dades o els paths del programa.
+ * Vista de gesti\u00F3 de dades: permet escollir entre gestionar els conjunts de dades o els paths del programa.
  * @author Carla Claverol
  *
  */

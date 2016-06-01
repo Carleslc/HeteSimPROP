@@ -95,7 +95,7 @@ public class DriverControladorConsultes extends Driver {
 			id2 = nextInt();
 			try {
 				if (contrRelacions.afegirAdjacenciaPaperAutor(id1, id2))
-					println("S'ha afegit correctament la relació.");
+					println("S'ha afegit correctament la relaci\u00F3.");
 				else {
 					println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
 					println("idPaper\n" + "idAutor");
@@ -115,7 +115,7 @@ public class DriverControladorConsultes extends Driver {
 			id2 = nextInt();
 			try {
 				if (contrRelacions.setAdjacenciaPaperConferencia(id1, id2))
-					println("S'ha afegit correctament la relació.");
+					println("S'ha afegit correctament la relaci\u00F3.");
 				else {
 					println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
 					println("idPaper\n" + "idConferència");
@@ -135,7 +135,7 @@ public class DriverControladorConsultes extends Driver {
 			id2 = nextInt();
 			try {
 				if (contrRelacions.afegirAdjacenciaPaperTerme(id1, id2))
-					println("S'ha afegit correctament la relació.");
+					println("S'ha afegit correctament la relaci\u00F3.");
 				else {
 					println("Hi ha hagut un error. Introdueix els ids en el format correcte:");
 					println("idPaper\n" + "idTerme");
@@ -166,24 +166,24 @@ public class DriverControladorConsultes extends Driver {
 				println("Per fer una consulta sense threshold prem 1.");
 				println("Per fer una consulta amb threshold prem 2.");
 				println("Per veure totes les dates en que s'han fet consultes prem 3.");
-				println("Per veure el resultat de l'última consulta prem 4.");
+				println("Per veure el resultat de l'\u00FAltima consulta prem 4.");
 				println("Per veure el resultat d'una data prem 5.");
 				println("Per esborrar una consulta prem 6.");
-				println("Per esborrar tots els resultats de l'última consulta tret dels n primers, prem 7.");
-				println("Per esborrar tots els resultats de l'última consulta tret dels n últims, prem 8.");
-				println("Per filtrar els resultats de l'última consulta segons una etiqueta, prem 9.");
-				println("Per filtrar els resultats de l'última consulta segons una rellevància mínima i una màxima, pem 10.");
-				println("Per esborrar tots els resultats de l'última consulta prem 11.");
-				println("Per afegir un resultat a l'última consulta prem 12.");
-				println("Per esborrar un resultat de l'última consulta prem 13.");
-				println("Per consultar el tipus del node del resultat de l'última consulta prem 14.");
-				println("Per modificar la rellevància d'un resultat de l'última consulta prem 15.");
-				println("Per modificar el node d'un resultat de l'última consulta prem 16.");
-				println("Per modificar el nom d'un resultat de l'última consulta prem 17.");
-				println("Per modificar el threshold de l'última consulta prem 18.");
-				println("Per modificar el path i la dada de l'última consulta prem 19.");
-				println("Per modificar la dada de l'última consulta prem 20.");
-				println("Per exportar el resultat de l'última consulta prem 21.");
+				println("Per esborrar tots els resultats de l'\u00FAltima consulta tret dels n primers, prem 7.");
+				println("Per esborrar tots els resultats de l'\u00FAltima consulta tret dels n \u00FAltims, prem 8.");
+				println("Per filtrar els resultats de l'\u00FAltima consulta segons una etiqueta, prem 9.");
+				println("Per filtrar els resultats de l'\u00FAltima consulta segons una rellev\u00E0ncia m\u00EDnima i una m\u00E0xima, pem 10.");
+				println("Per esborrar tots els resultats de l'\u00FAltima consulta prem 11.");
+				println("Per afegir un resultat a l'\u00FAltima consulta prem 12.");
+				println("Per esborrar un resultat de l'\u00FAltima consulta prem 13.");
+				println("Per consultar el tipus del node del resultat de l'\u00FAltima consulta prem 14.");
+				println("Per modificar la rellev\u00E0ncia d'un resultat de l'\u00FAltima consulta prem 15.");
+				println("Per modificar el node d'un resultat de l'\u00FAltima consulta prem 16.");
+				println("Per modificar el nom d'un resultat de l'\u00FAltima consulta prem 17.");
+				println("Per modificar el threshold de l'\u00FAltima consulta prem 18.");
+				println("Per modificar el path i la dada de l'\u00FAltima consulta prem 19.");
+				println("Per modificar la dada de l'\u00FAltima consulta prem 20.");
+				println("Per exportar el resultat de l'\u00FAltima consulta prem 21.");
 				println("Per guardar tots els resultats prem 22.");
 				println("Per carregar tots els resultats prem 23.");
 				println("Per sortir prem 0.");
@@ -222,12 +222,12 @@ public class DriverControladorConsultes extends Driver {
 				}
 
 				case 3:
-					println("Les dates en que s'han fet consultes són:");
+					println("Les dates en que s'han fet consultes s\u00F3n:");
 					contrConsultes.consultarDatesConsultes().forEach(Driver::println);
 					break;
 
 				case 4:
-					println("El resultat de l'última consulta és:");
+					println("El resultat de l'\u00FAltima consulta és:");
 					println(contrConsultes.consultarResultat());
 					break;
 
@@ -255,7 +255,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix un enter: ");
 					int n = nextInt();
 					contrConsultes.filtrarElsPrimers(n, true);
-					println("S'han esborrat tots els resultats de l'última consulta tret dels " + n + " primers.");
+					println("S'han esborrat tots els resultats de l'\u00FAltima consulta tret dels " + n + " primers.");
 					break;
 				}
 
@@ -263,7 +263,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix un enter: ");
 					int n = nextInt();
 					contrConsultes.filtrarElsUltims(n, true);
-					println("S'han esborrat tots els resultats de l'última consulta tret dels " + n + " últims.");
+					println("S'han esborrat tots els resultats de l'\u00FAltima consulta tret dels " + n + " \u00FAltims.");
 					break;
 				}
 
@@ -271,81 +271,81 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix una etiqueta: ");
 					String label = nextWord();
 					contrConsultes.filtrarPerEtiqueta(label, true);
-					println("S'han esborrat tots els resultats de l'última consulta tret dels que contenen l'etiqueta " + label);
+					println("S'han esborrat tots els resultats de l'\u00FAltima consulta tret dels que contenen l'etiqueta " + label);
 					break;
 				}
 
 				case 10: {
-					print("Introdueix la rellevància mínima que vols que tinguin els resultats: ");
+					print("Introdueix la rellev\u00E0ncia m\u00EDnima que vols que tinguin els resultats: ");
 					Double min = nextDouble();
-					print("Introdueix la rellevància màxima que vols que tinguin els resultats: ");
+					print("Introdueix la rellev\u00E0ncia m\u00E0xima que vols que tinguin els resultats: ");
 					Double max = nextDouble();
 					contrConsultes.filtrarPerRellevancia(min, max, true);
-					println("S'han esborrat tots els resultats de l'última consulta tret dels que tenen una rellevància major o igual que " + min + " i menor o igual que " + max);
+					println("S'han esborrat tots els resultats de l'\u00FAltima consulta tret dels que tenen una rellev\u00E0ncia major o igual que " + min + " i menor o igual que " + max);
 					break;
 				}
 
 				case 11: {
 					contrConsultes.clear();
-					println("S'han esborrat tots els resultats de l'última consulta.");
+					println("S'han esborrat tots els resultats de l'\u00FAltima consulta.");
 					break;
 				}
 
 				case 12: {
 					print("Introdueix l'id del node del resultat que vols afegir: ");
 					id = nextInt();
-					print("Introdueix la rellevància: ");
+					print("Introdueix la rellev\u00E0ncia: ");
 					double rellevancia = nextDouble();
 					contrConsultes.afegir(rellevancia, id);
-					println("S'ha afegit al resultat de l'última consulta el node indicat.");
+					println("S'ha afegit al resultat de l'\u00FAltima consulta el node indicat.");
 					break;
 				}
 
 				case 13: {
-					print("Introdueix l'índex del resultat que vols esborrar.");
+					print("Introdueix l'\u00EDndex del resultat que vols esborrar.");
 					int index = nextInt();
 					contrConsultes.esborrar(index);
-					println("S'ha esborrat el resultat número " + index + " de lúltima consulta.");
+					println("S'ha esborrat el resultat n\u00FAmero " + index + " de l\u00FAltima consulta.");
 					break;
 				}
 
 				case 14:
-					println("El node del resultat de l'última consulta és de tipus " + contrConsultes.getTipusNode());
+					println("El node del resultat de l'\u00FAltima consulta és de tipus " + contrConsultes.getTipusNode());
 					break;
 
 				case 15: {
-					print("Introdueix l'índex del resultat que vols modificar: ");
+					print("Introdueix l'\u00EDndex del resultat que vols modificar: ");
 					int index = nextInt();
-					print("Introdueix la nova rellevància: ");
+					print("Introdueix la nova rellev\u00E0ncia: ");
 					double rellevancia = nextDouble();
 					if (contrConsultes.setRellevancia(index, rellevancia))
-						println("S'ha modificat el resultat número " + index + "de l'última consulta. La nova rellevància és " + rellevancia);
+						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. La nova rellev\u00E0ncia és " + rellevancia);
 					else
-						println("No s'ha pogut modificar la rellevància del resultat número " + index);
+						println("No s'ha pogut modificar la rellev\u00E0ncia del resultat n\u00FAmero " + index);
 					break;
 				}
 
 				case 16: {
-					print("Introdueix l'índex del resultat que vols modificar: ");
+					print("Introdueix l'\u00EDndex del resultat que vols modificar: ");
 					int index = nextInt();
 					print("Introdueix l'id del nou node: ");
 					id = nextInt();
 					if(contrConsultes.setDada(index, id))
-						println("S'ha modificat el resultat número " + index + "de l'última consulta. L'id del nou node és " + id);
+						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. L'id del nou node és " + id);
 					else
-						println("No s'ha pogut modificar el node del resultat número " + index);
+						println("No s'ha pogut modificar el node del resultat n\u00FAmero " + index);
 					break;
 				}
 
 				case 17: {
-					print("Introdueix l'índex del resultat que vols modificar: ");
+					print("Introdueix l'\u00EDndex del resultat que vols modificar: ");
 					int index = nextInt();
 					print("Introdueix el nou nom: ");
 					nom = nextLine();
 					if(contrConsultes.canviarNom(index, nom))
-						println("S'ha modificat el resultat número " + index + "de l'última consulta. El noou nom és " + nom);
+						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. El noou nom és " + nom);
 					else
-						println("No s'ha pogut modificar el nom del resultat número " + index);
+						println("No s'ha pogut modificar el nom del resultat n\u00FAmero " + index);
 					break;
 				}
 
@@ -357,7 +357,7 @@ public class DriverControladorConsultes extends Driver {
 					println("Introdueix l'id del segon node del threshold:");
 					id2 = nextInt();
 					contrConsultes.setThreshold(id1, id2, path, false);
-					println("S'ha modificat el threshold de l'última consulta.");
+					println("S'ha modificat el threshold de l'\u00FAltima consulta.");
 					break;
 				}
 
@@ -383,7 +383,7 @@ public class DriverControladorConsultes extends Driver {
 					println("Introdueix el filesystem_path on vols exportar el resultat.");
 					String f = nextLine();
 					contrConsultes.exportarResultat(f, contrConsultes.consultarResultat());
-					println("S'ha exportat el resultat de l'última consulta.");
+					println("S'ha exportat el resultat de l'\u00FAltima consulta.");
 					break;
 				}
 

@@ -56,7 +56,7 @@ public class MenuPrincipal extends JFrame {
 		MenuPrincipal ref = this;
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setBounds(100, 100, 255, 327);
-		setTitle("Men� Principal");
+		setTitle("Men\u00FA Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
@@ -107,9 +107,9 @@ public class MenuPrincipal extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new Message(contentPane, "Grup 12.2\n"
-						+ "Carla Claverol González\n"
+						+ "Carla Claverol Gonz\u00E1lez\n"
 						+ "Guillem Castro Olivares\n"
-						+ "Carlos Lázaro Costa\n" + "Arnau Badia Sampera\n",
+						+ "Carlos L\u00E1zaro Costa\n" + "Arnau Badia Sampera\n",
 						"About");
 			}
 		});
@@ -130,7 +130,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(comboBox);
 
 		//Gestio de dades button
-		JButton btnNewButton_1 = new JButton("Gestió de Dades");
+		JButton btnNewButton_1 = new JButton("Gesti\u00F3 de Dades");
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

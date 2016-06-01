@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Message {
 
-	protected static String defaultTitle = "Informació";
+	protected static String defaultTitle = "Informaci\u00F3";
 	
 	private Component parentComponent;
 	private String message, title;
