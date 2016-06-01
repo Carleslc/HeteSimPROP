@@ -223,6 +223,7 @@ public class Consulta extends JFrame {
 					Component parent = e.getComponent();
 					String path = comboBox_relacio.getSelectedItem().toString();
 					doStep(parent, path, "Consulta", StepConsulta.RESOLUCIO_THRESHOLD);
+					setEnabled(true);
 				}
 			}
 		});
