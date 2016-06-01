@@ -359,7 +359,7 @@ public class ModificarDada extends JFrame {
 								}
 							}
 							else {
-								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja t� una Conferencia relacionada");
+								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -401,7 +401,7 @@ public class ModificarDada extends JFrame {
 								}
 							}
 							else {
-								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja t� una Conferencia relacionada");
+								new ErrorMessage("El Paper " + cntrl.consultarNomPaper(selectedID) + " ja té una Conferencia relacionada");
 								tableModel.removeRow(row);
 								adjacencies.remove(row);
 							}
@@ -775,9 +775,8 @@ public class ModificarDada extends JFrame {
 						txtNom.setEnabled(false);
 						comboBoxtipus.setEnabled(false);
 					}
-					else if (TipusDada.valueOf(selectedType) == TipusDada.Paper) {
-						if (cntrl.consultarRelacionsPaperAmbConferencia(selectedID) == null) teConferencia = false;
-						else teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
+					if (selectedType != null && selectedID != -1 && selectedType.equals("Paper")) {
+						teConferencia = !cntrl.consultarRelacionsPaperAmbConferencia(selectedID).isEmpty();
 					}
 				}
 			}
