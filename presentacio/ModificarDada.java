@@ -1,6 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -66,25 +65,6 @@ public class ModificarDada extends JFrame {
 	private boolean teConferencia = false;
 	private Integer idConferencia = -1;
 	private SeleccionarDada sd;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacio cntrl = new ControladorPresentacio();
-					cntrl.afegirGraf("test");
-					cntrl.afegirPaper("aa");
-					cntrl.afegirConferencia("op");
-					cntrl.afegirConferencia("op2");
-					cntrl.setAdjacenciaPaperConferencia(0, 0);
-					ModificarDada frame = new ModificarDada(cntrl);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public ModificarDada(ControladorPresentacio cntrl) {
 		this.cntrl = cntrl;
@@ -128,7 +108,6 @@ public class ModificarDada extends JFrame {
 				JComboBox src = (JComboBox) e.getSource();
 				if (!src.getSelectedItem().equals(tipus[0])) {
 					selectedType = (String) src.getSelectedItem();
-					System.out.println("." + txtNom.getText() + ".");
 					if (!txtNom.getText().equals(""))
 						nomOriginal = txtNom.getText();
 					if (nomOriginal != null) {
@@ -323,6 +302,7 @@ public class ModificarDada extends JFrame {
 							cntrl.modificarTerme(nouNom, selectedID);
 							break;
 						}
+						new Message("Els canvis s'han guardat correctament");
 					}
 					disableComponents();	
 				}
@@ -337,7 +317,6 @@ public class ModificarDada extends JFrame {
 		tableModel.addTableModelListener(new TableModelListener() {
 			@Override
 			public void tableChanged(TableModelEvent e) {
-				System.out.println("Vamos a modificar, teConferencia = " + teConferencia);
 				TableModel src = (TableModel) e.getSource();
 				if (e.getColumn() >= 0 && e.getColumn() < 2 && e.getFirstRow() >= 0 && e.getFirstRow() < src.getRowCount()) {
 					int column = e.getColumn();
@@ -347,7 +326,6 @@ public class ModificarDada extends JFrame {
 							adjacencies.set(row, new Pair<Integer, String>(null, (String)src.getValueAt(row, column)));
 						else {
 							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (tableModel.getValueAt(row, 0).equals("Conferencia") && teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) {
-								System.out.println("A�adiendo adjacencia1");
 								if (sd == null) {
 									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), TipusDada.valueOf((String)src.getValueAt(row, 0)));
 									sd.setVisible(true);
@@ -390,7 +368,6 @@ public class ModificarDada extends JFrame {
 					if (column == 1) {
 						if (!src.getValueAt(row, 0).equals(null) && !src.getValueAt(row, 0).equals("")) {
 							if ((!tableModel.getValueAt(row, 0).equals("Conferencia")) || !teConferencia || (teConferencia && adjacencies.get(row).getKey()!= null && idConferencia == adjacencies.get(row).getKey())) { 
-								System.out.println("A�adiendo adjacencia2");
 								if (sd == null) {
 									sd = new SeleccionarDada(cntrl, (String)src.getValueAt(row, 1), TipusDada.valueOf((String)src.getValueAt(row, 0)));
 									sd.setVisible(true);
@@ -474,7 +451,6 @@ public class ModificarDada extends JFrame {
 								+ "\nModifica l'adjacencia per cambiar de Conferencia");
 					}
 					else {
-						System.out.println("OPCION A");
 						Integer id_ad = adjacencies.get(modelRow).getKey();
 						String tipus_ad = adjacencies.get(modelRow).getValue();
 						esborrarAdjacencia(id_ad, tipus_ad);
@@ -490,7 +466,6 @@ public class ModificarDada extends JFrame {
 									+ "\nModifica l'adjacencia per cambiar de Conferencia");
 						}
 						else {
-							System.out.println("OPCION B");
 							SeleccionarDada sd = new SeleccionarDada(cntrl, (String) tableModel.getValueAt(modelRow, 1), TipusDada.valueOf((String)tableModel.getValueAt(modelRow, 0)));
 							String tipus_ad = (String) tableModel.getValueAt(modelRow, 0);
 							sd.setVisible(true);
@@ -593,7 +568,6 @@ public class ModificarDada extends JFrame {
 	}
 	
 	void afegirAdjacenciaambConferencia(Integer id_ad) {
-		System.out.println("teConferencia: " + teConferencia);
 		try {
 			teConferencia = true;
 			idConferencia = id_ad;
@@ -620,7 +594,6 @@ public class ModificarDada extends JFrame {
 	}
 	
 	void esborrarAdjacenciaambPaper(Integer id_ad) {
-		System.out.println("Borrando " + selectedType + " " + selectedID + " con Paper " + id_ad);
 		switch (selectedType) {
 		case "Autor":
 			try {
@@ -701,7 +674,6 @@ public class ModificarDada extends JFrame {
 			omplirTable((ArrayList<String>) cntrl.consultarRelacionsAutor(selectedID), "Paper");
 			break;
 		case "Conferencia":
-			System.out.println("Posibles antes de llamada: " + cntrl.consultarRelacionsConferencia(selectedID));
 			omplirTable((ArrayList<String>) cntrl.consultarRelacionsConferencia(selectedID), "Paper");
 			break;
 		case "Terme":
@@ -741,7 +713,6 @@ public class ModificarDada extends JFrame {
 	
 	ArrayList<Integer> adjAmbPaper(ArrayList<Integer> posibles) {
 		ArrayList<Integer> res = new ArrayList<>();
-		System.out.println("Posibles: " + posibles);
 		for (Integer paper : posibles) {
 			switch (selectedType) {
 			case "Autor":
@@ -805,7 +776,6 @@ public class ModificarDada extends JFrame {
 						comboBoxtipus.setEnabled(false);
 					}
 					else if (TipusDada.valueOf(selectedType) == TipusDada.Paper) {
-						System.out.println("Size relacions = " + cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size());
 						if (cntrl.consultarRelacionsPaperAmbConferencia(selectedID) == null) teConferencia = false;
 						else teConferencia = cntrl.consultarRelacionsPaperAmbConferencia(selectedID).size()>=1?true:false;
 					}

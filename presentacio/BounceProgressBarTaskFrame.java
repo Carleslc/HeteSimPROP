@@ -13,25 +13,6 @@ public class BounceProgressBarTaskFrame<V> extends JFrame implements Callable<Vo
 
 	private BounceProgressBarTask<V> barTask;
 	
-	public static void main(String[] args) {
-		try {
-		new BounceProgressBarTaskFrame<Integer>("Exemple",
-				() -> {
-					Thread.sleep(5000);
-					return 3;
-				},
-				(result) -> {
-					System.out.println(result);
-					return true;
-				},
-				"Treballant...",
-				"Finalitzat!",
-				"Error!").call();
-		} catch (Exception e) {
-			new ErrorMessage(e.getMessage());
-		}
-	}
-	
 	public BounceProgressBarTaskFrame(Callable<V> task, TaskListener<V> listener, String progressLabel, String successLable, String failLabel) {
 		barTask = new BounceProgressBarTask<>(this, task, listener, progressLabel, successLable, failLabel);
 		getContentPane().add(barTask);

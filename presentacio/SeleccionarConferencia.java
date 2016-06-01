@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,25 +20,6 @@ public class SeleccionarConferencia extends JFrame {
 	private JTextField textField;
 	private Integer resultat;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SeleccionarConferencia frame = new SeleccionarConferencia(new ControladorPresentacio(), "Conf", "");
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public SeleccionarConferencia(ControladorPresentacio cntrl, String nomConferencia, String nomPaper) {
 		resultat = -1;
 		setResizable(false);

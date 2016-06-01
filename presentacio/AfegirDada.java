@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -70,19 +68,6 @@ public class AfegirDada extends JFrame {
 	private boolean firstClickIntrodueixUnNom = true;
 	private SeleccionarDada sd;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AfegirDada frame = new AfegirDada(new ControladorPresentacio());
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 
 	public AfegirDada(ControladorPresentacio cntrl) {
 		this.cntrl = cntrl;
@@ -108,7 +93,6 @@ public class AfegirDada extends JFrame {
 					String[] opcions = {"Cancelar", "No", "S�"};
 					int n = JOptionPane.showOptionDialog(e.getComponent(), "Vols guardar la dada abans de sortir?", "Guardar abans de sortir?", 
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, opcions, opcions[2]);
-					System.out.println(n);
 					if (n == 2) {
 						guardarDades();
 						dispose();
@@ -247,7 +231,6 @@ public class AfegirDada extends JFrame {
 				JComboBox<String> src = (JComboBox<String>) e.getSource();
 				if (src.isEnabled()) {
 					etiqueta = (String)src.getSelectedItem();
-					System.out.println(etiqueta);
 				}
 			}
 
@@ -344,10 +327,6 @@ public class AfegirDada extends JFrame {
 				JTable table = (JTable)e.getSource();
 				int modelRow = Integer.valueOf( e.getActionCommand() );
 				((DefaultTableModel)table.getModel()).removeRow(modelRow);
-				if (adjacencies.get(modelRow) != null)
-					System.out.println("DELETE: "+ adjacencies.get(modelRow).getKey() + " " + adjacencies.get(modelRow).getValue());
-				else
-					System.out.println("DELETE: null");
 				adjacencies.remove(modelRow);
 			}
 		};
@@ -363,11 +342,9 @@ public class AfegirDada extends JFrame {
 				@Override
 				public void windowClosed(WindowEvent e) {
 					SeleccionarDada src = (SeleccionarDada) e.getSource();
-					System.out.println("closed");
 					setEnabled(true);
 					if (!src.isEmpty()) {
 						Integer res = src.getResultat();
-						System.out.println(res);
 						if (!res.equals(-1)) {
 							if (tipusDada.equals("Conferencia")) {
 								idCOnferencia = res;
@@ -382,7 +359,6 @@ public class AfegirDada extends JFrame {
 						}
 					}
 					else {
-						System.out.println("empty");
 						adjacencies.remove(row);
 						tableModel.removeRow(row);
 					}
@@ -399,7 +375,6 @@ public class AfegirDada extends JFrame {
 		if (tipus_dada != null) {
 			if (!txtIntrodueixUnNom.getText().isEmpty() && !firstClickIntrodueixUnNom) {
 				nom = txtIntrodueixUnNom.getText();
-				System.out.println("Estamos guardando un: " + tipus_dada + ", Con nombre: " + nom);
 				int id = -1;
 				try {
 					switch(tipus_dada) {
@@ -426,7 +401,7 @@ public class AfegirDada extends JFrame {
 				} catch (IOException e) {
 					new ErrorMessage(e.getMessage());
 				}
-				System.out.println("El id resultante es: " + id);
+				new Message("S'ha afegit correctament");
 			}
 			else {
 				new ErrorMessage("Has d'afegir un nom!");
@@ -494,15 +469,12 @@ public class AfegirDada extends JFrame {
 								switch (tipus_ad) {
 								case "Autor":
 									cntrl.afegirAdjacenciaPaperAutor(id, id_ad);
-									System.out.println(tipus_ad + cntrl.consultarNomAutor(id_ad));
 									break;
 								case "Conferencia":
 									cntrl.setAdjacenciaPaperConferencia(id, id_ad);
-									System.out.println(tipus_ad + cntrl.consultarNomConferencia(id_ad));
 									break;
 								case "Terme":
-									boolean res = cntrl.afegirAdjacenciaPaperTerme(id, id_ad);
-									System.out.println(tipus_ad + " " + cntrl.consultarNomTerme(id_ad) + " " + res);
+									cntrl.afegirAdjacenciaPaperTerme(id, id_ad);
 									break;
 								}
 							} catch (Exception e) {

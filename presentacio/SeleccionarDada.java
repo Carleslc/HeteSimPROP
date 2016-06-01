@@ -115,8 +115,8 @@ public class SeleccionarDada extends JFrame {
 	
 	/**
 	 * Consulta el nom de la dada.
-	 * Si hi ha un resultat, el nom és el nom seleccionat.
-	 * D'altre manera el nom és el del constructor.
+	 * Si hi ha un resultat, el nom ï¿½s el nom seleccionat.
+	 * D'altre manera el nom ï¿½s el del constructor.
 	 * @return el nom de la dada.
 	 */
 	public String getNomDada() {
@@ -132,7 +132,7 @@ public class SeleccionarDada extends JFrame {
 	}
 	
 	private void configurarTable() {
-		String[] colnames = {"ID", "Nom", "Informació Adicional"};
+		String[] colnames = {"ID", "Nom", "Informaciï¿½ Adicional"};
 
 		if (resultats != null) {
 			String[][] data = new String[resultats.size()][3];
@@ -152,7 +152,7 @@ public class SeleccionarDada extends JFrame {
 					data[i][1] = cntrl.consultarNomTerme(resultats.get(i));
 					break;
 				}
-				data[i][2] = "Informació Adicional";
+				data[i][2] = "Informaciï¿½ Adicional";
 			}
 			tableModel = new DefaultTableModel(data, colnames);
 		}
@@ -169,7 +169,6 @@ public class SeleccionarDada extends JFrame {
 
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println("tipus: " + tipus.toString().toLowerCase());
 				InformacioAddicional ia = new InformacioAddicional(cntrl, seleccio, tipus);
 				ia.setVisible(true);
 			}
@@ -183,7 +182,6 @@ public class SeleccionarDada extends JFrame {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				System.out.println("LS");
 				ListSelectionModel ls = (ListSelectionModel) e.getSource();
 				int row = -1;
 				int minIndex = ls.getMinSelectionIndex();
@@ -193,7 +191,6 @@ public class SeleccionarDada extends JFrame {
 						row = i;
 				}
 
-				System.out.println(row);
 				seleccio = Integer.valueOf((String)tableModel.getValueAt(row, 0));
 				nomDada = (String)tableModel.getValueAt(row, 1);
 			}
