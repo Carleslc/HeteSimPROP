@@ -144,6 +144,7 @@ public class MenuPrincipal extends JFrame {
 	private void exit() {
 		ctrl.esborrarFitxersTemporals();
 		dispose();
+		System.exit(0);
 	}
 
 	private void guardarDades(boolean sortir) {
