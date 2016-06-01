@@ -48,8 +48,9 @@ public class Consulta extends JFrame {
 	private final JPanel contentPane;
 	private final JSpinner spinnerMinim, spinnerMaxim;
 	private final JLabel lblRellevanciaMinima, lblRellevanciaMaxima, lblDada1,
-	lblDada2, lblRelacioThreshold, lblDada, lblRelacio;
+		lblDada2, lblRelacioThreshold, lblDada, lblRelacio;
 	private final JComboBox<String> comboBox_relacioThreshold, comboBox_relacio, selector;
+	private final JComboBox<Date> comboBox_consultaAnterior;
 	private final JButton btnConsultar, btnEsborrarCamps;
 	private final JToggleButton tglbtnAfegirFiltre;
 	private final JTextField dada, dada1, dada2;
@@ -91,12 +92,8 @@ public class Consulta extends JFrame {
 		JLabel lblRecuperarConsultaAnterior = new JLabel("Recuperar consulta anterior");
 		contentPane.add(lblRecuperarConsultaAnterior, "flowx,cell 0 1");
 
-		JComboBox<Date> comboBox_consultaAnterior = new JComboBox<>();
-		LinkedList<Date> datesConsultesAnteriors = ctrl.consultarDatesConsultes();
-		datesConsultesAnteriors.addFirst(null);
-		Date[] dates = new Date[datesConsultesAnteriors.size()];
-		dates = datesConsultesAnteriors.toArray(dates);
-		comboBox_consultaAnterior.setModel(new DefaultComboBoxModel<>(dates));
+		comboBox_consultaAnterior = new JComboBox<>();
+		updateConsultesAnteriors();
 		comboBox_consultaAnterior.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -249,6 +246,14 @@ public class Consulta extends JFrame {
 		clear();
 	}
 	
+	private void updateConsultesAnteriors() {
+		LinkedList<Date> datesConsultesAnteriors = ctrl.consultarDatesConsultes();
+		datesConsultesAnteriors.addFirst(null);
+		Date[] dates = new Date[datesConsultesAnteriors.size()];
+		dates = datesConsultesAnteriors.toArray(dates);
+		comboBox_consultaAnterior.setModel(new DefaultComboBoxModel<>(dates));
+	}
+	
 	private void doStep(Component parent, String path, String tipusClausura, StepConsulta nextStep) {
 		if (nextStep == StepConsulta.RESOLUCIO_THRESHOLD)
 			ignorarClausura = false;
@@ -353,6 +358,7 @@ public class Consulta extends JFrame {
 			else
 				consulta(ref, comboBox_relacio.getSelectedItem().toString(), idDada, ignorarClausura,
 						idDada1, idDada2, null, 0, 1, ignorarClausura);
+			
 		}
 	}
 	
@@ -374,8 +380,11 @@ public class Consulta extends JFrame {
 						throw ex;
 					} finally {
 						parent.setEnabled(true);
+						parent.setVisible(true);
 					}
 					return null;
+				}, (v) -> {
+					updateConsultesAnteriors();
 				}).call();
 	}
 
@@ -552,6 +561,7 @@ public class Consulta extends JFrame {
 									}
 								}
 								setEnabled(true);
+								setVisible(true);
 								checkStatus();
 							}
 						});

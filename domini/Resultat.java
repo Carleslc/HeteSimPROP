@@ -264,7 +264,8 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 * @return el resultat amb el filtratge aplicat
 	 */
 	public Resultat filtrarElsPrimers(int n, boolean aplicar) {
-		List<Pair<Double, Node>> aux = resultats.subList(0, n);
+		int size = resultats.size();
+		List<Pair<Double, Node>> aux = resultats.subList(0, n <= size ? n : size);
 		if (aplicar) {
 			resultats = aux;
 			return this;
