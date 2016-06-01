@@ -380,7 +380,6 @@ public class Consulta extends JFrame {
 						throw ex;
 					} finally {
 						parent.setEnabled(true);
-						parent.setVisible(true);
 					}
 					return null;
 				}, (v) -> {
@@ -555,9 +554,9 @@ public class Consulta extends JFrame {
 										new ErrorMessage("Has de seleccionar una dada!");
 									dadaField.setText("");
 									switch (numeroDada) {
-									case 0: idDada = -1; break;
-									case 1: idDada1 = -1; break;
-									default: idDada2 = -1; break;
+										case 0: idDada = -1; break;
+										case 1: idDada1 = -1; break;
+										default: idDada2 = -1; break;
 									}
 								}
 								setEnabled(true);
