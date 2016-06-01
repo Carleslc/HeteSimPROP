@@ -460,9 +460,7 @@ public class Resultats extends JFrame {
 			fillTable();
 		}
 		catch (Exception e) {
-			new ErrorMessage(contentPane, "Introdueix un nombre entre 0 i "
-											+ resultat.size()
-											+ " al camp sel·lecionat.");
+			new ErrorMessage(contentPane, "Introdueix un nombre positiu al camp sel·lecionat.");
 		}
 	}
 	
@@ -478,9 +476,7 @@ public class Resultats extends JFrame {
 			fillTable();
 		}
 		catch (Exception e) {
-			new ErrorMessage(contentPane, "Introdueix un nombre entre 0 i "
-											+ resultat.size()
-											+ " al camp sel·lecionat.");
+			new ErrorMessage(contentPane, "Introdueix un nombre positiu al camp sel·lecionat.");
 		}
 	}
 	

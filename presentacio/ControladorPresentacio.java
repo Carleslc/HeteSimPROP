@@ -21,6 +21,11 @@ import domini.ControladorNodes;
 import domini.ControladorPaths;
 import domini.ControladorRelacions;
 
+/**
+ * 
+ * @author Arnau Badia Sampera
+ *
+ */
 public class ControladorPresentacio {
 
 	public static final Image ICON_MAIN = Toolkit.getDefaultToolkit()
@@ -592,7 +597,7 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Actualitza o desactualitza una clausura si està disponible
+	 * Actualitza o desactualitza una clausura si estï¿½ disponible
 	 * @param path la clausura a actualitzar/desactualitzar
 	 * @param updated si es vol actualitzar o desactualitzar
 	 * @throws IOException si no es pot llegir/escriure el fitxer de clausura
@@ -602,17 +607,17 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Consulta si una clausura està actualitzada
+	 * Consulta si una clausura estï¿½ actualitzada
 	 * @param path la clausura a comprovar
-	 * @return Si la clausura està disponible retorna si està actualitzada.
-	 * Retorna <code>false</code> si la clausura no està disponible.
+	 * @return Si la clausura estï¿½ disponible retorna si estï¿½ actualitzada.
+	 * Retorna <code>false</code> si la clausura no estï¿½ disponible.
 	 */
 	public boolean isUpdatedClausura(String path) {
 		return controladorMultigraf.getHeteSim().isUpdated(path);
 	}
 
 	/**
-	 * Consulta si està disponible una clausura
+	 * Consulta si estï¿½ disponible una clausura
 	 * @param path la clausura a comprovar
 	 * @return si esta disponible la clausura
 	 */
@@ -626,7 +631,7 @@ public class ControladorPresentacio {
 	 * @param ignorarClausura true si no es vol utilitzar cap clausura existent
 	 * (es calculara com si no hi fos)
 	 * @throws IllegalArgumentException si <b>path</b> es <code>null</code> o es buit
-	 * @throws InterruptedException si s'aborta el càlcul
+	 * @throws InterruptedException si s'aborta el cï¿½lcul
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
 	public void clausura(String path, boolean ignorarClausura)
@@ -835,9 +840,9 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Modificadora de la última consulta
+	 * Modificadora de la ï¿½ltima consulta
 	 * @param date la data de la consulta
-	 * @throw IllegalArgumentException si date és null o no existeix cap consulta en date
+	 * @throw IllegalArgumentException si date ï¿½s null o no existeix cap consulta en date
 	 */
 	public void setUltimaConsulta(Date date) throws IllegalArgumentException {
 		controladorConsultes.setUltimaConsulta(date);
@@ -851,6 +856,7 @@ public class ControladorPresentacio {
 	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
 	 * @param min La rellevància mínima que han de tenir tots els nodes de la llista.
 	 * @param max La rellevància màxima que han de tenir tots els nodes de la llista.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el cï¿½lcul.
 	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat.
@@ -875,10 +881,10 @@ public class ControladorPresentacio {
 	 * @param idNodeThreshold2 L'id del segon node del threshold.<br>
 	 * El node es de l'ultim tipus de node del path del threshold.
 	 * @param thresholdPath El nom del path del threshold.
-	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
-	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el càlcul del threshold.
-	 * @param min la mínima rellevància que ha de tenir qualsevol resultat que es retorni
-	 * @param max la màxima rellevància que ha de tenir qualsevol resultat que es retorni
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el cï¿½lcul.
+	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el cï¿½lcul del threshold.
+	 * @param min la mï¿½nima rellevï¿½ncia que ha de tenir qualsevol resultat que es retorni
+	 * @param max la mï¿½xima rellevï¿½ncia que ha de tenir qualsevol resultat que es retorni
 	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat que passen el threshold.
@@ -907,12 +913,12 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obté els n primers resultats
+	 * Obtï¿½ els n primers resultats
 	 * @param n nombre de resultats amb mes rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarElsPrimers(int n, boolean aplicar)
 			throws IllegalArgumentException {
@@ -920,12 +926,12 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obté els n ultims resultats
+	 * Obtï¿½ els n ultims resultats
 	 * @param n nombre de resultats amb menys rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarElsUltims(int n, boolean aplicar)
 			throws IllegalArgumentException {
@@ -933,12 +939,12 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obté tots els resultats que tenen el node amb l'etiqueta label.
+	 * Obtï¿½ tots els resultats que tenen el node amb l'etiqueta label.
 	 * @param label de les tuples del resultat que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarPerEtiqueta(String label, boolean aplicar)
 			throws IllegalArgumentException {
@@ -946,13 +952,13 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Obté tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
+	 * Obtï¿½ tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
 	 * @param min es el minim de rellevancia
 	 * @param max es el maxim de rellevancia
 	 * @param aplicar si es vol aplicar el filtre al ultim resultat,
 	 * si es posa a false l'ultim resultat no es veura modificat.
 	 * @return el resultat amb el filtratge aplicat
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> filtrarPerRellevancia(double min, double max,
 			boolean aplicar) throws IllegalArgumentException {
@@ -991,18 +997,18 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Consultora de la dada de l'última consulta.
-	 * @returns Retorna el nom de la dada sobre la que s'ha fet l'última consulta.
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * Consultora de la dada de l'ï¿½ltima consulta.
+	 * @returns Retorna el nom de la dada sobre la que s'ha fet l'ï¿½ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public String getDada() throws IllegalArgumentException {
 		return controladorConsultes.getDada();
 	}
 	
 	/**
-	 * Consultora del path de l'última consulta.
-	 * @returns Retorna el nom del path fet servir en l'última consulta.
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * Consultora del path de l'ï¿½ltima consulta.
+	 * @returns Retorna el nom del path fet servir en l'ï¿½ltima consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public String getPath() throws IllegalArgumentException {
 		return controladorConsultes.getPath();
@@ -1066,7 +1072,7 @@ public class ControladorPresentacio {
 	 * @param idNode2 L'id del segon node del nou threshold.
 	 * 			El node es de l'ultim tipus de node del path del threshold.
 	 * @param path El nom del path del nou threshold.
-	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul del threshold.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el cï¿½lcul del threshold.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 * @throws IOException 
 	 * @throws InterruptedException 
@@ -1101,11 +1107,11 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Exporta uns resultats amb les dades de la última consulta.
+	 * Exporta uns resultats amb les dades de la ï¿½ltima consulta.
 	 * @param filesystem_path El fitxer on es vol exportar els resultats.
 	 * @param resultats Els resultats a exportar.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
-	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 * @throws IllegalArgumentException si no existeix una ï¿½ltima consulta.
 	 */
 	public void exportarResultat(String filesystem_path,
 			ArrayList<Entry<Double, Entry<Integer, String>>> resultats) throws Exception {
@@ -1150,7 +1156,7 @@ public class ControladorPresentacio {
 	}
 	
 	/**
-	 * Deixa l'estat de les clausures tal i com estàven abans d'iniciar el programa.
+	 * Deixa l'estat de les clausures tal i com estï¿½ven abans d'iniciar el programa.
 	 * @throws IOException si no es poden guardar les clausures
 	 */
 	public void reestablirClausures() throws IOException {

@@ -12,6 +12,11 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * 
+ * @author Arnau Badia Sampera
+ *
+ */
 public class GestorConjuntDades extends JFrame {
 
 	private static final long serialVersionUID = 2784181985614807193L;

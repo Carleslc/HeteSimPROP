@@ -19,6 +19,11 @@ import java.io.IOException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * 
+ * @author Arnau Badia Sampera
+ *
+ */
 public class MenuPrincipal extends JFrame {
 
 	private static final long serialVersionUID = -9206328603791933807L;
@@ -51,7 +56,7 @@ public class MenuPrincipal extends JFrame {
 		MenuPrincipal ref = this;
 		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setBounds(100, 100, 255, 327);
-		setTitle("Menú Principal");
+		setTitle("Menï¿½ Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setResizable(false);
 		addWindowListener(new WindowAdapter() {
