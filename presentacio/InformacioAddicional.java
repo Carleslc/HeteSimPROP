@@ -26,6 +26,7 @@ public class InformacioAddicional extends JFrame {
 		setIconImage(ControladorPresentacio.ICON_INFO);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 484, 300);
+		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -35,8 +36,6 @@ public class InformacioAddicional extends JFrame {
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-
-
 
 		JLabel lblTipusNodeRelacionat = new JLabel("Tipus de node relacionat:");
 		GridBagConstraints gbc_lblTipusNodeRelacionat = new GridBagConstraints();

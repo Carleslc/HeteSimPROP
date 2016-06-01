@@ -31,14 +31,12 @@ public class Threshold implements Serializable {
 	 * @param a. El primer Node.
 	 * @param b. El segon Node.
 	 * @param path. El nom del Path del Threshold.
-	 * @param hs. El HeteSim del Graf amb el que estem treballant.
 	 */
-	public Threshold(double rellevancia, Node a, Node b, String path, HeteSim hs) {
+	public Threshold(double rellevancia, Node a, Node b, String path) {
 		this.rellevancia = rellevancia;
 		this.a = a;
 		this.b = b;
 		this.path = path;
-		this.hs = hs;
 	}
 	
 	/**
@@ -47,17 +45,19 @@ public class Threshold implements Serializable {
 	 * @param b. El segon Node.
 	 * @param path. El nom del Path del Threshold.
 	 * @param hs. El HeteSim del Graf amb el que estem treballant.
+	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el càlcul del threshold.
 	 * @throws IllegalArgumentException si path és null o bé si el Node a
 	 * 			no és del tipus indicat pel primer tipus de node de path o bé si
 	 * 			el Node b no és del tipus indicat per l'úlitm tipus de node de path.
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
-	public Threshold(Node a, Node b, String path, HeteSim hs) throws IllegalArgumentException, InterruptedException, IOException {
+	public Threshold(Node a, Node b, String path, HeteSim hs, boolean ignorarClausura)
+			throws IllegalArgumentException, InterruptedException, IOException {
 		this.a = a;
 		this.b = b;
 		this.path = path;
 		this.hs = hs;
-		this.rellevancia = calculateRellevancia();
+		this.rellevancia = calculateRellevancia(ignorarClausura);
 	}
 	
 	/**
@@ -108,14 +108,15 @@ public class Threshold implements Serializable {
 	/**
 	 * Calcula la rellevància entre els dos Nodes segons el Path del Threshold
 	 * fent servir el HeteSim d'aquest.
+	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el càlcul de rellevància.
 	 * @return Retorna la rellevància entre els dos Nodes del Threshold
 	 * 			segons el Path d'aquest.
 	 * @throws IllegalArgumentException si el nom del path és null o bé si
 	 * 			algun dels Nodes no es correspon amb el path.
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
-	private double calculateRellevancia()
+	private double calculateRellevancia(boolean ignorarClausura)
 			throws IllegalArgumentException, InterruptedException, IOException {
-		return hs.heteSim(a, b, path);
+		return hs.heteSim(a, b, path, ignorarClausura);
 	}
 }

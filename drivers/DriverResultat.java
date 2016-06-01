@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import domini.Autor;
 import domini.ControladorGraf;
 import domini.ControladorPaths;
-import domini.Graf;
-import domini.HeteSim;
 import domini.Node;
 import domini.Pair;
 import domini.Resultat;
@@ -28,7 +26,7 @@ public final class DriverResultat extends Driver {
 		l.add(p1);l.add(p2);l.add(p3);l.add(p4);
 		Threshold t;
 		try {
-			t = new Threshold(0,n,n,"APAPA", new HeteSim(new Graf()));
+			t = new Threshold(0,n,n,"APAPA");
 			Resultat r = new Resultat(n,"APA",new ControladorPaths(new ControladorGraf()),"Graf1",l,t);
 			print("El driver comença amb un objecte Resultat de mostra:\n");
 			print(r.toString());

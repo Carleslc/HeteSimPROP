@@ -77,7 +77,7 @@ public class Resultats extends JFrame {
 					ctrl.afegirPaper("hola");
 					ctrl.afegirLabelPaper("Database", np);
 					ctrl.afegirAdjacenciaPaperAutor(np, na);
-					ctrl.consulta("AP", na);
+					ctrl.consulta("AP", na, false);
 					Resultats frame = new Resultats(ctrl);
 					frame.setVisible(true);
 				} catch (Exception e) {

@@ -1,9 +1,11 @@
 package domini;
 
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map.Entry;
 import java.io.IOException;
 
@@ -31,7 +33,8 @@ public class ControladorConsultes {
 	 * @param controladorMultigraf. El controlador multigraf del programa.
 	 * @param controladorPaths. El controlador de paths del programa.
 	 */
-	public ControladorConsultes(ControladorMultigraf controladorMultigraf, ControladorPaths controladorPaths) {
+	public ControladorConsultes(ControladorMultigraf controladorMultigraf,
+			ControladorPaths controladorPaths) {
 		resultats = new TreeMap<>((d1, d2) -> d2.compareTo(d1)); // decreixentment
 		ultimaConsulta = null;
 		this.controladorMultigraf = controladorMultigraf;
@@ -43,7 +46,8 @@ public class ControladorConsultes {
 	 * @return tots els resultats amb el format [Rellevància, [ID_Dada, Nom_Dada]]
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat() throws IllegalArgumentException {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat()
+			throws IllegalArgumentException {
 		return resultats.get(getUltimaConsulta()).getResultats();
 	}
 
@@ -56,14 +60,26 @@ public class ControladorConsultes {
 		if (resultats.isEmpty()) throw new IllegalArgumentException("No existeix una última consulta.");
 		return ultimaConsulta == null ? resultats.firstKey() : ultimaConsulta;
 	}
+	
+	/**
+	 * Modificadora de la última consulta
+	 * @param date la data de la consulta
+	 * @throws IllegalArgumentException si date és null o no existeix cap consulta en date
+	 */
+	public void setUltimaConsulta(Date date) throws IllegalArgumentException {
+		if (date == null || !resultats.containsKey(date))
+			throw new IllegalArgumentException("No existeix la consulta amb data " + date);
+		ultimaConsulta = date;
+	}
 
 	/**
 	 * Consultora d'un resultat s'una data concreta.
-	 * @param data. La data el resultat de la qual volem consultar.
+	 * @param data La data el resultat de la qual volem consultar.
 	 * @return tots els resultats amb el format [Rellevància, [ID_Dada, Nom_Dada]]
 	 * @throws IllegalArgumentException si no existeix cap consulta realitzada en la data indicada.
 	 */
-	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat(Date data) throws IllegalArgumentException {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat(Date data) 
+		throws IllegalArgumentException {
 		if (!resultats.containsKey(data))
 			throw new IllegalArgumentException("No existeix cap consulta realitzada en la data especificada.");
 		ultimaConsulta = data;
@@ -80,9 +96,10 @@ public class ControladorConsultes {
 
 	/**
 	 * Realitza una consulta de rellevàncies a partir d'un node i un path.
-	 * @param path. El nom del path que es vol fer servir per calcular rellevàncies.
-	 * @param idNode. L'id del node del que es vol obtenir rellevàncies amb altres nodes.
+	 * @param path El nom del path que es vol fer servir per calcular rellevàncies.
+	 * @param idNode L'id del node del que es vol obtenir rellevàncies amb altres nodes.<br>
 	 * 			El node és del primer tipus de node del path.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
 	 * @returns Retorna el resultat de la consulta,
 	 * 			amb la llista de totes les rellevancies i els noms dels nodes
 	 * 			(de l'últim tipus de node del path) rellevants pel node
@@ -91,15 +108,15 @@ public class ControladorConsultes {
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode)
-			throws IllegalArgumentException, InterruptedException, IOException {
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
+			boolean ignorarClausura) throws IllegalArgumentException, InterruptedException, IOException {
 		
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 
 		Node n = getNode(path, 0, idNode);
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, (double)0);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, 0d, ignorarClausura);
 
 		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res);
 		Date d = new Date();
@@ -111,35 +128,41 @@ public class ControladorConsultes {
 	/**
 	 * Realitza una consulta de rellevàncies a partir d'un node i un path 
 	 * i fent servir un threshold com a filtre.
-	 * @param path. El nom del path que es vol fer servir per calcular rellevàncies.
-	 * @param idNode. L'id del node del que es vol obtenir rellevàncies amb altres nodes.
-	 * 			El node és del primer tipus de node del path.
-	 * @param idNodeThreshold1. L'id del primer node del threshold.<br>
+	 * @param path El nom del path que es vol fer servir per calcular rellevàncies.
+	 * @param idNode L'id del node del que es vol obtenir rellevàncies amb altres nodes.<br>
+	 * El node és del primer tipus de node del path.
+	 * @param idNodeThreshold1 L'id del primer node del threshold.<br>
 	 * El node és del primer tipus de node del path del threshold.
-	 * @param idNodeThreshold2. L'id del segon node del threshold.<br>
+	 * @param idNodeThreshold2 L'id del segon node del threshold.<br>
 	 * El node és de l'últim tipus de node del path del threshold.
-	 * @param thresholdPath. El nom del path del threshold.
+	 * @param thresholdPath El nom del path del threshold.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
+	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el càlcul del threshold.
+	 * @param min la mínima rellevància que ha de tenir qualsevol resultat que es retorni
+	 * @param max la màxima rellevància que ha de tenir qualsevol resultat que es retorni
 	 * @returns Retorna el resultat de la consulta,
 	 * 			amb la llista de totes les rellevancies i els noms dels nodes
 	 * 			(de l'últim tipus de node del path) rellevants pel node
 	 * 			identificat per idNode que passen el threshold.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats
 	 * 			o bé algun dels nodes o el path del threshold no existeixen.
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
-			int idNodeThreshold1,int idNodeThreshold2, String thresholdPath)
-					throws IllegalArgumentException, InterruptedException, IOException {
+			int idNodeThreshold1, int idNodeThreshold2, String thresholdPath,
+			double min, double max, boolean ignorarClausura, boolean ignorarClausuraThreshold)
+			throws IllegalArgumentException, InterruptedException, IOException {
 		
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 
 		Node n = getNode(path, 0, idNode);
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
-		Threshold t = createThreshold(idNodeThreshold1, idNodeThreshold2, thresholdPath);
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, t.getRellevancia());
+		Threshold t = createThreshold(idNodeThreshold1, idNodeThreshold2, thresholdPath, ignorarClausuraThreshold);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, t.getRellevancia(), ignorarClausura);
 
-		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res, t);
+		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res, t)
+				.filtrarPerRellevancia(min, max, true);
 		Date d = new Date();
 		resultats.put(d, r);
 		ultimaConsulta = d;
@@ -148,7 +171,7 @@ public class ControladorConsultes {
 
 	/**
 	 * Esborra la consulta indicada.
-	 * @param data. La data la consulta de la qual volem esborrar.
+	 * @param data La data la consulta de la qual volem esborrar.
 	 * @returns Retorna cert si s'ha pogut esborrar la consulta (existeix una consulta amb la data indicada)
 	 * 			i fals altrament.
 	 */
@@ -220,7 +243,7 @@ public class ControladorConsultes {
 	/**
 	 * Afegeix a l'última consulta un resultat amb la rellevància i el node indicats.
 	 * @param rellevancia. La rellevància del node que s'afegeix.
-	 * @param idNode. L'id del node que s'afegeix.
+	 * @param idNode L'id del node que s'afegeix.
 	 * 			El node és de l'últim tipus de node del path de l'última consulta.
 	 * @throws IllegalArgumentException si no existeix una última consulta
 	 * 			o si no existeix el node indicat.
@@ -235,7 +258,7 @@ public class ControladorConsultes {
 
 	/**
 	 * Esborra de l'última consulta el resultat indicat.
-	 * @param index. La posició del resultat que es vol esborrar.
+	 * @param index La posició del resultat que es vol esborrar.
 	 * @returns Retorna cert si s'ha pogut esborrar el resultat (index es troba dins d'un rang correcte)
 	 * 			i fals altrament.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
@@ -261,6 +284,51 @@ public class ControladorConsultes {
 	public String getPath() throws IllegalArgumentException {
 		return resultats.get(getUltimaConsulta()).getPath();
 	}
+	
+	/**
+	 * Consulta si la última consulta té threshold.
+	 * @return si la última consulta té threshold.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public boolean hasThreshold() throws IllegalArgumentException {
+		return resultats.get(getUltimaConsulta()).getThreshold() != null;
+	}
+	
+	/**
+	 * Consultora del path del threshold de l'última consulta.
+	 * @returns Retorna el path de la consulta o null si la consulta no té threshold.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public String getPathThreshold() throws IllegalArgumentException {
+		Threshold t = resultats.get(getUltimaConsulta()).getThreshold();
+		return t == null ? null : t.getPath();
+	}
+	
+	/**
+	 * Consultora de les dades del threshold de l'última consulta.
+	 * @returns Retorna els noms de les dades del threshold sobre la que s'ha fet la consulta
+	 * o null si la consulta no té threshold.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public Entry<String, String> getDadesThreshold() throws IllegalArgumentException {
+		Threshold t = resultats.get(getUltimaConsulta()).getThreshold();
+		if (t != null) {
+			List<String> dades = t.getNodes().stream().map(n -> n.getNom()).collect(Collectors.toList());
+			return new Pair<>(dades.get(0), dades.get(1));
+		}
+		return null;
+	}
+	
+	/**
+	 * Consultora de la rellevància del threshold de l'última consulta.
+	 * @returns Retorna la rellevància del threshold sobre la que s'ha fet la consulta
+	 * o 1 o null si la consulta no té threshold.
+	 * @throws IllegalArgumentException si no existeix una última consulta.
+	 */
+	public double getRellevanciaThreshold() throws IllegalArgumentException {
+		Threshold t = resultats.get(getUltimaConsulta()).getThreshold();
+		return t == null ? 1 : t.getRellevancia();
+	}
 
 	/**
 	 * Consultora del tipus dels nodes dels resultats de l'última consulta.
@@ -280,8 +348,8 @@ public class ControladorConsultes {
 	 * Modifica la rellevància del resultat indicat de l'última consulta.
 	 * S'ha de tenir en compte que després d'aquesta crida si retorna cert llavors
 	 * és probable que aquesta posició hagi canviat degut a l'ordre dels resultats.
-	 * @param index. La posició del resultat que es vol modificar.
-	 * @param rellevancia. La rellevancia per la qual es vol modificar l'actual.
+	 * @param index La posició del resultat que es vol modificar.
+	 * @param rellevancia La rellevancia per la qual es vol modificar l'actual.
 	 * @returns Retorna cert si s'ha pogut modificar el resultat
 	 * 			(index es troba dins d'un rang correcte i 0 <= rellevancia <= 1)
 	 * 			i fals altrament.
@@ -293,8 +361,8 @@ public class ControladorConsultes {
 
 	/**
 	 * Modifica la dada del resultat indicat de l'última consulta.
-	 * @param index. La posició del resultat que es vol modificar.
-	 * @param idNode. L'id del node pel qual es vol modificar l'actual.
+	 * @param index La posició del resultat que es vol modificar.
+	 * @param idNode L'id del node pel qual es vol modificar l'actual.
 	 * 			El node és de l'últim tipus de node del path de l'última consulta.
 	 * @returns Retorna cert si s'ha pogut modificar el resultat
 	 * 			(index es troba dins d'un rang correcte i el node existeix)
@@ -313,8 +381,8 @@ public class ControladorConsultes {
 
 	/**
 	 * Modifica el nom de la dada del resultat indicat de l'última consulta.
-	 * @param index. La posició del resultat que es vol modificar.
-	 * @param nom. El nom pel qual es vol modificar l'actual.
+	 * @param index La posició del resultat que es vol modificar.
+	 * @param nom El nom pel qual es vol modificar l'actual.
 	 * @returns Retorna cert si s'ha pogut modificar el resultat (index es troba dins d'un rang correcte)
 	 * 			i fals altrament.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
@@ -328,34 +396,37 @@ public class ControladorConsultes {
 
 	/**
 	 * Modifica el threshold de l'última consulta i refà la consulta.
-	 * @param idNode1. L'id del primer node del nou threshold.
+	 * @param idNode1 L'id del primer node del nou threshold.<br>
 	 * 			El node és del primer tipus de node del path del threshold.
-	 * @param idNode2. L'id del segon node del nou threshold.
+	 * @param idNode2 L'id del segon node del nou threshold.<br>
 	 * 			El node és de l'últim tipus de node del path del threshold.
-	 * @param path. El nom del path del nou threshold.
+	 * @param path El nom del path del nou threshold.
+	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el càlcul del threshold.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 * @throws IOException 
 	 */
-	public void setThreshold(int idNode1, int idNode2, String path)
+	public void setThreshold(int idNode1, int idNode2, String path, boolean ignorarClausura)
 			throws IllegalArgumentException, InterruptedException, IOException {
-		Threshold t = createThreshold(idNode1, idNode2, path);
+		Threshold t = createThreshold(idNode1, idNode2, path, ignorarClausura);
 		Resultat r = resultats.get(getUltimaConsulta());
-		ArrayList<Pair<Double, Node>> res = llistaResultats(r.getNode(), r.getPath(), t.getRellevancia());
+		ArrayList<Pair<Double, Node>> res = llistaResultats(r.getNode(),
+				r.getPath(), t.getRellevancia(), false);
 		r.setThreshold(t);
 		r.setResultats(res);
 	}
 
 	/**
 	 * Modifica el path i la dada de l'última consulta i refà la consulta.
-	 * @param path. El nom del path pel qual es vol modificar l'actual.
-	 * @param id. L'id del node pel qual es vol modificar l'actual.
+	 * @param path El nom del path pel qual es vol modificar l'actual.
+	 * @param id L'id del node pel qual es vol modificar l'actual.<br>
 	 * 			El node és del primer tipus de node de path.
 	 * @throws IllegalArgumentException si no existeix una última consulta, 
 	 * 			o bé no existeixen el path o el node indicats.
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void setPath(String path, int id) throws IllegalArgumentException, InterruptedException, IOException {
+	public void setPath(String path, int id)
+			throws IllegalArgumentException, InterruptedException, IOException {
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 
 		Resultat r = resultats.get(getUltimaConsulta());
@@ -365,7 +436,7 @@ public class ControladorConsultes {
 		Double filtre = 0.;
 		Threshold t = r.getThreshold();
 		if (t != null) filtre = t.getRellevancia();
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, filtre);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, filtre, false);
 		r.setPath(path);
 		r.setNode(n);
 		r.setResultats(res);
@@ -373,14 +444,15 @@ public class ControladorConsultes {
 
 	/**
 	 * Modifica la dada de l'última consulta i refà la consulta.
-	 * @param id. L'id del node pel qual es vol modificar l'actual.
+	 * @param id L'id del node pel qual es vol modificar l'actual.
 	 * 			El node és del primer tipus de node del path de l'última consulta.
 	 * @throws IllegalArgumentException si no existeix una última consulta,
 	 * 			o bé no existeix el node indicat.
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void setDada(int id) throws IllegalArgumentException, InterruptedException, IOException {
+	public void setDada(int id)
+			throws IllegalArgumentException, InterruptedException, IOException {
 		Resultat r = resultats.get(getUltimaConsulta());
 		Node n = getNode(r.getPath(), 0, id);
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
@@ -388,19 +460,20 @@ public class ControladorConsultes {
 		Double filtre = 0.;
 		Threshold t = r.getThreshold();
 		if (t != null) filtre = t.getRellevancia();
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), filtre);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), filtre, false);
 		r.setNode(n);
 		r.setResultats(res);
 	}
 
 	/**
 	 * Exporta uns resultats amb les dades de la última consulta.
-	 * @param filesystem_path. El fitxer on es vol exportar els resultats.
-	 * @param resultats. Els resultats a exportar.
+	 * @param filesystem_path El fitxer on es vol exportar els resultats.
+	 * @param resultats Els resultats a exportar.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void exportarResultat(String filesystem_path, ArrayList<Entry<Double, Entry<Integer, String>>> resultats)
+	public void exportarResultat(String filesystem_path,
+			ArrayList<Entry<Double, Entry<Integer, String>>> resultats)
 			throws IOException, IllegalArgumentException {
 		Date ultimaConsulta = getUltimaConsulta();
 		ControladorExportacio.exportar(filesystem_path, ultimaConsulta,
@@ -409,11 +482,12 @@ public class ControladorConsultes {
 	
 	/**
 	 * Exporta els resultats de la última consulta.
-	 * @param filesystem_path. El fitxer on es vol exportar els resultats.
+	 * @param filesystem_path El fitxer on es vol exportar els resultats.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
-	public void exportarResultat(String filesystem_path) throws IOException, IllegalArgumentException {
+	public void exportarResultat(String filesystem_path)
+			throws IOException, IllegalArgumentException {
 		Date ultimaConsulta = getUltimaConsulta();
 		ControladorExportacio.exportar(filesystem_path, ultimaConsulta,
 				this.resultats.get(ultimaConsulta).toString());
@@ -429,7 +503,8 @@ public class ControladorConsultes {
 
 	/**
 	 * Carrega totes les consultes del fitxer per defecte.
-	 * @throws IOException si no existeix el fitxer per defecte o si no es pot llegir o no té el format correcte.
+	 * @throws IOException si no existeix el fitxer per defecte
+	 * o si no es pot llegir o no té el format correcte.
 	 */
 	public void carregarResultats() throws IOException {
 		resultats = ControladorPersistenciaPropi.carregarResultats(DEFAULT_PATH_RESULTATS);
@@ -437,7 +512,7 @@ public class ControladorConsultes {
 
 	/**
 	 * Fa una còpia del node indicat.
-	 * @param n. El node que es vol copiar.
+	 * @param n El node que es vol copiar.
 	 * @returns Retorna una còpia del node indicat.
 	 */
 	private Node copia(Node n) {
@@ -454,9 +529,9 @@ public class ControladorConsultes {
 
 	/**
 	 * Retorna el node amb l'id indicat del tipus indicat pel caràcter en la posició index del path.
-	 * @param path. El path en el que es consulta el tipus del node.
-	 * @param index. Posició del caràcter del path que ens indica el tipus del node.
-	 * @param id. Id del node que volem consultar.
+	 * @param path El path en el que es consulta el tipus del node.
+	 * @param index Posició del caràcter del path que ens indica el tipus del node.
+	 * @param id Id del node que volem consultar.
 	 * @returns Retorna el node amb l'id indicat del tipus indicat pel caràcter en la posició index del path
 	 * 			(-1 si el node no existeix).
 	 */
@@ -471,7 +546,7 @@ public class ControladorConsultes {
 
 	/**
 	 * Indica si un path existeix en el sistema.
-	 * @param path. El path que volem saber si existeix.
+	 * @param path El path que volem saber si existeix.
 	 * @returns Retorna cert si el path existeix al sistema i fals altrament.
 	 */
 	private boolean exists(String path) {
@@ -480,16 +555,17 @@ public class ControladorConsultes {
 
 	/**
 	 * Crea un threshold amb el path i els nodes indicats.
-	 * @param idNode1. L'id del primer node del threshold.
+	 * @param idNode1 L'id del primer node del threshold.
 	 * 			El node és del primer tipus de node de path.
-	 * @param idNode2. L'id del segon node del threshold.
+	 * @param idNode2 L'id del segon node del threshold.
 	 * 			El node és de l'últim tipus de node de path.
-	 * @param path. El nom del path del threshold.
+	 * @param path El nom del path del threshold.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul del threshold.
 	 * @returns Retorna el threshold que s'ha creat.
 	 * @throws IllegalArgumentException si el path o els nodes indicats no existeixen.
 	 * @throws IOException si no es pot calcular la rellevancia
 	 */
-	private Threshold createThreshold(int idNode1, int idNode2, String path)
+	private Threshold createThreshold(int idNode1, int idNode2, String path, boolean ignorarClausura)
 			throws IllegalArgumentException, InterruptedException, IOException {
 		if (!exists(path)) throw new IllegalArgumentException("El path del threshold no existeix.");
 
@@ -497,23 +573,25 @@ public class ControladorConsultes {
 		Node n2 = getNode(path, path.length()-1, idNode2);
 		if (n1 .getId() == -1 || n2.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
-		return new Threshold(n1, n2, path, controladorMultigraf.getHeteSim());
+		return new Threshold(n1, n2, path, controladorMultigraf.getHeteSim(), ignorarClausura);
 	}
 
 	/**
 	 * Realitza una consulta de tots els nodes rellevants per un node concret
 	 * segons un path i aplicant un filtre.
-	 * @param n. El node per al que volem trobar nodes rellevants.
-	 * @param path. El path que volem fer servir per realitzar la consulta.
-	 * @param filtre. La rellevància mínima que han de tenir tots els nodes de la llista.
+	 * @param n El node per al que volem trobar nodes rellevants.
+	 * @param path El path que volem fer servir per realitzar la consulta.
+	 * @param filtre La rellevància mínima que han de tenir tots els nodes de la llista.
+	 * @param ignorarClausura si es vol ignorar la clausura.
 	 * @returns Retorna una llista ordenada de parells de rellevància i node
 	 * 			de tots els nodes rellevants per n segons path que tenen una rellevància major que 0
 	 * 			i superior o igual a filtre.
 	 */
-	private ArrayList<Pair<Double, Node>> llistaResultats(Node n, String path, Double filtre)
+	private ArrayList<Pair<Double, Node>> llistaResultats(Node n, String path, double filtre,
+			boolean ignorarClausura)
 			throws InterruptedException, IOException {
 		HeteSim hs = controladorMultigraf.getHeteSim();
-		ArrayList<Entry<Double, Integer>> resultatshs = hs.heteSimAmbIdentificadors(n, path);
+		ArrayList<Entry<Double, Integer>> resultatshs = hs.heteSimAmbIdentificadors(n, path, ignorarClausura);
 		ArrayList<Pair<Double, Node>> res = new ArrayList<>();
 
 		for(Entry<Double, Integer> reshs : resultatshs) {

@@ -138,7 +138,7 @@ public class DriverThreshold extends Driver {
 			}
 		} while (id == -1);
 
-		Threshold t = new Threshold(a, b, path, contrMultigraf.getHeteSim());
+		Threshold t = new Threshold(0, a, b, path);
 
 		int num = 5;
 		do {

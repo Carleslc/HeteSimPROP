@@ -200,7 +200,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix l'id del node amb el que vols fer la consulta: ");
 					id = nextInt();
 					println("El resultat de la consulta és:\n");
-					contrConsultes.consulta(path, id).forEach(Driver::println);
+					contrConsultes.consulta(path, id, false).forEach(Driver::println);
 					break;
 				}
 
@@ -216,7 +216,8 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix l'id del primer node del threshold: ");
 					int idT2 = nextInt();
 					println("El resultat de la consulta és:\n");
-					contrConsultes.consulta(path, id, idT1, idT2, pathT).forEach(Driver::println);
+					contrConsultes.consulta(path, id, idT1, idT2, pathT, 0, 1, false, false)
+						.forEach(Driver::println);
 					break;
 				}
 
@@ -355,7 +356,7 @@ public class DriverControladorConsultes extends Driver {
 					id1 = nextInt();
 					println("Introdueix l'id del segon node del threshold:");
 					id2 = nextInt();
-					contrConsultes.setThreshold(id1, id2, path);
+					contrConsultes.setThreshold(id1, id2, path, false);
 					println("S'ha modificat el threshold de l'última consulta.");
 					break;
 				}

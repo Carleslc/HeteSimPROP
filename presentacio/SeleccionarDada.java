@@ -58,7 +58,7 @@ public class SeleccionarDada extends JFrame {
 
 		setTitle("Seleccionar Dada");
 		setIconImage(ControladorPresentacio.ICON_MAIN);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -98,11 +98,9 @@ public class SeleccionarDada extends JFrame {
 		contentPane.add(btnAcceptar, gbc_btnAcceptar);
 
 		btnAcceptar.addMouseListener(new MouseAdapter() {
-
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}
-
 		});
 
 	}
@@ -113,6 +111,16 @@ public class SeleccionarDada extends JFrame {
 	 */
 	public int getResultat() {
 		return seleccio;
+	}
+	
+	/**
+	 * Consulta el nom de la dada.
+	 * Si hi ha un resultat, el nom és el nom seleccionat.
+	 * D'altre manera el nom és el del constructor.
+	 * @return el nom de la dada.
+	 */
+	public String getNomDada() {
+		return nomDada;
 	}
 
 	/**
@@ -181,13 +189,13 @@ public class SeleccionarDada extends JFrame {
 				int minIndex = ls.getMinSelectionIndex();
 				int maxIndex = ls.getMaxSelectionIndex();
 				for (int i = minIndex; i <= maxIndex; i++) {
-					if (ls.isSelectedIndex(i)) {
+					if (ls.isSelectedIndex(i))
 						row = i;
-					}
 				}
 
 				System.out.println(row);
-				seleccio = Integer.valueOf((String) tableModel.getValueAt(row, 0));
+				seleccio = Integer.valueOf((String)tableModel.getValueAt(row, 0));
+				nomDada = (String)tableModel.getValueAt(row, 1);
 			}
 
 		});

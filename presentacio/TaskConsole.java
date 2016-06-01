@@ -18,7 +18,7 @@ import javax.swing.JScrollPane;
 public class TaskConsole<V> extends JFrame implements Callable<Void> {
 
 	private static final long serialVersionUID = 6048639893281544248L;
-	
+	private boolean finished;
 	private Callable<V> task;
 	private TaskListener<V> listener;
 	
@@ -53,6 +53,7 @@ public class TaskConsole<V> extends JFrame implements Callable<Void> {
 	}
 	
 	public TaskConsole(Image icon, String title, Callable<V> task, TaskListener<V> listener) {
+		finished = false;
 		this.task = task;
 		this.listener = listener;
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -70,6 +71,10 @@ public class TaskConsole<V> extends JFrame implements Callable<Void> {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(textArea);
 		getContentPane().add(scrollPane);
+	}
+	
+	public boolean isFinished() {
+		return finished;
 	}
 	
 	private class Console extends OutputStream {
@@ -93,13 +98,15 @@ public class TaskConsole<V> extends JFrame implements Callable<Void> {
 					V result = task.call();
 					if (listener != null)
 						listener.onDone(result);
-					dispose();
 				} catch (Exception e) {
 					textArea.setForeground(Color.RED);
 					e.printStackTrace();
+					try { Thread.sleep(3000); } catch (Exception ignore) {}
 				} finally {
 					System.setOut(out);
 					System.setErr(err);
+					finished = true;
+					dispose();
 				}
 			}
 		}).start();

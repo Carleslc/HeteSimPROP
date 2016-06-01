@@ -808,7 +808,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Consultora de l'ultim resultat.
-	 * @returns Retorna un String que representa el resultat de l'ultima consulta.
+	 * @return Retorna un String que representa el resultat de l'ultima consulta.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat() throws IllegalArgumentException {
@@ -817,8 +817,8 @@ public class ControladorPresentacio {
 
 	/**
 	 * Consultora d'un resultat s'una data concreta.
-	 * @param data. La data el resultat de la qual volem consultar.
-	 * @returns Retorna un String que representa el resultat de la data indicada.
+	 * @param data La data el resultat de la qual volem consultar.
+	 * @return Retorna un String que representa el resultat de la data indicada.
 	 * @throws IllegalArgumentException si no existeix cap consulta realitzada en la data indicada.
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consultarResultat(Date data)
@@ -833,35 +833,51 @@ public class ControladorPresentacio {
 	public LinkedList<Date> consultarDatesConsultes() {
 		return controladorConsultes.consultarDatesConsultes();
 	}
+	
+	/**
+	 * Modificadora de la última consulta
+	 * @param date la data de la consulta
+	 * @throw IllegalArgumentException si date és null o no existeix cap consulta en date
+	 */
+	public void setUltimaConsulta(Date date) throws IllegalArgumentException {
+		controladorConsultes.setUltimaConsulta(date);
+	}
 
 	/**
 	 * Realitza una consulta de rellevancies a partir d'un node i un path.
-	 * @param path. El nom del path que es vol fer servir per calcular rellevancies.
-	 * @param idNode. L'id del node del que es vol obtenir rellevancies amb altres nodes.
+	 * @param path El nom del path que es vol fer servir per calcular rellevancies.
+	 * @param idNode L'id del node del que es vol obtenir rellevancies amb altres nodes.<br>
 	 * 			El node es del primer tipus de node del path.
-	 * @returns Retorna un String que representa el resultat de la consulta,
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
+	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats.
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode) throws Exception {
-		return controladorConsultes.consulta(path, idNode);
+	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
+			boolean ignorarClausura) throws Exception {
+		return controladorConsultes.consulta(path, idNode, ignorarClausura);
 	}
 
 	/**
 	 * Realitza una consulta de rellevancies a partir d'un node i un path i fent servir un threshold
 	 * com a filtre.
-	 * @param path. El nom del path que es vol fer servir per calcular rellevancies.
-	 * @param idNode. L'id del node del que es vol obtenir rellevancies amb altres nodes.
+	 * @param path El nom del path que es vol fer servir per calcular rellevancies.
+	 * @param idNode L'id del node del que es vol obtenir rellevancies amb altres nodes.
 	 * 			El node es del primer tipus de node del path.
-	 * @param idNodeThreshold1. L'id del primer node del threshold. El node es del primer tipus
+	 * @param idNodeThreshold1 L'id del primer node del threshold.<br>
+	 * El node es del primer tipus
 	 * de node del path del threshold.
-	 * @param idNodeThreshold2. L'id del segon node del threshold. El node es de l'ultim tipus
-	 * de node del path del threshold.
-	 * @param thresholdPath. El nom del path del threshold.
-	 * @returns Retorna un String que representa el resultat de la consulta,
+	 * @param idNodeThreshold2 L'id del segon node del threshold.<br>
+	 * El node es de l'ultim tipus de node del path del threshold.
+	 * @param thresholdPath El nom del path del threshold.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
+	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el càlcul del threshold.
+	 * @param min la mínima rellevància que ha de tenir qualsevol resultat que es retorni
+	 * @param max la màxima rellevància que ha de tenir qualsevol resultat que es retorni
+	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat que passen el threshold.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats
@@ -870,17 +886,18 @@ public class ControladorPresentacio {
 	 * @throws InterruptedException 
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
-			int idNodeThreshold1, int idNodeThreshold2,
-			String thresholdPath) throws Exception {
+			int idNodeThreshold1, int idNodeThreshold2, String thresholdPath, double min, double max,
+			boolean ignorarClausura, boolean ignorarClausuraThreshold) throws Exception {
 		
 		return controladorConsultes.consulta(path, idNode,
-				idNodeThreshold1, idNodeThreshold2, thresholdPath);
+				idNodeThreshold1, idNodeThreshold2, thresholdPath, min, max,
+				ignorarClausura, ignorarClausuraThreshold);
 	}
 
 	/**
 	 * Esborra la consulta indicada.
-	 * @param data. La data la consulta de la qual volem esborrar.
-	 * @returns Retorna cert si s'ha pogut esborrar la consulta
+	 * @param data La data la consulta de la qual volem esborrar.
+	 * @return Retorna cert si s'ha pogut esborrar la consulta
 	 * (existeix una consulta amb la data indicada) i fals altrament.
 	 */
 	public boolean esborrarConsulta(Date data) {
@@ -950,8 +967,8 @@ public class ControladorPresentacio {
 
 	/**
 	 * Afegeix a l'ultima consulta un resultat amb la rellevancia i el node indicats.
-	 * @param rellevancia. La rellevancia del node que s'afegeix.
-	 * @param idNode. L'id del node que s'afegeix.
+	 * @param rellevancia La rellevancia del node que s'afegeix.
+	 * @param idNode L'id del node que s'afegeix.
 	 * 			El node es de l'ultim tipus de node del path de l'ultima consulta.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta
 	 * 			o si no existeix el node indicat.
@@ -962,8 +979,8 @@ public class ControladorPresentacio {
 
 	/**
 	 * Esborra de l'ultima consulta el resultat indicat.
-	 * @param index. La posicio del resultat que es vol esborrar.
-	 * @returns Retorna cert si s'ha pogut esborrar el resultat (index es troba dins d'un rang correcte)
+	 * @param index La posicio del resultat que es vol esborrar.
+	 * @return Retorna cert si s'ha pogut esborrar el resultat (index es troba dins d'un rang correcte)
 	 * 			i fals altrament.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
@@ -1003,9 +1020,9 @@ public class ControladorPresentacio {
 	 * Modifica la rellevancia del resultat indicat de l'ultima consulta.
 	 * S'ha de tenir en compte que despres d'aquesta crida si retorna cert llavors
 	 * es probable que aquesta posicio hagi canviat degut a l'ordre dels resultats.
-	 * @param index. La posicio del resultat que es vol modificar.
-	 * @param rellevancia. La rellevancia per la qual es vol modificar l'actual.
-	 * @returns Retorna cert si s'ha pogut modificar el resultat
+	 * @param index La posicio del resultat que es vol modificar.
+	 * @param rellevancia La rellevancia per la qual es vol modificar l'actual.
+	 * @return Retorna cert si s'ha pogut modificar el resultat
 	 * 			(index es troba dins d'un rang correcte i 0 <= rellevancia <= 1)
 	 * 			i fals altrament.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
@@ -1016,10 +1033,10 @@ public class ControladorPresentacio {
 
 	/**
 	 * Modifica la dada del resultat indicat de l'ultima consulta.
-	 * @param index. La posicio del resultat que es vol modificar.
-	 * @param idNode. L'id del node pel qual es vol modificar l'actual.
+	 * @param index La posicio del resultat que es vol modificar.
+	 * @param idNode L'id del node pel qual es vol modificar l'actual.
 	 * 			El node es de l'ultim tipus de node del path de l'ultima consulta.
-	 * @returns Retorna cert si s'ha pogut modificar el resultat
+	 * @return Retorna cert si s'ha pogut modificar el resultat
 	 * 			(index es troba dins d'un rang correcte i el node existeix)
 	 * 			i fals altrament.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
@@ -1030,9 +1047,9 @@ public class ControladorPresentacio {
 
 	/**
 	 * Modifica el nom de la dada del resultat indicat de l'ultima consulta.
-	 * @param index. La posicio del resultat que es vol modificar.
-	 * @param nom. El nom pel qual es vol modificar l'actual.
-	 * @returns Retorna cert si s'ha pogut modificar el resultat (index es troba dins d'un rang correcte)
+	 * @param index La posicio del resultat que es vol modificar.
+	 * @param nom El nom pel qual es vol modificar l'actual.
+	 * @return Retorna cert si s'ha pogut modificar el resultat (index es troba dins d'un rang correcte)
 	 * 			i fals altrament.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 */
@@ -1042,23 +1059,24 @@ public class ControladorPresentacio {
 
 	/**
 	 * Modifica el threshold de l'ultima consulta i refa la consulta.
-	 * @param idNode1. L'id del primer node del nou threshold.
+	 * @param idNode1 L'id del primer node del nou threshold.
 	 * 			El node es del primer tipus de node del path del threshold.
-	 * @param idNode2. L'id del segon node del nou threshold.
+	 * @param idNode2 L'id del segon node del nou threshold.
 	 * 			El node es de l'ultim tipus de node del path del threshold.
-	 * @param path. El nom del path del nou threshold.
+	 * @param path El nom del path del nou threshold.
+	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul del threshold.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
-	public void setThreshold(int idNode1, int idNode2, String path) throws Exception {
-		controladorConsultes.setThreshold(idNode1, idNode2, path);
+	public void setThreshold(int idNode1, int idNode2, String path, boolean ignorarClausura) throws Exception {
+		controladorConsultes.setThreshold(idNode1, idNode2, path, ignorarClausura);
 	}
 
 	/**
 	 * Modifica el path i la dada de l'ultima consulta i refa la consulta.
-	 * @param path. El nom del path pel qual es vol modificar l'actual.
-	 * @param id. L'id del node pel qual es vol modificar l'actual.
+	 * @param path El nom del path pel qual es vol modificar l'actual.
+	 * @param id L'id del node pel qual es vol modificar l'actual.
 	 * 			El node es del primer tipus de node de path.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 * @throws IOException 
@@ -1070,7 +1088,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Modifica la dada de l'ultima consulta i refa la consulta.
-	 * @param id. L'id del node pel qual es vol modificar l'actual.
+	 * @param id L'id del node pel qual es vol modificar l'actual.
 	 * 			El node es del primer tipus de node del path de l'ultima consulta.
 	 * @throws IllegalArgumentException si no existeix una ultima consulta.
 	 * @throws IOException 
@@ -1082,8 +1100,8 @@ public class ControladorPresentacio {
 
 	/**
 	 * Exporta uns resultats amb les dades de la última consulta.
-	 * @param filesystem_path. El fitxer on es vol exportar els resultats.
-	 * @param resultats. Els resultats a exportar.
+	 * @param filesystem_path El fitxer on es vol exportar els resultats.
+	 * @param resultats Els resultats a exportar.
 	 * @throws IOException si no es pot crear o escriure en el fitxer indicat.
 	 * @throws IllegalArgumentException si no existeix una última consulta.
 	 */
