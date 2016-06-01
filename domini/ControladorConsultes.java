@@ -27,6 +27,7 @@ public class ControladorConsultes {
 	private Date ultimaConsulta;
 	private ControladorMultigraf controladorMultigraf;
 	private ControladorPaths controladorPaths;
+	private static final double threshold = 0.0001;
 
 	/**
 	 * Constructor de la classe.
@@ -116,7 +117,7 @@ public class ControladorConsultes {
 		Node n = getNode(path, 0, idNode);
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, 0d, ignorarClausura);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, threshold, ignorarClausura);
 
 		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res);
 		Date d = new Date();
@@ -159,7 +160,7 @@ public class ControladorConsultes {
 		if (n.getId() == -1) throw new IllegalArgumentException ("El node no existeix.");
 
 		Threshold t = createThreshold(idNodeThreshold1, idNodeThreshold2, thresholdPath, ignorarClausuraThreshold);
-		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, t.getRellevancia(), ignorarClausura);
+		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, Math.max(t.getRellevancia(), threshold), ignorarClausura);
 
 		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res, t)
 				.filtrarPerRellevancia(min, max, true);
@@ -410,7 +411,7 @@ public class ControladorConsultes {
 		Threshold t = createThreshold(idNode1, idNode2, path, ignorarClausura);
 		Resultat r = resultats.get(getUltimaConsulta());
 		ArrayList<Pair<Double, Node>> res = llistaResultats(r.getNode(),
-				r.getPath(), t.getRellevancia(), false);
+				r.getPath(), Math.max(t.getRellevancia(), threshold), false);
 		r.setThreshold(t);
 		r.setResultats(res);
 	}
@@ -435,7 +436,7 @@ public class ControladorConsultes {
 
 		Double filtre = 0.;
 		Threshold t = r.getThreshold();
-		if (t != null) filtre = t.getRellevancia();
+		if (t != null) filtre = Math.max(t.getRellevancia(), threshold);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, filtre, false);
 		r.setPath(path);
 		r.setNode(n);
@@ -459,7 +460,7 @@ public class ControladorConsultes {
 
 		Double filtre = 0.;
 		Threshold t = r.getThreshold();
-		if (t != null) filtre = t.getRellevancia();
+		if (t != null) filtre = Math.max(t.getRellevancia(), threshold);
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, r.getPath(), filtre, false);
 		r.setNode(n);
 		r.setResultats(res);
