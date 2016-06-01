@@ -849,6 +849,8 @@ public class ControladorPresentacio {
 	 * @param idNode L'id del node del que es vol obtenir rellevancies amb altres nodes.<br>
 	 * 			El node es del primer tipus de node del path.
 	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
+	 * @param min La rellevància mínima que han de tenir tots els nodes de la llista.
+	 * @param max La rellevància màxima que han de tenir tots els nodes de la llista.
 	 * @return Retorna un String que representa el resultat de la consulta,
 	 * 			amb la llista de tots els nodes (de l'ultim tipus de node del path)
 	 * 			rellevants pel node amb id idNode segons el path indicat.
@@ -857,8 +859,8 @@ public class ControladorPresentacio {
 	 * @throws InterruptedException 
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
-			boolean ignorarClausura) throws Exception {
-		return controladorConsultes.consulta(path, idNode, ignorarClausura);
+			boolean ignorarClausura, double min, double max) throws Exception {
+		return controladorConsultes.consulta(path, idNode, ignorarClausura, min, max);
 	}
 
 	/**

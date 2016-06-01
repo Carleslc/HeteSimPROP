@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -29,9 +30,15 @@ public class MenuPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ControladorPresentacio ctrl = new ControladorPresentacio();
-					MenuPrincipal frame = new MenuPrincipal(ctrl);
-					frame.setVisible(true);
+					new BounceProgressBarTaskFrame<ControladorPresentacio>(ControladorPresentacio.ICON_DISK,
+							"Iniciar programa", () -> {
+						return new ControladorPresentacio();
+					},
+					(ctrl) -> {
+						MenuPrincipal frame = new MenuPrincipal(ctrl);
+						frame.setVisible(true);
+						return true;
+					}, "Carregant dades...", "Benvingut!", "Error al carregar dades!").call();
 				} catch (Exception uncaught) {
 					new ErrorMessage(uncaught.getMessage());
 				}
@@ -41,8 +48,8 @@ public class MenuPrincipal extends JFrame {
 
 	public MenuPrincipal(ControladorPresentacio ctrl) {
 		this.ctrl = ctrl;
-		setDefaultStyle();
 		MenuPrincipal ref = this;
+		setIconImage(ControladorPresentacio.ICON_MAIN);
 		setBounds(100, 100, 255, 327);
 		setTitle("Menú Principal");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -52,12 +59,12 @@ public class MenuPrincipal extends JFrame {
 				int opt = JOptionPane.showConfirmDialog(ref, "Vols guardar els canvis abans de sortir?",
 						"Guardar dades", JOptionPane.YES_NO_CANCEL_OPTION);
 				switch (opt) {
-				case JOptionPane.YES_OPTION:
-					sortir(true);
-					break;
-				case JOptionPane.NO_OPTION:
-					sortir(false);
-					break;
+					case JOptionPane.YES_OPTION:
+						sortir(true);
+						break;
+					case JOptionPane.NO_OPTION:
+						sortir(false);
+						break;
 				}
 			}
 		});
@@ -105,7 +112,7 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btnNewButton_3);
 
 		// selector de conjunts
-		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector(this);
+		JComboBox<String> comboBox = ctrl.getSelectorConjunts().newSelector(ref);
 		comboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -167,8 +174,7 @@ public class MenuPrincipal extends JFrame {
 		} catch (Exception ignore) {}
 	}
 
-	private final void setDefaultStyle() {
-		setIconImage(ControladorPresentacio.ICON_MAIN);
+	public static final void setDefaultStyle() {
 		try {
 			// Nimbus L&F style
 			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");

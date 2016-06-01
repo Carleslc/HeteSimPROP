@@ -293,21 +293,25 @@ public class Consulta extends JFrame {
 				getNext(nextStep).run();
 		}
 		else {
-			int opt = JOptionPane.showConfirmDialog(contentPane, "<html>No s'ha detectat cap"
-					+ " clausura per la relació <b>" + path + "</b> i conjunt de dades <b>"
-					+ selector.getSelectedItem().toString()
-					+ "</b>,<br><i>Vols calcular la clausura <b>" + path
-					+ "</b> per agilitzar futures consultes?</i></html>", "Calcular clausura",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if (opt == JOptionPane.YES_OPTION)
-				calcularClausura(parent, path, getNext(nextStep));
-			else {
-				if (nextStep == StepConsulta.RESOLUCIO_THRESHOLD)
-					ignorarClausura = true;
-				else
-					ignorarClausura2 = true;
-				getNext(nextStep).run();
+			if (path != null && !path.isEmpty()) {
+				int opt = JOptionPane.showConfirmDialog(contentPane, "<html>No s'ha detectat cap"
+						+ " clausura per la relació <b>" + path + "</b> i conjunt de dades <b>"
+						+ selector.getSelectedItem().toString()
+						+ "</b>,<br><i>Vols calcular la clausura <b>" + path
+						+ "</b> per agilitzar futures consultes?</i></html>", "Calcular clausura",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				if (opt == JOptionPane.YES_OPTION)
+					calcularClausura(parent, path, getNext(nextStep));
+				else {
+					if (nextStep == StepConsulta.RESOLUCIO_THRESHOLD)
+						ignorarClausura = true;
+					else
+						ignorarClausura2 = true;
+					getNext(nextStep).run();
+				}
 			}
+			else
+				getNext(nextStep).run();
 		}
 	}
 	
@@ -370,8 +374,8 @@ public class Consulta extends JFrame {
 				() -> {
 					try {
 						parent.setEnabled(false);
-						if (thresholdPath == null)
-							ctrl.consulta(path, idDada, ignorarClausura);
+						if (thresholdPath == null || thresholdPath.isEmpty())
+							ctrl.consulta(path, idDada, ignorarClausura, min, max);
 						else
 							ctrl.consulta(path, idDada, idNodeThreshold1, idNodeThreshold2,
 									thresholdPath, min, max, ignorarClausura, ignorarClausuraThreshold);
@@ -467,6 +471,8 @@ public class Consulta extends JFrame {
 							if (idDada1 >= 0 && idDada2 >= 0)
 								enableConsultaButton(true);
 						}
+						else
+							enableConsultaButton(true);
 					}
 					else
 						enableConsultaButton(true);

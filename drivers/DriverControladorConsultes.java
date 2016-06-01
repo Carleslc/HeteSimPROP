@@ -200,7 +200,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix l'id del node amb el que vols fer la consulta: ");
 					id = nextInt();
 					println("El resultat de la consulta és:\n");
-					contrConsultes.consulta(path, id, false).forEach(Driver::println);
+					contrConsultes.consulta(path, id, false, 0, 1).forEach(Driver::println);
 					break;
 				}
 

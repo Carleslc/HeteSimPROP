@@ -148,10 +148,10 @@ public class Importar extends JFrame {
 		JFileChooser fc = new JFileChooser();
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fc.setCurrentDirectory(new File(System.getProperty("user.home")));
-		int ret = fc.showOpenDialog(new JPanel());
+		int ret = fc.showOpenDialog(this);
 		if (ret == JFileChooser.APPROVE_OPTION) {
 			return fc.getSelectedFile().getPath();
-		} 
+		}
 		else return null;
 	}
 }

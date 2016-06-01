@@ -100,7 +100,9 @@ public class ControladorConsultes {
 	 * @param idNode L'id del node del que es vol obtenir rellevàncies amb altres nodes.<br>
 	 * 			El node és del primer tipus de node del path.
 	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el càlcul.
-	 * @returns Retorna el resultat de la consulta,
+	 * @param min La rellevància mínima que han de tenir tots els nodes de la llista.
+	 * @param max La rellevància màxima que han de tenir tots els nodes de la llista.
+	 * @return Retorna el resultat de la consulta,
 	 * 			amb la llista de totes les rellevancies i els noms dels nodes
 	 * 			(de l'últim tipus de node del path) rellevants pel node
 	 * 			identificat per idNode.
@@ -109,7 +111,7 @@ public class ControladorConsultes {
 	 * @throws InterruptedException 
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
-			boolean ignorarClausura) throws IllegalArgumentException, InterruptedException, IOException {
+			boolean ignorarClausura, double min, double max) throws IllegalArgumentException, InterruptedException, IOException {
 		
 		if (!exists(path)) throw new IllegalArgumentException("El path no existeix.");
 
@@ -118,7 +120,8 @@ public class ControladorConsultes {
 
 		ArrayList<Pair<Double, Node>> res = llistaResultats(n, path, 0d, ignorarClausura);
 
-		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res);
+		Resultat r = new Resultat(n, path, controladorPaths, controladorMultigraf.getIdActual(), res)
+				.filtrarPerRellevancia(min, max, true);
 		Date d = new Date();
 		resultats.put(d, r);
 		ultimaConsulta = d;
@@ -140,7 +143,7 @@ public class ControladorConsultes {
 	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el càlcul del threshold.
 	 * @param min la mínima rellevància que ha de tenir qualsevol resultat que es retorni
 	 * @param max la màxima rellevància que ha de tenir qualsevol resultat que es retorni
-	 * @returns Retorna el resultat de la consulta,
+	 * @return Retorna el resultat de la consulta,
 	 * 			amb la llista de totes les rellevancies i els noms dels nodes
 	 * 			(de l'últim tipus de node del path) rellevants pel node
 	 * 			identificat per idNode que passen el threshold.
@@ -172,7 +175,7 @@ public class ControladorConsultes {
 	/**
 	 * Esborra la consulta indicada.
 	 * @param data La data la consulta de la qual volem esborrar.
-	 * @returns Retorna cert si s'ha pogut esborrar la consulta (existeix una consulta amb la data indicada)
+	 * @return Retorna cert si s'ha pogut esborrar la consulta (existeix una consulta amb la data indicada)
 	 * 			i fals altrament.
 	 */
 	public boolean esborrarConsulta(Date data) {

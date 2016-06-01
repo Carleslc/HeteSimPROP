@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import java.awt.CardLayout;
@@ -23,26 +21,6 @@ public class TaskConsole<V> extends JFrame implements Callable<Void> {
 	private TaskListener<V> listener;
 	
 	private JTextArea textArea;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new TaskConsole<>("Test", () -> {
-						for (int i = 1; i <= 100; ++i) {
-							System.err.println(i + "%");
-							try { Thread.sleep(50); } catch (Exception ignore) {}
-						}
-						System.err.println("Done!");
-						try { Thread.sleep(1000); } catch (Exception ignore) {}
-						return null;
-					}).call();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 	
 	public TaskConsole(String title, Callable<V> task) {
 		this(null, title, task, null);

@@ -1,8 +1,6 @@
 package presentacio;
 
 import java.awt.Dimension;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -65,34 +63,13 @@ public class Resultats extends JFrame {
 	private JTable table;
 	private ArrayList<Entry<Double, Entry<Integer, String>>> resultat;
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacio ctrl = new ControladorPresentacio();
-					ctrl.afegir("AP");
-					ctrl.afegirGraf("test");
-					int na = ctrl.afegirAutor("anna");
-					int np = ctrl.afegirPaper("El misterio del bug");
-					ctrl.afegirPaper("hola");
-					ctrl.afegirLabelPaper("Database", np);
-					ctrl.afegirAdjacenciaPaperAutor(np, na);
-					ctrl.consulta("AP", na, false);
-					Resultats frame = new Resultats(ctrl);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
 	/**
 	 * Constructor.
 	 * @param ctrl. El ControladorPresentacio del programa.
 	 */
 	public Resultats(ControladorPresentacio ctrl) {
 		this.ctrl = ctrl;
+		JFrame ref = this;
 		resultat = ctrl.consultarResultat();
 		setTitle("Resultats");
 		setIconImage(ControladorPresentacio.ICON_MAIN);
@@ -100,7 +77,6 @@ public class Resultats extends JFrame {
 		Dimension min = new Dimension(650, 300);
 		setMinimumSize(min);
 		setBounds(100, 100, min.width, 450);
-		JFrame ref = this;
 		
 		//contentPane
 		contentPane = new JPanel();
@@ -139,7 +115,7 @@ public class Resultats extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				JFileChooser exportar = new JFileChooser();
 				exportar.setCurrentDirectory(new File(System.getProperty("user.home")));
-				int option = exportar.showSaveDialog(contentPane);
+				int option = exportar.showSaveDialog(ref);
 				if (option == JFileChooser.APPROVE_OPTION) {
 					String file = exportar.getSelectedFile().toString();
 					try {

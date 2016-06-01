@@ -1,7 +1,5 @@
 package presentacio;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -46,21 +44,6 @@ public class EsborrarDada extends JFrame {
 	private static final String[] colnames = {"ID", "Nom", "Informació Adicional"};
 	private static final String[] tipus = {"Selecciona el tipus de dada", "Autor", "Conferencia", "Terme", "Paper"};
 	private JTable table;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ControladorPresentacio cntrl = new ControladorPresentacio();
-					cntrl.importar("GRAF", "D:\\Descargas\\DBLP_four_area\\DBLP_four_area");
-					EsborrarDada frame = new EsborrarDada(cntrl);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public EsborrarDada(ControladorPresentacio cntrl) {
 		this.cntrl = cntrl;
