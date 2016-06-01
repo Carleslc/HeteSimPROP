@@ -782,7 +782,7 @@ public class ModificarDada extends JFrame {
 	ArrayList<Integer> adjAmbTerme (ArrayList<Integer> posibles) {
 		ArrayList<Integer> res = new ArrayList<>();
 		for (Integer terme : posibles) {
-			if (cntrl.existeixRelacioPaperAutor(selectedID, terme))
+			if (cntrl.existeixRelacioPaperTerme(selectedID, terme))
 				res.add(terme);
 		}
 		return res;
