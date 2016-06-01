@@ -199,7 +199,7 @@ public class DriverControladorConsultes extends Driver {
 					path = nextWord();
 					print("Introdueix l'id del node amb el que vols fer la consulta: ");
 					id = nextInt();
-					println("El resultat de la consulta és:\n");
+					println("El resultat de la consulta \u00E9s:\n");
 					contrConsultes.consulta(path, id, false, 0, 1).forEach(Driver::println);
 					break;
 				}
@@ -215,7 +215,7 @@ public class DriverControladorConsultes extends Driver {
 					int idT1 = nextInt();
 					print("Introdueix l'id del primer node del threshold: ");
 					int idT2 = nextInt();
-					println("El resultat de la consulta és:\n");
+					println("El resultat de la consulta \u00E9s:\n");
 					contrConsultes.consulta(path, id, idT1, idT2, pathT, 0, 1, false, false)
 						.forEach(Driver::println);
 					break;
@@ -227,7 +227,7 @@ public class DriverControladorConsultes extends Driver {
 					break;
 
 				case 4:
-					println("El resultat de l'\u00FAltima consulta és:");
+					println("El resultat de l'\u00FAltima consulta \u00E9s:");
 					println(contrConsultes.consultarResultat());
 					break;
 
@@ -235,7 +235,7 @@ public class DriverControladorConsultes extends Driver {
 					println("Introdueix una data amb el format dd/MM/yy HH:mm");
 					SimpleDateFormat df = new SimpleDateFormat();
 					Date d = df.parse(nextLine());
-					println("El resultat de la data " + d + "és:");
+					println("El resultat de la data " + d + "\u00E9s:");
 					println(contrConsultes.consultarResultat(d));
 					break;
 				}
@@ -310,7 +310,7 @@ public class DriverControladorConsultes extends Driver {
 				}
 
 				case 14:
-					println("El node del resultat de l'\u00FAltima consulta és de tipus " + contrConsultes.getTipusNode());
+					println("El node del resultat de l'\u00FAltima consulta \u00E9s de tipus " + contrConsultes.getTipusNode());
 					break;
 
 				case 15: {
@@ -319,7 +319,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix la nova rellev\u00E0ncia: ");
 					double rellevancia = nextDouble();
 					if (contrConsultes.setRellevancia(index, rellevancia))
-						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. La nova rellev\u00E0ncia és " + rellevancia);
+						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. La nova rellev\u00E0ncia \u00E9s " + rellevancia);
 					else
 						println("No s'ha pogut modificar la rellev\u00E0ncia del resultat n\u00FAmero " + index);
 					break;
@@ -331,7 +331,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix l'id del nou node: ");
 					id = nextInt();
 					if(contrConsultes.setDada(index, id))
-						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. L'id del nou node és " + id);
+						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. L'id del nou node \u00E9s " + id);
 					else
 						println("No s'ha pogut modificar el node del resultat n\u00FAmero " + index);
 					break;
@@ -343,7 +343,7 @@ public class DriverControladorConsultes extends Driver {
 					print("Introdueix el nou nom: ");
 					nom = nextLine();
 					if(contrConsultes.canviarNom(index, nom))
-						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. El noou nom és " + nom);
+						println("S'ha modificat el resultat n\u00FAmero " + index + "de l'\u00FAltima consulta. El noou nom \u00E9s " + nom);
 					else
 						println("No s'ha pogut modificar el nom del resultat n\u00FAmero " + index);
 					break;

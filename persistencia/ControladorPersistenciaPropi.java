@@ -27,10 +27,10 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 	/**
 	 * Consulta els noms de tots els grafs disponibles en un directori recursivament.
 	 * <br>Es considerar\u00E0n grafs els fitxers amb el format <code>graf_NOM.dat</code>
-	 * on <code>NOM</code> Ès el que s'afegeix a la llista de noms retornada.
+	 * on <code>NOM</code> \u00E9s el que s'afegeix a la llista de noms retornada.
 	 * @param dir el directori dels grafs
 	 * @return una llista amb tots els noms de tots els grafs disponibles a <b>dir</b>
-	 * @throws FileNotFoundException si dir Ès null o no Ès un directori
+	 * @throws FileNotFoundException si dir \u00E9s null o no \u00E9s un directori
 	 */
 	public static List<String> getNomsGrafs(String dir) throws FileNotFoundException {
 		if (dir == null)
@@ -41,7 +41,7 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 		List<String> noms = new LinkedList<>();
 		if (d.exists()) {
 			if (!d.isDirectory())
-				throw new FileNotFoundException(dir + " no Ès un directori!");
+				throw new FileNotFoundException(dir + " no \u00E9s un directori!");
 
 			for (File f : d.listFiles()) {
 				if (!f.isDirectory()) {
@@ -61,7 +61,7 @@ public abstract class ControladorPersistenciaPropi extends ControladorPersistenc
 	 * Guarda els resultats a un fitxer corresponent al path donat.
 	 * @param filesystem_path Path del sistema que indica el fitxer a on es volen guardar els resultats.
 	 * @param resultats Conjunt de resultats a guardar.
-	 * @throws IOException Si no es pot escriure al fitxer, llen√ßar\u00E1 una IOException.
+	 * @throws IOException Si no es pot escriure al fitxer, llen\u00E7ar\u00E1 una IOException.
 	 */
 	public static void guardarResultats(String filesystem_path, TreeMap<Date, Resultat> resultats) throws IOException {
 		FileOutputStream file = new FileOutputStream(filesystem_path, false);

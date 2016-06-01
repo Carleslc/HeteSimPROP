@@ -65,7 +65,7 @@ public class ControladorConsultes {
 	/**
 	 * Modificadora de la \u00FAltima consulta
 	 * @param date la data de la consulta
-	 * @throws IllegalArgumentException si date és null o no existeix cap consulta en date
+	 * @throws IllegalArgumentException si date \u00E9s null o no existeix cap consulta en date
 	 */
 	public void setUltimaConsulta(Date date) throws IllegalArgumentException {
 		if (date == null || !resultats.containsKey(date))
@@ -99,7 +99,7 @@ public class ControladorConsultes {
 	 * Realitza una consulta de rellev\u00E0ncies a partir d'un node i un path.
 	 * @param path El nom del path que es vol fer servir per calcular rellev\u00E0ncies.
 	 * @param idNode L'id del node del que es vol obtenir rellev\u00E0ncies amb altres nodes.<br>
-	 * 			El node és del primer tipus de node del path.
+	 * 			El node \u00E9s del primer tipus de node del path.
 	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul.
 	 * @param min La rellev\u00E0ncia m\u00EDnima que han de tenir tots els nodes de la llista.
 	 * @param max La rellev\u00E0ncia m\u00E0xima que han de tenir tots els nodes de la llista.
@@ -134,11 +134,11 @@ public class ControladorConsultes {
 	 * i fent servir un threshold com a filtre.
 	 * @param path El nom del path que es vol fer servir per calcular rellev\u00E0ncies.
 	 * @param idNode L'id del node del que es vol obtenir rellev\u00E0ncies amb altres nodes.<br>
-	 * El node és del primer tipus de node del path.
+	 * El node \u00E9s del primer tipus de node del path.
 	 * @param idNodeThreshold1 L'id del primer node del threshold.<br>
-	 * El node és del primer tipus de node del path del threshold.
+	 * El node \u00E9s del primer tipus de node del path del threshold.
 	 * @param idNodeThreshold2 L'id del segon node del threshold.<br>
-	 * El node és de l'\u00FAltim tipus de node del path del threshold.
+	 * El node \u00E9s de l'\u00FAltim tipus de node del path del threshold.
 	 * @param thresholdPath El nom del path del threshold.
 	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul.
 	 * @param ignorarClausuraThreshold Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
@@ -149,7 +149,7 @@ public class ControladorConsultes {
 	 * 			(de l'\u00FAltim tipus de node del path) rellevants pel node
 	 * 			identificat per idNode que passen el threshold.
 	 * @throws IllegalArgumentException si no existeixen el path o el node indicats
-	 * 			o bé algun dels nodes o el path del threshold no existeixen.
+	 * 			o b\u00E9 algun dels nodes o el path del threshold no existeixen.
 	 * @throws IOException
 	 */
 	public ArrayList<Entry<Double, Entry<Integer, String>>> consulta(String path, int idNode,
@@ -187,7 +187,7 @@ public class ControladorConsultes {
 	}
 	
 	/**
-	 * Obté els n primers resultats
+	 * Obt\u00E9 els n primers resultats
 	 * @param n nombre de resultats amb mes rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
 	 * si es posa a false l'ultim resultat no es veur\u00E0 modificat.
@@ -199,7 +199,7 @@ public class ControladorConsultes {
 	}
 
 	/**
-	 * Obté els n ultims resultats
+	 * Obt\u00E9 els n ultims resultats
 	 * @param n nombre de resultats amb menys rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
 	 * si es posa a false l'ultim resultat no es veur\u00E0 modificat.
@@ -211,7 +211,7 @@ public class ControladorConsultes {
 	}
 
 	/**
-	 * Obté tots els resultats que tenen el node amb l'etiqueta label.
+	 * Obt\u00E9 tots els resultats que tenen el node amb l'etiqueta label.
 	 * @param label de les tuples del resultat que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
 	 * si es posa a false l'ultim resultat no es veur\u00E0 modificat.
@@ -223,7 +223,7 @@ public class ControladorConsultes {
 	}
 
 	/**
-	 * Obté tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
+	 * Obt\u00E9 tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
 	 * @param min es el minim de rellevancia
 	 * @param max es el maxim de rellevancia
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
@@ -248,7 +248,7 @@ public class ControladorConsultes {
 	 * Afegeix a l'\u00FAltima consulta un resultat amb la rellev\u00E0ncia i el node indicats.
 	 * @param rellevancia. La rellev\u00E0ncia del node que s'afegeix.
 	 * @param idNode L'id del node que s'afegeix.
-	 * 			El node és de l'\u00FAltim tipus de node del path de l'\u00FAltima consulta.
+	 * 			El node \u00E9s de l'\u00FAltim tipus de node del path de l'\u00FAltima consulta.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta
 	 * 			o si no existeix el node indicat.
 	 */
@@ -290,8 +290,8 @@ public class ControladorConsultes {
 	}
 	
 	/**
-	 * Consulta si la \u00FAltima consulta té threshold.
-	 * @return si la \u00FAltima consulta té threshold.
+	 * Consulta si la \u00FAltima consulta t\u00E9 threshold.
+	 * @return si la \u00FAltima consulta t\u00E9 threshold.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public boolean hasThreshold() throws IllegalArgumentException {
@@ -300,7 +300,7 @@ public class ControladorConsultes {
 	
 	/**
 	 * Consultora del path del threshold de l'\u00FAltima consulta.
-	 * @returns Retorna el path de la consulta o null si la consulta no té threshold.
+	 * @returns Retorna el path de la consulta o null si la consulta no t\u00E9 threshold.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public String getPathThreshold() throws IllegalArgumentException {
@@ -311,7 +311,7 @@ public class ControladorConsultes {
 	/**
 	 * Consultora de les dades del threshold de l'\u00FAltima consulta.
 	 * @returns Retorna els noms de les dades del threshold sobre la que s'ha fet la consulta
-	 * o null si la consulta no té threshold.
+	 * o null si la consulta no t\u00E9 threshold.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public Entry<String, String> getDadesThreshold() throws IllegalArgumentException {
@@ -326,7 +326,7 @@ public class ControladorConsultes {
 	/**
 	 * Consultora de la rellev\u00E0ncia del threshold de l'\u00FAltima consulta.
 	 * @returns Retorna la rellev\u00E0ncia del threshold sobre la que s'ha fet la consulta
-	 * o 1 o null si la consulta no té threshold.
+	 * o 1 o null si la consulta no t\u00E9 threshold.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
 	 */
 	public double getRellevanciaThreshold() throws IllegalArgumentException {
@@ -350,8 +350,8 @@ public class ControladorConsultes {
 
 	/**
 	 * Modifica la rellev\u00E0ncia del resultat indicat de l'\u00FAltima consulta.
-	 * S'ha de tenir en compte que després d'aquesta crida si retorna cert llavors
-	 * és probable que aquesta posici\u00F3 hagi canviat degut a l'ordre dels resultats.
+	 * S'ha de tenir en compte que despr\u00E9s d'aquesta crida si retorna cert llavors
+	 * \u00E9s probable que aquesta posici\u00F3 hagi canviat degut a l'ordre dels resultats.
 	 * @param index La posici\u00F3 del resultat que es vol modificar.
 	 * @param rellevancia La rellevancia per la qual es vol modificar l'actual.
 	 * @returns Retorna cert si s'ha pogut modificar el resultat
@@ -367,7 +367,7 @@ public class ControladorConsultes {
 	 * Modifica la dada del resultat indicat de l'\u00FAltima consulta.
 	 * @param index La posici\u00F3 del resultat que es vol modificar.
 	 * @param idNode L'id del node pel qual es vol modificar l'actual.
-	 * 			El node és de l'\u00FAltim tipus de node del path de l'\u00FAltima consulta.
+	 * 			El node \u00E9s de l'\u00FAltim tipus de node del path de l'\u00FAltima consulta.
 	 * @returns Retorna cert si s'ha pogut modificar el resultat
 	 * 			(index es troba dins d'un rang correcte i el node existeix)
 	 * 			i fals altrament.
@@ -401,9 +401,9 @@ public class ControladorConsultes {
 	/**
 	 * Modifica el threshold de l'\u00FAltima consulta i ref\u00E0 la consulta.
 	 * @param idNode1 L'id del primer node del nou threshold.<br>
-	 * 			El node és del primer tipus de node del path del threshold.
+	 * 			El node \u00E9s del primer tipus de node del path del threshold.
 	 * @param idNode2 L'id del segon node del nou threshold.<br>
-	 * 			El node és de l'\u00FAltim tipus de node del path del threshold.
+	 * 			El node \u00E9s de l'\u00FAltim tipus de node del path del threshold.
 	 * @param path El nom del path del nou threshold.
 	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta.
@@ -423,9 +423,9 @@ public class ControladorConsultes {
 	 * Modifica el path i la dada de l'\u00FAltima consulta i ref\u00E0 la consulta.
 	 * @param path El nom del path pel qual es vol modificar l'actual.
 	 * @param id L'id del node pel qual es vol modificar l'actual.<br>
-	 * 			El node és del primer tipus de node de path.
+	 * 			El node \u00E9s del primer tipus de node de path.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta, 
-	 * 			o bé no existeixen el path o el node indicats.
+	 * 			o b\u00E9 no existeixen el path o el node indicats.
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
@@ -450,9 +450,9 @@ public class ControladorConsultes {
 	/**
 	 * Modifica la dada de l'\u00FAltima consulta i ref\u00E0 la consulta.
 	 * @param id L'id del node pel qual es vol modificar l'actual.
-	 * 			El node és del primer tipus de node del path de l'\u00FAltima consulta.
+	 * 			El node \u00E9s del primer tipus de node del path de l'\u00FAltima consulta.
 	 * @throws IllegalArgumentException si no existeix una \u00FAltima consulta,
-	 * 			o bé no existeix el node indicat.
+	 * 			o b\u00E9 no existeix el node indicat.
 	 * @throws IOException 
 	 * @throws InterruptedException 
 	 */
@@ -510,7 +510,7 @@ public class ControladorConsultes {
 	/**
 	 * Carrega totes les consultes del fitxer per defecte.
 	 * @throws IOException si no existeix el fitxer per defecte
-	 * o si no es pot llegir o no té el format correcte.
+	 * o si no es pot llegir o no t\u00E9 el format correcte.
 	 */
 	public void carregarResultats() throws IOException {
 		resultats = ControladorPersistenciaPropi.carregarResultats(DEFAULT_PATH_RESULTATS);
@@ -562,9 +562,9 @@ public class ControladorConsultes {
 	/**
 	 * Crea un threshold amb el path i els nodes indicats.
 	 * @param idNode1 L'id del primer node del threshold.
-	 * 			El node és del primer tipus de node de path.
+	 * 			El node \u00E9s del primer tipus de node de path.
 	 * @param idNode2 L'id del segon node del threshold.
-	 * 			El node és de l'\u00FAltim tipus de node de path.
+	 * 			El node \u00E9s de l'\u00FAltim tipus de node de path.
 	 * @param path El nom del path del threshold.
 	 * @param ignorarClausura Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
 	 * @returns Retorna el threshold que s'ha creat.

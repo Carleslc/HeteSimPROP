@@ -89,7 +89,7 @@ public class ControladorPresentacio {
 	/**
 	 * Afegeix un autor al graf actual i retorna el seu identificador intern.
 	 * @param nom de l'autor a afegir
-	 * @param label que tindrà l'autor
+	 * @param label que tindr\u00E0 l'autor
 	 * @return el seu identificador intern
 	 * @throws IOException si hi ha un error invalidant clausures
 	 */
@@ -121,7 +121,7 @@ public class ControladorPresentacio {
 	/**
 	 * Afegeix una conferència al graf actual i retorna el seu identificador intern.
 	 * @param nom de la conferencia a afegir
-	 * @param label que tindrà la conferencia
+	 * @param label que tindr\u00E0 la conferencia
 	 * @return el seu identificador intern
 	 * @throws IOException si hi ha un error invalidant clausures
 	 */
@@ -131,7 +131,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Afegeix una etiqueta a una conferencia del graf i retorna el seu identificador intern.
-	 * Llençara una excepci\u00F3 en cas de que conferencia no existeixi en el graf actual.
+	 * Llen\u00E7ara una excepci\u00F3 en cas de que conferencia no existeixi en el graf actual.
 	 * @param label que es vol afegir
 	 * @param idConferencia es l'id de la conferencia
 	 * @return identificador intern de la conferencia
@@ -154,7 +154,7 @@ public class ControladorPresentacio {
 	/**
 	 * Afegeix un paper al graf actual i retorna el seu identificador intern.
 	 * @param nom del paper a afegir
-	 * @param label que tindrà el paper
+	 * @param label que tindr\u00E0 el paper
 	 * @return el seu identificador intern
 	 * @throws IOException si hi ha un error invalidant clausures
 	 */
@@ -164,7 +164,7 @@ public class ControladorPresentacio {
 
 	/**
 	 * Afegeix una etiqueta a un paper del graf i retorna el seu identificador intern.
-	 *  Llençarà una excepci\u00F3 en cas de que paper no existeixi en el graf actual.
+	 *  Llen\u00E7ar\u00E0 una excepci\u00F3 en cas de que paper no existeixi en el graf actual.
 	 * @param label que es vol afegir
 	 * @param idPaper es l'id del paper
 	 * @return identificador intern del paper
@@ -658,10 +658,10 @@ public class ControladorPresentacio {
 	}
 
 	/**
-	 * Importa i crea un graf que tindrà el nom donat mitjançant els fitxers
-	 * del directori que es passen com a paràmetre (autors, papers, conferències, 
+	 * Importa i crea un graf que tindr\u00E0 el nom donat mitjan\u00E7ant els fitxers
+	 * del directori que es passen com a par\u00E0metre (autors, papers, conferències, 
 	 * labels i relacions). Aquest graf s’estableix com l’actual. 
-	 * El graf passa a ser el graf importat i idActual passarà a ser nomGraf.
+	 * El graf passa a ser el graf importat i idActual passar\u00E0 a ser nomGraf.
 	 * @param nomGraf que és el nom del nou Graf importat
 	 * @param directori on es troben els fitxers a patir dels quals es fa la importaci\u00F3.
 	 * @throws IOException en cas de que algun fitxer no tingui el format correcte 
@@ -721,29 +721,29 @@ public class ControladorPresentacio {
 
 	//**************funcions de controladorGraf****************
 
-	/** Retorna una llista amb els identificadors de tots els papers amb el nom del paràmetre.
-	 * @retrun Retorna una llista amb els identificadors de tots els papers amb el nom del paràmetre.
+	/** Retorna una llista amb els identificadors de tots els papers amb el nom del par\u00E0metre.
+	 * @retrun Retorna una llista amb els identificadors de tots els papers amb el nom del par\u00E0metre.
 	 */
 	public List<Integer> consultarPaper(String nom){
 		return controladorMultigraf.consultarPaper(nom);
 	}
 
-	/** Retorna una llista amb els identificadors de totes les conferències amb el nom del paràmetre.
-	 * @retrun Retorna una llista amb els identificadors de totes les conferències amb el nom del paràmetre.
+	/** Retorna una llista amb els identificadors de totes les conferències amb el nom del par\u00E0metre.
+	 * @retrun Retorna una llista amb els identificadors de totes les conferències amb el nom del par\u00E0metre.
 	 */
 	public List<Integer> consultarConferencia(String nom){
 		return controladorMultigraf.consultarConferencia(nom);	    
 	}
 
-	/** Retorna una llista amb els identificadors de tots els termes amb el nom del paràmetre.
-	 * @retrun Retorna una llista amb els identificadors de tots els termes amb el nom del paràmetre.
+	/** Retorna una llista amb els identificadors de tots els termes amb el nom del par\u00E0metre.
+	 * @retrun Retorna una llista amb els identificadors de tots els termes amb el nom del par\u00E0metre.
 	 */
 	public List<Integer> consultarTerme(String nom){
 		return controladorMultigraf.consultarTerme(nom);
 	}
 
-	/** Retorna una llista amb els identificadors de tots els autors amb el nom del paràmetre.
-	 * @retrun Retorna una llista amb els identificadors de tots els autors amb el nom del paràmetre.
+	/** Retorna una llista amb els identificadors de tots els autors amb el nom del par\u00E0metre.
+	 * @retrun Retorna una llista amb els identificadors de tots els autors amb el nom del par\u00E0metre.
 	 */
 	public List<Integer> consultarAutor(String nom){
 		return controladorMultigraf.consultarAutor(nom);

@@ -163,17 +163,17 @@ public class DriverThreshold extends Driver {
 				}
 
 				case 2:
-					println("El path del threshold és: " + t.getPath());
+					println("El path del threshold \u00E9s: " + t.getPath());
 					break;
 
 				case 3:
-					println("La rellev\u00E0ncia és: " + t.getRellevancia());
+					println("La rellev\u00E0ncia \u00E9s: " + t.getRellevancia());
 					break;
 
 				case 4: {
 					print("Introdueix la nova rellev\u00E0ncia: ");
 					t.setRellevancia(nextDouble());
-					println("La rellev\u00E0ncia s'ha modificat. La nova rellev\u00E0ncia és " + t.getRellevancia());
+					println("La rellev\u00E0ncia s'ha modificat. La nova rellev\u00E0ncia \u00E9s " + t.getRellevancia());
 					break;
 				}
 

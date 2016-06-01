@@ -152,7 +152,7 @@ public class AfegirResultat extends JFrame {
 
 
 	/**
-	 * Métode per obtenir els noms de totes les dades del tipus indicat.
+	 * M\u00E9tode per obtenir els noms de totes les dades del tipus indicat.
 	 * @return un array amb els noms de totes les dades del conjunt de dades actual que siguin
 	 * 			del tipus indicat per l'atibut tipus de la classe, sense repeticions.
 	 */
@@ -181,7 +181,7 @@ public class AfegirResultat extends JFrame {
 	}
 
 	/**
-	 * Métode per obtenir els identificadors de totes les dades del tipus indicat amb un nom concret.
+	 * M\u00E9tode per obtenir els identificadors de totes les dades del tipus indicat amb un nom concret.
 	 * @param nom. El nom de les dades de les quals volem obtenir els identificadors.
 	 * @return una llista amb els identificadors de totes les dades del conjunt de dades actual
 	 * 			que tenen el nom indicat i que s\u00F3n del tipus indicat per l'atribut tipus de la classe.
@@ -235,8 +235,8 @@ public class AfegirResultat extends JFrame {
 	}
 	
 	/**
-	 * Métode per consultar si el resultat que volem afegir ja forma part de l\u00FAltima consulta.
-	 * @return cert si l'atribut de la classe id és l'identificador d'algun resultat de
+	 * M\u00E9tode per consultar si el resultat que volem afegir ja forma part de l\u00FAltima consulta.
+	 * @return cert si l'atribut de la classe id \u00E9s l'identificador d'algun resultat de
 	 * 			l'\u00FAltima consulta, i fals altrament.
 	 */
 	private boolean jaAfegit() {

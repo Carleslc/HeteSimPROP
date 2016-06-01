@@ -169,7 +169,7 @@ public class ModificarResultat extends JFrame {
 
 	
 	/**
-	 * Métode per obtenir els noms de totes les dades del tipus indicat.
+	 * M\u00E9tode per obtenir els noms de totes les dades del tipus indicat.
 	 * @return un array amb els noms de totes les dades del conjunt de dades actual que siguin
 	 * 			del tipus indicat per l'atibut tipus de la classe, sense repeticions.
 	 */
@@ -198,7 +198,7 @@ public class ModificarResultat extends JFrame {
 	}
 	
 	/**
-	 * Métode per obtenir els identificadors de totes les dades del tipus indicat amb un nom concret.
+	 * M\u00E9tode per obtenir els identificadors de totes les dades del tipus indicat amb un nom concret.
 	 * @param dada. El nom de les dades de les quals volem obtenir els identificadors.
 	 * @return una llista amb els identificadors de totes les dades del conjunt de dades actual
 	 * 			que tenen el nom indicat i que s\u00F3n del tipus indicat per l'atribut tipus de la classe.

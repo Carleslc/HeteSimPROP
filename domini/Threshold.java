@@ -7,8 +7,8 @@ import java.io.Serializable;
 /**
  * Classe que implementa un threshold que es podr\u00E0 fer servir per filtrar resultats
  * d'una consulta segons la rellevancia de dos nodes.
- * Conté informaci\u00F3 sobre els dos nodes, el nom d'un path i una rellev\u00E0ncia
- * (una introduïda expl\u00EDcitament o bé la rellev\u00E0ncia entre els dos nodes
+ * Cont\u00E9 informaci\u00F3 sobre els dos nodes, el nom d'un path i una rellev\u00E0ncia
+ * (una introduïda expl\u00EDcitament o b\u00E9 la rellev\u00E0ncia entre els dos nodes
  * segons el path fent servir el HeteSim del graf amb el que s'est\u00E0 treballant).
  * 
  * @author Carla Claverol
@@ -46,9 +46,9 @@ public class Threshold implements Serializable {
 	 * @param path. El nom del Path del Threshold.
 	 * @param hs. El HeteSim del Graf amb el que estem treballant.
 	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el c\u00E0lcul del threshold.
-	 * @throws IllegalArgumentException si path és null o bé si el Node a
-	 * 			no és del tipus indicat pel primer tipus de node de path o bé si
-	 * 			el Node b no és del tipus indicat per l'\u00FAlitm tipus de node de path.
+	 * @throws IllegalArgumentException si path \u00E9s null o b\u00E9 si el Node a
+	 * 			no \u00E9s del tipus indicat pel primer tipus de node de path o b\u00E9 si
+	 * 			el Node b no \u00E9s del tipus indicat per l'\u00FAlitm tipus de node de path.
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */
 	public Threshold(Node a, Node b, String path, HeteSim hs, boolean ignorarClausura)
@@ -111,7 +111,7 @@ public class Threshold implements Serializable {
 	 * @param ignorarClausura. Indica si es vol ignorar la clausura al fer el c\u00E0lcul de rellev\u00E0ncia.
 	 * @return Retorna la rellev\u00E0ncia entre els dos Nodes del Threshold
 	 * 			segons el Path d'aquest.
-	 * @throws IllegalArgumentException si el nom del path és null o bé si
+	 * @throws IllegalArgumentException si el nom del path \u00E9s null o b\u00E9 si
 	 * 			algun dels Nodes no es correspon amb el path.
 	 * @throws IOException si la clausura existeix i no es pot llegir
 	 */

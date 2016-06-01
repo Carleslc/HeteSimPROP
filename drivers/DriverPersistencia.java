@@ -175,7 +175,7 @@ public class DriverPersistencia extends Driver {
 			print("Columnes de la matriu de " + nomClausura + ": ");
 			int c = nextInt();
 			Matriu clausura = new Matriu(f, c, 0d);
-			println("Introdueix tots els valors de la matriu per files (decimals amb comes). Afegeix un enter després de cada valor:");
+			println("Introdueix tots els valors de la matriu per files (decimals amb comes). Afegeix un enter despr\u00E9s de cada valor:");
 			for (int ii = 0; ii < f; ++ii) {
 				for (int jj = 0; jj < c; ++jj)
 					clausura.set(ii, jj, nextDouble());

@@ -244,7 +244,7 @@ public class DriverHeteSim extends Driver {
 		
 		HeteSim hs = new HeteSim(g);
 		
-		println("Mitjançant llistes");
+		println("Mitjan\u00E7ant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaAutor(); ++j)
 				print(String.format(Locale.UK, "%.2f", hs.heteSim(g.consultarPaper(i), g.consultarAutor(j), path)) + (j < g.consultaMidaAutor() - 1 ? ", " : ""));
@@ -255,7 +255,7 @@ public class DriverHeteSim extends Driver {
 		for (int i = 0; i < g.consultaMidaPaper(); ++i)
 			printAmbID(hs.heteSimAmbIdentificadors(g.consultarPaper(i), path), i, path);
 		
-		println("\nMitjançant clausura");
+		println("\nMitjan\u00E7ant clausura");
 		print(hs.clausura(path));
 		
 		println("\nHeteSim amb Noms");
@@ -281,7 +281,7 @@ public class DriverHeteSim extends Driver {
 		
 		HeteSim hs = new HeteSim(g);
 		
-		println("Mitjançant llistes");
+		println("Mitjan\u00E7ant llistes");
 		for (int i = 0; i < g.consultaMidaPaper(); ++i) {
 			for (int j = 0; j < g.consultaMidaPaper(); ++j)
 				try {
@@ -297,7 +297,7 @@ public class DriverHeteSim extends Driver {
 		for (int i = 0; i < g.consultaMidaPaper(); ++i)
 			printAmbID(hs.heteSimAmbIdentificadors(g.consultarPaper(i), path), i, path);
 		
-		println("\nMitjançant clausura");
+		println("\nMitjan\u00E7ant clausura");
 		print(hs.clausura(path));
 		
 		println("\nHeteSim amb Noms");

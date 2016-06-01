@@ -31,24 +31,24 @@ public class DriverPair extends Driver {
 					break;
 
 				case 1:
-					println("La clau del pair és: " + p.getKey());
+					println("La clau del pair \u00E9s: " + p.getKey());
 					break;
 
 				case 2:
-					println("El valor del pair és: " + p.getValue());
+					println("El valor del pair \u00E9s: " + p.getValue());
 					break;
 
 				case 3: {
 					print("Introdueix la nova clau del pair(double): ");
 					p.setKey(nextDouble());
-					println("La clau s'ha modificat. La nova clau és " + p.getKey());
+					println("La clau s'ha modificat. La nova clau \u00E9s " + p.getKey());
 					break;
 				}
 
 				case 4: {
 					print("Introdueix el nou valor del pair(string): ");
 					String old = p.setValue(nextLine());
-					println("El valor s'ha modificat. L'antic valor és " + old + " i el nou valor és " + p.getValue());
+					println("El valor s'ha modificat. L'antic valor \u00E9s " + old + " i el nou valor \u00E9s " + p.getValue());
 					break;
 				}
 
@@ -61,14 +61,14 @@ public class DriverPair extends Driver {
 					println("Pair1: key = " + p.getKey() + ", value = " + p.getValue());
 					println("Pair2: key = " + p2.getKey() + ", value = " + p2.getValue());
 					int comp = p.compareTo(p2);
-					if (comp > 0) println("El Pair2 és més gran que el Pair1.");
-					else if (comp < 0) println("El Pair2 és més petit que el Pair1.");
-					else println("El Pair2 és igual que el Pair1.");
+					if (comp > 0) println("El Pair2 \u00E9s m\u00E9s gran que el Pair1.");
+					else if (comp < 0) println("El Pair2 \u00E9s m\u00E9s petit que el Pair1.");
+					else println("El Pair2 \u00E9s igual que el Pair1.");
 					break;
 				}
 
 				case 6:
-					println("El pair és: " + p.toString());
+					println("El pair \u00E9s: " + p.toString());
 					break;
 
 				default:

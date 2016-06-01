@@ -28,7 +28,7 @@ public final class DriverResultat extends Driver {
 		try {
 			t = new Threshold(0,n,n,"APAPA");
 			Resultat r = new Resultat(n,"APA",new ControladorPaths(new ControladorGraf()),"Graf1",l,t);
-			print("El driver comença amb un objecte Resultat de mostra:\n");
+			print("El driver comen\u00E7a amb un objecte Resultat de mostra:\n");
 			print(r.toString());
 			println();
 

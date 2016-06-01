@@ -130,7 +130,7 @@ public class Consulta extends JFrame {
 		lblDada = new JLabel("Dada");
 		contentPane.add(lblDada, "cell 0 3,alignx right,aligny center");
 
-		// El sistema espera MILLIS_DELAY_TO_SELECT_DADA ms després d'haver introduit
+		// El sistema espera MILLIS_DELAY_TO_SELECT_DADA ms despr\u00E9s d'haver introduit
 		// el nom i llavors selecciona la dada o l'envia a seleccionar la dada si hi ha repetits
 		dada = new JTextField();
 		dada.getDocument().addDocumentListener(new DadaListener(0));

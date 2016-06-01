@@ -41,9 +41,9 @@ import java.text.DecimalFormat;
 
 /**
  * Vista que mostra tots els resultats de l'\u00FAltima consulta, ordenats decreixentment per rellev\u00E0ncia.
- * Permet modificar els resultats, esborrar-los o afegir-ne de nous, a més d'aplicar un filtre
- * per tal que només es mostrin els primers resultats, els \u00FAltims o els que tinguin una determinada etiqueta.
- * També permet exportar els resultats.
+ * Permet modificar els resultats, esborrar-los o afegir-ne de nous, a m\u00E9s d'aplicar un filtre
+ * per tal que nom\u00E9s es mostrin els primers resultats, els \u00FAltims o els que tinguin una determinada etiqueta.
+ * Tamb\u00E9 permet exportar els resultats.
  * @author Carla Claverol
  *
  */
@@ -449,7 +449,7 @@ public class Resultats extends JFrame {
 	}
 	
 	/**
-	 * Métode per mostrar només els n primers resultats, on n és un nombre introduït
+	 * M\u00E9tode per mostrar nom\u00E9s els n primers resultats, on n \u00E9s un nombre introduït
 	 * per l'usuari a textPrimers.
 	 */
 	private void filtrarPrimers() {
@@ -465,7 +465,7 @@ public class Resultats extends JFrame {
 	}
 	
 	/**
-	 * Métode per mostrar només els n \u00FAltims resultats, on n és un nombre introduït
+	 * M\u00E9tode per mostrar nom\u00E9s els n \u00FAltims resultats, on n \u00E9s un nombre introduït
 	 * per l'usuari a textUltims.
 	 */
 	private void filtrarUltims() {
@@ -481,7 +481,7 @@ public class Resultats extends JFrame {
 	}
 	
 	/**
-	 * Métode per mostrar només els resultats la dada dels quals té l'etiqueta indicada
+	 * M\u00E9tode per mostrar nom\u00E9s els resultats la dada dels quals t\u00E9 l'etiqueta indicada
 	 * per l'usuari a cbEtiquetes.
 	 */
 	private void filtrarEtiquetes() {

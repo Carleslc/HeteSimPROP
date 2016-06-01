@@ -33,7 +33,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	/** Constructor sense threshold, que ordena la llista resultats
 	 * @param Dada sobre la que s'ha fet la consulta
 	 * @param Path usat en la consulta
-	 * @param nom del Graf sobre el que es fa la consulta
+	 * @param nomPath del Graf sobre el que es fa la consulta
 	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
 	 * nodes son copies dels nodes originals
 	 */
@@ -46,7 +46,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	 * Constructor amb threshold, que ordena la llista resultats i elimina els que no superen el threshold
 	 * @param Dada sobre la que s'ha fet la consulta
 	 * @param Path usat en la consulta
-	 * @param nom del Graf sobre el que es fa la consulta
+	 * @param nomPath del Graf sobre el que es fa la consulta
 	 * @param llista de parelles de rellevancia i nodes ordenada decreixentment per rellevancia, els 
 	 * nodes son copies dels nodes originals
 	 * @param threshold usat en la consulta
@@ -257,7 +257,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	}
 
 	/**
-	 * Obté els n primers resultats
+	 * Obt\u00E9 els n primers resultats
 	 * @param n nombre de resultats amb mes rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre a this,
 	 * si es posa a false this no es veur\u00E0 modificat.
@@ -276,7 +276,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	}
 
 	/**
-	 * Obté els n ultims resultats
+	 * Obt\u00E9 els n ultims resultats
 	 * @param n nombre de resultats amb menys rellevancia que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
 	 * si es posa a false this no es veur\u00E0 modificat.
@@ -298,7 +298,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	}
 
 	/**
-	 * Obté tots els resultats que tenen el node amb l'etiqueta label.
+	 * Obt\u00E9 tots els resultats que tenen el node amb l'etiqueta label.
 	 * @param label de les tuples del resultat que s'han de conservar
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,
 	 * si es posa a false this no es veur\u00E0 modificat.
@@ -318,7 +318,7 @@ public class Resultat implements Serializable, Iterable<Entry<Double, Entry<Inte
 	}
 
 	/**
-	 * Obté tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
+	 * Obt\u00E9 tots els resultats que tenen una rellevancia entre min i max, ambdos incluits.
 	 * @param min es el minim de rellevancia
 	 * @param max es el maxim de rellevancia
 	 * @param aplicar si es vol aplicar el filtre al \u00FAltim resultat,

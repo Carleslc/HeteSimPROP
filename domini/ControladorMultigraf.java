@@ -67,10 +67,10 @@ public class ControladorMultigraf extends ControladorGraf {
 	}
 	
 	/**
-	 * Importa i crea un graf que tindrà el nom donat mitjançant els fitxers
-	 * del directori que es passen com a paràmetre (autors, papers, conferències, 
+	 * Importa i crea un graf que tindr\u00E0 el nom donat mitjan\u00E7ant els fitxers
+	 * del directori que es passen com a par\u00E0metre (autors, papers, conferències, 
 	 * labels i relacions). Aquest graf s’estableix com l’actual. 
-	 * El graf passa a ser el graf importat i idActual passarà a ser nomGraf.
+	 * El graf passa a ser el graf importat i idActual passar\u00E0 a ser nomGraf.
 	 * @param nomGraf que és el nom del nou Graf importat
 	 * @param directori on es troben els fitxers a patir dels quals es fa la importaci\u00F3.
 	 * @throws IOException en cas de que algun fitxer no tingui el format correcte 
@@ -123,7 +123,7 @@ public class ControladorMultigraf extends ControladorGraf {
 	/**
 	 * Carrega els noms dels grafs guardats en el directori donat. 
 	 * @param dir on estan continguts els grafs
-	 * @throws FileNotFoundException si dir �s null o no �s un directori
+	 * @throws FileNotFoundException si dir \u00E9s null o no \u00E9s un directori
 	 */
 	public void carregarNoms(String dir) throws FileNotFoundException {
 		grafs.addAll(ControladorPersistenciaPropi.getNomsGrafs(dir));

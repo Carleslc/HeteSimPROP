@@ -42,7 +42,7 @@ public class Test extends Driver {
 
 	/**
 	 * Comprova el temps de multiplicar matrius normalitzades (CP*PA)
-	 * i també comprova que les funcions de normalitzar retornen els mateixos resultats.
+	 * i tamb\u00E9 comprova que les funcions de normalitzar retornen els mateixos resultats.
 	 * @throws InterruptedException 
 	 */
 	@SuppressWarnings("unused")
@@ -62,7 +62,7 @@ public class Test extends Driver {
 			System.out.println(time + "ns");
 		}
 		// Test per comprovar si les funcions de normalitzaci\u00F3 funcionen correctament
-		// Compara els resultats de normalitzadaPerFilas/Columnes amb els creats mitjançant
+		// Compara els resultats de normalitzadaPerFilas/Columnes amb els creats mitjan\u00E7ant
 		// la fila/columna normalitzada corresponent
 		long start = System.nanoTime();
 		String res = "";

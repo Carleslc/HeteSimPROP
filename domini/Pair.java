@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * Classe genèrica amb dos par\u00E0metres que implementa l'interf\u00EDcie Entry<K, V>.
- * El primer par\u00E0metre és la clau i el segon, el valor.
+ * El primer par\u00E0metre \u00E9s la clau i el segon, el valor.
  * 
  * @author Carla Claverol
  */
@@ -67,10 +67,10 @@ public class Pair<K extends Comparable<K> & Serializable, V> implements Entry<K,
 	}
 	
 	/**
-	 * Comparador de la classe. Compara només segons les claus.
+	 * Comparador de la classe. Compara nom\u00E9s segons les claus.
 	 * @param p. Pair amb el que comparem el nostre pair.
 	 * @return Retorna 0 si els dos pairs s\u00F3n iguals, un valor negatiu si el pair original
-	 * 			és més gran que p o un valor positiu si el pair original és més petit que p
+	 * 			\u00E9s m\u00E9s gran que p o un valor positiu si el pair original \u00E9s m\u00E9s petit que p
 	 */
 	@Override
 	public int compareTo(Pair<K, V> p) {
