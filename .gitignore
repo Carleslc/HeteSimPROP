@@ -1,2 +1,10 @@
 
 *.dat
+
+JARs/HeteSimPROP/.classpath
+
+*.class
+
+JARs/HeteSimPROP/.project
+
+JARs/HeteSimPROP/META-INF/MANIFEST.MF
